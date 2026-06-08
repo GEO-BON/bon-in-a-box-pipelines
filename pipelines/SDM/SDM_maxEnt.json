@@ -838,113 +838,8 @@
       ],
       "weight": 0
     },
-    "pipeline@140": {
-      "label": "Bounding box and CRS",
-      "description": "Select a bounding box and CRS. This defines the geographic extent of the analysis as a bounding box, along with its coordinate reference system (CRS). A larger extent increases computation time.",
-      "type": "bboxCRS",
-      "example": null,
-      "weight": 1
-    },
-    "data>loadFromStac.yml@144|study_area": {
-      "description": "Polygon of study area used to mask output layers, in geopackage format.",
-      "label": "Study area",
-      "type": "application/geopackage+sqlite3",
-      "example": null,
-      "weight": 2
-    },
-    "pipeline@128": {
-      "label": "Spatial resolution",
-      "description": "Spatial resolution of the rasters must match the units of the CRS. ",
-      "type": "float",
-      "example": 1000,
-      "weight": 3
-    },
-    "data>loadFromStac.yml@144|temporal_res": {
-      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
-      "label": "Temporal resolution",
-      "type": "text",
-      "example": null,
-      "weight": 4
-    },
-    "data>getGBIFObservations>getGBIFObservations.yml@142|min_year": {
-      "description": "Min year observations wanted",
-      "label": "Minimum year",
-      "type": "int",
-      "example": 2010,
-      "weight": 5
-    },
-    "data>getGBIFObservations>getGBIFObservations.yml@142|max_year": {
-      "description": "Max year observations wanted",
-      "label": "Maximum year",
-      "type": "int",
-      "example": 2024,
-      "weight": 6
-    },
-    "SDM>selectBackground.yml@40|n_background": {
-      "description": "Number of background points",
-      "label": "Number of background points",
-      "type": "int",
-      "example": 10000,
-      "weight": 7
-    },
-    "SDM>selectBackground.yml@40|method_background": {
-      "description": "Generates background points using any of the six available methods. \n- `random`: background points are randomly sampled throughout the whole study extent.\n- `weighted_raster`: background points are sampled in proportion to the number of observations of a target group in an observation density raster. \n- `unweighted_raster`: background points are sampled only in cells where there are observations from a target group. \n- `inclusion_buffer`: background points are sampled within a buffer around observations. \n- `thickening`: background points are sampled in proportion the local density of observations by sampling in a buffer around each observation. ",
-      "label": "Method background",
-      "type": "options",
-      "options": [
-        "random",
-        "inclusion_buffer",
-        "weighted_raster",
-        "unweighted_raster"
-      ],
-      "example": "random",
-      "weight": 8
-    },
-    "SDM>runMaxent.yml@108|fc": {
-      "description": "Vector of strings, feature classes for MaxEnt algorithm. Accepted values are combinations of L (linear), Q (quadratic), P (product), H (hinge) or T (threshold).",
-      "label": "Feature classes",
-      "type": "text[]",
-      "example": [
-        "L",
-        "LQ",
-        "LQHP"
-      ],
-      "weight": 9
-    },
-    "SDM>runMaxent.yml@108|rm": {
-      "description": "Vector of numbers, regularization multipliers for MaxEnt algorithm.",
-      "label": "Regularization multiplier",
-      "type": "float[]",
-      "example": [
-        0.5,
-        1,
-        2
-      ],
-      "weight": 10
-    },
-    "SDM>runMaxent.yml@108|partition_type": {
-      "description": "String, name of partitioning technique.",
-      "label": "Partition type",
-      "type": "options",
-      "options": [
-        "randomkfold",
-        "jackknife",
-        "block",
-        "checkerboard1",
-        "checkerboard2"
-      ],
-      "example": "block",
-      "weight": 11
-    },
-    "pipeline@46": {
-      "label": "Number of runs",
-      "description": "number of runs (in bootstrap or crossvalidation method)",
-      "type": "int",
-      "example": 2,
-      "weight": 12
-    },
     "data>GBIFHeatmapFromSTAC.yml@139|taxa": {
-      "description": "taxonomic group for which to retrieve GBIF heatmap",
+      "description": "Broad taxonomic group used to retrieve the GBIF observation-density heatmap for background-point sampling. Choose the group that best matches the modeled taxa, or all for all GBIF observations.",
       "label": "Taxa",
       "type": "options",
       "options": [
@@ -957,55 +852,160 @@
         "all"
       ],
       "example": "plants",
-      "weight": 13
+      "weight": 1
+    },
+    "pipeline@140": {
+      "label": "Bounding box and CRS",
+      "description": "Bounding box and coordinate reference system defining the analysis extent. This extent is used to retrieve GBIF occurrences, environmental predictor rasters, the GBIF sampling-effort heatmap, and the study extent for modeling.",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 2
+    },
+    "data>loadFromStac.yml@144|study_area": {
+      "description": "Polygon of the study area, in geopackage format. To use a custom study area, input the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg) and it will override the country polygon from the \"Get country polygon\" script. Leave blank to use country or region polygons pulled from the \"Get country polygon\" script. ",
+      "label": "Study area",
+      "type": "application/geopackage+sqlite3",
+      "example": null,
+      "weight": 3
+    },
+    "pipeline@128": {
+      "label": "Spatial resolution",
+      "description": "Target spatial resolution for the predictor rasters and GBIF heatmap. Units must match the selected CRS, for example meters for projected CRS or degrees for latitude-longitude CRS.",
+      "type": "float",
+      "example": 1000,
+      "weight": 4
+    },
+    "data>loadFromStac.yml@144|temporal_res": {
+      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
+      "label": "Temporal resolution",
+      "type": "text",
+      "example": null,
+      "weight": 5
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@142|min_year": {
+      "description": "Earliest year (inclusive) from which GBIF occurrence records will be retrieved.",
+      "label": "Minimum year",
+      "type": "int",
+      "example": 2010,
+      "weight": 6
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@142|max_year": {
+      "description": "Latest year (inclusive) from which GBIF occurrence records will be retrieved.",
+      "label": "Maximum year",
+      "type": "int",
+      "example": 2024,
+      "weight": 7
     },
     "data>loadFromStac.yml@144|t0": {
-      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name or to extract layers from all available dates.",
+      "description": "Start date for STAC time-series predictor layers. Use YYYY or YYYY-MM-DD. Leave blank when selecting predictors by item name or using all available dates.",
       "label": "Start date",
       "type": "text",
       "example": null,
-      "weight": 14
+      "weight": 8
     },
     "data>loadFromStac.yml@144|t1": {
-      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
+      "description": "End date for STAC time-series predictor layers. Use YYYY or YYYY-MM-DD. Leave blank when selecting predictors by item name or using all available dates.",
       "label": "End date",
       "type": "text",
       "example": null,
-      "weight": 15
+      "weight": 9
     },
     "data>loadFromStac.yml@144|stac_url": {
-      "description": "URL of the STAC catalog.",
+      "description": "URL of the STAC catalog used to retrieve environmental predictor layers.",
       "label": "STAC URL",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 16
+      "weight": 10
     },
     "data>loadFromStac.yml@144|collections_items": {
-      "description": "Vector of strings. To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. \"chelsa-clim|bio1\"). To extract a whole collection, type the collection name only (e.g. \"chelsa-clim\"). To pull collection items by date, write the collection name and provide a start date, end date, and temporal resolution. If pulling a layer that is tiled (e.g. https://stac.geobon.org/viewer/gfw-lossyear/_80N_180W), enter the collection name (e.g. gfw-lossyear), bounding box and time range if the layer is a time series, and the script will assemble the tiles into a continuous layer automatically.)",
+      "description": "To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. \"chelsa-clim|bio1\"). To extract a whole collection, type the collection name only (e.g. \"chelsa-clim\"). To pull collection items by date, write the collection name and provide a start date, end date, and temporal resolution. If pulling a layer that is tiled (e.g. https://stac.geobon.org/viewer/gfw-lossyear/_80N_180W), enter the collection name (e.g. gfw-lossyear), bounding box and time range if the layer is a time series, and the script will assemble the tiles into a continuous layer automatically.)",
       "label": "STAC collection items",
       "type": "text[]",
       "example": [
         "chelsa-clim|bio1",
         "chelsa-clim|bio2"
       ],
+      "weight": 11
+    },
+    "SDM>selectBackground.yml@40|n_background": {
+      "description": "Target number of pseudo-absence/background points to generate within the study extent.",
+      "label": "Number of background points",
+      "type": "int",
+      "example": 10000,
+      "weight": 12
+    },
+    "SDM>selectBackground.yml@40|method_background": {
+      "description": "Generates background points using any of the six available methods. \n- `random`: background points are randomly sampled throughout the whole study extent.\n- `weighted_raster`: background points are sampled in proportion to the number of observations of a target group in an observation density raster. \n- `unweighted_raster`: background points are sampled only in cells where there are observations from a target group. \n- `inclusion_buffer`: background points are sampled within a buffer around observations. \n- `thickening`: background points are sampled in proportion the local density of observations by sampling in a buffer around each observation. ",
+      "label": "Method background",
+      "type": "options",
+      "options": [
+        "random",
+        "inclusion_buffer",
+        "weighted_raster",
+        "unweighted_raster"
+      ],
+      "example": "random",
+      "weight": 13
+    },
+    "SDM>runMaxent.yml@108|fc": {
+      "description": "MaxEnt feature classes control the shapes of relationships the model can learn between species occurrence and environmental predictors. Simpler classes, such as L or LQ, fit smoother, more constrained responses and are often safer for small datasets. More complex combinations, such as LQH or LQHP, can capture more flexible ecological responses but may overfit when occurrence records are limited. This pipeline tests all values provided here and selects the best-performing combination using the parameter selection method configured in the MaxEnt step. Accepted values are combinations of L (linear), Q (quadratic), P (product), H (hinge) or T (threshold).",
+      "label": "Feature classes",
+      "type": "text[]",
+      "example": [
+        "L",
+        "LQ",
+        "LQHP"
+      ],
+      "weight": 14
+    },
+    "SDM>runMaxent.yml@108|rm": {
+      "description": "Regularization multiplier values to evaluate for MaxEnt model tuning. The regularization multiplier controls how strongly MaxEnt penalizes model complexity. Lower values allow a more flexible model that may fit local patterns closely. Higher values produce smoother, more generalized predictions and reduce overfitting risk. ",
+      "label": "Regularization multiplier",
+      "type": "float[]",
+      "example": [
+        0.5,
+        1,
+        2
+      ],
+      "weight": 15
+    },
+    "SDM>runMaxent.yml@108|partition_type": {
+      "description": "ENMeval partitioning method used to evaluate MaxEnt parameter combinations. This option controls how ENMeval partitions presence and background data while tuning MaxEnt parameters. Spatially structured methods are usually preferable when occurrence records are spatially clustered.\n- block: Splits records geographically and gives a more realistic test of spatial transferability.\n- randomkfold: Randomly splits records into folds. Useful for general model checking, but can overestimate performance when nearby points are environmentally or spatially similar.\n- jackknife: Useful for very small datasets because each presence record can be tested in turn.\n- checkerboard1 / checkerboard2: Spatial checkerboard partitioning methods; useful for spatial evaluation, especially when working with gridded predictors, but may be more sensitive to spatial scale and sampling density.",
+      "label": "Partition type",
+      "type": "options",
+      "options": [
+        "randomkfold",
+        "jackknife",
+        "block",
+        "checkerboard1",
+        "checkerboard2"
+      ],
+      "example": "block",
+      "weight": 16
+    },
+    "pipeline@46": {
+      "label": "Number of runs",
+      "description": "Number of bootstrap or cross-validation runs used when preparing SDM training and testing data. Also used as the number of folds for random k-fold MaxEnt partitioning.",
+      "type": "int",
+      "example": 2,
       "weight": 17
     }
   },
   "outputs": {
     "filtering>cleanCoordinates.yml@34|clean_presence": {
-      "description": "Occurrences from GBIF after cleaning. This is the recommended input for downstream species distribution modeling steps.",
+      "description": "Cleaned GBIF occurrence records that passed the selected coordinate-cleaning tests. These records are used as presence points in the SDM workflow.",
       "label": "Presences",
       "type": "text/tab-separated-values",
       "weight": 0
     },
     "SDM>removeCollinearity.yml@97|rasters_selected": {
-      "description": "Environmental layers used as predictors in species distribution modeling",
+      "description": "GeoTIFF predictor rasters retained after collinearity filtering. These are the environmental variables used to fit and project the MaxEnt model.",
       "label": "Environmental predictors",
       "type": "image/tiff;application=geotiff[]",
       "weight": 1
     },
     "SDM>runMaxent.yml@108|sdm_pred": {
-      "description": "Model predictions from Maxent algorithm",
+      "description": "MaxEnt habitat suitability prediction raster fitted using the selected model settings.",
       "label": "Predictions",
       "type": "image/tiff;application=geotiff",
       "range": [
@@ -1015,14 +1015,14 @@
       "weight": 2
     },
     "SDM>rangePredictions.yml@68|range_predictions": {
-      "description": "Variability of predictions based on range method",
+      "description": "Raster showing the range of the 95% confidence interval across prediction rasters.",
       "label": "Variability of predictions",
       "type": "image/tiff;application=geotiff",
       "weight": 3
     },
     "pipeline@121|default_output": {
       "label": "Taxa list",
-      "description": "List of taxa for which the model was run.",
+      "description": "Taxa supplied to the pipeline and used for GBIF occurrence retrieval and model fitting.",
       "example": [
         "Acer saccharum"
       ],
