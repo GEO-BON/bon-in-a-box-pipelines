@@ -8,6 +8,9 @@ sf_use_s2(FALSE) # turn off spherical geometry
 
 input <- biab_inputs() # Load input file
 crs_input <- paste0(input$crs$CRS$authority, ":", input$crs$CRS$code)
+if (is.lonlat(crs_input)) {
+  biab_error_stop(sprintf("The current CRS %s is in latitude longitude. Please choose a projected crs.", crs_input))
+}
 
 if ((input$year_int) >= (input$years - input$start_year)) {
   biab_error_stop("Please make sure the year interval is smaller than the difference between start year and year for cutoff.")
