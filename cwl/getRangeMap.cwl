@@ -178,11 +178,11 @@ outputs:
   sf_range_map:
     type: File
     outputBinding:
-      glob: "$((inputs.runFolder ? inputs.runFolder.path + '/' : '') + 'output.json')"
+      glob: "$((inputs.runFolder ? inputs.runFolder.basename + '/' : '') + 'output.json')"
       loadContents: true
       outputEval: $(extractOutputFile(self, "sf_range_map"))
 
   logs:
     type: File
     outputBinding:
-       glob: "$((inputs.runFolder ? inputs.runFolder.path : runtime.outdir) + '/logs.txt')"
+       glob: "$((inputs.runFolder ? inputs.runFolder.basename : runtime.outdir) + '/logs.txt')"
