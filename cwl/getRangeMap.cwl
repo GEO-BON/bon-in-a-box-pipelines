@@ -115,6 +115,10 @@ arguments:
     exit "$scriptExitCode"
 
 inputs:
+  #################
+  # Script inputs #
+  #################
+
   expert_source:
     type:
       type: enum
@@ -126,9 +130,11 @@ inputs:
 
   species:
     type: string[]
-    inputBinding:
-      position: 3
     default: ["Myrmecophaga tridactyla"]
+
+  ###################
+  # Run environment #
+  ###################
 
   envFolder:
     type: Directory
@@ -171,7 +177,7 @@ outputs:
   sf_range_map:
     type: File
     outputBinding:
-      glob: "$((inputs.runFolder ? inputs.runFolder.path : runtime.outdir) + '/output.json')"
+      glob: "$((inputs.runFolder ? inputs.runFolder.path + '/' : '') + 'output.json')"
       loadContents: true
       outputEval: $(extractOutput(self, inputs, "sf_range_map", true))
 
@@ -179,4 +185,3 @@ outputs:
     type: File
     outputBinding:
        glob: "$((inputs.runFolder ? inputs.runFolder.path : runtime.outdir) + '/logs.txt')"
-
