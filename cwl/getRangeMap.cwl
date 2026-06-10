@@ -10,13 +10,14 @@ requirements:
   InlineJavascriptRequirement:
     expressionLib:
       - |
-        function extractOutput(outputFiles, inputs, key, isFile) {
+        function extractOutput(outputFiles, key) {
           if (!outputFiles || outputFiles.length === 0) return null;
-          var obj = JSON.parse(outputFiles[0].contents);
-          var value = obj[key];
-          if (value === undefined || value === null) return null;
-          if (isFile) return { class: "File", location: "file://" + value };
-          else return value;
+          return JSON.parse(outputFiles[0].contents)[key];
+        }
+        function extractOutputFile(outputFiles, key) {
+          var value = extractOutput(outputFiles, key, true);
+          if(value === undefined || value === null) return null;
+          return { class: "File", location: "file://" + value };
         }
   InplaceUpdateRequirement:
     inplaceUpdate: true
@@ -179,7 +180,7 @@ outputs:
     outputBinding:
       glob: "$((inputs.runFolder ? inputs.runFolder.path + '/' : '') + 'output.json')"
       loadContents: true
-      outputEval: $(extractOutput(self, inputs, "sf_range_map", true))
+      outputEval: $(extractOutputFile(self, "sf_range_map"))
 
   logs:
     type: File
