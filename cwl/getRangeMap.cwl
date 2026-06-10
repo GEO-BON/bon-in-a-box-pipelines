@@ -2,14 +2,9 @@
 cwlVersion: v1.2
 class: CommandLineTool
 
-# To run this POC
-# 1. checkout the BON in a Box repo
-# 2. copy runner.sample.env to runner.env
-# 3. cd to the cwl folder
-# 4. run:
-#   cwltool getRangeMap.cwl --runFolder="../output/cwl/data/getRangeMap" --expert_source="MOL"
-#
-# To run with default parameters, runner.env must contain IUCN_TOKEN variable.
+# To run this proof of concept:
+# cwltool <path/url to cwl file> --envFolder="./env" --species=<array of species> --expert_source="IUCN"
+# envFolder will keep conda environments between runs.
 
 requirements:
   InlineJavascriptRequirement:
@@ -32,10 +27,6 @@ requirements:
       ${
         return [
           {
-            entry: inputs.runFolder,
-            writable: true
-          },
-          {
             entry: inputs.envFolder,
             entryname: "/conda-envs",
             writable: true
@@ -48,6 +39,10 @@ requirements:
         ].concat(
           inputs.environment
             ? [{ entry: inputs.environment, entryname: "/runner.env" }]
+            : []
+        ).concat(
+          inputs.runFolder
+            ? [{ entry: inputs.runFolder, writable: true }]
             : []
         ).concat( // For debugging, overrides /scripts
           inputs.scripts_root
@@ -70,16 +65,16 @@ requirements:
       SCRIPT_LOCATION: /scripts
       SCRIPT_STUBS_LOCATION: /script-stubs
       USERDATA_LOCATION: /userdata
-      OUTPUT_LOCATION: /output
+      OUTPUT_LOCATION: "$(inputs.runFolder ? inputs.runFolder.path : runtime.outdir)"
 
 baseCommand: ["bash", "-c"]
 arguments:
   - |
-    log=$(inputs.runFolder.basename)/logs.txt
+    log=$OUTPUT_LOCATION/logs.txt
     rm -f $log
     mkdir -p /conda-env-yml/pkgs /conda-env-yml/envs
 
-    cat > "$(inputs.runFolder.basename)/input.json" <<'JSON'
+    cat > "$OUTPUT_LOCATION/input.json" <<'JSON'
     ${
       return JSON.stringify({
         "expert_source": inputs.expert_source,
@@ -87,13 +82,13 @@ arguments:
       }, null, 2);
     }
     JSON
-    echo "Running in $(inputs.runFolder.basename)" | tee -a $log
+    echo "Running in $OUTPUT_LOCATION" | tee -a $log
     echo "Inputs:" | tee -a $log
-    cat $(inputs.runFolder.basename)/input.json | tee -a $log
+    cat $OUTPUT_LOCATION/input.json | tee -a $log
 
     # This script does not really need the conda environment. Switch the comments to test with Conda.
-    # source $SCRIPT_STUBS_LOCATION/system/condaEnvironment.sh $(inputs.runFolder.path) rbase 2>&1 >> $log
-    source $SCRIPT_STUBS_LOCATION/system/condaEnvironment.sh $(inputs.runFolder.path) data__getRangeMap "
+    # source $SCRIPT_STUBS_LOCATION/system/condaEnvironment.sh $OUTPUT_LOCATION rbase 2>&1 >> $log
+    source $SCRIPT_STUBS_LOCATION/system/condaEnvironment.sh $OUTPUT_LOCATION data__getRangeMap "
       name: data__getRangeMap
       channels:
         - conda-forge
@@ -109,7 +104,7 @@ arguments:
 
     Rscript \
       $SCRIPT_STUBS_LOCATION/system/scriptWrapper.R \
-      $(inputs.runFolder.path) \
+      $OUTPUT_LOCATION \
       $SCRIPT_LOCATION/$(inputs.scriptPath) \
       2>&1 | tee -a $log
     scriptExitCode=\${PIPESTATUS[0]}
@@ -120,12 +115,6 @@ arguments:
     exit "$scriptExitCode"
 
 inputs:
-  runFolder:
-    type: Directory
-    doc: This folder will contain the input.json, output.json, logs.txt, and any other file saved by the script.
-    inputBinding:
-      position: 1
-
   expert_source:
     type:
       type: enum
@@ -133,8 +122,6 @@ inputs:
         - MOL
         - IUCN
         - QC
-    inputBinding:
-      position: 2
     default: IUCN
 
   species:
@@ -145,14 +132,22 @@ inputs:
 
   envFolder:
     type: Directory
-    doc: Folder for conda-pack to export environments. This avoids downloading/resolving the environement multiple times.
+    doc: Folder for conda-pack to export environments. This avoids downloading/resolving the same environement multiple times.
     default:
       class: Directory
       path: ./envs
 
+  runFolder:
+    type: Directory?
+    doc:
+      Optional. This folder will keep the input.json, output.json, logs.txt, and any other file saved by the script.
+      If left blank, a temporary folder will be used and discarded after the run.
+
   environment:
     type: File?
-    doc: BON in a Box runner.env file, necessary for scripts requiring credentials. If not provided, an empty one will be used.
+    doc:
+      Optional. BON in a Box runner.env file, necessary for scripts requiring credentials.
+      If not provided, an empty one will be used.
 
   #################################################################
   # The following inputs should not be changed in a regular setup #
@@ -176,12 +171,12 @@ outputs:
   sf_range_map:
     type: File
     outputBinding:
-      glob: $(inputs.runFolder.basename)/output.json
+      glob: "$((inputs.runFolder ? inputs.runFolder.path : runtime.outdir) + '/output.json')"
       loadContents: true
       outputEval: $(extractOutput(self, inputs, "sf_range_map", true))
 
   logs:
     type: File
     outputBinding:
-       glob: $(inputs.runFolder.basename)/logs.txt
+       glob: "$((inputs.runFolder ? inputs.runFolder.path : runtime.outdir) + '/logs.txt')"
 
