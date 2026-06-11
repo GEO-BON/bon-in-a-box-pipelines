@@ -2,7 +2,7 @@ runner.env
 .vscode
 **/.cache
 **/.config
-.server
+.server*
 
 rosm.cache
 .RData
@@ -20,3 +20,7 @@ lib/
 # mac system files
 **/._*
 **/.DS_Store
+
+# scripts and pipelines previous versions
+scripts/_*
+pipelines/_*
