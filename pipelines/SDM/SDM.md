@@ -2,7 +2,7 @@ Species distributions are an important EBV in the ‘species populations’ clas
 
 ### **MaxEnt**
 
-_Author: [Sarah Valentin](https://orcid.org/0000-0002-9028-681X), [Guillaume Larocque](https://orcid.org/0000-0002-5967-9156), [François Rousseu](https://orcid.org/0000-0002-2400-2479)_
+_Authors: [Sarah Valentin](https://orcid.org/0000-0002-9028-681X), [Guillaume Larocque](https://orcid.org/0000-0002-5967-9156), [François Rousseu](https://orcid.org/0000-0002-2400-2479)_
 
 Review status: Under development
 
@@ -108,13 +108,13 @@ The BON in a Box pipeline allows you to run an SDM for a specific region and spe
 
 ### Pipeline steps
 
-#### **1. Pulling occurences from GBIF**
+#### **1. Pulling occurences from GBIF and loading environmental layers**
 
- This step pulls occurrences of the species of interest from GBIF and environmental raster layers from the GEO BON STAC catalog. 
+This step pulls occurrences of the species of interest from GBIF and environmental raster layers from the GEO BON STAC catalog. 
  
 #### **2. Cleaning input data**
 
- This step cleans the GBIF data by only including one occurrence per pixel and removes collinearity between the environmental layers. 
+This step cleans the GBIF data by only including one occurrence per pixel and removes collinearity between the environmental layers. 
 
 #### **3. Generating background points**
 

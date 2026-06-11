@@ -129,7 +129,7 @@
       "id": "68",
       "type": "io",
       "position": {
-        "x": 4541,
+        "x": 4542.558329159321,
         "y": 711
       },
       "data": {
@@ -1038,7 +1038,7 @@
       "weight": 2
     },
     "SDM>rangePredictions.yml@68|range_predictions": {
-      "description": "Raster showing the range of the 95% confidence interval across prediction rasters.",
+      "description": "The variability of the 95% confidence of each prediction can be viewed on a map to show uncertainty.",
       "label": "Variability of predictions",
       "type": "image/tiff;application=geotiff",
       "weight": 3
