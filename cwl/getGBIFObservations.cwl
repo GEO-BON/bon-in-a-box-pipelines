@@ -3,8 +3,9 @@ cwlVersion: v1.2
 class: CommandLineTool
 
 # To run this proof of concept:
-# cwltool <path/url to cwl file> --envFolder="./env" --species=<array of species> --expert_source="IUCN"
+# cwltool <path/url to cwl file> --envFolder="./env" [optional inputs] --environment="path/to/runner.env"
 # envFolder will keep conda environments between runs.
+# environment file is necessary for GBIF credentials.
 
 requirements:
   InlineJavascriptRequirement:
@@ -54,10 +55,10 @@ requirements:
 
 
   DockerRequirement:
-    # dockerPull: ghcr.io/geo-bon/bon-in-a-box-pipelines/runner-conda-cwl:cwl-poc
-    dockerImageId: conda-cwl-runner-local
-    dockerFile:
-        $include: ../runners/cwl/conda-cwl-dockerfile
+    dockerPull: ghcr.io/geo-bon/bon-in-a-box-pipelines/runner-conda-cwl:cwl-poc
+    # dockerImageId: conda-cwl-runner-local
+    # dockerFile:
+    #     $include: ../runners/cwl/conda-cwl-dockerfile
 
   EnvVarRequirement:
     envDef:
@@ -78,8 +79,16 @@ arguments:
     cat > "$OUTPUT_LOCATION/input.json" <<'JSON'
     ${
       return JSON.stringify({
-        "expert_source": inputs.expert_source,
-        "species": inputs.species
+        taxa: inputs.taxa,
+        bbox_crs: {
+          bbox: inputs.bbox,
+          CRS: {
+            authority: "EPSG",
+            code: inputs.crs_code
+          },
+        },
+        min_year: inputs.min_year,
+        max_year: inputs.max_year,
       }, null, 2);
     }
     JSON
@@ -89,29 +98,25 @@ arguments:
 
     # This script does not really need the conda environment. Switch the comments to test with Conda.
     # source $SCRIPT_STUBS_LOCATION/system/condaEnvironment.sh $OUTPUT_LOCATION rbase 2>&1 >> $log
-    source $SCRIPT_STUBS_LOCATION/system/condaEnvironment.sh $OUTPUT_LOCATION data__getRangeMap "
-      name: data__getRangeMap
+    source $SCRIPT_STUBS_LOCATION/system/condaEnvironment.sh $OUTPUT_LOCATION data__getGBIFObservations__getGBIFObservations "
+      name: data__getGBIFObservations__getGBIFObservations
       channels:
         - conda-forge
-        - r
       dependencies:
-        - r-rjson
-        - r-dplyr
-        - r-tidyr
-        - r-purrr
-        - r-sf
-        - r-stringr
+        - pygbif
+        - pandas
+        - pyproj
     " /conda-envs $(inputs.condaPackURL) 2>&1 >> $log
 
-    Rscript \
-      $SCRIPT_STUBS_LOCATION/system/scriptWrapper.R \
+    python3 \
+      $SCRIPT_STUBS_LOCATION/system/scriptWrapper.py \
       $OUTPUT_LOCATION \
       $SCRIPT_LOCATION/$(inputs.scriptPath) \
       2>&1 | tee -a $log
     scriptExitCode=\${PIPESTATUS[0]}
     echo "Script exited with code $scriptExitCode" | tee -a $log
 
-    source $SCRIPT_STUBS_LOCATION/system/condaPackEnvironment.sh data__getRangeMap /conda-envs 2>&1 >> $log
+    source $SCRIPT_STUBS_LOCATION/system/condaPackEnvironment.sh data__getGBIFObservations__getGBIFObservations /conda-envs 2>&1 >> $log
 
     exit "$scriptExitCode"
 
@@ -119,19 +124,39 @@ inputs:
   #################
   # Script inputs #
   #################
-
-  expert_source:
-    type:
-      type: enum
-      symbols:
-        - MOL
-        - IUCN
-        - QC
-    default: IUCN
-
-  species:
+  taxa:
     type: string[]
-    default: ["Myrmecophaga tridactyla"]
+    label: Taxa list
+    doc: Comma-separated list of [taxa](https://en.wikipedia.org/wiki/Taxon). Each value could be a species name, order, class, genus, kingdom or family, as long as it is an exact match with the GBIF taxonomic backbone. Individual species can be looked up [on the GBIF website](https://www.gbif.org/species/).
+    default: [Acer saccharum, Acer nigrum]
+
+  bbox:
+    type: int[]
+    label: Bounding Box
+    doc: Bounding box for the area of interest, in the format "minLon,minLat,maxLon,maxLat".
+    default:
+      - 2296842
+      - 7275965
+      - 2717150
+      - 7678409
+
+  crs_code:
+    type: int
+    label: CRS code
+    doc: EPSG code of the coordinate reference system for the bounding box.
+    default: 2953
+
+  min_year:
+    label: minimum year
+    doc: Min year observations wanted
+    type: int
+    default: 2010
+
+  max_year:
+    label: maximum year
+    doc: Max year observations wanted
+    type: int
+    default: 2024
 
   ###################
   # Run environment #
@@ -168,19 +193,46 @@ inputs:
   scriptPath:
     type: string
     doc: Path to the script, relative to scripts root.
-    default: data/getRangeMap.R
+    default: data/getGBIFObservations/getGBIFObservations.py
 
   scripts_root:
     type: Directory?
     doc: Root folder for scripts. Use this to override the image's scripts while debugging.
 
 outputs:
-  sf_range_map:
+  output_file:
     type: File
+    label: outputs
+    doc: Output file
+    outputBinding:
+      glob: "$((inputs.runFolder ? inputs.runFolder.basename + '/' : '') + 'output.json')"
+
+  observations_file:
+    type: File
+    label: Observations
+    doc: Output file with observations
     outputBinding:
       glob: "$((inputs.runFolder ? inputs.runFolder.basename + '/' : '') + 'output.json')"
       loadContents: true
-      outputEval: $(extractOutputFile(self, "sf_range_map"))
+      outputEval: $(extractOutputFile(self, "observations_file"))
+
+  total_records:
+    type: int
+    label: Total number of occurrences
+    doc: Total number of GBIF occurrences in csv file
+    outputBinding:
+      glob: "$((inputs.runFolder ? inputs.runFolder.basename + '/' : '') + 'output.json')"
+      loadContents: true
+      outputEval: $(parseInt(extractOutput(self, "total_records")))
+
+  gbif_doi:
+    type: string
+    label: DOI of GBIF download
+    doc: DOI of GBIF download. Used for citing downloaded data.
+    outputBinding:
+      glob: "$((inputs.runFolder ? inputs.runFolder.basename + '/' : '') + 'output.json')"
+      loadContents: true
+      outputEval: $(extractOutput(self, "gbif_doi"))
 
   logs:
     type: File
