@@ -502,6 +502,31 @@
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
       }
+    },
+    {
+      "id": "145",
+      "type": "constant",
+      "position": {
+        "x": 195.65519948076462,
+        "y": 196.8989332441075
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2010
+      }
+    },
+    {
+      "id": "146",
+      "type": "constant",
+      "position": {
+        "x": 181.70776281726063,
+        "y": 332.1890688800968
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
     }
   ],
   "edges": [
@@ -826,6 +851,18 @@
       "target": "97",
       "targetHandle": "rasters",
       "id": "reactflow__edge-144rasters-97rasters"
+    },
+    {
+      "source": "145",
+      "target": "142",
+      "targetHandle": "min_year",
+      "id": "xy-edge__145-142min_year"
+    },
+    {
+      "source": "146",
+      "target": "144",
+      "targetHandle": "t0",
+      "id": "xy-edge__146-144t0"
     }
   ],
   "inputs": {
@@ -840,7 +877,7 @@
     },
     "data>GBIFHeatmapFromSTAC.yml@139|taxa": {
       "description": "Broad taxonomic group used to retrieve the GBIF observation-density heatmap for background-point sampling. Choose the group that best matches the modeled taxa, or all for all GBIF observations.",
-      "label": "Taxa",
+      "label": "Taxonomic group",
       "type": "options",
       "options": [
         "reptiles",
@@ -862,7 +899,7 @@
       "weight": 2
     },
     "data>loadFromStac.yml@144|study_area": {
-      "description": "Polygon of the study area, in geopackage format. To use a custom study area, input the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg) and it will override the country polygon from the \"Get country polygon\" script. Leave blank to use country or region polygons pulled from the \"Get country polygon\" script. ",
+      "description": "Polygon of the study area, in geopackage format. To use a custom study area, input the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg) and it will crop the area to the shape of the polygon. Leave blank to use bounding box and CRS chosen above.",
       "label": "Study area",
       "type": "application/geopackage+sqlite3",
       "example": null,
@@ -882,40 +919,26 @@
       "example": null,
       "weight": 5
     },
-    "data>getGBIFObservations>getGBIFObservations.yml@142|min_year": {
-      "description": "Earliest year (inclusive) from which GBIF occurrence records will be retrieved.",
-      "label": "Minimum year",
-      "type": "int",
-      "example": 2010,
-      "weight": 6
-    },
     "data>getGBIFObservations>getGBIFObservations.yml@142|max_year": {
       "description": "Latest year (inclusive) from which GBIF occurrence records will be retrieved.",
       "label": "Maximum year",
       "type": "int",
       "example": 2024,
-      "weight": 7
-    },
-    "data>loadFromStac.yml@144|t0": {
-      "description": "Start date for STAC time-series predictor layers. Use YYYY or YYYY-MM-DD. Leave blank when selecting predictors by item name or using all available dates.",
-      "label": "Start date",
-      "type": "text",
-      "example": null,
-      "weight": 8
+      "weight": 6
     },
     "data>loadFromStac.yml@144|t1": {
       "description": "End date for STAC time-series predictor layers. Use YYYY or YYYY-MM-DD. Leave blank when selecting predictors by item name or using all available dates.",
       "label": "End date",
       "type": "text",
       "example": null,
-      "weight": 9
+      "weight": 7
     },
     "data>loadFromStac.yml@144|stac_url": {
       "description": "URL of the STAC catalog used to retrieve environmental predictor layers.",
       "label": "STAC URL",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 10
+      "weight": 8
     },
     "data>loadFromStac.yml@144|collections_items": {
       "description": "To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. \"chelsa-clim|bio1\"). To extract a whole collection, type the collection name only (e.g. \"chelsa-clim\"). To pull collection items by date, write the collection name and provide a start date, end date, and temporal resolution. If pulling a layer that is tiled (e.g. https://stac.geobon.org/viewer/gfw-lossyear/_80N_180W), enter the collection name (e.g. gfw-lossyear), bounding box and time range if the layer is a time series, and the script will assemble the tiles into a continuous layer automatically.)",
@@ -925,14 +948,14 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio2"
       ],
-      "weight": 11
+      "weight": 9
     },
     "SDM>selectBackground.yml@40|n_background": {
       "description": "Target number of pseudo-absence/background points to generate within the study extent.",
       "label": "Number of background points",
       "type": "int",
       "example": 10000,
-      "weight": 12
+      "weight": 10
     },
     "SDM>selectBackground.yml@40|method_background": {
       "description": "Generates background points using any of the six available methods. \n- `random`: background points are randomly sampled throughout the whole study extent.\n- `weighted_raster`: background points are sampled in proportion to the number of observations of a target group in an observation density raster. \n- `unweighted_raster`: background points are sampled only in cells where there are observations from a target group. \n- `inclusion_buffer`: background points are sampled within a buffer around observations. \n- `thickening`: background points are sampled in proportion the local density of observations by sampling in a buffer around each observation. ",
@@ -945,7 +968,7 @@
         "unweighted_raster"
       ],
       "example": "random",
-      "weight": 13
+      "weight": 11
     },
     "SDM>runMaxent.yml@108|fc": {
       "description": "MaxEnt feature classes control the shapes of relationships the model can learn between species occurrence and environmental predictors. Simpler classes, such as L or LQ, fit smoother, more constrained responses and are often safer for small datasets. More complex combinations, such as LQH or LQHP, can capture more flexible ecological responses but may overfit when occurrence records are limited. This pipeline tests all values provided here and selects the best-performing combination using the parameter selection method configured in the MaxEnt step. Accepted values are combinations of L (linear), Q (quadratic), P (product), H (hinge) or T (threshold).",
@@ -956,7 +979,7 @@
         "LQ",
         "LQHP"
       ],
-      "weight": 14
+      "weight": 12
     },
     "SDM>runMaxent.yml@108|rm": {
       "description": "Regularization multiplier values to evaluate for MaxEnt model tuning. The regularization multiplier controls how strongly MaxEnt penalizes model complexity. Lower values allow a more flexible model that may fit local patterns closely. Higher values produce smoother, more generalized predictions and reduce overfitting risk. ",
@@ -967,10 +990,10 @@
         1,
         2
       ],
-      "weight": 15
+      "weight": 13
     },
     "SDM>runMaxent.yml@108|partition_type": {
-      "description": "ENMeval partitioning method used to evaluate MaxEnt parameter combinations. This option controls how ENMeval partitions presence and background data while tuning MaxEnt parameters. \n  - Block \\- partitions the bounding box into four equally sized quadrants and assigns groups by quadrant\n  - Checkerboard 1 \\- Generates checkerboard from the study area and assigns groups based on what square the points fall in\n  - Checkerboard 2- Similar to checkerboard 1 but performs this separately for occurrence and background points\n  - Jackknife \\- Does not partition the background points into testing and training (uses them all), performs leave one out cross validation (recommended for small datasets only)\n  - Random k-fold \\- Does not partition the background points into testing and training, partitions groups randomly into a user specified (K) number of bins, and runs the model k times, with each bin used once as testing.",
+      "description": "ENMeval partitioning method used to evaluate MaxEnt parameter combinations. This option controls how ENMeval partitions presence and background data while tuning MaxEnt parameters. \n  - Block \\- partitions the bounding box into four equally sized quadrants and assigns groups by quadrant\n  - Checkerboard 1 \\- Generates checkerboard from the study area and assigns groups based on what square the points fall in\n  - Checkerboard 2 \\- Similar to checkerboard 1 but performs this separately for occurrence and background points\n  - Jackknife \\- Does not partition the background points into testing and training (uses them all), performs leave one out cross validation (recommended for small datasets only)\n  - Random k-fold \\- Does not partition the background points into testing and training, partitions groups randomly into a user specified (K) number of bins, and runs the model k times, with each bin used once as testing.",
       "label": "Partition type",
       "type": "options",
       "options": [
@@ -981,14 +1004,14 @@
         "checkerboard2"
       ],
       "example": "block",
-      "weight": 16
+      "weight": 14
     },
     "pipeline@46": {
       "label": "Number of runs",
       "description": "Number of bootstrap or cross-validation runs used when preparing SDM training and testing data. Also used as the number of folds for random k-fold MaxEnt partitioning.",
       "type": "int",
       "example": 2,
-      "weight": 17
+      "weight": 15
     }
   },
   "outputs": {
