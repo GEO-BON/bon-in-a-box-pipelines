@@ -505,27 +505,28 @@
     },
     {
       "id": "145",
-      "type": "constant",
+      "type": "userInput",
       "position": {
-        "x": 195.65519948076462,
-        "y": 196.8989332441075
+        "x": 88.53761964002445,
+        "y": 215.02283797481215
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "int",
-        "value": 2010
+        "type": "text",
+        "value": "2010"
       }
     },
     {
       "id": "146",
-      "type": "constant",
+      "type": "userInput",
       "position": {
-        "x": 181.70776281726063,
-        "y": 332.1890688800968
+        "x": 77.19757100917576,
+        "y": 297.6431922852808
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "text"
+        "type": "text",
+        "value": "2024"
       }
     }
   ],
@@ -860,9 +861,21 @@
     },
     {
       "source": "146",
+      "target": "142",
+      "targetHandle": "max_year",
+      "id": "xy-edge__146-142max_year"
+    },
+    {
+      "source": "145",
       "target": "144",
       "targetHandle": "t0",
-      "id": "xy-edge__146-144t0"
+      "id": "xy-edge__145-144t0"
+    },
+    {
+      "source": "146",
+      "target": "144",
+      "targetHandle": "t1",
+      "id": "xy-edge__146-144t1"
     }
   ],
   "inputs": {
@@ -912,33 +925,12 @@
       "example": 1000,
       "weight": 4
     },
-    "data>loadFromStac.yml@144|temporal_res": {
-      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
-      "label": "Temporal resolution",
-      "type": "text",
-      "example": null,
-      "weight": 5
-    },
-    "data>getGBIFObservations>getGBIFObservations.yml@142|max_year": {
-      "description": "Latest year (inclusive) from which GBIF occurrence records will be retrieved.",
-      "label": "Maximum year",
-      "type": "int",
-      "example": 2024,
-      "weight": 6
-    },
-    "data>loadFromStac.yml@144|t1": {
-      "description": "End date for STAC time-series predictor layers. Use YYYY or YYYY-MM-DD. Leave blank when selecting predictors by item name or using all available dates.",
-      "label": "End date",
-      "type": "text",
-      "example": null,
-      "weight": 7
-    },
     "data>loadFromStac.yml@144|stac_url": {
       "description": "URL of the STAC catalog used to retrieve environmental predictor layers.",
       "label": "STAC URL",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 8
+      "weight": 5
     },
     "data>loadFromStac.yml@144|collections_items": {
       "description": "To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. \"chelsa-clim|bio1\"). To extract a whole collection, type the collection name only (e.g. \"chelsa-clim\"). To pull collection items by date, write the collection name and provide a start date, end date, and temporal resolution. If pulling a layer that is tiled (e.g. https://stac.geobon.org/viewer/gfw-lossyear/_80N_180W), enter the collection name (e.g. gfw-lossyear), bounding box and time range if the layer is a time series, and the script will assemble the tiles into a continuous layer automatically.)",
@@ -948,6 +940,27 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio2"
       ],
+      "weight": 6
+    },
+    "pipeline@145": {
+      "label": "Minimum year or start date",
+      "description": "Earliest year for input data (GBIF records and environmental predictors). Accepts YYYY or YYYY-MM-DD; if a full date is supplied, only the year is used for GBIF data.",
+      "type": "text",
+      "example": "2010",
+      "weight": 7
+    },
+    "pipeline@146": {
+      "label": "Maximum year or end date",
+      "description": "Latest year for input data (GBIF records and environmental predictors). Accepts YYYY or YYYY-MM-DD; if a full date is supplied, only the year is used for GBIF data.",
+      "type": "text",
+      "example": "2024",
+      "weight": 8
+    },
+    "data>loadFromStac.yml@144|temporal_res": {
+      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is monthly, and \"P1D\" is daily). If there is no temporal option all items will be extracted. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated using the 'first' method.",
+      "label": "Temporal resolution",
+      "type": "text",
+      "example": null,
       "weight": 9
     },
     "SDM>selectBackground.yml@40|n_background": {
@@ -958,14 +971,15 @@
       "weight": 10
     },
     "SDM>selectBackground.yml@40|method_background": {
-      "description": "Generates background points using any of the six available methods. \n- `random`: background points are randomly sampled throughout the whole study extent.\n- `weighted_raster`: background points are sampled in proportion to the number of observations of a target group in an observation density raster. \n- `unweighted_raster`: background points are sampled only in cells where there are observations from a target group. \n- `inclusion_buffer`: background points are sampled within a buffer around observations. \n- `thickening`: background points are sampled in proportion the local density of observations by sampling in a buffer around each observation. ",
+      "description": "Generates background points using any of the five available methods. \n- `random`: background points are randomly sampled throughout the whole study extent.\n- `weighted_raster`: background points are sampled in proportion to the number of observations of a target group in an observation density raster. \n- `unweighted_raster`: background points are sampled only in cells where there are observations from a target group. \n- `inclusion_buffer`: background points are sampled within a buffer around observations. \n- `thickening`: background points are sampled in proportion the local density of observations by sampling in a buffer around each observation. ",
       "label": "Method background",
       "type": "options",
       "options": [
         "random",
         "inclusion_buffer",
         "weighted_raster",
-        "unweighted_raster"
+        "unweighted_raster",
+        "thickening"
       ],
       "example": "random",
       "weight": 11

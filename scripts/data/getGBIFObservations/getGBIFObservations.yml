@@ -19,15 +19,15 @@ inputs:
     type: bboxCRS
     example:
   min_year:
-    description: Earliest year (inclusive) from which GBIF occurrence records will be retrieved.
-    label: minimum year
-    type: int
-    example: 2010
+    description: Earliest year for GBIF records. Accepts YYYY or YYYY-MM-DD; if a full date is supplied, only the year is used.
+    label: Minimum year or start date
+    type: text
+    example: "2010"
   max_year:
-    description: Latest year (inclusive) from which GBIF occurrence records will be retrieved.
-    label: maximum year
-    type: int
-    example: 2024
+    description: Latest year for GBIF records. Accepts YYYY or YYYY-MM-DD; if a full date is supplied, only the year is used.
+    label: Maximum year or end date
+    type: text
+    example: "2024"
 outputs:
   observations_file:
     label: Observations

@@ -1,6 +1,7 @@
 import sys
 import gbif_api
 import tempfile
+import re
 from pyproj import Proj
 import datetime
 
@@ -21,16 +22,39 @@ bbox = data['bbox_crs']['bbox']
 if bbox=='' or bbox==None or len(bbox)==0:
 	biab_error_stop("Please specify bounding box")
 
-min_year = data['min_year']
-if min_year==None or min_year=='' or min_year<0 or min_year>datetime.date.today().year:
-	biab_error_stop("Please specify a valid minimum year")
+## reading in different possible year formats and converting to int
 
-max_year = data['max_year']
-if max_year==None or max_year=='' or max_year<0 or max_year>datetime.date.today().year:
-	biab_error_stop("Please specify a valid maximum year")
+def parse_year(value, label):
+    if value is None or value == "":
+        biab_error_stop(f"Please specify a valid {label}")
 
-if max_year<min_year:
-	biab_error_stop("Please specify proper min and max years")
+    if isinstance(value, int):
+        year = value
+    else:
+        value = str(value).strip()
+
+        if re.fullmatch(r"\d{4}", value):
+            year = int(value)
+        elif re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
+            year = int(value[:4])
+        else:
+            biab_error_stop(
+                f"{label} must be a year like 2010 or a date like 2010-01-01"
+            )
+
+    current_year = datetime.date.today().year
+    if year < 0 or year > current_year:
+        biab_error_stop(f"Please specify a valid {label}")
+
+    return year
+
+
+min_year = parse_year(data["min_year"], "minimum year")
+max_year = parse_year(data["max_year"], "maximum year")
+
+if max_year < min_year:
+    biab_error_stop("Please specify proper min and max years")
+
 
 proj = data['bbox_crs']['CRS']['authority']+':'+str(data['bbox_crs']['CRS']['code'])
 if proj=='' or ('EPSG' not in proj and 'WKT' not in proj):
