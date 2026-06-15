@@ -1,0 +1,7 @@
+UDPs:
+  LAI.udp:
+    name: Leaf Area Index
+    url: https://raw.githubusercontent.com/ESA-APEx/apex_algorithms/main/algorithm_catalog/obsgession/udp_obsgession_w23_lai/records/udp_obsgession_w23_lai.json
+  SAR.udp:
+    name: Sentinel-1 Coherence
+    url: https://raw.githubusercontent.com/ESA-APEx/apex_algorithms/main/algorithm_catalog/eurac/sentinel1_sar_coherence/records/sentinel1_sar_coherence.json
