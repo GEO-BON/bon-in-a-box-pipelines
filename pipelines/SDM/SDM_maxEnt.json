@@ -77,8 +77,8 @@
       "id": "46",
       "type": "userInput",
       "position": {
-        "x": 3161,
-        "y": 706
+        "x": 3092.1415426075364,
+        "y": 752.4046125905734
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -305,7 +305,7 @@
       "type": "constant",
       "position": {
         "x": 3654,
-        "y": 823
+        "y": 922.9330925056657
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -528,6 +528,19 @@
         "type": "text",
         "value": "2024"
       }
+    },
+    {
+      "id": "147",
+      "type": "userInput",
+      "position": {
+        "x": 3695.8843201080817,
+        "y": 843.473305036976
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 5
+      }
     }
   ],
   "edges": [
@@ -714,13 +727,6 @@
       "id": "reactflow__edge-48-44cv_partitions"
     },
     {
-      "source": "46",
-      "sourceHandle": null,
-      "target": "108",
-      "targetHandle": "n_folds",
-      "id": "reactflow__edge-46-108n_folds"
-    },
-    {
       "source": "115",
       "sourceHandle": null,
       "target": "108",
@@ -876,6 +882,12 @@
       "target": "144",
       "targetHandle": "t1",
       "id": "xy-edge__146-144t1"
+    },
+    {
+      "source": "147",
+      "target": "108",
+      "targetHandle": "n_folds",
+      "id": "xy-edge__147-108n_folds"
     }
   ],
   "inputs": {
@@ -1020,12 +1032,19 @@
       "example": "block",
       "weight": 14
     },
+    "pipeline@147": {
+      "label": "Number of folds",
+      "description": "Number of folds for random k-fold MaxEnt partitioning when partition type = random k-fold. Can be left blank when another method is chosen.",
+      "type": "int",
+      "example": null,
+      "weight": 15
+    },
     "pipeline@46": {
       "label": "Number of runs",
-      "description": "Number of bootstrap or cross-validation runs used when preparing SDM training and testing data. Also used as the number of folds for random k-fold MaxEnt partitioning.",
+      "description": "Number of bootstrap or cross-validation runs used when preparing SDM training and testing data.",
       "type": "int",
       "example": 2,
-      "weight": 15
+      "weight": 16
     }
   },
   "outputs": {
