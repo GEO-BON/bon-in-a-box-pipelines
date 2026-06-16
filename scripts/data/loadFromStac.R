@@ -59,6 +59,18 @@ if (grepl("chelsa", input$collections_items[1], ignore.case = TRUE) && (!is.null
 }
 coord <- st_crs(CRS)
 # Load the CRS object
+if (!is.null(CRS) && is.null(input$spatial_res)) {
+
+  if (!st_is_longlat(coord)) {
+    biab_error_stop(
+      "A projected CRS was supplied but no spatial resolution was provided. 
+      The default resolution (0.00833 degrees) can only be used with geographic CRSs."
+    )
+
+  }
+
+}
+
 if (!is.null(CRS) & !is.null(input$spatial_res)) {
   # Check for inconsistencies between CRS type and resolution
   if (st_is_longlat(coord) && input$spatial_res > 1) {
