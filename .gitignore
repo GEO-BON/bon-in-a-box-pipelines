@@ -9,6 +9,9 @@ rosm.cache
 *.Rproj
 lib/
 
+# Python cache
+**/__pycache__/
+
 # R temporary files
 .Rproj.user
 .Rhistory
