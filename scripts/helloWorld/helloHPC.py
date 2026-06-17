@@ -7,7 +7,7 @@ seconds = data['seconds']
 fileIn = data['some_csv_file']
 
 # Validations
-if not os.path.exists(fileIn):
+if fileIn is None or not os.path.exists(fileIn):
   biab_error_stop(f"File '{fileIn}' does not exist.")
 
 # Partial output
