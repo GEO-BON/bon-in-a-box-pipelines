@@ -33,8 +33,8 @@ if not id or not secret:
 EPSG = int(crs.split(':')[1])
 coord = CRS.from_epsg(EPSG)
 
-if spatial_resolution is not None and coord.is_geographic and spatial_resolution > 1:
-    biab_error_stop("CRS is in degrees and resolution is in meters.")
+if coord.is_geographic:
+    biab_error_stop("CRS is in degrees and must be in meters.")
 
 if spatial_resolution is not None and coord.is_projected and spatial_resolution < 1:
     biab_error_stop("CRS is in meters and resolution is in degrees.")
@@ -59,8 +59,7 @@ connection.authenticate_oidc_client_credentials(
     client_secret = secret,
 )
 
-# Use WGS84 for the UDP request. Some CDSE-hosted collections used inside the
-# UDP fail when the inherited spatial extent uses newer EPSG codes like 8857.
+
 aoi = {"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs": EPSG}
 process_graph = "https://raw.githubusercontent.com/ESA-APEx/apex_algorithms/obsgession_lai/algorithm_catalog/obsgession/udp_obsgession_w23_lai/openeo_udp/udp_obsgession_w23_lai.json"
 

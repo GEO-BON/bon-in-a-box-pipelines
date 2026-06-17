@@ -1,5 +1,5 @@
 script: summariseLAI.py
-name: Summarise Lead Area Index (LAI)
+name: Summarise Leaf Area Index (LAI)
 author:
   - name: Samara Manzin
     email: samara.manzin@mcgill.ca
