@@ -1,125 +1,187 @@
 {
   "nodes": [
     {
-      "id": "1",
+      "id": "6",
       "type": "io",
       "position": {
-        "x": 34,
-        "y": 224.8125
+        "x": 264.18424717787104,
+        "y": 221.14510231346188
       },
       "data": {
-        "descriptionFile": "IAS>download_checklist.yml"
+        "descriptionFile": "IAS>P1_ChecklistDownload>download_checklist.yml"
       }
     },
     {
-      "id": "2",
-      "type": "output",
+      "id": "9",
+      "type": "constant",
       "position": {
-        "x": 1143,
-        "y": 194.8125
+        "x": -86.37178704367723,
+        "y": 263.0155778698452
       },
+      "dragHandle": ".dragHandle",
       "data": {
-        "label": "Output"
+        "type": "text/csv",
+        "value": "/scripts/IAS/compendiumCountries.xlsx"
       }
     },
     {
-      "id": "3",
-      "type": "output",
-      "position": {
-        "x": 1159,
-        "y": 337.8125
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "4",
-      "type": "output",
-      "position": {
-        "x": 566,
-        "y": 135.8125
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "5",
+      "id": "10",
       "type": "io",
       "position": {
-        "x": 577,
-        "y": 271.8125
+        "x": 924.5007539835042,
+        "y": 293.76876628815614
       },
       "data": {
-        "descriptionFile": "IAS>combine_checklists.yml"
+        "descriptionFile": "IAS>P1_ChecklistDownload>combine_checklists.yml"
+      }
+    },
+    {
+      "id": "11",
+      "type": "output",
+      "position": {
+        "x": 837.3579594989437,
+        "y": 182.57090392864535
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "12",
+      "type": "output",
+      "position": {
+        "x": 816.1295038755716,
+        "y": 135.6448441296121
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "13",
+      "type": "output",
+      "position": {
+        "x": 846.2962566035216,
+        "y": 226.14510231346185
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "14",
+      "type": "output",
+      "position": {
+        "x": 1539.0142822082976,
+        "y": 288.7131820455062
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "15",
+      "type": "output",
+      "position": {
+        "x": 1574.7674706266084,
+        "y": 380.3307273674282
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
   "edges": [
     {
-      "source": "1",
-      "sourceHandle": "griis_summary",
-      "target": "4",
-      "targetHandle": null,
-      "id": "reactflow__edge-1griis_summary-4"
+      "source": "9",
+      "target": "6",
+      "targetHandle": "compendium_countries",
+      "id": "xy-edge__9-6compendium_countries"
     },
     {
-      "source": "1",
+      "source": "6",
       "sourceHandle": "griis_checklist",
-      "target": "5",
+      "target": "10",
       "targetHandle": "griis_checklist",
-      "id": "reactflow__edge-1griis_checklist-5griis_checklist"
+      "id": "xy-edge__6griis_checklist-10griis_checklist"
     },
     {
-      "source": "1",
+      "source": "6",
       "sourceHandle": "griis_directory",
-      "target": "5",
+      "target": "10",
       "targetHandle": "griis_directory",
-      "id": "reactflow__edge-1griis_directory-5griis_directory"
+      "id": "xy-edge__6griis_directory-10griis_directory"
     },
     {
-      "source": "5",
+      "source": "6",
+      "sourceHandle": "griis_summary",
+      "target": "11",
+      "id": "xy-edge__6griis_summary-11"
+    },
+    {
+      "source": "6",
+      "sourceHandle": "griis_checklist",
+      "target": "12",
+      "id": "xy-edge__6griis_checklist-12"
+    },
+    {
+      "source": "6",
+      "sourceHandle": "griis_directory",
+      "target": "13",
+      "id": "xy-edge__6griis_directory-13"
+    },
+    {
+      "source": "10",
       "sourceHandle": "all_data_summary",
-      "target": "2",
-      "targetHandle": null,
-      "id": "reactflow__edge-5all_data_summary-2"
+      "target": "14",
+      "id": "xy-edge__10all_data_summary-14"
     },
     {
-      "source": "5",
+      "source": "10",
       "sourceHandle": "per_list_summary",
-      "target": "3",
-      "targetHandle": null,
-      "id": "reactflow__edge-5per_list_summary-3"
+      "target": "15",
+      "id": "xy-edge__10per_list_summary-15"
     }
   ],
   "inputs": {
-    "IAS>download_checklist.yml@1|country_name": {
+    "IAS>P1_ChecklistDownload>download_checklist.yml@6|country_name": {
       "description": "Name of the country for which to download the GRIIS checklist.",
       "label": "Country name",
       "type": "country",
-      "example": null,
-      "weight": 0
+      "weight": 0,
+      "example": null
     }
   },
   "outputs": {
-    "IAS>download_checklist.yml@1|griis_summary": {
+    "IAS>P1_ChecklistDownload>download_checklist.yml@6|griis_summary": {
       "description": "Summary of the GRIIS checklist for the specified country.",
       "label": "GRIIS summary",
       "type": "text/csv",
       "weight": 0
     },
-    "IAS>combine_checklists.yml@5|all_data_summary": {
-      "description": "GRIIS checklist summary for all data.",
-      "label": "GRIIS checklist summary (all data)",
+    "IAS>P1_ChecklistDownload>download_checklist.yml@6|griis_checklist": {
+      "description": "GRIIS checklist for the specified country.",
+      "label": "GRIIS checklist",
       "type": "text/csv",
       "weight": 1
     },
-    "IAS>combine_checklists.yml@5|per_list_summary": {
+    "IAS>P1_ChecklistDownload>download_checklist.yml@6|griis_directory": {
+      "description": "Directory where the GRIIS checklist is saved.",
+      "label": "GRIIS directory",
+      "type": "text/csv",
+      "weight": 2
+    },
+    "IAS>P1_ChecklistDownload>combine_checklists.yml@10|all_data_summary": {
+      "description": "GRIIS checklist summary for all data.",
+      "label": "GRIIS checklist summary (all data)",
+      "type": "text/csv",
+      "weight": 3
+    },
+    "IAS>P1_ChecklistDownload>combine_checklists.yml@10|per_list_summary": {
       "description": "GRIIS checklist summary for each list.",
       "label": "GRIIS checklist summary (per list)",
       "type": "text/csv",
-      "weight": 2
+      "weight": 4
     }
   },
   "metadata": {
@@ -127,8 +189,8 @@
     "description": null,
     "author": [
       {
-        "name": null,
-        "email": null,
+        "name": "Samara Manzin",
+        "email": "samara.manzin@mcgill.ca",
         "identifier": null
       }
     ],

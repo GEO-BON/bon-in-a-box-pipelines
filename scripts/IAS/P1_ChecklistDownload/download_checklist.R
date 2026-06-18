@@ -4,12 +4,17 @@ library(tidyr)
 library(rvest)
 library(stringr)
 library(XML)
+library(readxl)
 
 input <- biab_inputs()
 
 country_name <- input$country_name$country$englishName
+iso3 <- input$country_name$country$ISO3
+print(iso3)
+ifelse(is.na(iso3), print("ISO3 code is missing"), print("ISO3 code is present"))
 print(country_name)
 print(class(country_name))
+compendium_countries <- read_excel(input$compendium_countries)
 
 feed_url <- "https://cloud.gbif.org/griis/rss.do"
 
@@ -43,22 +48,43 @@ feed <-
 
 # Match requested country
 feed_match <- feed %>%
-  dplyr::filter(country == country_name)
+  dplyr::filter(
+    country == country_name |
+      stringr::str_ends(
+        stringr::str_squish(country),
+        paste0(", ", country_name)
+      )
+  )
 print("feed match")
 print(feed_match)
 
+checklist_list <- vector("list", nrow(feed_match))
+summary_list <- vector("list", nrow(feed_match))
+directory_list <- vector("list", nrow(feed_match))
+
+if (nrow(feed_match) == 0) {
+  stop(sprintf("No GRIIS checklists found for %s.", country_name))
+}
+
+for (i in 1:nrow(feed_match)) {
+
+  checklist_name <- feed_match$country[[i]]
+  checklist_type <- feed_match$item_type[[i]]
+  version <- stringr::str_trim(feed_match$version[[i]])
+
 # Get details of checklist
-name <- feed_match$country
+name <- feed_match[i, ] %>% dplyr::pull(country)
 name <- stringr::str_trim(name, side = c("both"))
+checklist_level <- ifelse(stringr::str_detect(name, ","), "Secondary", "Primary")
 name <- gsub("[^[:alnum:]]", "_", name)
 
-type <- feed_match$item_type
+type <- feed_match[i, ] %>% dplyr::pull(item_type)
 
-version <- feed_match$version
+version <- feed_match[i, ] %>% dplyr::pull(version)
 version <- stringr::str_trim(version, side = c("both"))
 
 # Get country-specific page content and search for download link to zip file
-url <- feed_match$item_link
+url <- feed_match$item_link[[i]]
 html <- rvest::read_html(url)
 tables <-
   html |>
@@ -101,31 +127,39 @@ unlink(file.path(outputFolder, "temp.zip"))
 
 # Unify the "distribution" text file to the other invasive status/species profile
 join_1 <- species |>
-  dplyr::left_join(taxon, by = c("id" = "taxonID"))
-griis_checklist <- join_1 |> dplyr::left_join(dist, by = c("id" = "id"))
+  dplyr::left_join(taxon, by = c("id" = "id"))
+griis_checklist <- join_1 %>%
+  dplyr::left_join(dist, by = c("id" = "id")) %>%
+  dplyr::mutate(
+    fileName =  paste0(name, "_v", version, ".csv"),
+    .before = 1
+  )
 
+checklist_list[[i]] <- griis_checklist
 # Gather summary statistics for list
 DATE <- Sys.Date()
-summary <- tidyr::tibble(
+summary_list[[i]] <- tidyr::tibble(
   downloadDate = DATE,
   name = gsub("_", " ", gsub("__", ", ", name)),
+  ISO3 = iso3,
+  countryInCompendium = ifelse(iso3 %in% compendium_countries$ISO3, TRUE, FALSE),
   checklistType = type,
-  checklistLevel = ifelse(stringr::str_detect(name, ","), "Secondary", "Primary"),
+  checklistLevel = checklist_level,
   version = version,
   speciesCount = nrow(griis_checklist),
   invasiveCount = griis_checklist %>% dplyr::filter(isInvasive == "Invasive") %>% nrow()
 )
 
-print("summary")
-print(summary)
 
 # Gather Data for file directory
-directory <- tidyr::tibble(
+directory_list[[i]] <- tidyr::tibble(
   fileName = paste0(name, "_v", version, ".csv"),
   downloadDate = DATE,
   name = gsub("_", " ", gsub("__", ", ", name)),
+  ISO3 = iso3,
+  countryInCompendium = ifelse(iso3 %in% compendium_countries$ISO3, TRUE, FALSE),
   checklistType = type,
-  checklistLevel = ifelse(stringr::str_detect(name, ","), "Secondary", "Primary"),
+  checklistLevel = checklist_level,
   version = version,
   northBoundingCoordinate = northBoundingCoordinate,
   southBoundingCoordinate = southBoundingCoordinate,
@@ -135,17 +169,19 @@ directory <- tidyr::tibble(
   url = url,
   publicationDate = publicationDate
 )
-print("directory")
-print(directory)
 
+}
 # setting output paths
 checklist_path <- file.path(outputFolder, "GRIIS_checklist.csv")
 summary_path <- file.path(outputFolder, "GRIIS_summary.csv")
 directory_path <- file.path(outputFolder, "GRIIS_directory.csv")
 
-# Save checklist
-write.csv(griis_checklist, checklist_path, row.names = FALSE)
-write.csv(summary, summary_path, row.names = FALSE)
+griis_checklists <- dplyr::bind_rows(checklist_list)
+summaries <- dplyr::bind_rows(summary_list)
+directory <- dplyr::bind_rows(directory_list)
+
+write.csv(griis_checklists, checklist_path, row.names = FALSE)
+write.csv(summaries, summary_path, row.names = FALSE)
 write.csv(directory, directory_path, row.names = FALSE)
 biab_output("griis_checklist", checklist_path)
 biab_output("griis_summary", summary_path)

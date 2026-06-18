@@ -6,9 +6,12 @@ input <- biab_inputs()
 griis_checklist <- read.csv(input$griis_checklist)
 file_directory <- read.csv(input$griis_directory)
 
+griis_checklist <- read.csv("output/IAS/P1_ChecklistDownload/download_checklist/1q-GWjGdPGm112no07YqaQGuksaj/GRIIS_checklist.csv")
+file_directory <- read.csv("output/IAS/P1_ChecklistDownload/download_checklist/1q-GWjGdPGm112no07YqaQGuksaj/GRIIS_directory.csv")
+
 griis_checklist <- griis_checklist %>%
-cbind(file_directory)%>%
-dplyr::rename(checklistName = name)
+  dplyr::left_join(file_directory, by = c("fileName" = "fileName")) %>%
+  dplyr::rename(checklistName = name)
 
 # Clean Habitat Variable
 griis_checklist <- griis_checklist %>% dplyr::mutate(habitat = toupper(habitat))
