@@ -1,0 +1,165 @@
+IUCN_code,IUCN_Habitat_description,ESA_CCI_code,ESA_CCI_Habitat_description
+1,Forest - Boreal,60,"Tree cover, broadleaved, deciduous, closed to open (>15%)"
+1.1,Forest - Boreal,61,"Tree cover, broadleaved, deciduous, closed (>40%)"
+1.1,Forest - Boreal,62,"Tree cover, broadleaved, deciduous, open (15-40%)"
+1.1,Forest - Boreal,70,"Tree cover, needleleaved, evergreen, closed to open (>15%)"
+1.1,Forest - Boreal,71,"Tree cover, needleleaved, evergreen, closed (>40%)"
+1.1,Forest - Boreal,72,"Tree cover, needleleaved, evergreen, open (15-40%)"
+1.1,Forest - Boreal,80,"Tree cover, needleleaved, deciduous, closed to open (>15%)"
+1.1,Forest - Boreal,81,"Tree cover, needleleaved, deciduous, closed (>40%)"
+1.1,Forest - Boreal,82,"Tree cover, needleleaved, deciduous, open (15-40%)"
+1.1,Forest - Boreal,90,"Tree cover, mixed leaf type (broadleaved and needleleaved)"
+1.2,Forest - Subarctic,60,"Tree cover, broadleaved, deciduous, closed to open (>15%)"
+1.2,Forest - Subarctic,62,"Tree cover, broadleaved, deciduous, open (15-40%)"
+1.2,Forest - Subarctic,70,"Tree cover, needleleaved, evergreen, closed to open (>15%)"
+1.2,Forest - Subarctic,72,"Tree cover, needleleaved, evergreen, open (15-40%)"
+1.2,Forest - Subarctic,80,"Tree cover, needleleaved, deciduous, closed to open (>15%)"
+1.2,Forest - Subarctic,82,"Tree cover, needleleaved, deciduous, open (15-40%)"
+1.3,Forest - Subantarctic,60,"Tree cover, broadleaved, deciduous, closed to open (>15%)"
+1.3,Forest - Subantarctic,62,"Tree cover, broadleaved, deciduous, open (15-40%)"
+1.3,Forest - Subantarctic,70,"Tree cover, needleleaved, evergreen, closed to open (>15%)"
+1.3,Forest - Subantarctic,72,"Tree cover, needleleaved, evergreen, open (15-40%)"
+1.3,Forest - Subantarctic,80,"Tree cover, needleleaved, deciduous, closed to open (>15%)"
+1.3,Forest - Subantarctic,82,"Tree cover, needleleaved, deciduous, open (15-40%)"
+1.4,Forest - Temperate,50,"Tree cover, broadleaved, evergreen, closed to open (>15%)"
+1.4,Forest - Temperate,60,"Tree cover, broadleaved, deciduous, closed to open (>15%)"
+1.4,Forest - Temperate,61,"Tree cover, broadleaved, deciduous, closed (>40%)"
+1.4,Forest - Temperate,62,"Tree cover, broadleaved, deciduous, open (15-40%)"
+1.4,Forest - Temperate,70,"Tree cover, needleleaved, evergreen, closed to open (>15%)"
+1.4,Forest - Temperate,71,"Tree cover, needleleaved, evergreen, closed (>40%)"
+1.4,Forest - Temperate,72,"Tree cover, needleleaved, evergreen, open (15-40%)"
+1.4,Forest - Temperate,80,"Tree cover, needleleaved, deciduous, closed to open (>15%)"
+1.4,Forest - Temperate,81,"Tree cover, needleleaved, deciduous, closed (>40%)"
+1.4,Forest - Temperate,82,"Tree cover, needleleaved, deciduous, open (15-40%)"
+1.4,Forest - Temperate,90,"Tree cover, mixed leaf type (broadleaved and needleleaved)"
+1.5,Forest - Subtropical/Tropical Dry,60,"Tree cover, broadleaved, deciduous, closed to open (>15%)"
+1.5,Forest - Subtropical/Tropical Dry,62,"Tree cover, broadleaved, deciduous, open (15-40%)"
+1.5,Forest - Subtropical/Tropical Dry,70,"Tree cover, needleleaved, evergreen, closed to open (>15%)"
+1.5,Forest - Subtropical/Tropical Dry,72,"Tree cover, needleleaved, evergreen, open (15-40%)"
+1.6,Forest - Subtropical/Tropical Moist Lowland,50,"Tree cover, broadleaved, evergreen, closed to open (>15%)"
+1.6,Forest - Subtropical/Tropical Moist Lowland,60,"Tree cover, broadleaved, deciduous, closed to open (>15%)"
+1.6,Forest - Subtropical/Tropical Moist Lowland,61,"Tree cover, broadleaved, deciduous, closed (>40%)"
+1.8,Forest - Subtropical/Tropical Swamp,160,"Tree cover, flooded, fresh or brakish water"
+1.9,Forest - Subtropical/Tropical Moist Montane,50,"Tree cover, broadleaved, evergreen, closed to open (>15%)"
+1.9,Forest - Subtropical/Tropical Moist Montane,71,"Tree cover, needleleaved, evergreen, closed (>40%)"
+1.9,Forest - Subtropical/Tropical Moist Montane,90,"Tree cover, mixed leaf type (broadleaved and needleleaved)"
+2.1,Savanna - Dry,110,Mosaic herbaceous cover (>50%) / tree and shrub (<50%)
+2.1,Savanna - Dry,120,Shrubland
+2.1,Savanna - Dry,122,Deciduous shrubland
+2.1,Savanna - Dry,130,Grassland
+2.2,Savanna - Moist,180,"Shrub or herbaceous cover, flooded, fresh/saline/brakish water"
+2.2,Savanna - Moist,100,Mosaic tree and shrub (>50%) / herbaceous cover (<50%)
+2.2,Savanna - Moist,110,Mosaic herbaceous cover (>50%) / tree and shrub (<50%)
+3.1,Shrubland - Subarctic,120,Shrubland
+3.1,Shrubland - Subarctic,121,Evergreen shrubland
+3.1,Shrubland - Subarctic,122,Deciduous shrubland
+3.2,Shrubland - Subantarctic,120,Shrubland
+3.2,Shrubland - Subantarctic,121,Evergreen shrubland
+3.2,Shrubland - Subantarctic,122,Deciduous shrubland
+3.3,Shrubland - Boreal,120,Shrubland
+3.3,Shrubland - Boreal,121,Evergreen shrubland
+3.3,Shrubland - Boreal,122,Deciduous shrubland
+3.4,Shrubland - Temperate,120,Shrubland
+3.4,Shrubland - Temperate,121,Evergreen shrubland
+3.4,Shrubland - Temperate,122,Deciduous shrubland
+3.5,Shrubland - Subtropical/Tropical Dry,120,Shrubland
+3.5,Shrubland - Subtropical/Tropical Dry,121,Evergreen shrubland
+3.5,Shrubland - Subtropical/Tropical Dry,122,Deciduous shrubland
+3.6,Shrubland - Subtropical/Tropical Moist,120,Shrubland
+3.6,Shrubland - Subtropical/Tropical Moist,121,Evergreen shrubland
+3.7,Shrubland - Subtropical/Tropical High Altitude,120,Shrubland
+3.7,Shrubland - Subtropical/Tropical High Altitude,121,Evergreen shrubland
+3.7,Shrubland - Subtropical/Tropical High Altitude,122,Deciduous shrubland
+3.8,Shrubland - Mediterranean-type Shrubby Vegetation,120,Shrubland
+3.8,Shrubland - Mediterranean-type Shrubby Vegetation,121,Evergreen shrubland
+3.8,Shrubland - Mediterranean-type Shrubby Vegetation,122,Deciduous shrubland
+4.1,Grassland - Tundra,130,Grassland
+4.1,Grassland - Tundra,140,Lichens and mosses
+4.1,Grassland - Tundra,150,"Sparse vegetation (tree, shrub, herbaceous cover) (<15%)"
+4.1,Grassland - Tundra,152,Sparse shrub (<15%)
+4.1,Grassland - Tundra,180,"Shrub or herbaceous cover, flooded, fresh/saline/brakish water"
+4.2,Grassland - Subarctic,130,Grassland
+4.2,Grassland - Subarctic,140,Lichens and mosses
+4.2,Grassland - Subarctic,150,"Sparse vegetation (tree, shrub, herbaceous cover) (<15%)"
+4.2,Grassland - Subarctic,180,"Shrub or herbaceous cover, flooded, fresh/saline/brakish water"
+4.3,Grassland - Subantarctic,130,Grassland
+4.4,Grassland - Temperate,130,Grassland
+4.5,Grassland - Subtropical/Tropical Dry,130,Grassland
+4.6,Grassland - Subtropical/Tropical Seasonally Wet/Flooded,180,"Shrub or herbaceous cover, flooded, fresh/saline/brakish water"
+4.7,Grassland - Subtropical/Tropical High Altitude,130,Grassland
+5.12,Wetlands (inland) - Geothermal Wetlands,210,Water bodies
+5.13,Wetlands (inland) - Permanent Inland Deltas,210,Water bodies
+5.14,"Wetlands (inland) - Permanent Saline, Brackish or Alkaline Lakes",210,Water bodies
+5.16,"Wetlands (inland) - Permanent Saline, Brackish or Alkaline Marshes/Pools",210,Water bodies
+5.2,Wetlands (inland) - Seasonal/Intermittent/Irregular Rivers/Streams/Creeks,210,Water bodies
+5.3,Wetlands (inland) - Shrub Dominated Wetlands,180,"Shrub or herbaceous cover, flooded, fresh/saline/brakish water"
+5.4,"Wetlands (inland) - Bogs, Marshes, Swamps, Fens, Peatlands",180,"Shrub or herbaceous cover, flooded, fresh/saline/brakish water"
+5.5,Wetlands (inland) - Permanent Freshwater Lakes (over 8ha),210,Water bodies
+5.6,Wetlands (inland) - Seasonal/Intermittent Freshwater Lakes (over 8ha),210,Water bodies
+5.7,Wetlands (inland) - Permanent Freshwater Marshes/Pools (under 8ha),210,Water bodies
+5.9,Wetlands (inland) - Freshwater Springs and Oases,210,Water bodies
+6,"Rocky areas (eg. inland cliffs, mountain peaks)",200,Bare areas
+6,"Rocky areas (eg. inland cliffs, mountain peaks)",201,Consolidated bare areas
+7.1,Caves and Subterranean Habitats (non-aquatic) - Caves,NA,NA
+8.1,Desert - Hot,200,Bare areas
+8.1,Desert - Hot,201,Consolidated bare areas
+8.1,Desert - Hot,202,Unconsolidated bare areas
+8.1,Desert - Hot,150,"Sparse vegetation (tree, shrub, herbaceous cover) (<15%)"
+8.1,Desert - Hot,153,Sparse herbaceous cover (<15%)
+8.2,Desert - Temperate,200,Bare areas
+8.2,Desert - Temperate,201,Consolidated bare areas
+8.2,Desert - Temperate,202,Unconsolidated bare areas
+8.2,Desert - Temperate,150,"Sparse vegetation (tree, shrub, herbaceous cover) (<15%)"
+8.2,Desert - Temperate,153,Sparse herbaceous cover (<15%)
+8.3,Desert - Cold,200,Bare areas
+8.3,Desert - Cold,201,Consolidated bare areas
+8.3,Desert - Cold,202,Unconsolidated bare areas
+8.3,Desert - Cold,150,"Sparse vegetation (tree, shrub, herbaceous cover) (<15%)"
+8.3,Desert - Cold,140,Lichens and mosses
+9.1,Marine Neritic - Estuaries,210,Water bodies
+9.1,Marine Neritic - Pelagic,210,Water bodies
+9.2,Marine Neritic - Subtidal Rock and Rocky Reefs,210,Water bodies
+9.3,Marine Neritic - Subtidal Loose Rock/pebble/gravel,210,Water bodies
+9.4,Marine Neritic - Subtidal Sandy,210,Water bodies
+9.5,Marine Neritic - Subtidal Sandy-Mud,210,Water bodies
+9.6,Marine Neritic - Subtidal Muddy,210,Water bodies
+9.7,Marine Neritic - Macroalgal/Kelp,210,Water bodies
+9.9,Marine Neritic - Seagrass (Submerged),210,Water bodies
+10.1,Marine Oceanic - Epipelagic (0-200m),210,Water bodies
+10.2,Marine Oceanic - Mesopelagic (200-1000m),210,Water bodies
+10.3,Marine Oceanic - Bathypelagic (1000-4000m),210,Water bodies
+12.1,Marine Intertidal - Rocky Shoreline,201,Consolidated bare areas
+12.2,"Marine Intertidal - Sandy Shoreline and/or Beaches, Sand Bars, Spits, Etc",202,Unconsolidated bare areas
+12.3,Marine Intertidal - Shingle and/or Pebble Shoreline and/or Beaches,202,Unconsolidated bare areas
+12.4,Marine Intertidal - Mud Flats and Salt Flats,202,Unconsolidated bare areas
+12.5,Marine Intertidal - Salt Marshes (Emergent Grasses),180,"Shrub or herbaceous cover, flooded, fresh/saline/brakish water"
+12.6,Marine Intertidal - Tidepools,210,Water bodies
+12.7,Marine Intertidal - Mangrove Submerged Roots,210,Water bodies
+13.1,Marine Coastal/Supratidal - Sea Cliffs and Rocky Offshore Islands,201,Consolidated bare areas
+13.2,Marine Coastal/supratidal - Coastal Caves/Karst,201,Consolidated bare areas
+13.3,Marine Coastal/Supratidal - Coastal Sand Dunes,202,Unconsolidated bare areas
+13.5,Marine Coastal/Supratidal - Coastal Freshwater Lakes,201,Consolidated bare areas
+14.1,Artificial/Terrestrial - Arable Land,10,"Cropland, rainfed"
+14.1,Artificial/Terrestrial - Arable Land,11,"Cropland, rainfed, Herbaceous cover"
+14.1,Artificial/Terrestrial - Arable Land,12,"Cropland, rainfed, Tree or shrub cover"
+14.1,Artificial/Terrestrial - Arable Land,20,"Cropland, irrigated or post-flooding"
+14.2,Artificial/Terrestrial - Pastureland,130,Grassland
+14.3,Artificial/Terrestrial - Plantations,12,"Cropland, rainfed, Tree or shrub cover"
+14.5,Artificial/Terrestrial - Urban Areas,190,Urban areas
+15.1,Artificial/Aquatic - Water Storage Areas (over 8ha),210,Water bodies
+15.2,Artificial/Aquatic - Ponds (below 8ha),210,Water bodies
+15.3,Artificial/Aquatic - Aquaculture Ponds,210,Water bodies
+15.4,Artificial/Aquatic - Salt Exploitation Sites,202,Unconsolidated bare areas
+15.5,Artificial/Aquatic - Excavations (open),202,Unconsolidated bare areas
+15.6,Artificial/Aquatic - Wastewater Treatment Areas,190,Urban areas
+15.7,Artificial/Aquatic - Irrigated Land (includes irrigation channels),20,"Cropland, irrigated or post-flooding"
+15.8,Artificial/Aquatic - Seasonally Flooded Agricultural Land,20,"Cropland, irrigated or post-flooding"
+15.9,"Artificial/Aquatic - Canals and Drainage Channels, Ditches",210,Water bodies
+16,Introduced vegetation,NA,NA
+17,Other,NA,NA
+18,Unknown,NA,NA
+9.8.1,Outer Reef Channel,210,Water bodies
+9.8.3,Foreslope (Outer Reef Slope),210,Water bodies
+9.8.4,Lagoon,210,Water bodies
+9.8.5,Inter-Reef Soft Substrate,210,Water bodies
+9.8.6,Inter-Reef Rubble Substrate,210,Water bodies

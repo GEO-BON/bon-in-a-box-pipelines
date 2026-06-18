@@ -73,7 +73,44 @@ path_img_W_SHI_timeseries <- file.path(outputFolder, "Steward_SHI_timeseries.png
 ggsave(path_img_W_SHI_timeseries, img_W_SHI_timeseries, dpi = 300, width = 6, height = 4)
 
 #-------------------------------------------------------------------------------
+# SHS Boxplots
+#-------------------------------------------------------------------------------
+img_SubScores_boxplots <- df_SHS_sp |> filter(Score != "SHS") |> 
+  ggplot(aes(x=factor(Year),y=Values,group=interaction(Year,Score),color=Score)) + 
+  stat_summary(
+    fun = median,
+    geom = 'line',
+    aes(group = Score, color = Score),
+    position = position_dodge(width = 0.7),linetype="dashed")+
+  geom_boxplot(position = position_dodge(width = 0.7),width=0.6,alpha=0.8) + 
+  theme_classic() +
+  ylab("Score (%)")+xlab("Year")+theme_bw()+
+  theme(legend.position="bottom")+ 
+  #scale_color_manual(name="",labels=c("AS","GISFrag"))+
+  coord_cartesian(ylim=c(0,150))+ #scale_x_discrete(breaks=c("2000","2010","2020"))+
+  scale_y_continuous(breaks=seq(0,150,25));img_SubScores_boxplots
+
+path_img_SubScores_boxplots <- file.path(outputFolder, "SHS_boxplots.png")
+ggsave(path_img_SubScores_boxplots, img_SubScores_boxplots, dpi = 300, width = 6, height = 4)
+
+#-------------------------------------------------------------------------------
+# SHS By species
+#-------------------------------------------------------------------------------
+
+img_shs_scores_bar <- ggplot(df_SHS_aoh_areas_sp, 
+                              aes(x=sci_name,y=Values)) +
+  geom_bar(stat="identity",alpha=0.8)+ xlab("") + scale_y_continuous("Species Habitat Score",limits=c(0,190))+
+  geom_hline(yintercept = 100, linetype="dotted", col="gray")+
+  theme_classic() + coord_flip() +
+  theme(axis.text.y = element_text(angle = 0, vjust = 0.5,hjust=1,size=4,face = "italic"))
+
+path_img_shs_scores_bar <- file.path(outputFolder, "SHS_scores_bar.png")
+ggsave(path_img_shs_scores_bar, img_shs_scores_bar, dpi = 300, width = 6, height = 8)
+
+#-------------------------------------------------------------------------------
 # Outputing result
 biab_output("df_shi", path_SHI)
 biab_output("img_shi_timeseries", path_img_SHI_timeseries)
 biab_output("img_w_shi_timeseries", path_img_W_SHI_timeseries)
+biab_output("img_SubScores_boxplots", path_img_SubScores_boxplots)
+biab_output("img_shs_scores_bar", path_img_shs_scores_bar)
