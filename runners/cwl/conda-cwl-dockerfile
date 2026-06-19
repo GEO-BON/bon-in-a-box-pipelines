@@ -2,9 +2,7 @@ FROM ghcr.io/geo-bon/bon-in-a-box-pipelines/runner-conda
 ARG SERVER_BRANCH=cwl-export
 ARG PIPELNES_BRANCH=cwl-poc
 
-# Install
-# - CURL, needed to download conda-pack environments from the specified URL
-# - pigz, for faster unzipping using multiple cores
+# TODO : Remove these installations when edge merged to main
 RUN set -ex; \
     apt-get update; \
     apt-get install -y --no-install-recommends curl pigz; \
