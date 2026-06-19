@@ -1,16 +1,7 @@
-function create_diagnostics(model, predictors, presence_layer, pseudoabsences, confusion_matrices)
-    t = tuning_curve(confusion_matrices)
+function create_diagnostics(model, predictors, presence_layer, pseudoabsences, )
     c = corners(predictors, presence_layer, pseudoabsences)
-    t, c
+    return c
 end 
-
-function tuning_curve(M)
-    f = Figure()
-    ax = Axis(f[1, 1], xlabel="Threshold", ylabel="MCC")
-    T = LinRange(0.0, 1.0, 250)
-    lines!(ax, T, vec(mean(mcc.(M); dims=2)))
-    f
-end
 
 
 function _env_correlation_plot(
