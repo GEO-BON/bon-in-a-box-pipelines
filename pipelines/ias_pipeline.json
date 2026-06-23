@@ -89,6 +89,29 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "19",
+      "type": "constant",
+      "position": {
+        "x": -130.89018080762267,
+        "y": -5.185007344281612
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "country"
+      }
+    },
+    {
+      "id": "22",
+      "type": "io",
+      "position": {
+        "x": 1498.4099406977784,
+        "y": 102.21832105802334
+      },
+      "data": {
+        "descriptionFile": "IAS>P3_SInASworkflow>run_workflow.yml"
+      }
     }
   ],
   "edges": [
@@ -141,15 +164,91 @@
       "sourceHandle": "per_list_summary",
       "target": "15",
       "id": "xy-edge__10per_list_summary-15"
+    },
+    {
+      "source": "19",
+      "target": "6",
+      "targetHandle": "country_name",
+      "id": "xy-edge__19-6country_name"
+    },
+    {
+      "source": "6",
+      "sourceHandle": "griis_checklist",
+      "target": "22",
+      "targetHandle": "griis_checklist",
+      "id": "xy-edge__6griis_checklist-22griis_checklist"
+    },
+    {
+      "source": "19",
+      "target": "22",
+      "targetHandle": "country_name",
+      "id": "xy-edge__19-22country_name"
     }
   ],
   "inputs": {
-    "IAS>P1_ChecklistDownload>download_checklist.yml@6|country_name": {
-      "description": "Name of the country for which to download the GRIIS checklist.",
-      "label": "Country name",
-      "type": "country",
-      "weight": 0,
-      "example": null
+    "IAS>P3_SInASworkflow>run_workflow.yml@22|first_records": {
+      "description": "First records data for the specified country.",
+      "label": "First Records Data",
+      "type": "text/csv",
+      "example": null,
+      "weight": 0
+    },
+    "IAS>P3_SInASworkflow>run_workflow.yml@22|checklist_type": {
+      "description": "Type of checklist to integrate (e.g., \"national\", \"protected areas\").",
+      "label": "Checklist type",
+      "type": "options[]",
+      "value": "national",
+      "options": [
+        "national",
+        "protected areas"
+      ],
+      "example": null,
+      "weight": 1
+    },
+    "IAS>P3_SInASworkflow>run_workflow.yml@22|checklist_level": {
+      "description": "Level of checklist to integrate (e.g., \"primary\", \"secondary\").",
+      "label": "Checklist level",
+      "type": "options[]",
+      "value": "Primary",
+      "options": [
+        "Primary",
+        "Secondary"
+      ],
+      "example": null,
+      "weight": 2
+    },
+    "IAS>P3_SInASworkflow>run_workflow.yml@22|kingdoms": {
+      "description": "Kingdoms to include in the integration (e.g., \"PLANTAE\", \"ANIMALIA\").",
+      "label": "Kingdoms",
+      "type": "options[]",
+      "value": "PLANTAE",
+      "options": [
+        "PLANTAE",
+        "ANIMALIA"
+      ],
+      "example": null,
+      "weight": 3
+    },
+    "IAS>P3_SInASworkflow>run_workflow.yml@22|habitats": {
+      "description": "Habitats to include in the integration (e.g., \"TERRESTRIAL\", \"FRESHWATER\").",
+      "label": "Habitats",
+      "type": "options[]",
+      "value": "TERRESTRIAL",
+      "options": [
+        "TERRESTRIAL",
+        "FRESHWATER",
+        "FRESHWATER|BRACKISH",
+        "TERRESTRIAL|FRESHWATER",
+        "MARINE|FRESHWATER|BRACKISH",
+        "TERRESTRIAL|BRACKISH",
+        "TERRESTRIAL|FRESHWATER|BRACKISH",
+        "TERRESTRIAL|MARINE|FRESHWATER",
+        "TERRESTRIAL|MARINE|BRACKISH",
+        "MARINE|FRESHWATER",
+        "TERRESTRIAL|MARINE"
+      ],
+      "example": null,
+      "weight": 4
     }
   },
   "outputs": {
@@ -186,12 +285,12 @@
   },
   "metadata": {
     "name": "Invasive alien species pipeline",
-    "description": null,
+    "description": "Invasive alien species pipeline",
     "author": [
       {
         "name": "Samara Manzin",
         "email": "samara.manzin@mcgill.ca",
-        "identifier": null
+        "identifier": "https://orcid.org/0009-0005-9134-9981"
       }
     ],
     "license": null,

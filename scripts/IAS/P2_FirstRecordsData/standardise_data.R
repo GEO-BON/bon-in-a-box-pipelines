@@ -1,4 +1,5 @@
 library(jsonlite)
+library(stringr)
 library(duckdb)
 library(dplyr)
 
@@ -27,21 +28,59 @@ print(files_df)
 # Grab file that ends with .csv
 target_url <- files_df$direct_link[grepl("\\.csv$", files_df$filename)]
 
-# parsing by country "location" because the file is so big
 con <- dbConnect(duckdb())
-dbExecute(con, "INSTALL httpfs; LOAD httpfs;")
 
-query <- paste0("
-  SELECT * FROM read_csv_auto('", target_url, "', delim=' ', header=True)
-  WHERE location = country_name
-")
+DBI::dbExecute(con, "INSTALL httpfs; LOAD httpfs;")
 
-first_records <- dbGetQuery(con, query)
+# safely quote the remote CSV url and the country literal
+url_lit <- DBI::dbQuoteLiteral(con, target_url)
+country_lit <- DBI::dbQuoteLiteral(con, country_name)
 
-# Close connection
-dbDisconnect(con, shutdown = TRUE)
+# create a temporary table from the CSV (DuckDB will stream/parse it)
+## The CSV uses quoted fields separated by spaces; specify delim=' '
+DBI::dbExecute(con, paste0(
+  "CREATE TEMPORARY TABLE tmp_firstrecords AS SELECT * FROM read_csv_auto(", 
+  url_lit, ", header=TRUE, delim=' ')")
+)
 
-# Standardise habitat terms
+## Inspect actual column names discovered by DuckDB
+fields_raw <- DBI::dbListFields(con, "tmp_firstrecords")
+
+## DBI/driver may sometimes return a single string containing all quoted names
+## e.g. '"location" "locationID" "taxon" ...'. Detect and extract real names.
+if (length(fields_raw) == 1 && grepl('"', fields_raw)) {
+  matches <- regmatches(fields_raw, gregexpr('"([^\"]+)"', fields_raw))
+  fields_vec <- gsub('^"|"$', '', matches[[1]])
+} else {
+  fields_vec <- fields_raw
+}
+
+message("Columns in CSV: ", paste(fields_vec, collapse = ", "))
+
+## Find a column matching 'location' (case-insensitive)
+col_candidates <- fields_vec[tolower(fields_vec) == "location"]
+if (length(col_candidates) == 0) {
+  col_candidates <- fields_vec[grepl("location", fields_vec, ignore.case = TRUE)]
+}
+if (length(col_candidates) == 0) {
+  DBI::dbDisconnect(con, shutdown = TRUE)
+  stop("No 'location'-like column found in CSV. Columns: ", paste(fields_vec, collapse = ", "))
+}
+
+# Choose the first matching candidate and quote it as an identifier
+col_name <- col_candidates[1]
+col_ident <- DBI::dbQuoteIdentifier(con, col_name)
+
+# Now run the filtered query safely
+query <- paste0("SELECT * FROM tmp_firstrecords WHERE ", col_ident, " = ", country_lit)
+first_records <- DBI::dbGetQuery(con, query)
+
+# Cleanup
+DBI::dbDisconnect(con, shutdown = TRUE)
+
+##----------------------------
+## Standardise habitat terms
+##----------------------------
 first_records <- first_records %>% dplyr::mutate(habitat = toupper(habitat)) %>% 
   dplyr::mutate(habitat = gsub(";","|",habitat)) %>%
   dplyr::mutate(habitat = dplyr::case_when(habitat == "" ~ "NODATA", TRUE ~ as.character(habitat))) 
@@ -65,3 +104,15 @@ UniqueHabitats <- first_records %>%
 FirstRecords <- dplyr::left_join(first_records, UniqueHabitats, by = "habitat") %>% 
   dplyr::select(-habitat) %>% 
   dplyr::rename(habitat = habitatStandardised)
+
+##----------------------------
+## Add taxonomic information
+##----------------------------
+
+
+##----------------------------
+## Write and save
+##----------------------------
+firstrecords_path <- file.path(outputFolder, "FirstRecords_cleaned.csv")
+write.csv(FirstRecords, firstrecords_path, row.names = FALSE)
+biab_output("firstrecords_cleaned", firstrecords_path)

@@ -9,6 +9,8 @@ library(readxl)
 input <- biab_inputs()
 
 country_name <- input$country_name$country$englishName
+## need to inlcude a check so that it fails if the country is not in the compendium
+
 iso3 <- input$country_name$country$ISO3
 print(iso3)
 ifelse(is.na(iso3), print("ISO3 code is missing"), print("ISO3 code is present"))

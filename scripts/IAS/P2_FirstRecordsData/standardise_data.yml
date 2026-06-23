@@ -1,0 +1,27 @@
+script: standardise_data.R
+name: Standardise First Records Data
+description: "This script standardises the first records data for a country"
+author:
+  - name: Samara Manzin
+    email: samara.manzin@mcgill.ca
+inputs:
+  country_name:
+    label: Country name
+    type: country
+    description: Name of the country for which to download the GRIIS checklist.
+    example: NULL
+outputs:
+  firstrecords_cleaned:
+    label: First Records Cleaned
+    description: Cleaned first records data for the specified country.
+    type: text/csv
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-jsonlite
+    - r-dplyr
+    - r-duckdb
+    - r-rjson
+    - r-stringr
