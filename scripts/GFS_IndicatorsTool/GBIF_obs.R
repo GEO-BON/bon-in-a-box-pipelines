@@ -88,6 +88,20 @@ gbif_data<-gbif_download %>%
   # cc_inst(buffer = 2000) %>% # remove zoo and herbaria within 2km 
   # cc_sea() %>% # remove from ocean 
   distinct(decimallongitude,decimallatitude,specieskey,datasetkey, .keep_all = TRUE) # look at results of pipeline
+
+#Add Dataset metadata
+download_key <- as.character(gbif_download)
+
+# Option 1: Get dataset metadata as a dataframe
+dataset_meta <- occ_download_datasets(download_key)$results
+
+# Merge onto your occurrences
+gbif_data <- gbif_data %>%
+  left_join(
+    dataset_meta %>% select(datasetKey, datasetTitle, datasetDOI) %>% rename(dataset_name = datasetTitle),
+    by = c("datasetkey" = "datasetKey")
+  )
+
 path = file.path(outputFolder, 'GBIF_obs.csv')
 write.table(gbif_data, path, append = FALSE, , sep = "\t", quote=FALSE)
 
