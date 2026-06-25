@@ -23,17 +23,18 @@ library(dplyr)
 
 
 ## ------------------------------------------------------
-## SET INPUT AND OUTPUT PATHS
+## SET INPUTS
 ## ------------------------------------------------------ 
-## (Removed source_if_exists helper by request) -- we'll source helpers explicitly below
 
-# If running inside BON-in-a-Box wrapper, load inputs and derive script path
 input <- biab_inputs()
 country_name <- input$country_name$country$englishName
 
-GRIIS <- read.csv(input$griis_checklist)
-FirstRecords <- read.csv(input$first_records)
-# Setting directories
+griis <- read.csv(input$griis_checklist)
+firstrecords <- read.csv(input$first_records)
+
+checklistType <- input$checklistType
+
+# Add filter inputs here??
 
 ## ------------------------------------------------------
 ## SET DATE FOR CHECKLIST USE
@@ -46,21 +47,7 @@ DATE = Sys.Date() # Adjust to required checklist combined date
 ## LOAD REQUIRED DATASETS
 ## ------------------------------------------------------ 
 
-# Load First records location information - sheet 2 of AllLocations (from BIAB Config)
-allloc_file <- file.path("scripts/IAS", "Config", "AllLocations.xlsx")
-if (file.exists(allloc_file)) {
-  FirstRecordsLocations <- readxl::read_xlsx(allloc_file, sheet = 2)
-} else {
-  stop("Config AllLocations.xlsx not found at ", allloc_file)
-}
-
-# Correct incorrect ISO3 codes in First Records AllLocations.xlsx if helper exists in repo
-correct_iso_path <- file.path("scripts/IAS/P3_SInASworkflow/correctFirstRecordISO3s.R")
-if (file.exists(correct_iso_path)) {
-  source(correct_iso_path)
-} else {
-  warning("ISO3 correction helper not found at ", correct_iso_path, " — skipping.")
-}
+## Skipping this step for now
 
 ## ------------------------------------------------------
 ## FILTER DATASETS AS NEEDED 

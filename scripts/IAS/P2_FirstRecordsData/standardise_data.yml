@@ -10,6 +10,24 @@ inputs:
     type: country
     description: Name of the country for which to download the GRIIS checklist.
     example: NULL
+  griis_checklist:
+    label: GRIIS checklist
+    type: text/csv
+    description: GRIIS checklist for the specified country.
+    example: NULL
+  first_records:
+    label: First records data
+    type: text/csv
+    description: First records data for the specified country.
+    example: NULL
+  checklist_type:
+    label: Checklist type
+    type: options[]
+    options:
+      - national
+      - protected areas
+    description: Type of checklist to download (e.g., 'national' or 'protected areas').
+    example: NULL
 outputs:
   firstrecords_cleaned:
     label: First Records Cleaned

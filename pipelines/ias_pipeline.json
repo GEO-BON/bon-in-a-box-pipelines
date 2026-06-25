@@ -106,11 +106,22 @@
       "id": "22",
       "type": "io",
       "position": {
-        "x": 1498.4099406977784,
+        "x": 1690.4099406977784,
         "y": 102.21832105802334
       },
       "data": {
         "descriptionFile": "IAS>P3_SInASworkflow>run_workflow.yml"
+      }
+    },
+    {
+      "id": "23",
+      "type": "io",
+      "position": {
+        "x": 1007.4167503287813,
+        "y": -74.99330949267753
+      },
+      "data": {
+        "descriptionFile": "IAS>P2_FirstRecordsData>standardise_data.yml"
       }
     }
   ],
@@ -183,6 +194,19 @@
       "target": "22",
       "targetHandle": "country_name",
       "id": "xy-edge__19-22country_name"
+    },
+    {
+      "source": "19",
+      "target": "23",
+      "targetHandle": "country_name",
+      "id": "xy-edge__19-23country_name"
+    },
+    {
+      "source": "6",
+      "sourceHandle": "griis_checklist",
+      "target": "23",
+      "targetHandle": "griis_checklist",
+      "id": "xy-edge__6griis_checklist-23griis_checklist"
     }
   ],
   "inputs": {
@@ -193,62 +217,23 @@
       "example": null,
       "weight": 0
     },
-    "IAS>P3_SInASworkflow>run_workflow.yml@22|checklist_type": {
-      "description": "Type of checklist to integrate (e.g., \"national\", \"protected areas\").",
+    "IAS>P2_FirstRecordsData>standardise_data.yml@23|first_records": {
+      "description": "First records data for the specified country.",
+      "label": "First records data",
+      "type": "text/csv",
+      "example": null,
+      "weight": 1
+    },
+    "IAS>P2_FirstRecordsData>standardise_data.yml@23|checklist_type": {
+      "description": "Type of checklist to download (e.g., 'national' or 'protected areas').",
       "label": "Checklist type",
       "type": "options[]",
-      "value": "national",
       "options": [
         "national",
         "protected areas"
       ],
-      "example": null,
-      "weight": 1
-    },
-    "IAS>P3_SInASworkflow>run_workflow.yml@22|checklist_level": {
-      "description": "Level of checklist to integrate (e.g., \"primary\", \"secondary\").",
-      "label": "Checklist level",
-      "type": "options[]",
-      "value": "Primary",
-      "options": [
-        "Primary",
-        "Secondary"
-      ],
-      "example": null,
+      "example": [],
       "weight": 2
-    },
-    "IAS>P3_SInASworkflow>run_workflow.yml@22|kingdoms": {
-      "description": "Kingdoms to include in the integration (e.g., \"PLANTAE\", \"ANIMALIA\").",
-      "label": "Kingdoms",
-      "type": "options[]",
-      "value": "PLANTAE",
-      "options": [
-        "PLANTAE",
-        "ANIMALIA"
-      ],
-      "example": null,
-      "weight": 3
-    },
-    "IAS>P3_SInASworkflow>run_workflow.yml@22|habitats": {
-      "description": "Habitats to include in the integration (e.g., \"TERRESTRIAL\", \"FRESHWATER\").",
-      "label": "Habitats",
-      "type": "options[]",
-      "value": "TERRESTRIAL",
-      "options": [
-        "TERRESTRIAL",
-        "FRESHWATER",
-        "FRESHWATER|BRACKISH",
-        "TERRESTRIAL|FRESHWATER",
-        "MARINE|FRESHWATER|BRACKISH",
-        "TERRESTRIAL|BRACKISH",
-        "TERRESTRIAL|FRESHWATER|BRACKISH",
-        "TERRESTRIAL|MARINE|FRESHWATER",
-        "TERRESTRIAL|MARINE|BRACKISH",
-        "MARINE|FRESHWATER",
-        "TERRESTRIAL|MARINE"
-      ],
-      "example": null,
-      "weight": 4
     }
   },
   "outputs": {
