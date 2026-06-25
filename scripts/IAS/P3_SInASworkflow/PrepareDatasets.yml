@@ -1,0 +1,125 @@
+script: PrepareDatasets.R
+name: SInAS Prepare Datasets
+description: "Prepare and standardise input datasets (Step 1) for the SInAS workflow using pipeline-provided column mappings."
+author:
+  - name: Samara Manzin
+
+inputs:
+  griis_checklist:
+    label: GRIIS checklist
+    type: text/csv
+    description: GRIIS checklist table to include in Step 1 preparation.
+    example: NULL
+  first_records:
+    label: First records
+    type: text/csv
+    description: First records table to include in Step 1 preparation.
+    example: NULL
+  dataset:
+    label: Dataset names
+    type: text[]
+    description: Dataset brief names in the same order as provided datasets, e.g. ["GRIIS", "FirstRecords"].
+    example: ["GRIIS", "FirstRecords"]
+  taxon_group:
+    label: Taxon group
+    type: text
+    description: Taxon group label to attach to outputs.
+    example: "All"
+  column_recordid:
+    label: Record ID column
+    type: text[]
+    description: Record ID column name(s), one per dataset or a single value for all datasets.
+    example: ["linkID", "linkID"]
+  column_taxon:
+    label: Taxon column
+    type: text[]
+    description: Taxon column name(s), one per dataset.
+    example: ["scientificName", "taxon"]
+  column_author:
+    label: Author column
+    type: text[]
+    description: Optional author column name(s), one per dataset.
+    example: ["", ""]
+  column_scientificname:
+    label: Scientific name column
+    type: text[]
+    description: Optional scientific name column(s); used if different from column_taxon.
+    example: ["", ""]
+  column_location:
+    label: Location column
+    type: text[]
+    description: Required location column name(s), one per dataset.
+    example: ["checklistName", "location"]
+  column_kingdom:
+    label: Kingdom column
+    type: text[]
+    description: Optional kingdom column name(s), one per dataset.
+    example: ["kingdom", "kingdom"]
+  column_country_iso:
+    label: Country ISO column
+    type: text[]
+    description: Optional ISO3 column name(s), one per dataset.
+    example: ["ISO3", ""]
+  column_eventdate1:
+    label: Event date column
+    type: text[]
+    description: Optional primary event date column name(s), one per dataset.
+    example: ["", "eventDate"]
+  column_eventdate2:
+    label: Event date 2 column
+    type: text[]
+    description: Optional secondary event date column name(s), one per dataset.
+    example: ["", ""]
+  column_establishmentmeans:
+    label: Establishment means column
+    type: text[]
+    description: Optional establishment means column name(s), one per dataset.
+    example: ["establishmentMeans", ""]
+  column_occurrencestatus:
+    label: Occurrence status column
+    type: text[]
+    description: Optional occurrence status column name(s), one per dataset.
+    example: ["occurrenceStatus", ""]
+  column_degreeofestablishment:
+    label: Degree of establishment column
+    type: text[]
+    description: Optional degree of establishment column name(s), one per dataset.
+    example: ["", ""]
+  column_pathway:
+    label: Pathway column
+    type: text[]
+    description: Optional pathway column name(s), one per dataset.
+    example: ["", ""]
+  column_habitat:
+    label: Habitat column
+    type: text[]
+    description: Optional habitat column name(s), one per dataset.
+    example: ["habitat", "habitat"]
+  column_bibliographiccitation:
+    label: Bibliographic citation column
+    type: text[]
+    description: Optional bibliographic citation column name(s), one per dataset.
+    example: ["", "bibliographicCitation"]
+  column_additional:
+    label: Additional columns
+    type: text[]
+    description: Optional additional column names as '; ' separated text, one entry per dataset.
+    example: ["isInvasive; isInvasiveInCountry", "linkID"]
+outputs:
+  step1_intermediate_dir:
+    label: Step1 intermediate directory
+    description: Directory containing Step1_StandardColumns_<Dataset_brief_name>.csv files.
+    type: folder
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-dplyr
+    - r-jsonlite
+    - r-duckdb
+    - r-rjson
+    - r-stringr
+    - r-rgbif
+    - r-tidyr
+    - r-stringi

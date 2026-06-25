@@ -1,6 +1,6 @@
 script: download_checklist.R
 name: Download GRIIS checklist
-description: "This script generates GRIIS checklist for a country"
+description: "This script downloads the GRIIS checklist for a specified country and attaches metadata. This currently combines the country with all affiliated regions (e.g., territories, overseas regions) to produce a single checklist for the country."
 author:
   - name: Samara Manzin
     email: samara.manzin@mcgill.ca
@@ -27,6 +27,14 @@ outputs:
   griis_directory:
     label: GRIIS directory
     description: Directory where the GRIIS checklist is saved.
+    type: text/csv
+  all_data_summary:
+    label: GRIIS checklist summary (all data)
+    description: GRIIS checklist summary for all data.
+    type: text/csv
+  per_list_summary:
+    label: GRIIS checklist summary (per list)
+    description: GRIIS checklist summary for each list.
     type: text/csv
 conda:
   channels:

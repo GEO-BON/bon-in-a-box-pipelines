@@ -1,22 +1,44 @@
 {
   "nodes": [
     {
-      "id": "6",
+      "id": "24",
       "type": "io",
       "position": {
-        "x": 264.18424717787104,
-        "y": 221.14510231346188
+        "x": 478,
+        "y": 401.5
       },
       "data": {
         "descriptionFile": "IAS>P1_ChecklistDownload>download_checklist.yml"
       }
     },
     {
-      "id": "9",
+      "id": "25",
+      "type": "io",
+      "position": {
+        "x": 556,
+        "y": 237.5
+      },
+      "data": {
+        "descriptionFile": "IAS>P2_FirstRecordsData>standardise_data.yml"
+      }
+    },
+    {
+      "id": "26",
+      "type": "io",
+      "position": {
+        "x": 1494.163411434119,
+        "y": -25.907045714902118
+      },
+      "data": {
+        "descriptionFile": "IAS>P3_SInASworkflow>PrepareDatasets.yml"
+      }
+    },
+    {
+      "id": "28",
       "type": "constant",
       "position": {
-        "x": -86.37178704367723,
-        "y": 263.0155778698452
+        "x": 12,
+        "y": 405.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -25,247 +47,399 @@
       }
     },
     {
-      "id": "10",
-      "type": "io",
-      "position": {
-        "x": 924.5007539835042,
-        "y": 293.76876628815614
-      },
-      "data": {
-        "descriptionFile": "IAS>P1_ChecklistDownload>combine_checklists.yml"
-      }
-    },
-    {
-      "id": "11",
+      "id": "29",
       "type": "output",
       "position": {
-        "x": 837.3579594989437,
-        "y": 182.57090392864535
+        "x": 1153,
+        "y": 379
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "12",
+      "id": "30",
       "type": "output",
       "position": {
-        "x": 816.1295038755716,
-        "y": 135.6448441296121
+        "x": 1153,
+        "y": 556
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "13",
+      "id": "31",
       "type": "output",
       "position": {
-        "x": 846.2962566035216,
-        "y": 226.14510231346185
+        "x": 1153,
+        "y": 344
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "14",
+      "id": "32",
       "type": "output",
       "position": {
-        "x": 1539.0142822082976,
-        "y": 288.7131820455062
+        "x": 1153,
+        "y": 521
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "15",
+      "id": "33",
       "type": "output",
       "position": {
-        "x": 1574.7674706266084,
-        "y": 380.3307273674282
+        "x": 1153,
+        "y": 486
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "19",
-      "type": "constant",
+      "id": "34",
+      "type": "output",
       "position": {
-        "x": -130.89018080762267,
-        "y": -5.185007344281612
+        "x": 1153,
+        "y": 309
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "35",
+      "type": "output",
+      "position": {
+        "x": 2118.848525366452,
+        "y": -24.790312861611252
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "36",
+      "type": "userInput",
+      "position": {
+        "x": 29.999969482421875,
+        "y": 138.06665802001953
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "country"
       }
-    },
-    {
-      "id": "22",
-      "type": "io",
-      "position": {
-        "x": 1690.4099406977784,
-        "y": 102.21832105802334
-      },
-      "data": {
-        "descriptionFile": "IAS>P3_SInASworkflow>run_workflow.yml"
-      }
-    },
-    {
-      "id": "23",
-      "type": "io",
-      "position": {
-        "x": 1007.4167503287813,
-        "y": -74.99330949267753
-      },
-      "data": {
-        "descriptionFile": "IAS>P2_FirstRecordsData>standardise_data.yml"
-      }
     }
   ],
   "edges": [
     {
-      "source": "9",
-      "target": "6",
+      "source": "28",
+      "target": "24",
       "targetHandle": "compendium_countries",
-      "id": "xy-edge__9-6compendium_countries"
+      "id": "xy-edge__28-24compendium_countries"
     },
     {
-      "source": "6",
+      "source": "24",
       "sourceHandle": "griis_checklist",
-      "target": "10",
+      "target": "26",
       "targetHandle": "griis_checklist",
-      "id": "xy-edge__6griis_checklist-10griis_checklist"
+      "id": "xy-edge__24griis_checklist-26griis_checklist"
     },
     {
-      "source": "6",
-      "sourceHandle": "griis_directory",
-      "target": "10",
-      "targetHandle": "griis_directory",
-      "id": "xy-edge__6griis_directory-10griis_directory"
+      "source": "25",
+      "sourceHandle": "firstrecords_cleaned",
+      "target": "26",
+      "targetHandle": "first_records",
+      "id": "xy-edge__25firstrecords_cleaned-26first_records"
     },
     {
-      "source": "6",
+      "source": "24",
+      "sourceHandle": "griis_checklist",
+      "target": "29",
+      "id": "xy-edge__24griis_checklist-29"
+    },
+    {
+      "source": "24",
       "sourceHandle": "griis_summary",
-      "target": "11",
-      "id": "xy-edge__6griis_summary-11"
+      "target": "30",
+      "id": "xy-edge__24griis_summary-30"
     },
     {
-      "source": "6",
-      "sourceHandle": "griis_checklist",
-      "target": "12",
-      "id": "xy-edge__6griis_checklist-12"
-    },
-    {
-      "source": "6",
-      "sourceHandle": "griis_directory",
-      "target": "13",
-      "id": "xy-edge__6griis_directory-13"
-    },
-    {
-      "source": "10",
+      "source": "24",
       "sourceHandle": "all_data_summary",
-      "target": "14",
-      "id": "xy-edge__10all_data_summary-14"
+      "target": "31",
+      "id": "xy-edge__24all_data_summary-31"
     },
     {
-      "source": "10",
+      "source": "24",
+      "sourceHandle": "griis_directory",
+      "target": "32",
+      "id": "xy-edge__24griis_directory-32"
+    },
+    {
+      "source": "24",
       "sourceHandle": "per_list_summary",
-      "target": "15",
-      "id": "xy-edge__10per_list_summary-15"
+      "target": "33",
+      "id": "xy-edge__24per_list_summary-33"
     },
     {
-      "source": "19",
-      "target": "6",
+      "source": "25",
+      "sourceHandle": "firstrecords_cleaned",
+      "target": "34",
+      "id": "xy-edge__25firstrecords_cleaned-34"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "step1_intermediate_dir",
+      "target": "35",
+      "id": "xy-edge__26step1_intermediate_dir-35"
+    },
+    {
+      "source": "36",
+      "target": "25",
       "targetHandle": "country_name",
-      "id": "xy-edge__19-6country_name"
+      "id": "xy-edge__36-25country_name"
     },
     {
-      "source": "6",
-      "sourceHandle": "griis_checklist",
-      "target": "22",
-      "targetHandle": "griis_checklist",
-      "id": "xy-edge__6griis_checklist-22griis_checklist"
-    },
-    {
-      "source": "19",
-      "target": "22",
+      "source": "36",
+      "target": "24",
       "targetHandle": "country_name",
-      "id": "xy-edge__19-22country_name"
-    },
-    {
-      "source": "19",
-      "target": "23",
-      "targetHandle": "country_name",
-      "id": "xy-edge__19-23country_name"
-    },
-    {
-      "source": "6",
-      "sourceHandle": "griis_checklist",
-      "target": "23",
-      "targetHandle": "griis_checklist",
-      "id": "xy-edge__6griis_checklist-23griis_checklist"
+      "id": "xy-edge__36-24country_name"
     }
   ],
   "inputs": {
-    "IAS>P3_SInASworkflow>run_workflow.yml@22|first_records": {
-      "description": "First records data for the specified country.",
-      "label": "First Records Data",
-      "type": "text/csv",
+    "pipeline@36": {
+      "label": "Country name",
+      "description": "Name of the country for which to download the GRIIS checklist.",
+      "type": "country",
       "example": null,
       "weight": 0
     },
-    "IAS>P2_FirstRecordsData>standardise_data.yml@23|first_records": {
-      "description": "First records data for the specified country.",
-      "label": "First records data",
-      "type": "text/csv",
-      "example": null,
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|dataset": {
+      "description": "Dataset brief names in the same order as provided datasets, e.g. [\"GRIIS\", \"FirstRecords\"].",
+      "label": "Dataset names",
+      "type": "text[]",
+      "example": [
+        "GRIIS",
+        "FirstRecords"
+      ],
       "weight": 1
     },
-    "IAS>P2_FirstRecordsData>standardise_data.yml@23|checklist_type": {
-      "description": "Type of checklist to download (e.g., 'national' or 'protected areas').",
-      "label": "Checklist type",
-      "type": "options[]",
-      "options": [
-        "national",
-        "protected areas"
-      ],
-      "example": [],
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|taxon_group": {
+      "description": "Taxon group label to attach to outputs.",
+      "label": "Taxon group",
+      "type": "text",
+      "example": "All",
       "weight": 2
+    },
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|column_recordid": {
+      "description": "Record ID column name(s), one per dataset or a single value for all datasets.",
+      "label": "Record ID column",
+      "type": "text[]",
+      "example": [
+        "linkID",
+        "linkID"
+      ],
+      "weight": 3
+    },
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|column_taxon": {
+      "description": "Taxon column name(s), one per dataset.",
+      "label": "Taxon column",
+      "type": "text[]",
+      "example": [
+        "scientificName",
+        "taxon"
+      ],
+      "weight": 4
+    },
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|column_author": {
+      "description": "Optional author column name(s), one per dataset.",
+      "label": "Author column",
+      "type": "text[]",
+      "example": [
+        "",
+        ""
+      ],
+      "weight": 5
+    },
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|column_scientificname": {
+      "description": "Optional scientific name column(s); used if different from column_taxon.",
+      "label": "Scientific name column",
+      "type": "text[]",
+      "example": [
+        "",
+        ""
+      ],
+      "weight": 6
+    },
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|column_location": {
+      "description": "Required location column name(s), one per dataset.",
+      "label": "Location column",
+      "type": "text[]",
+      "example": [
+        "checklistName",
+        "location"
+      ],
+      "weight": 7
+    },
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|column_kingdom": {
+      "description": "Optional kingdom column name(s), one per dataset.",
+      "label": "Kingdom column",
+      "type": "text[]",
+      "example": [
+        "kingdom",
+        "kingdom"
+      ],
+      "weight": 8
+    },
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|column_country_iso": {
+      "description": "Optional ISO3 column name(s), one per dataset.",
+      "label": "Country ISO column",
+      "type": "text[]",
+      "example": [
+        "ISO3",
+        ""
+      ],
+      "weight": 9
+    },
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|column_eventdate1": {
+      "description": "Optional primary event date column name(s), one per dataset.",
+      "label": "Event date column",
+      "type": "text[]",
+      "example": [
+        "",
+        "eventDate"
+      ],
+      "weight": 10
+    },
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|column_eventdate2": {
+      "description": "Optional secondary event date column name(s), one per dataset.",
+      "label": "Event date 2 column",
+      "type": "text[]",
+      "example": [
+        "",
+        ""
+      ],
+      "weight": 11
+    },
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|column_establishmentmeans": {
+      "description": "Optional establishment means column name(s), one per dataset.",
+      "label": "Establishment means column",
+      "type": "text[]",
+      "example": [
+        "establishmentMeans",
+        ""
+      ],
+      "weight": 12
+    },
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|column_occurrencestatus": {
+      "description": "Optional occurrence status column name(s), one per dataset.",
+      "label": "Occurrence status column",
+      "type": "text[]",
+      "example": [
+        "occurrenceStatus",
+        ""
+      ],
+      "weight": 13
+    },
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|column_degreeofestablishment": {
+      "description": "Optional degree of establishment column name(s), one per dataset.",
+      "label": "Degree of establishment column",
+      "type": "text[]",
+      "example": [
+        "",
+        ""
+      ],
+      "weight": 14
+    },
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|column_pathway": {
+      "description": "Optional pathway column name(s), one per dataset.",
+      "label": "Pathway column",
+      "type": "text[]",
+      "example": [
+        "",
+        ""
+      ],
+      "weight": 15
+    },
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|column_habitat": {
+      "description": "Optional habitat column name(s), one per dataset.",
+      "label": "Habitat column",
+      "type": "text[]",
+      "example": [
+        "habitat",
+        "habitat"
+      ],
+      "weight": 16
+    },
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|column_bibliographiccitation": {
+      "description": "Optional bibliographic citation column name(s), one per dataset.",
+      "label": "Bibliographic citation column",
+      "type": "text[]",
+      "example": [
+        "",
+        "bibliographicCitation"
+      ],
+      "weight": 17
+    },
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|column_additional": {
+      "description": "Optional additional column names as '; ' separated text, one entry per dataset.",
+      "label": "Additional columns",
+      "type": "text[]",
+      "example": [
+        "isInvasive; isInvasiveInCountry",
+        "linkID"
+      ],
+      "weight": 18
     }
   },
   "outputs": {
-    "IAS>P1_ChecklistDownload>download_checklist.yml@6|griis_summary": {
-      "description": "Summary of the GRIIS checklist for the specified country.",
-      "label": "GRIIS summary",
-      "type": "text/csv",
-      "weight": 0
-    },
-    "IAS>P1_ChecklistDownload>download_checklist.yml@6|griis_checklist": {
+    "IAS>P1_ChecklistDownload>download_checklist.yml@24|griis_checklist": {
       "description": "GRIIS checklist for the specified country.",
       "label": "GRIIS checklist",
       "type": "text/csv",
+      "weight": 0
+    },
+    "IAS>P1_ChecklistDownload>download_checklist.yml@24|griis_summary": {
+      "description": "Summary of the GRIIS checklist for the specified country.",
+      "label": "GRIIS summary",
+      "type": "text/csv",
       "weight": 1
     },
-    "IAS>P1_ChecklistDownload>download_checklist.yml@6|griis_directory": {
-      "description": "Directory where the GRIIS checklist is saved.",
-      "label": "GRIIS directory",
-      "type": "text/csv",
-      "weight": 2
-    },
-    "IAS>P1_ChecklistDownload>combine_checklists.yml@10|all_data_summary": {
+    "IAS>P1_ChecklistDownload>download_checklist.yml@24|all_data_summary": {
       "description": "GRIIS checklist summary for all data.",
       "label": "GRIIS checklist summary (all data)",
       "type": "text/csv",
+      "weight": 2
+    },
+    "IAS>P1_ChecklistDownload>download_checklist.yml@24|griis_directory": {
+      "description": "Directory where the GRIIS checklist is saved.",
+      "label": "GRIIS directory",
+      "type": "text/csv",
       "weight": 3
     },
-    "IAS>P1_ChecklistDownload>combine_checklists.yml@10|per_list_summary": {
+    "IAS>P1_ChecklistDownload>download_checklist.yml@24|per_list_summary": {
       "description": "GRIIS checklist summary for each list.",
       "label": "GRIIS checklist summary (per list)",
       "type": "text/csv",
       "weight": 4
+    },
+    "IAS>P2_FirstRecordsData>standardise_data.yml@25|firstrecords_cleaned": {
+      "description": "Cleaned first records data for the specified country.",
+      "label": "First Records Cleaned",
+      "type": "text/csv",
+      "weight": 5
+    },
+    "IAS>P3_SInASworkflow>PrepareDatasets.yml@26|step1_intermediate_dir": {
+      "description": "Directory containing Step1_StandardColumns_<Dataset_brief_name>.csv files.",
+      "label": "Step1 intermediate directory",
+      "type": "folder",
+      "weight": 6
     }
   },
   "metadata": {

@@ -2,6 +2,8 @@ library(jsonlite)
 library(stringr)
 library(duckdb)
 library(dplyr)
+library(rgbif)
+
 
 input <- biab_inputs()
 country_name <- input$country_name$country$englishName
@@ -108,8 +110,13 @@ FirstRecords <- dplyr::left_join(first_records, UniqueHabitats, by = "habitat") 
 ##----------------------------
 ## Add taxonomic information
 ##----------------------------
+unique_names <- unique(FirstRecords$taxon)
 
+matches <- name_backbone_checklist(unique_names) %>%
+  select(verbatim_name, kingdom)
 
+FirstRecords <- FirstRecords %>%
+  left_join(matches, by = c("taxon" = "verbatim_name"))
 ##----------------------------
 ## Write and save
 ##----------------------------

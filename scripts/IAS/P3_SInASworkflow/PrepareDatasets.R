@@ -5,53 +5,151 @@
 ## 
 ## Hanno Seebens, Giessen, 02.07.2025
 #########################################################################################
+library(rgbif) # for checking names, records and taxonomy; note: usage of rgbif may cause warnings like "Unknown or uninitalised column: " which is a bug. Can be ignored.
+library(data.table)
+#library(tidyverse)
+library(tidyr)
+library(stringr)
+library(stringi)
+library(dplyr)
 
 
-PrepareDatasets <- function (FileInfo=NULL){
-  
-  ## create output folder #####
-  if (!file.exists("Output")){
-    dir.create("Output")
-    dir.create(file.path("Output","Intermediate"))
-    dir.create(file.path("Output","Check"))
+input <- biab_inputs()
+country_name <- input$country_name$country$englishName
+
+griis <- read.csv(input$griis_checklist)
+firstrecords <- read.csv(input$first_records)
+#griis <- read.csv("C:/Users/Samara/Desktop/bon-in-a-box-pipelines/output/IAS/P1_ChecklistDownload/download_checklist/24WCclDWWTOfF_TezBFTZE32-OPe/GRIIS_checklist.csv")
+#firstrecords <- read.csv("C:/Users/Samara/Desktop/bon-in-a-box-pipelines/output/IAS/P2_FirstRecordsData/standardise_data/MvoeUdjrbO9xW2gLxy9qcQhDgtHB/FirstRecords_cleaned.csv")
+
+
+Dataset_brief_name <- input$dataset
+Taxon_group <- input$taxon_group
+Column_recordID <- input$column_recordid
+Column_taxon <- input$column_taxon
+Column_author <- input$column_author
+Column_scientificName <- input$column_scientificname
+Column_location <- input$column_location
+Column_kingdom <- input$column_kingdom
+Column_country_ISO <- input$column_country_iso
+Column_eventDate1 <- input$column_eventdate1
+Column_eventDate2 <- input$column_eventdate2
+Column_establishmentMeans <- input$column_establishmentmeans
+Column_occurrenceStatus <- input$column_occurrencestatus
+Column_degreeOfEstablishment <- input$column_degreeofestablishment
+Column_pathway <- input$column_pathway
+Column_habitat <- input$column_habitat
+Column_bibliographicCitation <- input$column_bibliographiccitation
+Column_additional <- input$column_additional
+
+# Filter GRIIS data set 
+GRIIS <- griis %>% 
+  dplyr::filter(countryInCompendium == TRUE) %>% 
+  dplyr::filter(checklistType == "national") %>% 
+  dplyr::filter(checklistLevel != "Secondary") %>% 
+  dplyr::filter(kingdom %in% c("PLANTAE","ANIMALIA")) %>% 
+  dplyr::filter(habitat %in% c("TERRESTRIAL","FRESHWATER","FRESHWATER|BRACKISH",
+                               "TERRESTRIAL|FRESHWATER", "MARINE|FRESHWATER|BRACKISH",
+                               "TERRESTRIAL|BRACKISH", "TERRESTRIAL|FRESHWATER|BRACKISH",
+                               "TERRESTRIAL|MARINE|FRESHWATER", "TERRESTRIAL|MARINE|BRACKISH",
+                               "MARINE|FRESHWATER", "TERRESTRIAL|MARINE")) 
+
+# Filter First Records data set 
+FirstRecords <- firstrecords %>% 
+  dplyr::filter(kingdom %in% c("PLANTAE","ANIMALIA")) %>% 
+  dplyr::filter(habitat %in% c("TERRESTRIAL","FRESHWATER","FRESHWATER|BRACKISH",
+                               "TERRESTRIAL|FRESHWATER", "MARINE|FRESHWATER|BRACKISH",
+                               "TERRESTRIAL|BRACKISH", "TERRESTRIAL|FRESHWATER|BRACKISH",
+                               "TERRESTRIAL|MARINE|FRESHWATER", "TERRESTRIAL|MARINE|BRACKISH",
+                               "MARINE|FRESHWATER", "TERRESTRIAL|MARINE"))
+
+
+datasets_in <- list(GRIIS = GRIIS, FirstRecords = FirstRecords)
+
+
+
+PrepareDatasets <- function(datasets_in=NULL){
+
+  if (is.null(datasets_in)) {
+    if (!exists("datasets", inherits = TRUE)) {
+      stop("No datasets found. Provide 'datasets_in' or define a non-empty global 'datasets' list.")
+    }
+    datasets_in <- get("datasets", inherits = TRUE)
+    if (length(datasets_in) == 0) {
+      stop("No datasets found. Provide 'datasets_in' or define a non-empty global 'datasets' list.")
+    }
+  }
+
+  dataset_names <- names(datasets_in)
+  if (is.null(dataset_names)) dataset_names <- rep("", length(datasets_in))
+
+  default_dataset_name <- if (exists("Dataset_brief_name")) as.character(Dataset_brief_name) else ""
+  if (length(default_dataset_name) == 0) default_dataset_name <- ""
+
+  for (j in seq_along(dataset_names)) {
+    if (is.na(dataset_names[[j]]) || dataset_names[[j]] == "") {
+      dataset_names[[j]] <- if (length(default_dataset_name) >= j && !is.na(default_dataset_name[[j]]) && default_dataset_name[[j]] != "") {
+        default_dataset_name[[j]]
+      } else if (length(default_dataset_name) == 1 && !is.na(default_dataset_name) && default_dataset_name != "") {
+        default_dataset_name
+      } else {
+        paste0("Dataset", j)
+      }
+    }
+  }
+
+  get_mapping <- function(x, idx) {
+    if (is.null(x)) return(NA_character_)
+    x <- as.character(x)
+    if (length(x) == 0) return(NA_character_)
+    val <- if (length(x) >= idx) x[[idx]] else x[[1]]
+    if (is.na(val) || trimws(val) == "") return(NA_character_)
+    val
+  }
+
+  FileInfo <- data.frame(
+    Dataset_brief_name = dataset_names,
+    Taxon_group = rep(get_mapping(Taxon_group, 1), length(datasets_in)),
+    Column_recordID = sapply(seq_along(datasets_in), function(j) get_mapping(Column_recordID, j)),
+    Column_taxon = sapply(seq_along(datasets_in), function(j) get_mapping(Column_taxon, j)),
+    Column_author = sapply(seq_along(datasets_in), function(j) get_mapping(Column_author, j)),
+    Column_scientificName = sapply(seq_along(datasets_in), function(j) get_mapping(Column_scientificName, j)),
+    Column_location = sapply(seq_along(datasets_in), function(j) get_mapping(Column_location, j)),
+    Column_kingdom = sapply(seq_along(datasets_in), function(j) get_mapping(Column_kingdom, j)),
+    Column_country_ISO = sapply(seq_along(datasets_in), function(j) get_mapping(Column_country_ISO, j)),
+    Column_eventDate1 = sapply(seq_along(datasets_in), function(j) get_mapping(Column_eventDate1, j)),
+    Column_eventDate2 = sapply(seq_along(datasets_in), function(j) get_mapping(Column_eventDate2, j)),
+    Column_establishmentMeans = sapply(seq_along(datasets_in), function(j) get_mapping(Column_establishmentMeans, j)),
+    Column_occurrenceStatus = sapply(seq_along(datasets_in), function(j) get_mapping(Column_occurrenceStatus, j)),
+    Column_degreeOfEstablishment = sapply(seq_along(datasets_in), function(j) get_mapping(Column_degreeOfEstablishment, j)),
+    Column_pathway = sapply(seq_along(datasets_in), function(j) get_mapping(Column_pathway, j)),
+    Column_habitat = sapply(seq_along(datasets_in), function(j) get_mapping(Column_habitat, j)),
+    Column_bibliographicCitation = sapply(seq_along(datasets_in), function(j) get_mapping(Column_bibliographicCitation, j)),
+    Column_additional = sapply(seq_along(datasets_in), function(j) get_mapping(Column_additional, j)),
+    stringsAsFactors = FALSE
+  )
+
+  if (nrow(FileInfo) != length(datasets_in)) {
+    stop("Mismatch between number of datasets and number of FileInfo rows.")
+  }
+
+  if (!exists("outputFolder")) {
+    stop("outputFolder is not available in this runtime.")
   }
   
+  ## create output folder #####
+
   ######## Load data sets ########################################################
   
-  for (i in 1:nrow(FileInfo)){#
+  for (i in seq_along(datasets_in)){#
     
     ## load data set
-    data_name <- FileInfo[i,"File_name_to_load"]
-    if (!file.exists(file.path("Inputfiles",data_name))) stop(paste0("File ’",data_name,"’ does not exist!"))
-    if (grepl("\\.xlsx$",data_name)){
-      dat <- try(read.xlsx(file.path("Inputfiles",data_name),sheet=1),silent=T)
-    } 
-    if (grepl("\\.csv$",data_name)){
-      # dat <- try(read.csv(file.path("Inputfiles",data_name)),silent=T)
-      dat <- try(as.data.frame(fread(file.path("Inputfiles",data_name)),stringsAsFactors=F),silent=T)
-      if (dim(dat)[2]<3)  dat <- try(as.data.frame(fread(file.path("Inputfiles",data_name)),stringsAsFactors=F),silent=T)
-    }
-    if (class(dat)=="try-error") stop(paste0("File ’",data_name,"’ should be csv or xlsx format"))
-
-    # FileInfo[i,] <- gsub(" ",".",FileInfo[i,]) # replace space with "." (as done during the import of data)
-    
-  #   print(inputfiles[i])
-  #   print(dim(dat))
-  #   print(length(unique(dat$scientificName)))
-  #   print(length(unique(dat$Species)))
-  #   print(length(unique(paste(dat$standardized_name,dat$author))))
-  #   print(length(unique(dat$CountryName)))
-  #   print(length(unique(dat$country)))
-  #   print(length(unique(dat$tdwg4_name)))
-  # }
+    dat <- datasets_in[[i]]
   
     ## correct modification of import of column names through R
     col_names_import <- colnames(dat)
-    # col_names_import <- gsub("\\.+"," ",col_names_import)
-    # col_names_import <- gsub("^\\s+|\\s+$", "",col_names_import) # trim leading and trailing whitespace
   
     ## check and rename required column names
-
     all_column_names <- vector()
     
     if (!is.na(FileInfo[i,"Column_recordID"]) & FileInfo[i,"Column_recordID"]!=""){
@@ -147,10 +245,25 @@ PrepareDatasets <- function (FileInfo=NULL){
 
     if (!is.na(FileInfo[i,"Column_additional"]) & FileInfo[i,"Column_additional"]!=""){
       col_additional <- FileInfo[i,"Column_additional"]
-      addit_cols <- unlist(strsplit(col_additional,"; "))
-      all_column_names <- c(all_column_names,colnames(dat)[pmatch(addit_cols,colnames(dat))])
+      addit_cols <- unlist(strsplit(col_additional, ";\\s*"))
+      addit_cols <- trimws(addit_cols)
+      addit_cols <- addit_cols[addit_cols != ""]
+      matched_idx <- pmatch(addit_cols, colnames(dat))
+      missing_addit <- addit_cols[is.na(matched_idx)]
+      if (length(missing_addit) > 0) {
+        warning(
+          paste0(
+            "Ignoring unmatched additional columns in ",
+            FileInfo[i, "Dataset_brief_name"],
+            ": ",
+            paste(missing_addit, collapse = ", ")
+          )
+        )
+      }
+      all_column_names <- c(all_column_names, colnames(dat)[matched_idx[!is.na(matched_idx)]])
     }
-    
+
+    all_column_names <- unique(all_column_names)
     ## keep required, optional and additional columns
     dat_out <- dat[,all_column_names]
     dat_out[is.null(dat_out)] <- ""
@@ -181,7 +294,7 @@ PrepareDatasets <- function (FileInfo=NULL){
     dat_out <- dat_out[!dat_out$location_orig=="",]
     dat_out <- dat_out[!dat_out$taxon_orig=="",]
     
-    dat_out$Taxon_group <- FileInfo[i,"Taxon_group"]
+    dat_out$Taxon_group <- rep(FileInfo[i, "Taxon_group"], nrow(dat_out))
     
     colnames(dat_out) <- gsub("\\.+","_",colnames(dat_out))
     dat_out$taxon_orig <- gsub("\"","",dat_out$taxon_orig) # remove additional quotes to avoid difficulties with export
@@ -189,6 +302,17 @@ PrepareDatasets <- function (FileInfo=NULL){
 
     dat_out <- unique(dat_out) # remove duplicates
     
-    write.table(dat_out,file.path("Output","Intermediate",paste("Step1_StandardColumns_",FileInfo[i,"Dataset_brief_name"],".csv",sep="")),row.names = F)
+    clean_path <- file.path(outputFolder, paste("Step1_StandardColumns_",FileInfo[i,"Dataset_brief_name"],".csv",sep=""))
+    write.csv(dat_out, clean_path, row.names = FALSE)
+    output_name <- paste0(
+      "step1_standardcolumns_",
+      gsub("[^[:alnum:]_]+", "_", tolower(as.character(FileInfo[i, "Dataset_brief_name"])))
+    )
+      biab_output(output_name, clean_path)
   }
+
+  invisible(FileInfo)
 }
+
+
+PrepareDatasets(datasets_in = datasets_in)

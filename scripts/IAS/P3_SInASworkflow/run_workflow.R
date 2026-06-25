@@ -29,8 +29,8 @@ library(dplyr)
 input <- biab_inputs()
 country_name <- input$country_name$country$englishName
 
-griis <- read.csv(input$griis_checklist)
-firstrecords <- read.csv(input$first_records)
+griis <- read.csv("C:/Users/Samara/Desktop/bon-in-a-box-pipelines/output/IAS/P1_ChecklistDownload/download_checklist/24WCclDWWTOfF_TezBFTZE32-OPe/GRIIS_checklist.csv")
+firstrecords <- read.csv("C:/Users/Samara/Desktop/bon-in-a-box-pipelines/output/IAS/P2_FirstRecordsData/standardise_data/MvoeUdjrbO9xW2gLxy9qcQhDgtHB/FirstRecords_cleaned.csv")
 
 checklistType <- input$checklistType
 
@@ -54,7 +54,7 @@ DATE = Sys.Date() # Adjust to required checklist combined date
 ## ------------------------------------------------------ 
 
 # Filter GRIIS data set 
-GRIIS <- GRIIS %>% 
+GRIIS <- griis %>% 
   dplyr::filter(countryInCompendium == TRUE) %>% 
   dplyr::filter(checklistType == "national") %>% 
   dplyr::filter(checklistLevel != "Secondary") %>% 
@@ -66,13 +66,14 @@ GRIIS <- GRIIS %>%
                                "MARINE|FRESHWATER", "TERRESTRIAL|MARINE")) 
 
 # Filter First Records data set 
-FirstRecords <- FirstRecords %>% 
+FirstRecords <- firstrecords %>% 
   dplyr::filter(kingdom %in% c("PLANTAE","ANIMALIA")) %>% 
   dplyr::filter(habitat %in% c("TERRESTRIAL","FRESHWATER","FRESHWATER|BRACKISH",
                                "TERRESTRIAL|FRESHWATER", "MARINE|FRESHWATER|BRACKISH",
                                "TERRESTRIAL|BRACKISH", "TERRESTRIAL|FRESHWATER|BRACKISH",
                                "TERRESTRIAL|MARINE|FRESHWATER", "TERRESTRIAL|MARINE|BRACKISH",
                                "MARINE|FRESHWATER", "TERRESTRIAL|MARINE"))
+
 
 ## ------------------------------------------------------
 ## LOAD REQUIRED DATA
@@ -88,13 +89,10 @@ Corrections <- readxl::read_xlsx(file.path(workingDirectory, "Config", "AllCorre
 ## IDENTIFY FOCUS COUNTRIES
 ## ------------------------------------------------------ 
 
-focusCountries <- FileDirectory %>% 
+focusCountries <- GRIIS %>% 
   dplyr::filter(checklistType == "national") %>% # Removes all protected area checklists
   dplyr::filter(checklistLevel == "Primary") %>% # Removes all sub checklists within countries 
-  dplyr::filter(countryInCompendium == TRUE) %>% # Only includes countries with the GRIIS compendium 
-  dplyr::arrange(ISO3)
-
-focusCountries$ISO3
+  dplyr::filter(countryInCompendium == TRUE) # Only includes countries with the GRIIS compendium 
 
  
 ## ------------------------------------------------------
@@ -149,14 +147,9 @@ cat("\n Step 1 Preparing data sets \n")
 ## Prepare datasets (use local helper in repo)
 source(file.path(fxn_dir, "prepareData_update.R"))
 
-
-# Load database information
-FileInfo <- read.xlsx(file.path(workingDirectory, "Config", "DatabaseInfo.xlsx"), sheet = 1)
-if (nrow(FileInfo)==0) stop("No database information provided. Add information to Config/DatabaseInfo.xlsx.")
-
 ## load databases, extract required information and harmonise taxon names...
 cat("\n Step 1 Preparation of provided data sets \n")
-PrepareDatasets(FileInfo)
+FileInfo <- PrepareDatasets(datasets_in = datasets)
 
 ## load databases, extract required information and harmonise taxon names...
 cat("\n Step 2 Standardisation of terminology \n")
