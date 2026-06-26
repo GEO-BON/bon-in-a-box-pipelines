@@ -6,6 +6,7 @@ author:
     email: laetitia.tremblay@mcgill.ca
 lifecycle:
   status: in_development
+  message: This script still needs testing.
 inputs:
   tiff_files:
     label: GeoTIFF files
