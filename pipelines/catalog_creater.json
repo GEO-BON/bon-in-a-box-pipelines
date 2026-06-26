@@ -1,0 +1,377 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 1102,
+        "y": 181.5
+      },
+      "data": {
+        "descriptionFile": "STAC>createCollection.yml"
+      }
+    },
+    {
+      "id": "1",
+      "type": "io",
+      "position": {
+        "x": 1594,
+        "y": 255.5
+      },
+      "data": {
+        "descriptionFile": "STAC>createSTAC.yml"
+      }
+    },
+    {
+      "id": "2",
+      "type": "io",
+      "position": {
+        "x": 726.4699629492344,
+        "y": -63.223197480525805
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "3",
+      "type": "output",
+      "position": {
+        "x": 1974,
+        "y": 316.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "5",
+      "type": "constant",
+      "position": {
+        "x": 268,
+        "y": 12
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://stac.geobon.org/"
+      }
+    },
+    {
+      "id": "6",
+      "type": "constant",
+      "position": {
+        "x": 232,
+        "y": 63
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "chelsa-clim|bio1",
+          "chelsa-clim|bio2"
+        ]
+      }
+    },
+    {
+      "id": "7",
+      "type": "constant",
+      "position": {
+        "x": 280,
+        "y": 129
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "8",
+      "type": "constant",
+      "position": {
+        "x": 280,
+        "y": 180
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "9",
+      "type": "constant",
+      "position": {
+        "x": 280,
+        "y": 231
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "10",
+      "type": "constant",
+      "position": {
+        "x": 240,
+        "y": 282
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.08
+      }
+    },
+    {
+      "id": "11",
+      "type": "constant",
+      "position": {
+        "x": 184,
+        "y": 325
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
+      }
+    },
+    {
+      "id": "12",
+      "type": "constant",
+      "position": {
+        "x": 184,
+        "y": 373
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "min",
+          "max",
+          "mean",
+          "median"
+        ]
+      }
+    },
+    {
+      "id": "13",
+      "type": "constant",
+      "position": {
+        "x": 12,
+        "y": 421
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3"
+      }
+    },
+    {
+      "id": "14",
+      "type": "io",
+      "position": {
+        "x": 660.3341692690221,
+        "y": 522.5775185253829
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "15",
+      "type": "io",
+      "position": {
+        "x": 1086.4847316437106,
+        "y": 429.60944632874214
+      },
+      "data": {
+        "descriptionFile": "STAC>createCollection.yml"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "0",
+      "sourceHandle": "stac_collection",
+      "target": "1",
+      "targetHandle": "stac_collections",
+      "id": "xy-edge__0stac_collection-1stac_collections"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "rasters",
+      "target": "0",
+      "targetHandle": "tiff_files",
+      "id": "xy-edge__2rasters-0tiff_files"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "stac_catalog",
+      "target": "3",
+      "id": "xy-edge__1stac_catalog-3"
+    },
+    {
+      "source": "5",
+      "target": "2",
+      "targetHandle": "stac_url",
+      "id": "xy-edge__5-2stac_url"
+    },
+    {
+      "source": "6",
+      "target": "2",
+      "targetHandle": "collections_items",
+      "id": "xy-edge__6-2collections_items"
+    },
+    {
+      "source": "7",
+      "target": "2",
+      "targetHandle": "t0",
+      "id": "xy-edge__7-2t0"
+    },
+    {
+      "source": "8",
+      "target": "2",
+      "targetHandle": "t1",
+      "id": "xy-edge__8-2t1"
+    },
+    {
+      "source": "9",
+      "target": "2",
+      "targetHandle": "temporal_res",
+      "id": "xy-edge__9-2temporal_res"
+    },
+    {
+      "source": "10",
+      "target": "2",
+      "targetHandle": "spatial_res",
+      "id": "xy-edge__10-2spatial_res"
+    },
+    {
+      "source": "11",
+      "target": "2",
+      "targetHandle": "resampling",
+      "id": "xy-edge__11-2resampling"
+    },
+    {
+      "source": "12",
+      "target": "2",
+      "targetHandle": "aggregation",
+      "id": "xy-edge__12-2aggregation"
+    },
+    {
+      "source": "13",
+      "target": "2",
+      "targetHandle": "study_area",
+      "id": "xy-edge__13-2study_area"
+    },
+    {
+      "source": "5",
+      "target": "14",
+      "targetHandle": "stac_url",
+      "id": "xy-edge__5-14stac_url"
+    },
+    {
+      "source": "6",
+      "target": "14",
+      "targetHandle": "collections_items",
+      "id": "xy-edge__6-14collections_items"
+    },
+    {
+      "source": "7",
+      "target": "14",
+      "targetHandle": "t0",
+      "id": "xy-edge__7-14t0"
+    },
+    {
+      "source": "8",
+      "target": "14",
+      "targetHandle": "t1",
+      "id": "xy-edge__8-14t1"
+    },
+    {
+      "source": "9",
+      "target": "14",
+      "targetHandle": "temporal_res",
+      "id": "xy-edge__9-14temporal_res"
+    },
+    {
+      "source": "10",
+      "target": "14",
+      "targetHandle": "spatial_res",
+      "id": "xy-edge__10-14spatial_res"
+    },
+    {
+      "source": "11",
+      "target": "14",
+      "targetHandle": "resampling",
+      "id": "xy-edge__11-14resampling"
+    },
+    {
+      "source": "12",
+      "target": "14",
+      "targetHandle": "aggregation",
+      "id": "xy-edge__12-14aggregation"
+    },
+    {
+      "source": "13",
+      "target": "14",
+      "targetHandle": "study_area",
+      "id": "xy-edge__13-14study_area"
+    },
+    {
+      "source": "14",
+      "sourceHandle": "rasters",
+      "target": "15",
+      "targetHandle": "tiff_files",
+      "id": "xy-edge__14rasters-15tiff_files"
+    },
+    {
+      "source": "15",
+      "sourceHandle": "stac_collection",
+      "target": "1",
+      "targetHandle": "stac_collections",
+      "id": "xy-edge__15stac_collection-1stac_collections"
+    }
+  ],
+  "inputs": {
+    "data>loadFromStac.yml@14|bbox_crs": {
+      "description": "Object containing the chosen bounding box and CRS.",
+      "label": "Bounding box and CRS",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
+    "data>loadFromStac.yml@2|bbox_crs": {
+      "description": "Object containing the chosen bounding box and CRS.",
+      "label": "Bounding box and CRS",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 1
+    }
+  },
+  "outputs": {
+    "STAC>createSTAC.yml@1|stac_catalog": {
+      "description": "STAC catalog JSON created from the STAC collection(s)",
+      "label": "STAC Catalog",
+      "type": "application/json",
+      "weight": 0
+    }
+  }
+}

@@ -1,0 +1,25 @@
+script: createSTAC.py
+name: Collection to STAC
+description: Converts STAC collection(s) into a STAC catalog.
+author:
+  - name: Laetitia Tremblay
+    email: laetitia.tremblay@mcgill.ca
+lifecycle:
+  status: In development
+inputs:
+  stac_collections:
+    label: STAC collections
+    description: Input STAC collection(s) to convert to a STAC catalog. Can be a single collection or a list of collections.
+    type: application/json[]
+    example: null
+outputs:
+  stac_catalog:
+    label: STAC Catalog
+    description: STAC catalog JSON created from the STAC collection(s)
+    type: application/json
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - pystac
+    - jsonschema

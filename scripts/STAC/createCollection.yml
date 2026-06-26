@@ -1,0 +1,26 @@
+script: createCollection.py
+name: TIFF to STAC Collection
+description: Converts GeoTIFF files into a STAC collection
+author:
+  - name: Laetitia Tremblay
+    email: laetitia.tremblay@mcgill.ca
+lifecycle:
+  status: In development
+inputs:
+  tiff_files:
+    label: GeoTIFF files
+    description: GeoTIFFs to be add to the collection
+    type: image/tiff;application=geotiff[]
+    example: null
+outputs:
+  stac_collection:
+    label: STAC Collection
+    description: STAC collection JSON created from the GeoTIFFs
+    type: application/json
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - pystac
+    - gdal
+    - jsonschema
