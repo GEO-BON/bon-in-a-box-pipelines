@@ -5,7 +5,7 @@ author:
   - name: Laetitia Tremblay
     email: laetitia.tremblay@mcgill.ca
 lifecycle:
-  status: In development
+  status: in_development
 inputs:
   stac_collections:
     label: STAC collections
