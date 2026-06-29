@@ -1,19 +1,12 @@
-FROM ghcr.io/geo-bon/bon-in-a-box-pipelines/runner-conda
-ARG SERVER_BRANCH=cwl-export
-ARG PIPELNES_BRANCH=cwl-poc
+ARG CONDA_RUNNER_TAG
+FROM ghcr.io/geo-bon/bon-in-a-box-pipelines/runner-conda:${CONDA_RUNNER_TAG}
 
-# TODO : Remove these installations when edge merged to main
-RUN set -ex; \
-    apt-get update; \
-    apt-get install -y --no-install-recommends curl pigz; \
-    apt-get clean all;
-
-# Add conda-pack to the base environment
-RUN mamba install -n base conda-pack
+ARG SERVER_BRANCH
+ARG PIPELINES_BRANCH
 
 # Setup BON in a Box, runner.env and .server folder
 RUN set -ex; \
-    git clone -b $PIPELNES_BRANCH --single-branch --depth 1 https://github.com/GEO-BON/bon-in-a-box-pipelines.git \
+    git clone -b $PIPELINES_BRANCH --single-branch --depth 1 https://github.com/GEO-BON/bon-in-a-box-pipelines.git \
     && rm -rf bon-in-a-box-pipelines/.git \
     && find bon-in-a-box-pipelines -type f -name "*.tif" -delete \
     && ln -s /data/bon-in-a-box-pipelines/scripts /scripts \

@@ -2,6 +2,20 @@ name: Conda-CWL Runner
 
 on:
   workflow_dispatch:
+    # TODO : Change defaults when edge merged to main
+    inputs:
+      conda_runner_tag:
+        description: 'BON in a Box Conda-CWL Runner tag to use'
+        required: true
+        default: &conda_runner_tag_default 'edge'
+      server_branch:
+        description: 'BON in a Box Server branch to use'
+        required: true
+        default: &server_branch_default 'cwl-export'
+      pipelines_branch:
+        description: 'BON in a Box Pipelines branch to use'
+        required: true
+        default: &pipelines_branch_default 'cwl-poc'
   push:
     branches:
       - main
@@ -14,6 +28,9 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}/runner-conda-cwl
+  DEFAULT_CONDA_RUNNER_TAG: *conda_runner_tag_default
+  DEFAULT_SERVER_BRANCH: *server_branch_default
+  DEFAULT_PIPELINES_BRANCH: *pipelines_branch_default
 
 jobs:
   runner-conda-cwl:
@@ -55,6 +72,10 @@ jobs:
           context: runners/cwl
           file: runners/cwl/conda-cwl-dockerfile
           push: true
+          build-args: |
+            CONDA_RUNNER_TAG=${{ github.event.inputs.conda_runner_tag || env.DEFAULT_CONDA_RUNNER_TAG }}
+            SERVER_BRANCH=${{ github.event.inputs.server_branch || env.DEFAULT_SERVER_BRANCH }}
+            PIPELINES_BRANCH=${{ github.event.inputs.pipelines_branch || env.DEFAULT_PIPELINES_BRANCH }}
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
 
