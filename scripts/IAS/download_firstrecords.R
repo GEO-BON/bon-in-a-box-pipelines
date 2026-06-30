@@ -7,6 +7,7 @@ library(rgbif)
 
 input <- biab_inputs()
 country_name <- input$country_name$country$englishName
+iso3 <- input$country_name$country$ISO3
 
 # First record data doi
 doi <- "https://doi.org/10.5281/zenodo.18220953"
@@ -116,7 +117,9 @@ matches <- name_backbone_checklist(unique_names) %>%
   select(verbatim_name, kingdom)
 
 FirstRecords <- FirstRecords %>%
-  left_join(matches, by = c("taxon" = "verbatim_name"))
+  left_join(matches, by = c("taxon" = "verbatim_name"))  %>% 
+  mutate(kingdom = toupper(kingdom)) %>%
+  dplyr::mutate(ISO3 = iso3) # add iso3 column for country code
 ##----------------------------
 ## Write and save
 ##----------------------------

@@ -1,9 +1,9 @@
-script: PrepareDatasets.R
+script: prepare_datasets.R
 name: SInAS Prepare Datasets
 description: "Prepare and standardise input datasets (Step 1) for the SInAS workflow using pipeline-provided column mappings."
 author:
   - name: Samara Manzin
-
+    email: samara.manzin@mcgill.ca
 inputs:
   griis_checklist:
     label: GRIIS checklist
@@ -123,3 +123,4 @@ conda:
     - r-rgbif
     - r-tidyr
     - r-stringi
+    - r-openxlsx

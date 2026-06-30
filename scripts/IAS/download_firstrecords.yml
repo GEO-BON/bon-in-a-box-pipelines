@@ -1,5 +1,5 @@
-script: standardise_data.R
-name: Standardise First Records Data
+script: download_firstrecords.R
+name: Download First Records Data
 description: "This script downloads the first records data for a country"
 author:
   - name: Samara Manzin
@@ -8,7 +8,7 @@ inputs:
   country_name:
     label: Country name
     type: country
-    description: Name of the country for which to download the GRIIS checklist.
+    description: Name of the country for which to download the first records data.
     example: NULL
 outputs:
   firstrecords_cleaned:

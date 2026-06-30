@@ -1,5 +1,5 @@
-script: download_checklist.R
-name: Download GRIIS checklist
+script: download_griischecklist.R
+name: Download GRIIS Checklist
 description: "This script downloads the GRIIS checklist for a specified country and attaches metadata. This currently combines the country with all affiliated regions (e.g., territories, overseas regions) to produce a single checklist for the country."
 author:
   - name: Samara Manzin
