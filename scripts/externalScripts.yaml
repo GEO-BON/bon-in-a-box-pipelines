@@ -1,0 +1,4 @@
+CDSE:
+  LAI.udp:
+    name: Leaf Area Index
+    url: https://raw.githubusercontent.com/ESA-APEx/apex_algorithms/main/algorithm_catalog/obsgession/udp_obsgession_w23_lai/records/udp_obsgession_w23_lai.json
