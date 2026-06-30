@@ -4,8 +4,8 @@
       "id": "22",
       "type": "io",
       "position": {
-        "x": 477.6000061035156,
-        "y": 200
+        "x": 1808,
+        "y": 184
       },
       "data": {
         "descriptionFile": "zonal_statistics>percentage_cover_classes.yml"
@@ -15,8 +15,8 @@
       "id": "28",
       "type": "output",
       "position": {
-        "x": 1152.6000061035156,
-        "y": 197
+        "x": 2424,
+        "y": 154.5
       },
       "data": {
         "label": "Output"
@@ -26,8 +26,8 @@
       "id": "42",
       "type": "io",
       "position": {
-        "x": 68.16807300518667,
-        "y": -309.69435047402465
+        "x": 1363,
+        "y": 12
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -37,8 +37,8 @@
       "id": "43",
       "type": "userInput",
       "position": {
-        "x": -930.0802947923225,
-        "y": -181.65718710282113
+        "x": 34,
+        "y": 252.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -49,8 +49,8 @@
       "id": "44",
       "type": "io",
       "position": {
-        "x": -325.0375061035156,
-        "y": -66.20000457763672
+        "x": 465,
+        "y": 223.5
       },
       "data": {
         "descriptionFile": "data>load_polygons.yml"
@@ -60,8 +60,8 @@
       "id": "45",
       "type": "output",
       "position": {
-        "x": 92.96249389648438,
-        "y": -55.20000457763672
+        "x": 1363,
+        "y": 194
       },
       "data": {
         "label": "Output"
@@ -71,8 +71,8 @@
       "id": "46",
       "type": "constant",
       "position": {
-        "x": -757.578587098654,
-        "y": -143.2519828459221
+        "x": 12,
+        "y": 204.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -89,8 +89,8 @@
       "id": "47",
       "type": "constant",
       "position": {
-        "x": -781.9540028709455,
-        "y": -30.08040961742597
+        "x": 68,
+        "y": 288.5
       },
       "dragHandle": ".dragHandle",
       "data": {

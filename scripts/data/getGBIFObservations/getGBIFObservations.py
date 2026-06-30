@@ -51,6 +51,10 @@ out=gbif_api.gbif_api_dl(splist=taxa, bbox=bbox_wgs84, years=[min_year,max_year]
 print(taxa)
 print(sys.argv[1])
 
+if out['total_records'] == 0:
+	biab_error_stop("There are no observations for the species selected in the provided study area")
+
+
 biab_output("observations_file",str(out['outfile']))
 biab_output("gbif_doi", str(out['doi']))
 biab_output("total_records",str(out['total_records']))

@@ -4,7 +4,8 @@ description: Load observations from [Biodiversité Québec's Atlas](https://biod
 author:
   - name: Guillaume Larocque
     identifier: https://orcid.org/0000-0002-5967-9156
-
+lifecycle:
+  status: core
 inputs:
   taxa:
     description: Array of taxa values

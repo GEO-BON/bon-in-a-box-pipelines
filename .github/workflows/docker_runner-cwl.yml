@@ -1,4 +1,4 @@
-name: Conda Runner
+name: Conda-CWL Runner
 
 on:
   workflow_dispatch:
@@ -8,15 +8,15 @@ on:
       - edge
       - '*staging'
     paths:
-      - '.github/workflows/docker_runner-conda.yml'
-      - 'runners/conda/**'
+      - '.github/workflows/docker_runner-cwl.yml'
+      - 'runners/cwl/conda-cwl-dockerfile'
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/runner-conda
+  IMAGE_NAME: ${{ github.repository }}/runner-conda-cwl
 
 jobs:
-  runner-conda:
+  runner-conda-cwl:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -46,14 +46,14 @@ jobs:
             type=sha,value=${{ github.sha }}
           labels: |
             org.opencontainers.image.licenses=GPL-v3
-            org.opencontainers.image.title=BON in a Box Conda Runner
+            org.opencontainers.image.title=BON in a Box Conda-CWL Runner
 
       - name: Build and push Docker image
         id: push
         uses: docker/build-push-action@v7
         with:
-          context: runners/conda
-          file: runners/conda/conda-dockerfile
+          context: runners/cwl
+          file: runners/cwl/conda-cwl-dockerfile
           push: true
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
