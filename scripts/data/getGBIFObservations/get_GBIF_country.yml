@@ -1,0 +1,38 @@
+script: get_GBIF_country.py
+name: Get GBIF country observations
+description: Get the number of GBIF occurences for each year within a country
+author:
+  - name: Samara Manzin
+    email: samara.manzin@mcgill.ca
+lifecycle:
+  status: core
+
+inputs:
+  country_name:
+    description: Name of the country for which to get GBIF observations.
+    label: Country name
+    type: country
+    example: NULL
+  start_year:
+    description: Start year for which to get GBIF observations.
+    label: Start year
+    type: int
+    example: 1970
+  end_year:
+    description: End year for which to get GBIF observations.
+    label: End year
+    type: int
+    example: 2025
+outputs:
+  gbif_country_observations:
+    label: GBIF country observations
+    description: Number of GBIF occurrences for each year within the specified country.
+    type: text/csv
+    example: NULL
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - pygbif
+    - pandas
+    - pycountry
