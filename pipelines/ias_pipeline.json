@@ -4,8 +4,8 @@
       "id": "37",
       "type": "io",
       "position": {
-        "x": 593,
-        "y": 547
+        "x": 603,
+        "y": 34.5
       },
       "data": {
         "descriptionFile": "IAS>download_firstrecords.yml"
@@ -15,8 +15,8 @@
       "id": "38",
       "type": "io",
       "position": {
-        "x": 498,
-        "y": 982
+        "x": 508,
+        "y": 1004.5
       },
       "data": {
         "descriptionFile": "IAS>download_griischecklist.yml"
@@ -26,8 +26,8 @@
       "id": "39",
       "type": "io",
       "position": {
-        "x": 1286,
-        "y": 275
+        "x": 1306,
+        "y": 369.5
       },
       "data": {
         "descriptionFile": "IAS>prepare_datasets.yml"
@@ -37,8 +37,8 @@
       "id": "40",
       "type": "output",
       "position": {
-        "x": 1286,
-        "y": 1136.5
+        "x": 1306,
+        "y": 12
       },
       "data": {
         "label": "Output"
@@ -49,7 +49,7 @@
       "type": "userInput",
       "position": {
         "x": 110,
-        "y": 538.6666666666666
+        "y": 28.25
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -61,7 +61,7 @@
       "type": "constant",
       "position": {
         "x": 12,
-        "y": 986
+        "y": 1008.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -73,8 +73,8 @@
       "id": "43",
       "type": "output",
       "position": {
-        "x": 1286,
-        "y": 1241.5
+        "x": 1306,
+        "y": 1358
       },
       "data": {
         "label": "Output"
@@ -84,8 +84,8 @@
       "id": "44",
       "type": "output",
       "position": {
-        "x": 1286,
-        "y": 1171.5
+        "x": 1306,
+        "y": 1218
       },
       "data": {
         "label": "Output"
@@ -95,8 +95,8 @@
       "id": "45",
       "type": "output",
       "position": {
-        "x": 1286,
-        "y": 1066.5
+        "x": 1306,
+        "y": 1323
       },
       "data": {
         "label": "Output"
@@ -106,8 +106,8 @@
       "id": "46",
       "type": "output",
       "position": {
-        "x": 1286,
-        "y": 1206.5
+        "x": 1306,
+        "y": 1288
       },
       "data": {
         "label": "Output"
@@ -117,8 +117,8 @@
       "id": "47",
       "type": "output",
       "position": {
-        "x": 1286,
-        "y": 1101.5
+        "x": 1306,
+        "y": 1253
       },
       "data": {
         "label": "Output"
@@ -128,8 +128,8 @@
       "id": "49",
       "type": "output",
       "position": {
-        "x": 1980,
-        "y": 100.5
+        "x": 2000,
+        "y": 654
       },
       "data": {
         "label": "Output"
@@ -139,8 +139,8 @@
       "id": "50",
       "type": "output",
       "position": {
-        "x": 1980,
-        "y": 135.5
+        "x": 2000,
+        "y": 689
       },
       "data": {
         "label": "Output"
@@ -150,8 +150,8 @@
       "id": "51",
       "type": "output",
       "position": {
-        "x": 1980,
-        "y": 252.5
+        "x": 2000,
+        "y": 724
       },
       "data": {
         "label": "Output"
@@ -161,8 +161,8 @@
       "id": "52",
       "type": "io",
       "position": {
-        "x": 1980,
-        "y": 180.5
+        "x": 2000,
+        "y": 37
       },
       "data": {
         "descriptionFile": "IAS>merge_datasets.yml"
@@ -172,8 +172,8 @@
       "id": "53",
       "type": "output",
       "position": {
-        "x": 2476,
-        "y": 158
+        "x": 2596,
+        "y": 14.5
       },
       "data": {
         "label": "Output"
@@ -183,8 +183,8 @@
       "id": "54",
       "type": "constant",
       "position": {
-        "x": 792,
-        "y": 32
+        "x": 802,
+        "y": 126.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -199,8 +199,8 @@
       "id": "55",
       "type": "constant",
       "position": {
-        "x": 842,
-        "y": 74
+        "x": 852,
+        "y": 168.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -212,8 +212,8 @@
       "id": "56",
       "type": "constant",
       "position": {
-        "x": 792,
-        "y": 123
+        "x": 802,
+        "y": 217.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -228,8 +228,8 @@
       "id": "57",
       "type": "constant",
       "position": {
-        "x": 792,
-        "y": 165
+        "x": 802,
+        "y": 259.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -244,8 +244,8 @@
       "id": "58",
       "type": "constant",
       "position": {
-        "x": 792,
-        "y": 230
+        "x": 802,
+        "y": 324.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -260,8 +260,8 @@
       "id": "59",
       "type": "constant",
       "position": {
-        "x": 792,
-        "y": 314
+        "x": 802,
+        "y": 408.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -276,8 +276,8 @@
       "id": "60",
       "type": "constant",
       "position": {
-        "x": 792,
-        "y": 272
+        "x": 802,
+        "y": 366.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -292,8 +292,8 @@
       "id": "61",
       "type": "constant",
       "position": {
-        "x": 792,
-        "y": 379
+        "x": 802,
+        "y": 473.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -308,8 +308,8 @@
       "id": "62",
       "type": "constant",
       "position": {
-        "x": 792,
-        "y": 421
+        "x": 802,
+        "y": 515.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -324,8 +324,8 @@
       "id": "63",
       "type": "constant",
       "position": {
-        "x": 792,
-        "y": 505
+        "x": 802,
+        "y": 599.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -340,8 +340,8 @@
       "id": "64",
       "type": "constant",
       "position": {
-        "x": 792,
-        "y": 463
+        "x": 802,
+        "y": 557.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -356,8 +356,8 @@
       "id": "65",
       "type": "constant",
       "position": {
-        "x": 792,
-        "y": 619
+        "x": 802,
+        "y": 641.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -372,8 +372,8 @@
       "id": "66",
       "type": "constant",
       "position": {
-        "x": 792,
-        "y": 684
+        "x": 802,
+        "y": 706.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -388,8 +388,8 @@
       "id": "67",
       "type": "constant",
       "position": {
-        "x": 792,
-        "y": 768
+        "x": 802,
+        "y": 790.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -404,8 +404,8 @@
       "id": "68",
       "type": "constant",
       "position": {
-        "x": 792,
-        "y": 726
+        "x": 802,
+        "y": 748.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -420,8 +420,8 @@
       "id": "69",
       "type": "constant",
       "position": {
-        "x": 792,
-        "y": 810
+        "x": 802,
+        "y": 832.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -436,8 +436,8 @@
       "id": "70",
       "type": "constant",
       "position": {
-        "x": 792,
-        "y": 852
+        "x": 802,
+        "y": 874.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -452,8 +452,8 @@
       "id": "71",
       "type": "constant",
       "position": {
-        "x": 792,
-        "y": 917
+        "x": 802,
+        "y": 939.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -467,8 +467,8 @@
       "id": "72",
       "type": "io",
       "position": {
-        "x": 1527.7561309989724,
-        "y": 18.839937319928367
+        "x": 565,
+        "y": 1111.5
       },
       "data": {
         "descriptionFile": "data>getGBIFObservations>get_GBIF_country.yml"
@@ -478,8 +478,8 @@
       "id": "73",
       "type": "userInput",
       "position": {
-        "x": 1225.7561309989724,
-        "y": 29.839937319928367
+        "x": 189,
+        "y": 1119
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -491,8 +491,8 @@
       "id": "74",
       "type": "userInput",
       "position": {
-        "x": 1223.7561309989724,
-        "y": 87.83993731992837
+        "x": 195,
+        "y": 1154
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -504,8 +504,52 @@
       "id": "75",
       "type": "output",
       "position": {
-        "x": 2101.7561309989724,
-        "y": 15.839937319928367
+        "x": 1306,
+        "y": 1183
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "76",
+      "type": "io",
+      "position": {
+        "x": 2596,
+        "y": 109
+      },
+      "data": {
+        "descriptionFile": "IAS>summarise_ias.yml"
+      }
+    },
+    {
+      "id": "77",
+      "type": "output",
+      "position": {
+        "x": 3086,
+        "y": 168.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "78",
+      "type": "output",
+      "position": {
+        "x": 3086,
+        "y": 37
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "79",
+      "type": "output",
+      "position": {
+        "x": 3086,
+        "y": 203.5
       },
       "data": {
         "label": "Output"
@@ -757,6 +801,38 @@
       "sourceHandle": "gbif_country_observations",
       "target": "75",
       "id": "xy-edge__72gbif_country_observations-75"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "merged_dataset",
+      "target": "76",
+      "targetHandle": "merged_dataset",
+      "id": "xy-edge__52merged_dataset-76merged_dataset"
+    },
+    {
+      "source": "72",
+      "sourceHandle": "gbif_country_observations",
+      "target": "76",
+      "targetHandle": "gbif_country_observations",
+      "id": "xy-edge__72gbif_country_observations-76gbif_country_observations"
+    },
+    {
+      "source": "76",
+      "sourceHandle": "ias_annual_summary",
+      "target": "77",
+      "id": "xy-edge__76ias_annual_summary-77"
+    },
+    {
+      "source": "76",
+      "sourceHandle": "ias_summary",
+      "target": "78",
+      "id": "xy-edge__76ias_summary-78"
+    },
+    {
+      "source": "76",
+      "sourceHandle": "ias_summary_table",
+      "target": "79",
+      "id": "xy-edge__76ias_summary_table-79"
     }
   ],
   "inputs": {
@@ -848,6 +924,24 @@
       "label": "GBIF country observations",
       "type": "text/csv",
       "weight": 10
+    },
+    "IAS>summarise_ias.yml@76|ias_annual_summary": {
+      "description": "Annual table combining GBIF occurrence counts and IAS first-record counts.",
+      "label": "IAS annual summary",
+      "type": "text/csv",
+      "weight": 11
+    },
+    "IAS>summarise_ias.yml@76|ias_summary": {
+      "description": "Summary statistics for the merged IAS dataset.",
+      "label": "IAS summary",
+      "type": "text/csv",
+      "weight": 12
+    },
+    "IAS>summarise_ias.yml@76|ias_summary_table": {
+      "description": "HTML summary table for the merged IAS dataset.",
+      "label": "IAS summary table",
+      "type": "text/html",
+      "weight": 13
     }
   },
   "metadata": {
