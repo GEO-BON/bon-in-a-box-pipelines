@@ -104,12 +104,20 @@ inputs:
     label: Additional columns
     type: text[]
     description: Optional additional column names as '; ' separated text, one entry per dataset.
-    example: ["isInvasive; isInvasiveInCountry", "linkID"]
+    example: ["isInvasive; isInvasiveInCountry"]
 outputs:
-  step1_intermediate_dir:
-    label: Step1 intermediate directory
-    description: Directory containing Step1_StandardColumns_<Dataset_brief_name>.csv files.
-    type: folder
+  griis_clean:
+    label: cleaned GRIIS dataset
+    description: Cleaned GRIIS dataset with standardised column names and values.
+    type: text/csv
+  first_records_clean:
+    label: cleaned First Records dataset
+    description: Cleaned First Records dataset with standardised column names and values.
+    type: text/csv
+  file_info:
+    label: File information
+    description: Table containing information about the input datasets columns
+    type: text/csv
 conda:
   channels:
     - conda-forge

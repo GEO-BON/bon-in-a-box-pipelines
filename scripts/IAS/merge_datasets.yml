@@ -1,0 +1,36 @@
+script: merge_datasets.R
+name: SInAS Merge Datasets
+description: "Merge cleaned IAS datasets produced by the SInAS prepare-datasets step."
+author:
+  - name: Samara Manzin
+    email: samara.manzin@mcgill.ca
+inputs:
+  griis_clean:
+    label: Cleaned GRIIS dataset
+    type: text/csv
+    description: Cleaned GRIIS checklist
+    example: NULL
+  first_records_clean:
+    label: Cleaned First Records dataset
+    type: text/csv
+    description: Cleaned First Records dataset
+    example: NULL
+  file_info:
+    label: File information
+    type: text/csv
+    description: Table containing column information for each dataset, including standardised column names and values.
+    example: NULL
+outputs:
+  merged_dataset:
+    label: Merged dataset
+    description: Merged dataset with standardised column names and values.
+    type: text/csv
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-data.table
+    - r-dplyr
+    - r-stringr
+    - r-rjson

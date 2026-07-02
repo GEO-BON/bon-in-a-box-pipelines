@@ -28,7 +28,7 @@ firstrecords <- read.csv(input$first_records)
 
 # Loading in config files
 
-# Specifying in filters
+# Specifying column names for each dataset
 Dataset_brief_name <- input$dataset
 Taxon_group <- input$taxon_group
 Column_recordID <- input$column_recordid
@@ -399,7 +399,7 @@ StandardiseTerms <- function(FileInfo=NULL){
       # identify matches of alternative terms...
       ind <- match(tolower(dat$establishmentMeans),tolower(translation_estabmeans$origTerm)) # identify matches
       unresolved_estabmeans <- unique(dat$establishmentMeans[is.na(ind)]) # store mis-matches
-      resolved_estabmeans <- unique(dat$establishmentMeans[!is.na(ind)]) # store mis-matches
+      resolved_estabmeans <- unique(dat$establishmentMeans[!is.na(ind)]) # store matches
       translated <- translation_estabmeans$newTerm[ind]
       indNA <- is.na(translated)
       dat$establishmentMeans[!indNA] <- translated[!indNA]  # replace strings
@@ -415,7 +415,7 @@ StandardiseTerms <- function(FileInfo=NULL){
       # identify matches of alternative terms...
       ind <- match(tolower(dat$occurrenceStatus),tolower(translation_occurrence$origTerm)) # identify matches
       unresolved_occurrenceStatus <- unique(dat$occurrenceStatus[is.na(ind)]) # store mis-matches
-      resolved_occurrenceStatus <- unique(dat$occurrenceStatus[!is.na(ind)]) # store mis-matches
+      resolved_occurrenceStatus <- unique(dat$occurrenceStatus[!is.na(ind)]) # store matches
       translated <- translation_occurrence$newTerm[ind]
       indNA <- is.na(translated)
       dat$occurrenceStatus[!indNA] <- translated[!indNA]  # replace strings
@@ -488,12 +488,6 @@ StandardiseTerms <- function(FileInfo=NULL){
   
   return(list(clean_datasets = clean_datasets, unresolved_terms = unresolved_terms))
 }
-
-step2 <- StandardiseTerms(FileInfo = FileInfo)
-print(head(step2$clean_datasets[["FirstRecords"]]))      # cleaned data for one dataset
-print(head(step2$unresolved_terms[["FirstRecords"]]))    # unresolved terms vector for that dataset
-print(head(step2$clean_datasets[["GRIIS"]]))      # cleaned data for one dataset
-print(head(step2$unresolved_terms[["GRIIS"]])) 
 
 StandardiseLocationNames <- function(FileInfo = NULL, step2_output = NULL){
   
@@ -618,9 +612,669 @@ StandardiseLocationNames <- function(FileInfo = NULL, step2_output = NULL){
   ))
 }
 
+CheckGBIFTax <- function(taxon_names=NULL,
+                         column_name_taxa=NULL){
+  
+  ## check input variable
+  if (is.null(taxon_names)){
+    
+    stop("No taxon names provided.")
+    
+  } else if (is.character(taxon_names)){ # check if input file is a vector
+    
+    dat <- as.data.frame(taxon_names)
+    colnames(dat) <- "taxon_orig"
+    
+  } else if (is.data.frame(taxon_names)){ # check if input file is a data.frame
+    
+    dat <- taxon_names
+    
+  } else {
+    
+    stop("Cannot coerce data into data.frame. Please provide a data.frame or vector as input.")
+    
+  }
+  
+  if (!is.null(column_name_taxa)){ # check if column name of taxa provided
+    
+    colnames(dat)[colnames(dat)==column_name_taxa] <- "taxon_orig" # rename to standard column name
+    
+  }
+  if (all(colnames(dat)!="taxon_orig")){ # check if column "taxon_orig" can be found
+    
+    stop("No column with taxon names found. Please specify in column_name_taxa.")
+    
+  }
+  
+  dat$scientificName <- NA
+  dat$taxon <- dat$taxon_orig
+  dat$GBIFstatus <- "MISSING"
+  dat$GBIFmatchtype <- NA
+  dat$GBIFnote <- NA
+  dat$GBIFstatus_Synonym <- NA
+  dat$species <- NA
+  dat$genus <- NA
+  dat$family <- NA
+  dat$class <- NA
+  dat$order <- NA
+  dat$phylum <- NA
+  dat$kingdom <- NA 
+  dat$GBIFtaxonRank <- NA
+  dat$GBIFusageKey <- NA
+  
+  kingdom_user_col <- intersect(c("kingdom_user", "Kingdom_user"), colnames(dat))
+  kingdom_user_col <- if (length(kingdom_user_col) > 0) kingdom_user_col[[1]] else NA_character_
+  
+  if (!is.na(kingdom_user_col)){
+    taxlist_lifeform <- unique(dat[,c("taxon", kingdom_user_col)])
+    taxlist <- taxlist_lifeform$taxon
+  } else if (any(colnames(dat)=="Author")){
+    taxlist <- unique(paste(dat$taxon,dat$Author))
+  } else {
+    taxlist <- unique(dat$taxon)
+  }
+  n_taxa <- length(taxlist)
+
+  #setup progress bar
+  pb <- txtProgressBar(min=0, max=n_taxa, initial=0,style = 3)
+  
+  options(warn=-1) # the use of 'tibbles' data frame generates warnings as a bug; if solved this options() should be turned off
+  
+  mismatches <- data.frame(taxon=NA,status=NA,matchType=NA)
+  for (j in 1:n_taxa){# loop over all species names; takes some hours...
+    
+    # select species name and download taxonomy
+    ind_tax <- which(dat$taxon==taxlist[j])
+    db_all <- name_backbone_verbose(taxlist[j],strict=T) # check for names and synonyms
+    db <- db_all[["data"]]
+    alternatives <- db_all$alternatives
+    
+    if (any(db$status=="ACCEPTED" & db$matchType=="EXACT" & colnames(db)=="canonicalName")){ 
+      
+      ### EXACT MATCHES: select only accepted names and exact matches ##############################################
+      
+      dat$taxon[ind_tax]      <- db[db$status=="ACCEPTED" & db$matchType=="EXACT",]$canonicalName[1]
+      dat$scientificName[ind_tax] <- db[db$status=="ACCEPTED" & db$matchType=="EXACT",]$scientificName[1]
+      dat$GBIFstatus[ind_tax]      <- db[db$status=="ACCEPTED" & db$matchType=="EXACT",]$status[1]
+      dat$GBIFmatchtype[ind_tax]   <- db[db$status=="ACCEPTED" & db$matchType=="EXACT",]$matchType[1]
+      dat$GBIFtaxonRank[ind_tax]        <- db[db$status=="ACCEPTED" & db$matchType=="EXACT",]$rank[1]
+      dat$GBIFusageKey[ind_tax]        <- db[db$status=="ACCEPTED" & db$matchType=="EXACT",]$usageKey[1]
+      
+      try(dat$species[ind_tax]     <- db[db$status=="ACCEPTED" & db$matchType=="EXACT",]$species[1],silent=T)
+      try(dat$genus[ind_tax]       <- db[db$status=="ACCEPTED" & db$matchType=="EXACT",]$genus[1],silent=T)
+      try(dat$family[ind_tax]      <- db[db$status=="ACCEPTED" & db$matchType=="EXACT",]$family[1],silent=T)
+      try(dat$class[ind_tax]       <- db[db$status=="ACCEPTED" & db$matchType=="EXACT",]$class[1],silent=T)
+      try(dat$order[ind_tax]       <- db[db$status=="ACCEPTED" & db$matchType=="EXACT",]$order[1],silent=T)
+      try(dat$phylum[ind_tax]      <- db[db$status=="ACCEPTED" & db$matchType=="EXACT",]$phylum[1],silent=T)
+      try(dat$kingdom[ind_tax]     <- db[db$status=="ACCEPTED" & db$matchType=="EXACT",]$kingdom[1],silent=T)
+      
+      next # jump to next taxon
+      
+    } else if (any(db$status=="SYNONYM" & db$matchType=="EXACT" & colnames(db)=="species")) { # select synonyms
+      
+      ## SYNONYMS #################################################################################
+      
+      ## flag that it is a synonym
+      dat$GBIFstatus[ind_tax] <- db[db$status=="SYNONYM" & db$matchType=="EXACT",]$status[1]
+      dat$GBIFmatchtype[ind_tax] <- db[db$status=="SYNONYM" & db$matchType=="EXACT",]$matchType[1]
+      dat$GBIFtaxonRank[ind_tax]     <- db[db$status=="SYNONYM" & db$matchType=="EXACT",]$rank[1]
+      dat$GBIFusageKey[ind_tax]     <- db[db$status=="SYNONYM" & db$matchType=="EXACT",]$usageKey[1]
+      
+      ## check if accepted name is provided in 'alternatives'
+      if (any(alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT")){
+        
+        if (nrow(alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",])>1) {
+          dat$GBIFnote[ind_tax] <- "No single accepted name in GBIF"  # !!! new string
+        } 
+        
+        dat$scientificName[ind_tax] <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$scientificName[1]
+        dat$taxon[ind_tax]          <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$canonicalName[1]
+        
+        try(dat$species[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$species[1],silent=T)
+        try(dat$genus[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$genus[1],silent=T)
+        try(dat$family[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$family[1],silent=T)
+        try(dat$class[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$class[1],silent=T)
+        try(dat$order[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$order[1],silent=T)
+        try(dat$phylum[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$phylum[1],silent=T)
+        try(dat$kingdom[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$kingdom[1],silent=T)
+        
+        next # jump to next taxon
+        
+      } else if (db$rank=="SPECIES"){  ## try to get author name of synonym (not provided in 'db')(works only for species)
+
+        dat$taxon[ind_tax]    <- db[db$status=="SYNONYM" & db$matchType=="EXACT",]$species[1]
+        dat$GBIFstatus[ind_tax]    <- db[db$status=="SYNONYM" & db$matchType=="EXACT",]$status[1]
+        dat$GBIFmatchtype[ind_tax] <- db[db$status=="SYNONYM" & db$matchType=="EXACT",]$matchType[1]
+        dat$GBIFtaxonRank[ind_tax]      <- db[db$status=="SYNONYM" & db$matchType=="EXACT",]$rank[1]
+        dat$GBIFusageKey[ind_tax]      <- db[db$status=="SYNONYM" & db$matchType=="EXACT",]$usageKey[1]
+        
+        db_all_2 <- name_backbone_verbose(dat$taxon[ind_tax][1],strict=T) # get scientific name
+        db_2 <- db_all_2[["data"]]
+
+        if (db_2$matchType=="EXACT"){ # exact matches
+          dat$scientificName[ind_tax]  <- db_2[db_2$matchType=="EXACT",]$scientificName[1]
+          dat$GBIFstatus_Synonym[ind_tax]<- db_2[db_2$matchType=="EXACT",]$status[1]
+          try(dat$species[ind_tax]     <- db_2[db_2$matchType=="EXACT",]$species[1],silent=T)
+          try(dat$genus[ind_tax]       <- db_2[db_2$matchType=="EXACT",]$genus[1],silent=T)
+          try(dat$family[ind_tax]      <- db_2[db_2$matchType=="EXACT",]$family[1],silent=T)
+          try(dat$class[ind_tax]       <- db_2[db_2$matchType=="EXACT",]$class[1],silent=T)
+          try(dat$order[ind_tax]       <- db_2[db_2$matchType=="EXACT",]$order[1],silent=T)
+          try(dat$phylum[ind_tax]      <- db_2[db_2$matchType=="EXACT",]$phylum[1],silent=T)
+          try(dat$kingdom[ind_tax]     <- db_2[db_2$matchType=="EXACT",]$kingdom[1],silent=T)
+        }
+      }
+      next
+      
+    } else if (any(db$status=="ACCEPTED" & db$matchType=="FUZZY" & db$confidence==100 & colnames(db)=="canonicalName")) { 
+
+      ## FUZZY MATCHES #################################################################################
+      
+      dat$taxon[ind_tax]      <- db[db$status=="ACCEPTED" & db$matchType=="FUZZY",]$canonicalName[1]
+      dat$scientificName[ind_tax] <- db[db$status=="ACCEPTED" & db$matchType=="FUZZY",]$scientificName[1]
+      dat$GBIFstatus[ind_tax]      <- db[db$status=="ACCEPTED" & db$matchType=="FUZZY",]$status[1]
+      dat$GBIFmatchtype[ind_tax]   <- db[db$status=="ACCEPTED" & db$matchType=="FUZZY",]$matchType[1]
+      dat$GBIFtaxonRank[ind_tax]        <- db[db$status=="ACCEPTED" & db$matchType=="FUZZY",]$rank[1]
+      dat$GBIFusageKey[ind_tax]        <- db[db$status=="ACCEPTED" & db$matchType=="FUZZY",]$usageKey[1]
+      
+      dat$scientificName[ind_tax] <- db[db$status=="ACCEPTED" & db$matchType=="FUZZY",]$scientificName[1]
+      try(dat$species[ind_tax] <-db[db$status=="ACCEPTED" & db$matchType=="FUZZY",]$species[1],silent=T)
+      try(dat$genus[ind_tax]   <-  db[db$status=="ACCEPTED" & db$matchType=="FUZZY",]$genus[1],silent=T)
+      try(dat$family[ind_tax]  <- db[db$status=="ACCEPTED" & db$matchType=="FUZZY",]$family[1],silent=T)
+      try(dat$class[ind_tax]   <- db[db$status=="ACCEPTED" & db$matchType=="FUZZY",]$class[1],silent=T)
+      try(dat$order[ind_tax]   <- db[db$status=="ACCEPTED" & db$matchType=="FUZZY",]$order[1],silent=T)
+      try(dat$phylum[ind_tax]  <- db[db$status=="ACCEPTED" & db$matchType=="FUZZY",]$phylum[1],silent=T)
+      try(dat$kingdom[ind_tax] <- db[db$status=="ACCEPTED" & db$matchType=="FUZZY",]$kingdom[1],silent=T)
+      
+      next # jump to next taxon
+      
+    } else if (any(alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT") & any(colnames(alternatives)=="species")){
+
+      if (length(unique(alternatives$phylum))>1){ # check whether entry exists for different phyla; likely indicates a homonym
+        
+        ## case: multiple accepted names in "alternatives" from different phyla
+        
+        ## HOMONYMS #################################################################################
+        ## check for alternative names because of e.g. multiple entries for different taxonomic groups in GBIF...
+        
+        dat$GBIFnote[ind_tax]        <- "Homonym in GBIF"
+        
+        ## check information of kingdom provided by user and selected respective author
+        if (!is.na(kingdom_user_col)) {
+          if (length(unique(alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$family))>1) print(paste(taxlist[j],"name occurrs in more than one family! To resolve this, you may provide information about author in original database, or kingdom or taxonomic group in DatabaseInfo.xlsx."))
+          
+          dat$taxon[ind_tax] <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$species[1]
+          
+          dat$scientificName[ind_tax] <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$scientificName[1]
+          dat$GBIFstatus[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$status[1]
+          dat$GBIFmatchtype[ind_tax]   <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$matchType[1]
+          dat$GBIFtaxonRank[ind_tax]        <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$rank[1]
+          dat$GBIFusageKey[ind_tax]        <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$usageKey[1]
+
+          try(dat$species[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$species[1],silent=T)
+          try(dat$genus[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$genus[1],silent=T)
+          try(dat$family[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$family[1],silent=T)
+          try(dat$class[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$class[1],silent=T)
+          try(dat$order[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$order[1],silent=T)
+          try(dat$phylum[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$phylum[1],silent=T)
+          try(dat$kingdom[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$kingdom[1],silent=T)
+          
+          next
+        }
+        
+        ## select entries from cross-taxonomic databases from certain taxa
+        if (any(colnames(dat)=="Taxon_group")) { # !!!!! new line
+          if (unique(dat$Taxon_group)!="All"){ # check if 'Taxon_group' provides useful information
+            if (grepl("Vascular plants",unique(dat$Taxon_group))){ # case of vascular plants
+              
+              dat$taxon[ind_tax] <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$species[1]
+              
+              dat$scientificName[ind_tax] <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom=="Plantae",]$scientificName[1]
+              dat$GBIFstatus[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom=="Plantae",]$status[1]
+              dat$GBIFmatchtype[ind_tax]   <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom=="Plantae",]$matchType[1]
+              dat$GBIFtaxonRank[ind_tax]        <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom=="Plantae",]$rank[1]
+              dat$GBIFusageKey[ind_tax]        <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom=="Plantae",]$usageKey[1]
+  
+              try(dat$species[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom=="Plantae",]$species[1],silent=T)
+              try(dat$genus[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom=="Plantae",]$genus[1],silent=T)
+              try(dat$family[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom=="Plantae",]$family[1],silent=T)
+              try(dat$class[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom=="Plantae",]$class[1],silent=T)
+              try(dat$order[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom=="Plantae",]$order[1],silent=T)
+              try(dat$phylum[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom=="Plantae",]$phylum[1],silent=T)
+              try(dat$kingdom[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom=="Plantae",]$kingdom[1],silent=T)
+            }
+            if (grepl("Reptiles",unique(dat$Taxon_group))){
+              
+              dat$taxon[ind_tax] <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$species[1]
+              
+              dat$scientificName[ind_tax] <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Reptilia",]$scientificName[1]
+              dat$GBIFstatus[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Reptilia",]$status[1]
+              dat$GBIFmatchtype[ind_tax]   <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Reptilia",]$matchType[1]
+              dat$GBIFtaxonRank[ind_tax]            <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Reptilia",]$rank[1]
+              dat$GBIFusageKey[ind_tax]            <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Reptilia",]$usageKey[1]
+  
+              try(dat$species[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Reptilia",]$species[1],silent=T)
+              try(dat$genus[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Reptilia",]$genus[1],silent=T)
+              try(dat$family[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Reptilia",]$family[1],silent=T)
+              try(dat$class[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Reptilia",]$class[1],silent=T)
+              try(dat$order[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Reptilia",]$order[1],silent=T)
+              try(dat$phylum[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Reptilia",]$phylum[1],silent=T)
+              try(dat$kingdom[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Reptilia",]$kingdom[1],silent=T)
+            }
+            if (grepl("Amphibians",unique(dat$Taxon_group))){
+              
+              dat$taxon[ind_tax] <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$species[1]
+              
+              dat$scientificName[ind_tax] <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Amphibia",]$scientificName[1]
+              dat$GBIFstatus[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Amphibia",]$status[1]
+              dat$GBIFmatchtype[ind_tax]   <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Amphibia",]$matchType[1]
+              dat$GBIFtaxonRank[ind_tax]            <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Amphibia",]$rank[1]
+              dat$GBIFusageKey[ind_tax]            <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Amphibia",]$usageKey[1]
+  
+              try(dat$species[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Amphibia",]$species[1],silent=T)
+              try(dat$genus[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Amphibia",]$genus[1],silent=T)
+              try(dat$family[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Amphibia",]$family[1],silent=T)
+              try(dat$class[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Amphibia",]$class[1],silent=T)
+              try(dat$order[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Amphibia",]$order[1],silent=T)
+              try(dat$phylum[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Amphibia",]$phylum[1],silent=T)
+              try(dat$kingdom[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Amphibia",]$kingdom[1],silent=T)
+            }
+            if (grepl("Birds",unique(dat$Taxon_group))){
+              
+              dat$taxon[ind_tax] <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$species[1]
+              
+              dat$scientificName[ind_tax] <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Aves",]$scientificName[1]
+              dat$GBIFstatus[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Aves",]$status[1]
+              dat$GBIFmatchtype[ind_tax]   <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Aves",]$matchType[1]
+              dat$GBIFtaxonRank[ind_tax]        <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Aves",]$rank[1]
+              dat$GBIFusageKey[ind_tax]        <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Aves",]$usageKey[1]
+  
+              try(dat$species[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Aves",]$species[1],silent=T)
+              try(dat$genus[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Aves",]$genus[1],silent=T)
+              try(dat$family[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Aves",]$family[1],silent=T)
+              try(dat$class[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Aves",]$class[1],silent=T)
+              try(dat$order[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Aves",]$order[1],silent=T)
+              try(dat$phylum[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Aves",]$phylum[1],silent=T)
+              try(dat$kingdom[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Aves",]$kingdom[1],silent=T)
+            }
+            if (grepl("Insects",unique(dat$Taxon_group))){
+              
+              dat$taxon[ind_tax] <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$species[1]
+              
+              dat$scientificName[ind_tax] <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Insecta",]$scientificName[1]
+              dat$GBIFstatus[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Insecta",]$status[1]
+              dat$GBIFmatchtype[ind_tax]   <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Insecta",]$matchType[1]
+              dat$GBIFtaxonRank[ind_tax]        <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Insecta",]$rank[1]
+              dat$GBIFusageKey[ind_tax]        <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Insecta",]$usageKey[1]
+  
+              try(dat$species[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Insecta",]$species[1],silent=T)
+              try(dat$genus[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Insecta",]$genus[1],silent=T)
+              try(dat$family[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Insecta",]$family[1],silent=T)
+              try(dat$class[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Insecta",]$class[1],silent=T)
+              try(dat$order[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Insecta",]$order[1],silent=T)
+              try(dat$phylum[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Insecta",]$phylum[1],silent=T)
+              try(dat$kingdom[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Insecta",]$kingdom[1],silent=T)
+            }
+            if (grepl("Mammals",unique(dat$Taxon_group))){
+              
+              dat$taxon[ind_tax] <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$species[1]
+              
+              dat$scientificName[ind_tax] <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Mammalia",]$scientificName[1]
+              dat$GBIFstatus[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Mammalia",]$status[1]
+              dat$GBIFmatchtype[ind_tax]   <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Mammalia",]$matchType[1]
+              dat$GBIFtaxonRank[ind_tax]        <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Mammalia",]$rank[1]
+              dat$GBIFusageKey[ind_tax]        <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Mammalia",]$usageKey[1]
+  
+              try(dat$species[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Mammalia",]$species[1],silent=T)
+              try(dat$genus[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Mammalia",]$genus[1],silent=T)
+              try(dat$family[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Mammalia",]$family[1],silent=T)
+              try(dat$class[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Mammalia",]$class[1],silent=T)
+              try(dat$order[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Mammalia",]$order[1],silent=T)
+              try(dat$phylum[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Mammalia",]$phylum[1],silent=T)
+              try(dat$kingdom[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$class=="Mammalia",]$kingdom[1],silent=T)
+            }
+          }
+        } # !!!!! new line
+      } else {
+        
+        ## case: a single accepted name in "alternatives" 
+
+        dat$taxon[ind_tax] <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$species[1]
+        
+        dat$scientificName[ind_tax]  <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$scientificName[1]
+        dat$GBIFstatus[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$status[1]
+        dat$GBIFmatchtype[ind_tax]   <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$matchType[1]
+        dat$GBIFtaxonRank[ind_tax]   <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$rank[1]
+        dat$GBIFusageKey[ind_tax]    <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$usageKey[1]
+
+        dat$GBIFnote[ind_tax]        <- "Accepted name provided in 'alternative names' in GBIF"
+        
+        try(dat$species[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$species[1],silent=T)
+        try(dat$genus[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$genus[1],silent=T)
+        try(dat$family[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$family[1],silent=T)
+        try(dat$class[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$class[1],silent=T)
+        try(dat$order[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$order[1],silent=T)
+        try(dat$phylum[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$phylum[1],silent=T)
+        try(dat$kingdom[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$kingdom[1],silent=T)
+        
+        next # jump to next taxon
+        
+      }
+    } else if (any(alternatives$status=="SYNONYM" & alternatives$matchType=="EXACT" & any(colnames(alternatives)=="species"))) { # check for synonyms in 'alternatives'
+
+      ## check alternative names #################################################################################
+      
+      if (nrow(alternatives[alternatives$status=="SYNONYM" & alternatives$matchType=="EXACT",])>1) { # check if multiple synonyms are provided; if so leave to next taxon
+        dat$GBIFnote[ind_tax] <- "No single accepted name in GBIF" # !!!! new string
+        next # not possible to identify correct name
+      } 
+      
+      dat$taxon[ind_tax]       <- alternatives[alternatives$status=="SYNONYM" & alternatives$matchType=="EXACT",]$species[1]
+      dat$GBIFstatus[ind_tax]       <- alternatives[alternatives$status=="SYNONYM" & alternatives$matchType=="EXACT",]$status[1]
+      dat$GBIFmatchtype[ind_tax]   <- alternatives[alternatives$status=="SYNONYM" & alternatives$matchType=="EXACT",]$matchType[1]
+      dat$GBIFtaxonRank[ind_tax]            <- alternatives[alternatives$status=="SYNONYM" & alternatives$matchType=="EXACT",]$rank[1]
+      dat$GBIFusageKey[ind_tax]            <- alternatives[alternatives$status=="SYNONYM" & alternatives$matchType=="EXACT",]$usageKey[1]
+
+      dat$GBIFnote[ind_tax] <- "Synonym without an exact match of an accepted name on GBIF"  # set as default in this case; potentially over-written in next step
+      
+      ## try to get author name of synonym (not provided in 'db')
+      db_all_2 <- name_backbone_verbose(dat$taxon[ind_tax][1])
+      db_2 <- db_all_2[["data"]]
+      
+      if (db_2$status=="ACCEPTED" & db_2$matchType=="EXACT"){
+        
+        if (length(unique(db_2[db_2$status=="ACCEPTED" & db_2$matchType=="EXACT",]$family))>1) cat(paste0("\n Warning: Multiple entries of ",dat$scientificName[ind_tax]," found in GBIF! Add author to species name or add kingdom information to original database or check GBIF. \n"))
+        
+        dat$scientificName[ind_tax] <- db_2[db_2$status=="ACCEPTED" & db_2$matchType=="EXACT",]$scientificName[1]
+        
+        try(dat$species[ind_tax]     <- db_2[db_2$status=="ACCEPTED" & db_2$matchType=="EXACT",]$species[1],silent=T)
+        try(dat$genus[ind_tax]       <- db_2[db_2$status=="ACCEPTED" & db_2$matchType=="EXACT",]$genus[1],silent=T)
+        try(dat$family[ind_tax]      <- db_2[db_2$status=="ACCEPTED" & db_2$matchType=="EXACT",]$family[1],silent=T)
+        try(dat$class[ind_tax]       <- db_2[db_2$status=="ACCEPTED" & db_2$matchType=="EXACT",]$class[1],silent=T)
+        try(dat$order[ind_tax]       <- db_2[db_2$status=="ACCEPTED" & db_2$matchType=="EXACT",]$order[1],silent=T)
+        try(dat$phylum[ind_tax]      <- db_2[db_2$status=="ACCEPTED" & db_2$matchType=="EXACT",]$phylum[1],silent=T)
+        try(dat$kingdom[ind_tax]     <- db_2[db_2$status=="ACCEPTED" & db_2$matchType=="EXACT",]$kingdom[1],silent=T)
+
+        dat$GBIFnote[ind_tax] <- "Accepted name found on GBIF"
+      }
+      
+      next # jump to next taxon
+
+    } else {
+      mismatches <- rbind(mismatches,c(taxlist[j],NA,NA))
+      try(mismatches$status[nrow(mismatches)] <- db$status,silent = T)
+      try(mismatches$matchType[nrow(mismatches)] <- db$matchType,silent = T)
+    }
+
+    #update progress bar
+    info <- sprintf("%d%% done", round((j/n_taxa)*100))
+    setTxtProgressBar(pb, j, label=info)
+  }
+  close(pb)
+
+  options(warn=0) # the use of 'tibbles' data frame generates warnings as a bug; if solved this options() should be turned off
+  
+  # dat <- dat[!is.na(dat$GBIFstatus),] # remove species not resolved in GBIF
+
+  out <- list()
+  out[[1]] <- dat
+  out[[2]] <- mismatches
+
+  return(out)
+}
+
+StandardiseTaxonNames <- function(FileInfo = NULL, step3_output = NULL){
+
+  inputfiles <- step3_output$clean_datasets
+  clean_datasets <- list()
+  missing_taxa <- list()
+  fullspeclist <- NULL
+  
+  taxon_list_cols <- c(
+    "taxon_orig", "taxon", "scientificName", "GBIFstatus",
+    "GBIFstatus_Synonym", "GBIFmatchtype", "GBIFtaxonRank",
+    "GBIFusageKey", "GBIFnote", "species", "genus", "family",
+    "order", "class", "phylum", "kingdom"
+  )
+  drop_gbif_cols <- c(
+    "GBIFstatus", "GBIFmatchtype", "GBIFtaxonRank", "GBIFusageKey",
+    "GBIFnote", "GBIFstatus_Synonym", "species", "genus", "family",
+    "class", "order", "phylum", "kingdom"
+  )
+
+  for (i in seq_along(inputfiles)){
+    
+    dat <- inputfiles[[i]]
+    dataset_name <- names(inputfiles)[i]
+    
+    # remove white space #######################################
+    dat$taxon_orig <- gsub("  "," ",dat$taxon_orig)
+    dat$taxon_orig <- gsub("^\\s+|\\s+$", "",dat$taxon_orig) # trim leading and trailing whitespace
+    dat$taxon_orig <- gsub("[$\xc2\xa0]", " ",dat$taxon_orig) # replace weird white space with recognised white space
+    dat$taxon_orig <- gsub("  "," ",dat$taxon_orig)
+    dat$taxon_orig <- gsub("\n"," ",dat$taxon_orig)
+    
+    dat <- dat[!is.na(dat$taxon_orig),]
+    dat <- dat[dat$taxon_orig!="",]
+    
+    #### check names using 'rgbif' GBIF taxonomy ###########
+    cat(paste0("\n    Working on ",dataset_name,"... \n"))
+    checked_taxa <- CheckGBIFTax(dat)
+    
+    DB <- checked_taxa[[1]]
+    mismatches <- checked_taxa[[2]]
+    mismatches <- mismatches[!(is.na(mismatches$taxon) & is.na(mismatches$status) & is.na(mismatches$matchType)),]
+    
+    ## collect full species list with original names and names assigned by GBIF
+    present_taxon_list_cols <- taxon_list_cols[taxon_list_cols %in% colnames(DB)]
+    fullspeclist <- rbind(fullspeclist, unique(DB[, present_taxon_list_cols, drop = FALSE]))
+    
+    DB <- unique(DB) # remove duplicates
+    DB$GBIFstatus[is.na(DB$GBIFstatus)] <- "NoMatch"
+    DB <- DB[, !colnames(DB) %in% drop_gbif_cols, drop = FALSE]
+    
+    if (!is.null(mismatches) && nrow(mismatches) > 0){
+      oo <- order(mismatches$taxon)
+      missing_taxa[[dataset_name]] <- unique(mismatches[oo,])
+    }
+    
+    clean_datasets[[dataset_name]] <- DB
+  }
+  
+  if (is.null(fullspeclist) || nrow(fullspeclist) == 0) {
+    return(list(
+      clean_datasets = clean_datasets,
+      missing_taxa = missing_taxa,
+      full_taxa_list = NULL
+    ))
+  }
+  
+  oo <- order(fullspeclist$kingdom, fullspeclist$phylum, fullspeclist$class, fullspeclist$order, fullspeclist$taxon)
+  fullspeclist <- unique(fullspeclist[oo,])
+  
+  ## assign taxon ID unique to individual taxa #############
+  ## identify unique taxa (obtained from GBIF)
+  fullspeclist$sequence <- 1:nrow(fullspeclist)
+  uni_taxa <- unique(fullspeclist$scientificName)
+  uni_taxa <- data.frame(scientificName = uni_taxa[!is.na(uni_taxa)], stringsAsFactors = FALSE)
+  uni_taxa$taxonID <- 1:nrow(uni_taxa)
+
+  ## merge taxonID with full taxa list
+  fullspeclist_2 <- merge(fullspeclist, uni_taxa, by = "scientificName", all = TRUE)
+  missing_taxon_id <- which(is.na(fullspeclist_2$taxonID))
+  if (length(missing_taxon_id) > 0) {
+    max_taxon_id <- max(fullspeclist_2$taxonID, na.rm = TRUE)
+    if (!is.finite(max_taxon_id)) max_taxon_id <- 0
+    fullspeclist_2$taxonID[missing_taxon_id] <- seq_along(missing_taxon_id) + max_taxon_id
+  }
+  
+  fullspeclist_2 <- fullspeclist_2[order(fullspeclist_2$sequence),]
+  fullspeclist_2 <- fullspeclist_2[, colnames(fullspeclist_2) != "sequence", drop = FALSE]
+  
+  ## add taxon ID to data sets ##########
+  taxon_id <- unique(fullspeclist_2[,c("taxonID","taxon_orig")])
+  for (dataset_name in names(clean_datasets)){
+    clean_datasets[[dataset_name]] <- merge(clean_datasets[[dataset_name]], taxon_id, by = "taxon_orig", all.x = TRUE)
+  }
+  
+  return(list(
+    clean_datasets = clean_datasets,
+    missing_taxa = missing_taxa,
+    full_taxa_list = fullspeclist_2
+  ))
+}
+
+
+GeteventDate <- function(FileInfo = NULL, step3_output = NULL){
+  
+  inputfiles <- step3_output$clean_datasets
+  replacements <- read.xlsx("/scripts/IAS/Config/Guidelines_eventDates.xlsx")
+  replacements$Entry <- as.character(replacements$Entry)
+  replacements$Replacement <- as.character(replacements$Replacement)
+  replacements$Replacement[is.na(replacements$Replacement)] <- ""
+  
+  clean_datasets <- list()
+  nonnumeric_eventDates <- list()
+  translated_eventDates <- list()
+  
+  values_differ <- function(x, y) {
+    x <- ifelse(is.na(x), "", as.character(x))
+    y <- ifelse(is.na(y), "", as.character(y))
+    x != y
+  }
+  
+  standardise_event_date <- function(x) {
+    x <- as.character(x)
+    x[is.na(x)] <- ""
+    for (j in 1:nrow(replacements)) {
+      if (!is.na(replacements$Entry[j])) {
+        x[x == replacements$Entry[j]] <- as.character(replacements$Replacement[j])
+      }
+    }
+    gsub("^\\s+|\\s+$", "", x)
+  }
+  
+  for (i in seq_along(inputfiles)){
+    
+    dat <- inputfiles[[i]]
+    dataset_name <- names(inputfiles)[i]
+    nonnumeric <- vector()
+    
+    ## treat first records #############
+    if (any(colnames(dat)=="eventDate")){ 
+      
+      dat$eventDate_orig <- dat$eventDate # keep original entry
+      dat$eventDate <- standardise_event_date(dat$eventDate)
+      
+      ## test if all first records can be transferred to numeric
+      firstrec_test <- dat$eventDate[dat$eventDate != ""]
+      suppressWarnings( first2 <- as.numeric(firstrec_test)) # default warning is confusing; print meaningful warning below instead
+      if (any(is.na(first2))){
+        nonnumeric <- unique(firstrec_test[is.na(first2)]) # collect non-numeric entries
+      } 
+      
+      ## convert first records to numeric
+      suppressWarnings( dat$eventDate <- as.numeric(dat$eventDate))
+    
+      ## treat second first record if available #############
+      if (any(colnames(dat)=="eventDate2")){
+        
+        dat$eventDate2_orig <- dat$eventDate2 # keep original entry
+        dat$eventDate2 <- standardise_event_date(dat$eventDate2)
+        
+        ## test if all first records can be transferred to numeric
+        firstrec_test <- dat$eventDate2[dat$eventDate2 != ""]
+        suppressWarnings( first2 <- as.numeric(firstrec_test))
+        if (any(is.na(first2))){
+          nonnumeric <- c(nonnumeric,unique(firstrec_test[is.na(first2)])) # collect non-numeric entries
+        } 
+    
+        ## convert first records to numeric
+        suppressWarnings( dat$eventDate2 <- as.numeric(dat$eventDate2))
+        
+        ## calculate unique first record if two are provided
+        ## if range between two first records > 1, take mean of both first records; otherwise, take the earliest (keep the one provided in 'eventDate')
+        diff_records <- which((dat$eventDate2 - dat$eventDate)>0) # difference to check
+        dat$eventDate[diff_records] <- round(rowMeans(dat[diff_records,c("eventDate","eventDate2")]))
+      } 
+      
+      ## prepare output #####
+      if (any(colnames(dat)=="eventDate2")){
+        changed <- values_differ(dat$eventDate, dat$eventDate_orig) | values_differ(dat$eventDate2, dat$eventDate2_orig)
+        out_translated <- unique(dat[changed,c("eventDate","eventDate2","eventDate_orig","eventDate2_orig")])
+        if (nrow(out_translated)>0){  # avoid situation of adding empty data sets
+          out_translated$note <- NA
+          ind <- (out_translated$eventDate2 - out_translated$eventDate)<0
+          out_translated[which(ind),]$note <- "eventDate2 lies before eventDate"
+          out_translated$origDB  <- dataset_name
+          out_translated <- out_translated[,c("eventDate","eventDate2","eventDate_orig","eventDate2_orig","note","origDB")]
+        }
+      } else {
+        changed <- values_differ(dat$eventDate, dat$eventDate_orig)
+        out_translated <- unique(dat[changed,c("eventDate","eventDate_orig")])
+        if (nrow(out_translated)>0){  # avoid situation of adding empty data sets
+          out_translated$eventDate2 <- NA
+          out_translated$eventDate2_orig <- NA
+          out_translated$note <- NA
+          out_translated$origDB  <- dataset_name
+          out_translated <- out_translated[,c("eventDate","eventDate2","eventDate_orig","eventDate2_orig","note","origDB")]
+        }
+      }
+      if (nrow(out_translated)>0){
+        translated_eventDates[[dataset_name]] <- out_translated
+      }
+    }    
+
+    ## Output #######################################
+    
+    if (length(nonnumeric)>0){
+      warning(paste("\n    Warning: First records in",dataset_name,"contain non-numeric symbols. Converted to missing values. \n"))
+      nonnumeric_eventDates[[dataset_name]] <- sort(unique(nonnumeric))
+    } 
+
+    clean_datasets[[dataset_name]] <- dat
+  }
+  
+  all_translated <- NULL
+  if (length(translated_eventDates) > 0){
+    all_translated <- unique(do.call("rbind",translated_eventDates))
+  }
+  
+  return(list(
+    clean_datasets = clean_datasets,
+    nonnumeric_eventDates = nonnumeric_eventDates,
+    translated_eventDates = all_translated
+  ))
+}
+
 step2 <- StandardiseTerms(FileInfo = FileInfo)
 step3 <- StandardiseLocationNames(FileInfo = FileInfo, step2_output = step2)
-
-print(head(step3$clean_datasets[["SInAS"]]))
-print(head(step3$missing_locations[["SInAS"]]))
+step4 <- StandardiseTaxonNames(FileInfo = FileInfo, step3_output = step3)
+step5 <- GeteventDate(FileInfo = FileInfo, step3_output = step4)
+print("*************clean datasets*************")
+print(head(step5$clean_datasets[["GRIIS"]]))
+print("*************missing locations*************")
+print(head(step3$missing_locations[["GRIIS"]]))
+print("*************translated locations*************")
 print(head(step3$translated_locations))
+print("*************missing taxa*************")
+print(head(step4$missing_taxa[["GRIIS"]]))
+print("*************non-numeric event dates*************")
+print(head(step5$nonnumeric_eventDates[["GRIIS"]]))
+print("*************translated event dates*************")
+print(head(step5$translated_eventDates))
+
+griis_clean <- step5$clean_datasets[["GRIIS"]]
+first_records_clean <- step5$clean_datasets[["FirstRecords"]]
+
+griis_path <- file.path(outputFolder, "GRIIS_clean.csv")
+first_records_path <- file.path(outputFolder, "FirstRecords_clean.csv")
+file_info_path <- file.path(outputFolder, "FileInfo.csv")
+
+write.csv(griis_clean, griis_path, row.names = FALSE)
+write.csv(first_records_clean, first_records_path, row.names = FALSE)
+write.csv(FileInfo, file_info_path, row.names = FALSE)
+
+biab_output("griis_clean", griis_path)
+biab_output("first_records_clean", first_records_path)
+biab_output("file_info", file_info_path)
+
