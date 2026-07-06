@@ -2,7 +2,7 @@ _Authors: Jory Griffith, Guillaume Larocque, Laetitia Tremblay, Jean-Michel Lord
 
 Review status: Reviewed
 
-Reviewed by: Santiago Saura, Oscar Godinez-Gomez, Camilo Andreas Correa Ayram, Teresa Goicolea
+Reviewed by: Santiago Saura, Oscar Godinez-Gomez, Camilo Andrés Correa-Ayram, Teresa Goicolea, Corey Ruha
 
 
 name: Protected Connected Index (ProtConn)
@@ -23,7 +23,7 @@ ProtConn can be used to assess current progress toward Goal A and Target 3 of th
 
 ## Pipeline limitations
 
-* On larger datasets, the pipeline is slow and uses a lot of memory, especially with larger input dispersal distances.
+* On larger datasets, the pipeline is slow and uses a lot of memory, especially with larger input dispersal distances or for countries with many protected areas.
 
 * Currently, the pipeline does not take into account landscape resistance (i.e., whether land between protected areas is easily traversed by species).
 
@@ -44,7 +44,7 @@ If you want to run the analysis with custom protected area data only, please use
 
 BON in a Box contains a pipeline to calculate ProtConn for a given country or region of interest. The pipeline has the following user inputs:
 
-- **Bounding Box and CRS:** the user must select a bounding box and coordinate reference system (CRS) to be used for the analysis. This can be done by using the chooser to either select a country and/or region, or type in/draw a custom bounding box. Then, an appropriate CRS can be selected from the corresponding drop-down menu. **The CRS must be projected.**
+- **Bounding Box and CRS:** the user must select a bounding box and coordinate reference system (CRS) to be used for the analysis. This can be done by using the chooser to either select a country and/or region, or type in/draw a custom bounding box. Then, an appropriate CRS can be selected from the corresponding drop-down menu. **The CRS must be projected (i.e. associated units must be in metres).**
 
 - **Polygon of study area:** this is an optional input to add a custom study area file, which will override the polygon generated from the Bounding Box and CRS input. The custom study area file must be in GeoPackage format and added to the userdata folder in your local repository. This input should be the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg).
 
@@ -103,7 +103,7 @@ This step cleans the data retrieved from the WDPA by correcting any geometry iss
 
 This step performs the ProtConn analysis on the protected areas of interest. ProtConn is calculated by creating a pairwise matrix of the distances between the closest edges of each protected area. Then, it calculates the probability of a species dispersing between these protected areas using a negative exponential dispersal kernel with the input distance assigned to a probability of 0.5. This means that if the protected areas are very near one another, there is a high probability that species will be able to disperse between them, but this probability decays exponentially with increasing distance. Different dispersal distances can be specified based on the species of interest, as very small species such as rodents cannot disperse as far as large mammals such as deer, so the connectedness would not be the same for those groups. Then, the dispersal probability between each pair of protected areas is multiplied by the area of the protected areas, and the result of this product is summed for all pairs and divided by the area of the study area.
 
-### Pipeline
+### Pipeline outputs
 
 - **Protected areas:** protected areas on which ProtConn is being calculated. Overlapping protected areas have been merged into one to speed up calculations.
 
@@ -123,15 +123,15 @@ This step performs the ProtConn analysis on the protected areas of interest. Pro
 
 - **Study area polygon:** polygon of the chosen study area.
 
-## Example
+## Examples
 
-**Sample run:**
+Example of a pipeline run with WDPA data: [Results viewer](http://pipelines-results.geobon.org/viewer/_2026-05-06%3EProtconn-pipeline%3EProtConn_pipeline%3ErgKj9pkfr2WYcX2U3L6seYkqqPXJ) and [run details](https://pipelines-results.geobon.org/pipeline-form/_2026-05-06%3EProtconn-pipeline%3EProtConn_pipeline/rgKj9pkfr2WYcX2U3L6seYkqqPXJ)
 
-Example of a pipeline run with WDPA data: [insert link]
+Example of a pipeline run with user data: [Results viewer](https://pipelines-results.geobon.org/viewer/_2026-05-06%3EProtconn-pipeline%3EProtConn_pipeline_userdata%3ECuX6Sktt9wSZcPb885-LCHZQ9ODI) and [run details](https://pipelines-results.geobon.org/pipeline-form/_2026-05-06%3EProtconn-pipeline%3EProtConn_pipeline_userdata/CuX6Sktt9wSZcPb885-LCHZQ9ODI)
+  
+</a>
 
-Example of a pipeline run with user data: [insert link]
-
-Example of a pipeline run with both user data and WDPA data: [insert link]
+Example of a pipeline run with combined user data and WDPA data: [Results viewer](https://pipelines-results.geobon.org/viewer/_2026-05-06%3EProtconn-pipeline%3EProtConn_pipeline%3EF7Kx9xgMeuerWHxh-p-tBG_PxM4z) and [run details](https://pipelines-results.geobon.org/pipeline-form/_2026-05-06%3EProtconn-pipeline%3EProtConn_pipeline/F7Kx9xgMeuerWHxh-p-tBG_PxM4z)
 
 ## Troubleshooting
 
@@ -140,6 +140,8 @@ Example of a pipeline run with both user data and WDPA data: [insert link]
 - `Error: Could not retrieve protected areas from WDPA`: if you encounter this error, it means the WDPA API is not able to retrieve the data for the country/region of interest. This sometimes happens with very large datasets and is a problem with the API itself, not the pipeline.
 
 - `Error: Script produced no results. Check log for errors and make sure that the script calls biab_output.`: if you encounter this error and you are running ProtConn for a large area with many protected areas, it is likely that Docker has terminated the process because you have run out of computer RAM. You may need to run the analysis with smaller areas or on a computer with more RAM.
+
+- `There is no country or region polygon for this bounding box`: if you encounter this error, you must select a bounding box that includes at least one full country or region. The smallest unit that ProtConn can currently be calculated on is a region.
 
 ## References
 

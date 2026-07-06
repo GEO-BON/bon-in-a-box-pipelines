@@ -1,0 +1,66 @@
+name: Conda-CWL Runner
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - edge
+      - '*staging'
+    paths:
+      - '.github/workflows/docker_runner-cwl.yml'
+      - 'runners/cwl/conda-cwl-dockerfile'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}/runner-conda-cwl
+
+jobs:
+  runner-conda-cwl:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v6
+
+      - name: Log in to GitHub Packages
+        uses: docker/login-action@v4
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: metadata
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
+          tags: |
+            # Image used in compose file
+            type=raw,value=${{ (github.ref_name == 'main' && 'latest') || github.ref_name }}
+            type=sha,value=${{ github.sha }}
+          labels: |
+            org.opencontainers.image.licenses=GPL-v3
+            org.opencontainers.image.title=BON in a Box Conda-CWL Runner
+
+      - name: Build and push Docker image
+        id: push
+        uses: docker/build-push-action@v7
+        with:
+          context: runners/cwl
+          file: runners/cwl/conda-cwl-dockerfile
+          push: true
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
+
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v4
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
