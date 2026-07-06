@@ -19,7 +19,13 @@ inputs:
     example: "/scripts/SDM/extentToBbox_extent.shp"
   method_background:
     label: method background
-    description: method used to sample background points
+    description: > 
+      Generates background points using any of the six available methods. 
+      - `random`: background points are randomly sampled throughout the whole study extent.
+      - `weighted_raster`: background points are sampled in proportion to the number of observations of a target group in an observation density raster. 
+      - `unweighted_raster`: background points are sampled only in cells where there are observations from a target group. 
+      - `inclusion_buffer`: background points are sampled within a buffer around observations. 
+      - `thickening`: background points are sampled in proportion the local density of observations by sampling in a buffer around each observation. 
     type: options
     options:
       - random
