@@ -23,31 +23,52 @@ secret = os.getenv("CDSE_CLIENT_SECRET")
 if spatial_resolution == "":
     spatial_resolution = None
 
-start_date = f"{start_year}-01-01"
-end_date = f"{end_year}-12-31"
+
+# Start date
+if "-" in str(start_year):
+    start_date = start_year
+else:
+    start_date = f"{start_year}-01-01"
+
+# End date
+if "-" in str(end_year):
+    end_date = end_year
+else:
+    end_date = f"{end_year}-12-31"
+
+input_crs = crs
+udp_crs = "EPSG:3035"
+udp_epsg = 3035
 
 # input checks
 if not id or not secret:
     biab_error_stop("Please specify CDSE credentials in runner.env")
 
-EPSG = int(crs.split(':')[1])
-coord = CRS.from_epsg(EPSG)
+input_epsg = int(input_crs.split(":")[1])
+input_coord = CRS.from_epsg(input_epsg)
 
-if coord.is_geographic:
+if input_coord.is_geographic:
     biab_error_stop("CRS is in degrees and must be in meters.")
 
-if spatial_resolution is not None and coord.is_projected and spatial_resolution < 1:
+if spatial_resolution is not None and input_coord.is_projected and spatial_resolution < 1:
     biab_error_stop("CRS is in meters and resolution is in degrees.")
 
 geometry = None
+
 if polygon is not None and polygon != "":
     gdf = gpd.read_file(polygon)
-    gdf = gdf.to_crs(crs)
+
     if gdf.empty:
         biab_error_stop("Study area polygon file does not contain any features.")
-    for col in gdf.select_dtypes(include=['datetime64']).columns:
+
+    # UDP needs polygon/bbox in EPSG:3035
+    gdf = gdf.to_crs(udp_crs)
+
+    for col in gdf.select_dtypes(include=["datetime64"]).columns:
         gdf[col] = gdf[col].astype(str)
+
     geometry = json.loads(gdf.to_json())
+
     west, south, east, north = gdf.total_bounds
     bbox = [west, south, east, north]
 
@@ -60,7 +81,7 @@ connection.authenticate_oidc_client_credentials(
 )
 
 
-aoi = {"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs": EPSG}
+aoi = {"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs": udp_epsg}
 process_graph = "https://raw.githubusercontent.com/ESA-APEx/apex_algorithms/obsgession_lai/algorithm_catalog/obsgession/udp_obsgession_w23_lai/openeo_udp/udp_obsgession_w23_lai.json"
 
 #get cube from udp
@@ -72,10 +93,10 @@ cube = connection.datacube_from_process(
     spatial_extent = aoi,
     binning_period = "year",
     temp_aggregator = "max",
-    epsg = EPSG
+    epsg = udp_epsg
 )
 
-# Run the UDP first, then reload its STAC output as a raster cube.
+#Run the UDP first, then reload its STAC output as a raster cube.
 print("Starting UDP job to retrieve LAI cube...", flush=True)
 udp_job = cube.create_job(
     title=f"LAI UDP {start_year}-{end_year}",
@@ -111,10 +132,14 @@ else:
     lai_cube_cropped = lai_cube.filter_spatial(geometry)
 
 # add step to resample spatial resolution if needed
-if spatial_resolution is None:
+if spatial_resolution is None and input_epsg == udp_epsg:
     datacube_resampled_cropped = lai_cube_cropped
 else:
-    datacube_resampled_cropped = lai_cube_cropped.resample_spatial(resolution=spatial_resolution, projection=crs, method="bilinear")
+    datacube_resampled_cropped = lai_cube_cropped.resample_spatial(
+        resolution=spatial_resolution,
+        projection=input_crs,
+        method="bilinear"
+    )
 
 # Min of yearly maxima per cell
 lai = datacube_resampled_cropped.reduce_dimension(dimension="t", reducer="min")
