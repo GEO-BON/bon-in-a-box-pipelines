@@ -107,10 +107,23 @@ cube = connection.datacube_from_process(
 )
 
 #Run the UDP first, then reload its STAC output as a raster cube.
-print("Starting UDP job to retrieve LAI cube...", flush=True)
-udp_job = cube.create_job(
-    title=f"LAI UDP {start_year}-{end_year}",
-    auto_add_save_result=True,
+#print("Starting UDP job to retrieve LAI cube...", flush=True)
+#udp_job = cube.create_job(
+#    title=f"LAI UDP {start_year}-{end_year}",
+#    auto_add_save_result=True,
+#)
+#try:
+#    udp_job.start_and_wait()
+#except Exception as e:
+#    biab_error_stop(f"UDP job failed: {e}")
+#
+#print(f"UDP job finished: {udp_job.job_id}", flush=True)
+
+#job_results = udp_job.get_results()
+#job_metadata = job_results.get_metadata()
+
+udp_job = cube.save_result(format="GTiff").create_job(
+    title=f"LAI UDP GeoTIFF {start_year}-{end_year}"
 )
 try:
     udp_job.start_and_wait()
@@ -119,8 +132,15 @@ except Exception as e:
 
 print(f"UDP job finished: {udp_job.job_id}", flush=True)
 
-job_results = udp_job.get_results()
-job_metadata = job_results.get_metadata()
+
+rasters = udp_job.get_results().download_files(output_folder)
+print("Job finished:", rasters, flush=True)
+
+
+raster_outs = [str(r) for r in rasters if not str(r).endswith(".json")]
+biab_output("rasters", raster_outs)
+
+biab_error_stop("just testing first part")
 
 canonical_links = [
     link["href"]
@@ -147,7 +167,7 @@ if spatial_resolution is None and input_epsg == udp_epsg:
 else:
     datacube_resampled_cropped = lai_cube_cropped.resample_spatial(
         resolution=spatial_resolution,
-        projection=input_crs,
+        projection=input_epsg,
         method="bilinear"
     )
 
