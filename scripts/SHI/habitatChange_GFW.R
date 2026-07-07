@@ -1,6 +1,7 @@
 #-------------------------------------------------------------------------------
 # This script measures change on the habitat of the species associated to forest cover
 #-------------------------------------------------------------------------------
+
 options(timeout = max(60000000, getOption("timeout")))
 path_script <- Sys.getenv("SCRIPT_LOCATION")
 
@@ -22,7 +23,8 @@ source(file.path(path_script, "data/loadCubeFunc.R"), echo = TRUE)
 
 # Parameters -------------------------------------------------------------------
 # spatial resolution
-spat_res <- ifelse(is.null(input$spat_res), 1000, input$spat_res)
+#spat_res <- ifelse(is.null(input$spat_res), 1000, input$spat_res)
+spat_res <- input$spat_res
 
 # Define SRS
 srs <- paste0(input$crs$CRS$authority, ":", input$crs$CRS$code)
@@ -36,6 +38,10 @@ srs_cube <- suppressWarnings(if (check_srs) {
 } else {
   srs
 }) # paste Authority in case SRID is used
+
+project_to_input_grid <- function(r) {
+  terra::project(r, srs, res = spat_res, method = "near")
+}
 
 # Define species
 sp <- str_to_sentence(input$species)
@@ -85,8 +91,16 @@ for (i in 1:length(sp)) {
   #-------------------------------------------------------------------------------------------------------------------
   # 1. Load inputs
   #-------------------------------------------------------------------------------------------------------------------
+ 
+#  if (input$crs$CRS$code != 4326) {
+#   sf_bbox_analysis <- st_read(v_path_bbox_analysis[i]) |> st_transform("EPSG:4326")
+#    sf_bbox_analysis <- st_segmentize(sf_bbox_analysis, dfMaxLength = 1000) # segmentize to avoid reprojection issues with large polygons
+#  } else {
+#    sf_bbox_analysis <- st_read(v_path_bbox_analysis[i])
+#  }
 
   sf_bbox_analysis <- st_read(v_path_bbox_analysis[i])
+
   sf_ext_srs <- sf_bbox_analysis |> st_bbox()
   print(sf_ext_srs)
   print(v_path_to_area_of_habitat[i])
@@ -100,6 +114,12 @@ for (i in 1:length(sp)) {
     print("dir exists")
   }
 
+# Define fine resolution for loading GFW data. This is needed to apply the threshold for forest cover at the native resolution of the data before aggregating to the desired spatial resolution. The fine resolution is set to 30m if the input CRS is in meters, and to 0.00025 degrees (approximately 30m at the equator) if the input CRS is in degrees.
+if (input$crs$CRS$unit == "metre") {
+  fine_res <- 30
+} else {
+  fine_res <- 0.00025
+}
   #-------------------------------------------------------------------------------------------------------------------
   # 2. Land Cover Values
   #-------------------------------------------------------------------------------------------------------------------
@@ -112,7 +132,7 @@ for (i in 1:length(sp)) {
       collections = c("gfw-treecover2000"),
       bbox = sf_ext_srs,
       srs.cube = srs_cube,
-      spatial.res = spat_res,
+      spatial.res = fine_res, # loading the native resolution of the data, which is 30m, to be able to apply the threshold for forest cover. The resampling to the desired spatial resolution will be done after applying the threshold.
       temporal.res = "P1Y",
       t0 = "2000-01-01",
       t1 = "2000-12-31",
@@ -124,12 +144,31 @@ for (i in 1:length(sp)) {
   } else {
     cube_GFW_TC_threshold <<- funFilterCube_range(cube_GFW_TC, min = min_forest[i], max = max_forest[i], value = FALSE)
   }
-  r_GFW_TC_threshold <- cube_to_raster(cube_GFW_TC_threshold, format = "terra") # convert to raster format
+
+  print(cube_GFW_TC_threshold)
+
+# aggregating to the desired spatial resultion. here we sum the number of pixels that are suitable in each aggregeated pixel which will later be translated to the area suitable
+cube_area_suitable <- aggregate_space(
+  cube_GFW_TC_threshold,
+  dx = spat_res,
+  dy = spat_res,
+  method = "sum"
+)
+
+print(cube_area_suitable)
+
+  library(stars)
+  r_GFW_TC_threshold <- st_as_stars(cube_area_suitable) |> terra::rast()
+  #r_GFW_TC_threshold <- cube_to_raster(cube_GFW_TC_threshold, format = "terra") # convert to raster format
   r_GFW_TC_threshold <- r_GFW_TC_threshold |>
     terra::classify(rcl = cbind(NA, 0)) # turn NA to 0
 
-  r_aoh_rescaled <- terra::resample(r_aoh, r_GFW_TC_threshold, method = "mode") # Adjust scale of range map
+print(r_GFW_TC_threshold)
 
+  r_aoh_native <- terra::project(r_aoh, r_GFW_TC_threshold, method = "near")
+  r_aoh_rescaled <- terra::resample(r_aoh_native, r_GFW_TC_threshold, method = "mode") # Align AOH to the native GFW grid before combining layers
+
+print(r_aoh_rescaled)
   print("========== Base forest layer downloaded ==========")
 
   # Download forest loss maps and create different layers for each year to remove from forest
@@ -140,7 +179,7 @@ for (i in 1:length(sp)) {
       collections = c("gfw-lossyear"),
       bbox = sf_ext_srs,
       srs.cube = srs_cube,
-      spatial.res = spat_res,
+      spatial.res = fine_res, # loading the native resolution of the data, which is 30m, to be able to apply the threshold for forest cover. The resampling to the desired spatial resolution will be done after applying the threshold.
       temporal.res = "P1Y",
       t0 = "2000-01-01",
       t1 = "2000-12-31",
@@ -149,12 +188,41 @@ for (i in 1:length(sp)) {
     )
 
   print("========== Forest loss layer downloaded ==========")
+print(cube_GFW_loss)
 
   times <- as.numeric(substr(v_time_steps[v_time_steps > 2000], start = 3, stop = 4))
 
   l_year_loss <- map(times, ~ funFilterCube_range(cube = cube_GFW_loss, max = .x, type_max = 1, min = 1, type_min = 1, value = FALSE))
-  # turn cube to raster
-  l_r_year_loss <- map(l_year_loss, cube_to_raster, format = "terra")
+  
+  print(l_year_loss)
+# only keep the suitale pixels that are lost so that we aren't losing areas that are already not suitable in the base year.
+l_year_loss_suitable <- map(l_year_loss, function(loss_cube) {
+
+  combined <- gdalcubes::join_bands(list(cube_GFW_TC_threshold, loss_cube))
+
+  # Keep only pixels that were suitable in the base year and were lost in the GFW loss cube.
+  # Use FUN instead of an expression string so we do not depend on band rename semantics.
+  apply_pixel(
+    combined,
+    FUN = function(pixel) {
+      pixel[1] * pixel[2]
+    },
+    names = "result"
+  )
+})
+print(l_year_loss_suitable)
+# aggregate each cumulative loss cube to desired resolution
+l_year_loss_agg <- map(
+  l_year_loss_suitable,
+  ~ gdalcubes::aggregate_space(
+    .x,
+    dx = spat_res,
+    dy = spat_res,
+    method = "sum"
+  ))
+print(l_year_loss_agg)
+  # turn aggregated loss cubes to raster
+  l_r_year_loss <- map(l_year_loss_agg, cube_to_raster, format = "terra")
   s_year_loss_w_nas <- rast(l_r_year_loss)
   # turn NAs into 0 for raster operations
   s_year_loss <- s_year_loss_w_nas |> terra::classify(rcl = cbind(NA, 0)) # faster than with ifel
@@ -168,7 +236,8 @@ for (i in 1:length(sp)) {
     cat("Create t0 layer with: ", paste0("Loss_", t_0), "\n")
     s_year_loss <- terra::subset(s_year_loss, subset = paste0("Loss_", v_time_steps[v_time_steps > t_0]))
     cat("Create new loss layers without t0: ", paste0("Loss_", v_time_steps[v_time_steps > t_0], collapse = ", "), "\n")
-    r_GFW_TC_threshold <- terra::classify(r_GFW_TC_threshold - s_year_loss_t0, rcl = cbind(-1, 0))
+    r_GFW_TC_threshold <- r_GFW_TC_threshold - s_year_loss_t0
+    r_GFW_TC_threshold[r_GFW_TC_threshold < 0] <- 0
     print("Create new base habitat layer")
   } else {
     names(s_year_loss) <- paste0("Loss_", v_time_steps[v_time_steps > t_0])
@@ -197,18 +266,29 @@ for (i in 1:length(sp)) {
       collections = c("gfw-gain"),
       bbox = sf_ext_srs,
       srs.cube = srs_cube,
-      spatial.res = spat_res,
+      spatial.res = fine_res, # loading the native resolution of the data, which is 30m, to be able to apply the threshold for forest cover. The resampling to the desired spatial resolution will be done after applying the threshold.
       temporal.res = "P1Y",
       t0 = "2000-01-01",
       t1 = "2000-12-31",
       resampling = "near"
     )
 
+
   print("========== Forest gain layer downloaded ==========")
   class(cube_GFW_gain)
   print(cube_GFW_gain)
 
-  r_GFW_gain <- cube_to_raster(cube_GFW_gain, format = "terra") # convert to raster format
+  # Aggregate gain layer to desired resolution (binary gain indicator, no thresholding needed)
+  cube_gain_agg <- gdalcubes::aggregate_space(
+    cube_GFW_gain,
+    dx = spat_res,
+    dy = spat_res,
+    method = "sum"
+  )
+
+  # Convert aggregated gain cube to raster
+  r_GFW_gain <- st_as_stars(cube_gain_agg) |> terra::rast()
+  r_GFW_gain <- r_GFW_gain |> terra::classify(rcl = cbind(NA, 0)) # turn NA to 0
   r_GFW_gain_rescaled <- terra::resample(r_GFW_gain, r_aoh_rescaled, method = "mode")
   r_GFW_gain_mask <- terra::classify(terra::mask(r_GFW_gain_rescaled, r_aoh_rescaled), rcl = cbind(0, NA))
 
@@ -229,7 +309,8 @@ for (i in 1:length(sp)) {
   df_r_GFW_TC_threshold_mask <- as.data.frame(r_GFW_TC_threshold_mask, xy = TRUE) |> setNames(c("x", "y", "No_change"))
   df_r_year_loss_mask_plot <- as.data.frame(r_year_loss_mask_plot, xy = TRUE) |> setNames(c("x", "y", "Loss"))
   df_r_GFW_gain_mask <- as.data.frame(r_GFW_gain_mask, xy = TRUE) |> setNames(c("x", "y", "Gain"))
-
+  
+  
   bbox_figure <- st_bbox(r_GFW_TC_threshold_mask)
   img_map_habitat_changes <- ggplot() +
     geom_tile(data = df_r_aoh, aes(x = x, y = y, fill = "Base"), alpha = 0.4) +
@@ -255,9 +336,12 @@ for (i in 1:length(sp)) {
   # Put no change, loss, and gain together in one raster
   v1 <- merge(r_year_loss_mask_plot, r_GFW_TC_threshold_mask) # merge loss and no change
   v2 <- merge(r_GFW_gain_mask, v1) # merge gain
-  v3 <- terra::classify(v2, rcl = cbind(0, NA)) # turn 0 to NA
+  v3_native <- terra::classify(v2, rcl = cbind(0, NA)) # turn 0 to NA while still on the native GFW grid
   # Recategorize
   # rast_map <- subst(v2, from=c(1,2,3), to=c("No Change", "Forest Loss", "Forest Gain"))
+
+  # reproject once all layers are combined on the native GFW grid
+  v3 <- project_to_input_grid(v3_native)
 
   habitat_change_map_path[i] <- file.path(outputFolder, sp[i], paste0(sp[i], "_GFW_loss.tiff"))
   habitat_change_map <- terra::writeRaster(v3, habitat_change_map_path[i], gdal = c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG")
@@ -269,11 +353,14 @@ for (i in 1:length(sp)) {
   # create non masked layers for distance metrics
   s_habitat0_nomask <- terra::classify(r_GFW_TC_threshold - s_year_loss_resampled, rcl = cbind(-1, 0))
 
-  s_habitat_nomask <- c(r_GFW_TC_threshold, s_habitat0_nomask)
+  s_habitat_nomask_native <- c(r_GFW_TC_threshold, s_habitat0_nomask)
   # rm(s_habitat0_nomask)
-  names(s_habitat_nomask) <- paste0("habitat_", v_time_steps)
+  names(s_habitat_nomask_native) <- paste0("habitat_", v_time_steps)
 
-  s_habitat <- terra::mask(s_habitat_nomask, r_aoh_rescaled)
+  s_habitat_native <- terra::mask(s_habitat_nomask_native, r_aoh_rescaled)
+  s_habitat_native <- terra::classify(s_habitat_native, rcl = cbind(0, NA))
+  s_habitat_nomask <- project_to_input_grid(s_habitat_nomask_native)
+  s_habitat <- project_to_input_grid(s_habitat_native)
   s_habitat <- terra::classify(s_habitat, rcl = cbind(0, NA))
 
   l_path_habitat_by_tstep[[i]] <- file.path(outputFolder, sp[i], paste0(sp[i], "_GFW_", names(s_habitat), ".tif"))
@@ -287,9 +374,27 @@ for (i in 1:length(sp)) {
   #-------------------------------------------------------------------------------------------------------------------
 
   # Area Score--------------------------------------------------------------------
-  r_areas <- terra::cellSize(s_habitat[[1]], unit = "ha") # create raster of areas by pixel
-
-  s_habitat_area <- s_habitat * r_areas
+  # Convert fine resolution pixel area to hectares based on CRS units
+  if (input$crs$CRS$unit == "metre") {
+    # fine_res in meters: convert m² to ha (1 ha = 10,000 m²)
+    fine_pixel_area_ha <- (fine_res * fine_res) / 10000
+    print(paste("Fine pixel area:", fine_pixel_area_ha, "hectares"))
+  } else {
+    # CRS in degrees: cannot directly convert to ha without latitude
+    # Use terra::cellSize on a known projected reference instead
+    warning("CRS in degrees detected. Using cellSize on reference grid for accurate area calculation.")
+    fine_pixel_area_ha <- NA  # Will use cellSize method below
+  }
+  
+  if (is.na(fine_pixel_area_ha)) {
+    # For degree-based CRS, calculate area using the first habitat layer's grid
+    r_areas_fine <- terra::cellSize(s_habitat[[1]], unit = "ha")
+    s_habitat_area <- s_habitat * r_areas_fine
+  } else {
+    # For meter-based CRS, use the calculated fine pixel area
+    s_habitat_area <- s_habitat * fine_pixel_area_ha
+  }
+  
   habitat_area <- terra::global(s_habitat_area, sum, na.rm = T)
 
   df_area_score_gfw <- tibble(sci_name = sp[i], Year = v_time_steps, Area = units::set_units(habitat_area$sum, "ha")) |>

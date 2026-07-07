@@ -1,5 +1,5 @@
 # Species Habitat Index and Species Habitat Score
-### Author(s): Maria Isabel Arce-Plata, Guillaume Larocque, Jaime Burbano-Girón, Maria Camila Díaz, Timothée Poisot, Jory Griffith, Jean-Michel Lord
+### Author(s): Maria Isabel Arce-Plata, Guillaume Larocque, Jaime Burbano-Girón, Maria Camila Díaz, Timothée Poisot, Jory Griffith, Jean-Michel Lord, Laetitia Tremblay
 #### Reviewed by: In review
 
 ## Introduction
@@ -21,15 +21,15 @@ BON in a Box has a pipeline to calculate SHS and SHI for species, countries, and
 
 - **Species:** List of scientific names of species for which you want to calculate the SHI index.
 
-- **Study area option:** Whether the study area of interest is a country, region, or a user provided polygon.
+- **Bounding box and CRS:** The user must select a bounding box for the analysis. This can be a country, region or a custom bounding box.
 
-- **Country:** Country of interest to be used as study area. Check the available countries and regions [here](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/).
+- **Start year (ESA pipeline only):** The first time point for the land cover loss analysis.
 
-- **Region:** Region of interest to be used as study area. To be used when you want more specific administrative boundaries. Check the available countries and regions [here](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/).
+- **End year (ESA pipeline only):** The end year for the land cover loss analysis.
 
-- **Study area:** Polygon of the study area, in geopackage format. Input the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg). To be used when the `Study area option` input is selected to be *user defined*.
+- **Time interval (ESA pipeline only):** Time interval of the analysis. This input should be the difference between inputs `End year` and `Start year`.
 
-- **Buffer for study area:** Size of the buffer around the study area. To avoid having edge effects in calculations, a buffer is used to the limit the area of study. Defaults to half of the total width of the study area.
+- **Habitats (ESA pipeline only):** The user must specify the codes for the habitat types of the species of interest. Refer to the [list of global CCI-LC codes](http://maps.elie.ucl.ac.be/CCI/viewer/download/CCI-LC_Maps_Legend.pdf) for the habitat types and their associated codes.
 
 - **Type of range map:** Used to select the type of range map. This is based on the type of the source file chosen or provided, where the source file can be a polygon, raster, or both.
 
@@ -37,23 +37,25 @@ BON in a Box has a pipeline to calculate SHS and SHI for species, countries, and
 
 - **Range map (raster):** Raster with the expected area for the species of interest. To be used when the `Type of range map` input is selected to be *Raster*.
 
-- **Spatial reference system:** Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.
+- **Min forest (GFW pipeline only):** Minimum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Myrmecophaga-tridactyla]). For multiple species, input in the same order as the input in species and separate with a comma.
 
-- **Min forest:** Minimum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Myrmecophaga-tridactyla]). For multiple species, input in the same order as the input in species and separate with a comma.
+- **Max forest (GFW pipeline only):** Maximum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Myrmecophaga-tridactyla]). For multiple species, input in the same order as the input in species and separate with a comma.
 
-- **Max forest:** Maximum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Myrmecophaga-tridactyla]). For multiple species, input in the same order as the input in species and separate with a comma.
+- **Initial time (GFW pipeline only):** Year at which the analysis should begin, must be 2000 or later. Check the time interval available for the Global Forecst Watch data [here](https://stac.geobon.org/collections/gfw-lossyear).
 
-- **Initial time:** Year at which the analysis should begin, must be 2000 or later. Check the time interval available for the Global Forecst Watch data [here](https://stac.geobon.org/collections/gfw-lossyear).
+- **Final time (GFW pipeline only):** Year at which the analysis should end, must be a later than the `Initial time` input. It should be within the time interval for the Global Forest Watch (GFW) data which can be found [here](https://stac.geobon.org/collections/gfw-lossyear).
 
-- **Final time:** Year at which the analysis should end, must be a later than the `Initial time` input. It should be within the time interval for the Global Forest Watch (GFW) data which can be found [here](https://stac.geobon.org/collections/gfw-lossyear).
-
-- **Time step:** Temporal resolution for analysis, in number of years. To get values for the end year, the time step should fit evenly into the given analysis range.
+- **Time step (GFW pipeline only):** Temporal resolution for analysis, in number of years. To get values for the end year, the time step should fit evenly into the given analysis range.
 
 - **Output spatial resolution:** The user can specify the spatial resolution at which they want to measure habitat change.
 
 - **Filter by elevation:** The user can decide whether they want to include elevation in the range map of the species of interest. If “yes” is chosen, the pipeline will extract the species elevation preferences from IUCN and remove areas within the range map that are outside of the elevational range of the species. The user can also specify a buffer to the elevation values.
 
 - **Elevation buffer:** Elevation buffer (in meters) to be added or subtracted to the reported species elevation range. Default is zero. Positive values will increase the range by that number in meters, while negative values will decrease the range by that number.
+
+- **Resampling method:** The user must select a resampling method for rescaling raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for a list of resampling methods and their functionalities.
+
+- **Aggregation method:** The user must select a method to aggregate items that overlay each other.
 
 ### Pipeline steps
 

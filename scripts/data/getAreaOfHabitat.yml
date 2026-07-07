@@ -8,11 +8,14 @@ author:
     identifier: "https://orcid.org/0000-0002-5967-9156"
   - name: Laetitia Tremblay
     identifier: https://www.linkedin.com/in/laetitia-tremblay-b0619b273/
+  - name: Laetitia Tremblay
+    identifier: https://www.linkedin.com/in/laetitia-tremblay-b0619b273/
 license: CC BY
 inputs:
   spat_res:
     label: output spatial resolution
     description: Spatial resolution (in meters) for the output of the analysis.
+    type: float
     type: float
     example: 1000
   crs:
@@ -117,6 +120,7 @@ conda:
     - r-readr
     - r-geodata
     - r-gdalcubes
+    - r-rredlist=1.0.0
     - r-rredlist=1.0.0
     - r-stringr
     - r-httr2
