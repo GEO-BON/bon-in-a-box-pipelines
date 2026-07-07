@@ -28,12 +28,30 @@ if (method %in% c("vif.cor", "pearson", "spearman", "kendall") && is.null(cutoff
 }
 rasts <- c()
 names_file <- list()
+
+template <- terra::rast(rasters[[1]])
+
 for (ra in rasters) {
   thisras <- terra::rast(ra)
+
+  if (!terra::compareGeom(template, thisras, stopOnError = FALSE)) {
+    print(paste("Aligning raster to template:", ra))
+
+    thisras <- terra::project(
+      thisras,
+      template,
+      method = "bilinear"
+    )
+  }
+
   rasts <- c(rasts, thisras)
-  names_file[[names(thisras)]] <- ra
+
+  for (nm in names(thisras)) {
+    names_file[[nm]] <- ra
+  }
 }
-rasts <- rast(rasts)
+
+rasts <- terra::rast(rasts)
 
 rasts
 env_df <- sample_spatial_obj(rasts, nb_points = input$nb_sample)

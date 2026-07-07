@@ -53,6 +53,16 @@ if input_coord.is_geographic:
 if spatial_resolution is not None and input_coord.is_projected and spatial_resolution < 1:
     biab_error_stop("CRS is in meters and resolution is in degrees.")
 
+if polygon is None or polygon == "":
+    if input_epsg != udp_epsg:
+        bbox_geom = gpd.GeoDataFrame(
+            geometry=[box(*bbox)],
+            crs=input_crs
+        ).to_crs(udp_crs)
+
+        west, south, east, north = bbox_geom.total_bounds
+        bbox = [west, south, east, north]
+
 geometry = None
 
 if polygon is not None and polygon != "":
