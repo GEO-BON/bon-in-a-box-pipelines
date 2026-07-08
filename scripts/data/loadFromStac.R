@@ -59,17 +59,6 @@ if (grepl("chelsa", input$collections_items[1], ignore.case = TRUE) && (!is.null
 }
 coord <- st_crs(CRS)
 # Load the CRS object
-if (!is.null(CRS) && is.null(input$spatial_res)) {
-
-  if (!st_is_longlat(coord)) {
-    biab_error_stop(
-      "A projected CRS was supplied but no spatial resolution was provided. 
-      The default resolution (0.00833 degrees) can only be used with geographic CRSs."
-    )
-
-  }
-
-}
 
 if (!is.null(CRS) & !is.null(input$spatial_res)) {
   # Check for inconsistencies between CRS type and resolution
@@ -193,6 +182,19 @@ for (coll_it in collections_items) { # Loop through input array
       resolution <- as.numeric(input$spatial_res)
     }
     print(resolution)
+
+if (!is.null(CRS) && is.null(input$spatial_res)) {
+
+  # Check for inconsistencies between CRS type and resolution
+  if (st_is_longlat(coord) && resolution > 1) {
+    biab_error_stop("CRS is in degrees and resolution is in meters.")
+  }
+
+  if (st_is_longlat(coord) == FALSE && resolution < 1) {
+    biab_error_stop("CRS is in meters and resolution is in degrees.")
+  }
+
+}
 
     # Make empty raster with desired resolution and extent
     empty_raster <- rast(xmin = bounding_box[1], xmax = bounding_box[3], ymin = bounding_box[2], ymax = bounding_box[4], resolution = resolution, crs = srs.cube)
