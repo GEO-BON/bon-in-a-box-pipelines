@@ -106,22 +106,6 @@ cube = connection.datacube_from_process(
     epsg = udp_epsg
 )
 
-#Run the UDP first, then reload its STAC output as a raster cube.
-#print("Starting UDP job to retrieve LAI cube...", flush=True)
-#udp_job = cube.create_job(
-#    title=f"LAI UDP {start_year}-{end_year}",
-#    auto_add_save_result=True,
-#)
-#try:
-#    udp_job.start_and_wait()
-#except Exception as e:
-#    biab_error_stop(f"UDP job failed: {e}")
-#
-#print(f"UDP job finished: {udp_job.job_id}", flush=True)
-
-#job_results = udp_job.get_results()
-#job_metadata = job_results.get_metadata()
-
 udp_job = cube.save_result(format="GTiff").create_job(
     title=f"LAI UDP GeoTIFF {start_year}-{end_year}"
 )
@@ -140,20 +124,7 @@ print("Job finished:", rasters, flush=True)
 raster_outs = [str(r) for r in rasters if not str(r).endswith(".json")]
 biab_output("rasters", raster_outs)
 
-biab_error_stop("just testing first part")
-
-canonical_links = [
-    link["href"]
-    for link in job_metadata.get("links", [])
-    if link.get("rel") == "canonical" and "href" in link
-]
-
-if not canonical_links:
-    biab_error_stop("No canonical STAC link found in UDP job results.")
-
-stac_url = canonical_links[0]
-print(f"Using STAC URL: {stac_url}", flush=True)
-lai_cube = connection.load_stac(stac_url)
+lai_cube = rasters
 
 # crop to study area polygon if provided
 if polygon is None or polygon == "":
