@@ -57,4 +57,4 @@ if out['total_records'] == 0:
 
 biab_output("observations_file",str(out['outfile']))
 biab_output("gbif_doi", str(out['doi']))
-biab_output("total_records",str(out['total_records']))
+biab_output("total_records", out['total_records'])
