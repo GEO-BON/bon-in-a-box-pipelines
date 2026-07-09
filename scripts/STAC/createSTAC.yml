@@ -13,6 +13,11 @@ inputs:
     description: Input STAC collection(s) to convert to a STAC catalog. Can be a single collection or a list of collections.
     type: application/json[]
     example: null
+  stac_name:
+    label: STAC Name
+    description: Name of the STAC collection to be created. Default is "biab-stac".
+    type: text
+    example: biab-stac
 outputs:
   stac_catalog:
     label: STAC Catalog

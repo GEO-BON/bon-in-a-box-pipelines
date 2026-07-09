@@ -8,8 +8,13 @@ output_dir = Path(sys.argv[1])
 output_dir.mkdir(parents=True, exist_ok=True)
 
 # Create STAC catalog
-# TODO: id needs to be unique 
-catalog = pystac.Catalog(id="biab-catalog", description="STAC catalog derived from collections in biab")
+if inputs["stac_name"] is "biab-stac" or inputs["stac_name"] is None:
+    biab_info("No STAC name provided, using default 'biab-stac'. Warning: if another STAC catalog with the same name exists, it will be overwritten.")
+    stac_name = "biab-stac"
+else:
+    stac_name = inputs["stac_name"]
+
+catalog = pystac.Catalog(id=stac_name, description="STAC catalog derived from collections in biab")
 
 for collection in collections:
     stac_obj = pystac.read_file(collection)

@@ -4,52 +4,30 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 1102,
-        "y": 181.5
+        "x": 1252,
+        "y": 182.5
       },
       "data": {
         "descriptionFile": "STAC>createCollection.yml"
       }
     },
     {
-      "id": "1",
-      "type": "io",
-      "position": {
-        "x": 1594,
-        "y": 255.5
-      },
-      "data": {
-        "descriptionFile": "STAC>createSTAC.yml"
-      }
-    },
-    {
       "id": "2",
       "type": "io",
       "position": {
-        "x": 726.4699629492344,
-        "y": -63.223197480525805
+        "x": 799,
+        "y": 22
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
       }
     },
     {
-      "id": "3",
-      "type": "output",
-      "position": {
-        "x": 1974,
-        "y": 316.5
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "5",
       "type": "constant",
       "position": {
-        "x": 268,
-        "y": 12
+        "x": 307,
+        "y": 69.33333333333331
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -61,8 +39,8 @@
       "id": "6",
       "type": "constant",
       "position": {
-        "x": 232,
-        "y": 63
+        "x": 235,
+        "y": 116.33333333333331
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -77,8 +55,8 @@
       "id": "7",
       "type": "constant",
       "position": {
-        "x": 280,
-        "y": 129
+        "x": 285,
+        "y": 182.33333333333331
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -89,8 +67,8 @@
       "id": "8",
       "type": "constant",
       "position": {
-        "x": 280,
-        "y": 180
+        "x": 285,
+        "y": 229.33333333333331
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -101,8 +79,8 @@
       "id": "9",
       "type": "constant",
       "position": {
-        "x": 280,
-        "y": 231
+        "x": 285,
+        "y": 276.3333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -113,8 +91,8 @@
       "id": "10",
       "type": "constant",
       "position": {
-        "x": 240,
-        "y": 282
+        "x": 231,
+        "y": 323.3333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -126,8 +104,8 @@
       "id": "11",
       "type": "constant",
       "position": {
-        "x": 184,
-        "y": 325
+        "x": 207,
+        "y": 365.3333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -155,8 +133,8 @@
       "id": "12",
       "type": "constant",
       "position": {
-        "x": 184,
-        "y": 373
+        "x": 207,
+        "y": 412.3333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -176,7 +154,7 @@
       "type": "constant",
       "position": {
         "x": 12,
-        "y": 421
+        "y": 459.3333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -187,8 +165,8 @@
       "id": "14",
       "type": "io",
       "position": {
-        "x": 660.3341692690221,
-        "y": 522.5775185253829
+        "x": 799,
+        "y": 241
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -198,34 +176,82 @@
       "id": "15",
       "type": "io",
       "position": {
-        "x": 1086.4847316437106,
-        "y": 429.60944632874214
+        "x": 1252,
+        "y": 401.5
       },
       "data": {
         "descriptionFile": "STAC>createCollection.yml"
       }
+    },
+    {
+      "id": "16",
+      "type": "constant",
+      "position": {
+        "x": 910,
+        "y": 184
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Colombia_chelsa"
+      }
+    },
+    {
+      "id": "17",
+      "type": "constant",
+      "position": {
+        "x": 910,
+        "y": 403
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Albania_chelsa"
+      }
+    },
+    {
+      "id": "21",
+      "type": "io",
+      "position": {
+        "x": 1776,
+        "y": 353
+      },
+      "data": {
+        "descriptionFile": "STAC>createSTAC.yml"
+      }
+    },
+    {
+      "id": "22",
+      "type": "constant",
+      "position": {
+        "x": 1434,
+        "y": 354.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "biab-stac"
+      }
+    },
+    {
+      "id": "23",
+      "type": "output",
+      "position": {
+        "x": 2155,
+        "y": 413.5
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
-    {
-      "source": "0",
-      "sourceHandle": "stac_collection",
-      "target": "1",
-      "targetHandle": "stac_collections",
-      "id": "xy-edge__0stac_collection-1stac_collections"
-    },
     {
       "source": "2",
       "sourceHandle": "rasters",
       "target": "0",
       "targetHandle": "tiff_files",
       "id": "xy-edge__2rasters-0tiff_files"
-    },
-    {
-      "source": "1",
-      "sourceHandle": "stac_catalog",
-      "target": "3",
-      "id": "xy-edge__1stac_catalog-3"
     },
     {
       "source": "5",
@@ -343,11 +369,42 @@
       "id": "xy-edge__14rasters-15tiff_files"
     },
     {
+      "source": "16",
+      "target": "0",
+      "targetHandle": "collection_name",
+      "id": "xy-edge__16-0collection_name"
+    },
+    {
+      "source": "17",
+      "target": "15",
+      "targetHandle": "collection_name",
+      "id": "xy-edge__17-15collection_name"
+    },
+    {
+      "source": "22",
+      "target": "21",
+      "targetHandle": "stac_name",
+      "id": "xy-edge__22-21stac_name"
+    },
+    {
       "source": "15",
       "sourceHandle": "stac_collection",
-      "target": "1",
+      "target": "21",
       "targetHandle": "stac_collections",
-      "id": "xy-edge__15stac_collection-1stac_collections"
+      "id": "xy-edge__15stac_collection-21stac_collections"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "stac_collection",
+      "target": "21",
+      "targetHandle": "stac_collections",
+      "id": "xy-edge__0stac_collection-21stac_collections"
+    },
+    {
+      "source": "21",
+      "sourceHandle": "stac_catalog",
+      "target": "23",
+      "id": "xy-edge__21stac_catalog-23"
     }
   ],
   "inputs": {
@@ -367,7 +424,7 @@
     }
   },
   "outputs": {
-    "STAC>createSTAC.yml@1|stac_catalog": {
+    "STAC>createSTAC.yml@21|stac_catalog": {
       "description": "STAC catalog JSON created from the STAC collection(s)",
       "label": "STAC Catalog",
       "type": "application/json",

@@ -82,11 +82,11 @@ spatial_extent = pystac.SpatialExtent(
 )
 temporal_extent = pystac.TemporalExtent(intervals=[[temporal_start, temporal_end]])
 
-if inputs("collection_name") is "biab-collection" or inputs("collection_name") is None:
+if inputs["collection_name"] is "biab-collection" or inputs["collection_name"] is None:
     biab_info("No collection name provided, using default 'biab-collection'. Warning: if another collection with the same name exists, it will be overwritten.")
     name = "biab-collection"
 else:
-    name = inputs("collection_name")
+    name = inputs["collection_name"]
 
 collection = pystac.Collection(
     id=name,
