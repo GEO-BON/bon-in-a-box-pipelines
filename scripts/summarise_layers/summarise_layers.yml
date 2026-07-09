@@ -1,4 +1,4 @@
-script: summariseLAI.py
+script: summarise_layers.R
 name: Summarise Leaf Area Index (LAI)
 author:
   - name: Samara Manzin
@@ -13,18 +13,13 @@ inputs:
   lai_layers:
     label: LAI layers
     description: Object containing the LAI raster layers.
-    type: raster
+    type: image/tiff;application=geotiff[]
     example:
   bbox_crs:
     label: Bounding box and CRS
     description: Object containing the chosen bounding box and CRS.
     type: bboxCRS
     example:
-  study_area_polygon:
-    label: Polygon of study area
-    description: Polygon of the study area of interest. Leave blank if you do not want to crop by a polygon and want to use the bounding box instead.
-    type: application/geopackage+sqlite3
-    example: null
   start_year:
     label: Start year
     description: Start date for LAI time series.
@@ -50,8 +45,9 @@ outputs:
 conda:
   channels:
     - conda-forge
+    - r
   dependencies:
-    - openeo
-    - pandas
-    - geopandas
-    - shapely
+    - r-rjson
+    - r-gdalcubes=0.7.1
+    - r-terra
+    - r-sf

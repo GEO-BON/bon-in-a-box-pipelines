@@ -1,20 +1,15 @@
-script: summariseLAI.py
-name: Summarise Leaf Area Index (LAI)
+script: calculateLAI.py
+name: Calculate Leaf Area Index (LAI)
 author:
   - name: Samara Manzin
     email: samara.manzin@mcgill.ca
     identifier: https://orcid.org/0009-0005-9134-9981
 license: CC BY
 description: |
-    This script summarizes the LAI for every pixel within a given region and for a selected
+    This script calculates and summarizes the LAI for every pixel within a given region and for a selected
     time period. The data is pulled using the OpenEO Python client connected to the Copernicus Data Space Ecosystem backend. The resulting
-    raster will give you the minimum LAI in each pixel of a given region over a given time period. You can read more about the LAI layers [here](https://algorithm-catalogue.apex.esa.int/apps/udp_obsgession_w23_lai#eo4diversity-evi-lai)."
+    raster will give you the maximum LAI in each pixel of a given region over a given time period. You can read more about the LAI layers [here](https://algorithm-catalogue.apex.esa.int/apps/udp_obsgession_w23_lai#eo4diversity-evi-lai)."
 inputs:
-  lai_layers:
-    label: LAI layers
-    description: Object containing the LAI raster layers.
-    type: raster
-    example:
   bbox_crs:
     label: Bounding box and CRS
     description: Object containing the chosen bounding box and CRS.

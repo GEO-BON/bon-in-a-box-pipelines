@@ -8,8 +8,6 @@ from shapely.geometry import box
 # Reading inputs
 data = biab_inputs()
 
-lai_layers = data['lai_layers']
-
 if (data['bbox_crs']['bbox'] is not None):
     bbox = data['bbox_crs']['bbox']
 else:
@@ -92,37 +90,37 @@ connection.authenticate_oidc_client_credentials(
     client_secret = secret,
 )
 
-# crop to study area polygon if provided
-if polygon is None or polygon == "":
-    lai_cube_cropped = lai_layers
-else:
-    lai_cube_cropped = lai_layers.filter_spatial(geometry)
+aoi = {"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs": udp_epsg}
+process_graph = "https://raw.githubusercontent.com/ESA-APEx/apex_algorithms/obsgession_lai/algorithm_catalog/obsgession/udp_obsgession_w23_lai/openeo_udp/udp_obsgession_w23_lai.json"
 
-# add step to resample spatial resolution if needed
-if spatial_resolution is None and input_epsg == udp_epsg:
-    datacube_resampled_cropped = lai_cube_cropped
-else:
-    datacube_resampled_cropped = lai_cube_cropped.resample_spatial(
-        resolution=spatial_resolution,
-        projection=input_epsg,
-        method="bilinear"
-    )
+#get cube from udp
+cube = connection.datacube_from_process(
+    process_id="udp_obsgession_w23_lai",
+    namespace=process_graph,
+    start_date = start_date,
+    end_date = end_date,
+    spatial_extent = aoi,
+    binning_period = "year",
+    temp_aggregator = "max",
+    epsg = udp_epsg
+)
 
-# Min of yearly maxima per cell
-lai = datacube_resampled_cropped.reduce_dimension(dimension="t", reducer="min")
-
-# Submit aggregation as separate job
-lai.save_result("GTiff")
-print("Starting aggregation job", flush=True)
-job2 = lai.create_job(title=f"LAI aggregation {start_year}-{end_year}")
+udp_job = cube.save_result(format="GTiff").create_job(
+    title=f"LAI UDP GeoTIFF {start_year}-{end_year}"
+)
 try:
-    job2.start_and_wait()
+    udp_job.start_and_wait()
 except Exception as e:
-    biab_error_stop(f"openEO job failed: {e}")
+    biab_error_stop(f"UDP job failed: {e}")
 
-rasters = job2.get_results().download_files(output_folder)
+print(f"UDP job finished: {udp_job.job_id}", flush=True)
+
+
+rasters = udp_job.get_results().download_files(output_folder)
 print("Job finished:", rasters, flush=True)
+
 
 raster_outs = [str(r) for r in rasters if not str(r).endswith(".json")]
 biab_output("rasters", raster_outs)
+
 
