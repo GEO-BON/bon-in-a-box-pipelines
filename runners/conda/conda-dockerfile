@@ -9,11 +9,14 @@ RUN chmod a+w /data
 # Setting Time zone (necessary to install cmake, + will persist at runtime)
 ENV TZ=Etc/UTC
 
-# CMake needs to be installed in order to install R packages from github (at least it's the case for some dependency of Makurhini)
+# Install
+# - CURL, needed to download conda-pack environments from the specified URL
+# - pigz, for faster unzipping using multiple cores
+# - CMake, needs to be installed in order to install R packages from github (at least it's the case for some dependency of Makurhini)
 ARG DEBIAN_FRONTEND=noninteractive
 RUN set -ex; \
     apt-get update; \
-    apt-get install -y --no-install-recommends cmake psmisc; \
+    apt-get install -y --no-install-recommends cmake psmisc curl pigz; \
     apt-get clean all;
 
 ## Mamba installation
@@ -36,6 +39,9 @@ RUN set -ex; \
 # conda-env-yml will be mounted as volume to store known conda environments.
 # We need to create it and set the permissions.
 RUN mkdir /conda-env-yml && chmod a+w /conda-env-yml;
+
+# Add conda-pack to the base environment
+RUN mamba install -n base conda-pack
 
 # Load R base environment
 ADD ./r-environment.yml /data/r-environment.yml

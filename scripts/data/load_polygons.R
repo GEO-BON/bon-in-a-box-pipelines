@@ -47,6 +47,37 @@ if (!is.null(val_country) && length(val_country) > 0 && !(is.atomic(val_country)
     country <- TRUE
 }
 
+make_bbox_geometries <- function(country_region_bbox, crs_input, latlong) {
+    bbox_values <- unlist(input$country_region_bbox$bbox)
+
+    if (is.null(bbox_values) || length(bbox_values) != 4 || any(is.na(bbox_values))) {
+        biab_error_stop("A valid bbox with four coordinates is required when no country ISO3 is supplied or when polygon type is 'Polygon of bounding box'.")
+    }
+
+    bbox_sf <- sf::st_as_sfc(
+        sf::st_bbox(
+            c(
+                xmin = bbox_values[1],
+                ymin = bbox_values[2],
+                xmax = bbox_values[3],
+                ymax = bbox_values[4]
+            ),
+            crs = crs_input
+        )
+    )
+
+    bbox_sf_4326 <- if (!latlong) {
+        sf::st_transform(bbox_sf, 4326)
+    } else {
+        bbox_sf
+    }
+
+    list(
+        bbox_sf = bbox_sf,
+        bbox_wkt_4326 = sf::st_as_text(bbox_sf_4326)
+    )
+}
+
 # Path for polygon
 if (country) { # if there is a country or region input
     if (is.null(input$country_region_bbox$region)) {
@@ -66,33 +97,6 @@ if (input$polygon_type == "Country or region") {
 } else {
     polygon_path <- file.path(outputFolder, paste0(input$polygon_type, "_", name, "_polygon.gpkg"))
 }
-
-
-
-
-bbox_values <- unlist(input$country_region_bbox$bbox)
-print(bbox_values)
-
-bbox_sf <- sf::st_as_sfc(
-    sf::st_bbox(
-        c(
-            xmin = bbox_values[1],
-            ymin = bbox_values[2],
-            xmax = bbox_values[3],
-            ymax = bbox_values[4]
-        ),
-        crs = crs_input
-    )
-)
-if (!latlong) {
-    bbox_sf_4326 <- sf::st_transform(bbox_sf, 4326) # transform bbox if not in 4326
-} else {
-    bbox_sf_4326 <- bbox_sf
-}
-bbox_wkt_4326 <- sf::st_as_text(bbox_sf_4326)
-print(bbox_wkt_4326)
-
-
 if (!input$polygon_type == "Polygon of bounding box") {
     # Load country region polygon
     if (input$polygon_type == "Country or region") {
@@ -116,6 +120,8 @@ if (!input$polygon_type == "Polygon of bounding box") {
                 geo_data_sf$fid <- as.integer(geo_data_sf$fid)
             }
         } else { # custom bounding box
+            bbox_geom <- make_bbox_geometries(input$country_region_bbox, crs_input, latlong)
+            bbox_wkt_4326 <- bbox_geom$bbox_wkt_4326
             print(sprintf("Loading region polygon for custom bounding box: %s", paste(input$country_region_bbox$bbox, collapse = ", ")))
             con <- dbConnect(duckdb())
             dbExecute(con, "INSTALL spatial; LOAD spatial; INSTALL httpfs; LOAD httpfs;")
@@ -304,6 +310,8 @@ if (!input$polygon_type == "Polygon of bounding box") {
                 df_sf <- st_transform(df_sf, st_crs(crs_input))
             }
         } else {
+            bbox_geom <- make_bbox_geometries(input$country_region_bbox, crs_input, latlong)
+            bbox_wkt_4326 <- bbox_geom$bbox_wkt_4326
             sprintf("Loading region WDPA data for custom bounding box: %s", input$country_region_bbox$bbox)
             bbox_values <- input$country_region_bbox$bbox
             names(bbox_values) <- c("xmin", "ymin", "xmax", "ymax")
@@ -363,6 +371,8 @@ if (!input$polygon_type == "Polygon of bounding box") {
                 to_sf() |>
                 st_set_crs(4326)
         } else { # Filter by custom bounding box
+            bbox_geom <- make_bbox_geometries(input$country_region_bbox, crs_input, latlong)
+            bbox_wkt_4326 <- bbox_geom$bbox_wkt_4326
             print("Loading EEZ based on custom bounding box:")
 
             con <- dbConnect(duckdb())
@@ -398,7 +408,8 @@ if (!input$polygon_type == "Polygon of bounding box") {
 }
 
 if (input$polygon_type == "Polygon of bounding box") {
-    polygon <- st_sf(geometry = bbox_sf)
+    bbox_geom <- make_bbox_geometries(input$country_region_bbox, crs_input, latlong)
+    polygon <- st_sf(geometry = bbox_geom$bbox_sf)
     st_write(polygon, polygon_path)
 }
 

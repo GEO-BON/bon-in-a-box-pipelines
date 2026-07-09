@@ -56,7 +56,8 @@ conda:
     - conda-forge
   dependencies:
     - libcxx
-hpc:
+compute:
+  hpc: true
   mem: 1G
   cpus-per-task: 1
   time: "00:03:00"

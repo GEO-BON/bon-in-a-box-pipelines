@@ -127,3 +127,7 @@ conda:
     - r-tidyselect
     - r-tidyverse
     - r-stringr
+compute:
+  hpc: false
+  mem: 24G
+  cpus-per-task: 12
