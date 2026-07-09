@@ -6,11 +6,9 @@ inputs = biab_inputs()
 collections = inputs['stac_collections']
 output_dir = Path(sys.argv[1])
 output_dir.mkdir(parents=True, exist_ok=True)
-print("*******")
-print(output_dir)
-# Create STAC catalog
-# generate random id for the catalog
 
+# Create STAC catalog
+# TODO: id needs to be unique 
 catalog = pystac.Catalog(id="biab-catalog", description="STAC catalog derived from collections in biab")
 
 for collection in collections:

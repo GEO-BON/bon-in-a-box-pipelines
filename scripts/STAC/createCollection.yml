@@ -13,6 +13,11 @@ inputs:
     description: GeoTIFFs to be add to the collection
     type: image/tiff;application=geotiff[]
     example: null
+  collection_name:
+    label: Collection Name
+    description: Name of the STAC collection to be created. Default is "biab-collection".
+    type: text
+    example: biab-collection
 outputs:
   stac_collection:
     label: STAC Collection
