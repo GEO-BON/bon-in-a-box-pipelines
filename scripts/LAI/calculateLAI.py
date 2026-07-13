@@ -6,6 +6,8 @@ from pyproj import CRS
 from shapely.geometry import box
 
 # Reading inputs
+
+print("********** Starting LAI calculation script *****")
 data = biab_inputs()
 
 if (data['bbox_crs']['bbox'] is not None):
@@ -119,8 +121,12 @@ print(f"UDP job finished: {udp_job.job_id}", flush=True)
 rasters = udp_job.get_results().download_files(output_folder)
 print("Job finished:", rasters, flush=True)
 
+print(str(rasters[0]), flush=True)
+raster_outs = [] # make an empty list
+for t in range(len(rasters) - 1):
+    raster_outs.append(str(rasters[t])) # get all file paths except json file (last one)
 
-raster_outs = [str(r) for r in rasters if not str(r).endswith(".json")]
+print(raster_outs) # output raster file paths
+
+# Output rasters
 biab_output("rasters", raster_outs)
-
-

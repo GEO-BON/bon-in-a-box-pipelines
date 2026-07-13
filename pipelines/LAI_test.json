@@ -107,6 +107,63 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "14",
+      "type": "constant",
+      "position": {
+        "x": 964,
+        "y": 275.8125
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "mean",
+        "options": [
+          "mean",
+          "median",
+          "max",
+          "min",
+          "sum",
+          "first",
+          "last"
+        ]
+      }
+    },
+    {
+      "id": "15",
+      "type": "constant",
+      "position": {
+        "x": 960,
+        "y": 268.8125
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "min",
+        "options": [
+          "mean",
+          "median",
+          "max",
+          "min",
+          "sum",
+          "first",
+          "last"
+        ]
+      }
+    },
+    {
+      "id": "16",
+      "type": "constant",
+      "position": {
+        "x": 940,
+        "y": 300.8125
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "LAI"
+      }
     }
   ],
   "edges": [
@@ -182,6 +239,31 @@
       "sourceHandle": "rasters",
       "target": "10",
       "id": "xy-edge__9rasters-10"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "rasters",
+      "target": "9",
+      "targetHandle": "layers",
+      "id": "xy-edge__1rasters-9layers"
+    },
+    {
+      "source": "14",
+      "target": "9",
+      "targetHandle": "temporal_aggregation_method",
+      "id": "xy-edge__14-9temporal_aggregation_method"
+    },
+    {
+      "source": "15",
+      "target": "9",
+      "targetHandle": "spatial_aggregation_method",
+      "id": "xy-edge__15-9spatial_aggregation_method"
+    },
+    {
+      "source": "16",
+      "target": "9",
+      "targetHandle": "bands",
+      "id": "xy-edge__16-9bands"
     }
   ],
   "inputs": {

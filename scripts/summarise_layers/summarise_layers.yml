@@ -1,18 +1,17 @@
 script: summarise_layers.R
-name: Summarise Leaf Area Index (LAI)
+name: Summarise Layers
 author:
   - name: Samara Manzin
     email: samara.manzin@mcgill.ca
     identifier: https://orcid.org/0009-0005-9134-9981
 license: CC BY
 description: |
-    This script summarizes the LAI for every pixel within a given region and for a selected
-    time period. The data is pulled using the OpenEO Python client connected to the Copernicus Data Space Ecosystem backend. The resulting
-    raster will give you the minimum LAI in each pixel of a given region over a given time period. You can read more about the LAI layers [here](https://algorithm-catalogue.apex.esa.int/apps/udp_obsgession_w23_lai#eo4diversity-evi-lai)."
+    This script summarizes multiple time series layers through space and time for a selected spatial resolution and time period using the specified aggregation methods. The resulting
+    output will give you a spatially aggregated and temporally averaged layer. 
 inputs:
-  lai_layers:
-    label: LAI layers
-    description: Object containing the LAI raster layers.
+  layers:
+    label: layers
+    description: Object containing the raster layers.
     type: image/tiff;application=geotiff[]
     example:
   bbox_crs:
@@ -22,12 +21,12 @@ inputs:
     example:
   start_year:
     label: Start year
-    description: Start date for LAI time series.
+    description: Start date for time series.
     type: text
     example: "2017"
   end_year:
     label: End year
-    description: End date for LAI time series.
+    description: End date for time series.
     type: text
     example: "2024"
   spatial_resolution:
@@ -35,12 +34,42 @@ inputs:
     description: Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).
     type: float
     example: 1000
+  spatial_aggregation_method:
+    label: Spatial aggregation method
+    description: Method to use for spatial aggregation of the raster layers. Options are "mean", "median", "max", "min", "sum", "first", "last".
+    type: options
+    options:
+      - mean
+      - median
+      - max
+      - min
+      - sum
+      - first
+      - last
+    example: min
+  temporal_aggregation_method:
+    label: Temporal aggregation method
+    description: Method to use for temporal aggregation of the raster layers. Options are "mean", "median", "max", "min", "sum", "first", "last".
+    type: options
+    options:
+      - mean
+      - median
+      - max
+      - min
+      - sum
+      - first
+      - last
+    example: mean
+  bands:
+    label: Bands
+    description: Bands to use for the aggregation. 
+    type: text
+    example: "LAI"
 outputs:
   rasters:
-    label: LAI rasters
+    label: summarised rasters
     description: |
-      Rasters of LAI layers, with one raster taken as the max LAI values over the period of interest.
-      Will either be the raw raster layers or resampled to the spatial resolution input by the user.
+      The output will be a single raster layer that is the result of the spatial and temporal aggregation of the input layers. The output will be in GeoTIFF format.
     type: image/tiff;application=geotiff[]
 conda:
   channels:
