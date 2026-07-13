@@ -49,8 +49,6 @@ for file_path in inputs["tiff_files"]:
 
     extracted = extract_date_from_filename(file.name)
     item_datetime = extracted if extracted is not None else datetime.now(timezone.utc)
-    print(type(extract_date_from_filename(file.name)))
-    print(extract_date_from_filename(file.name))
 
     if temporal_start is None or item_datetime < temporal_start:
         temporal_start = item_datetime
@@ -82,7 +80,7 @@ spatial_extent = pystac.SpatialExtent(
 )
 temporal_extent = pystac.TemporalExtent(intervals=[[temporal_start, temporal_end]])
 
-if inputs["collection_name"] is "biab-collection" or inputs["collection_name"] is None:
+if inputs["collection_name"] == "biab-collection" or inputs["collection_name"] is None:
     biab_info("No collection name provided, using default 'biab-collection'. Warning: if another collection with the same name exists, it will be overwritten.")
     name = "biab-collection"
 else:

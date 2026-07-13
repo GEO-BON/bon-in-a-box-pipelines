@@ -6,22 +6,21 @@ author:
     email: laetitia.tremblay@mcgill.ca
 lifecycle:
   status: in_development
-  message: This script still needs testing.
 inputs:
   tiff_files:
     label: GeoTIFF files
-    description: GeoTIFFs to be add to the collection
+    description: GeoTIFFs to be added to the collection
     type: image/tiff;application=geotiff[]
     example: null
   collection_name:
     label: Collection Name
-    description: Name of the STAC collection to be created. Default is "biab-collection".
+    description: Name of the STAC collection to be created. The collection name should be unique, using lowercase letters and hyphens only. Default is "biab-collection".
     type: text
     example: biab-collection
 outputs:
   stac_collection:
     label: STAC Collection
-    description: STAC collection JSON created from the GeoTIFFs
+    description: JSON file representing a STAC collection containing the provided GeoTIFFs
     type: application/json
 conda:
   channels:

@@ -8,7 +8,7 @@ output_dir = Path(sys.argv[1])
 output_dir.mkdir(parents=True, exist_ok=True)
 
 # Create STAC catalog
-if inputs["stac_name"] is "biab-stac" or inputs["stac_name"] is None:
+if inputs["stac_name"] == "biab-stac" or inputs["stac_name"] is None:
     biab_info("No STAC name provided, using default 'biab-stac'. Warning: if another STAC catalog with the same name exists, it will be overwritten.")
     stac_name = "biab-stac"
 else:
@@ -25,7 +25,7 @@ for collection in collections:
     except pystac.STACValidationError as e:
         biab_error(f"STAC collection {stac_obj.id} validation failed: {e}")
 
-    # Create add collection to STAC catalog
+    # Add collection to STAC catalog
     catalog.add_child(stac_obj)
 
 # Output STAC catalog

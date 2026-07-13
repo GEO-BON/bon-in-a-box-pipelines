@@ -6,7 +6,6 @@ author:
     email: laetitia.tremblay@mcgill.ca
 lifecycle:
   status: in_development
-  message: This script still needs testing.
 inputs:
   stac_collections:
     label: STAC collections
@@ -15,7 +14,7 @@ inputs:
     example: null
   stac_name:
     label: STAC Name
-    description: Name of the STAC collection to be created. Default is "biab-stac".
+    description: Name of the STAC catalog to be created, using lowercase letters and hyphens only. Default is "biab-stac".
     type: text
     example: biab-stac
 outputs:
