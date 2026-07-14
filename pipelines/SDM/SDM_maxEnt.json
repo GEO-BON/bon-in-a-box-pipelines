@@ -994,7 +994,21 @@
         "thickening"
       ],
       "example": "random",
-      "weight": 11
+      "weight": 2
+    },
+    "SDM>selectBackground.yml@40|n_background": {
+      "description": "number of background points",
+      "label": "Number of background points",
+      "type": "int",
+      "example": 10000,
+      "weight": 3
+    },
+    "pipeline@128": {
+      "label": "spatial resolution",
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). \n\nIf this is left blank it will use the native resolution of the rasters. \n\nIf the spatial resolution is coarser than the native resolution of the rasters, the layers will be resampled with the resampling method \"near\"",
+      "type": "float",
+      "example": 1000,
+      "weight": 4
     },
     "SDM>runMaxent.yml@108|fc": {
       "description": "MaxEnt feature classes control the shapes of relationships the model can learn between species occurrence and environmental predictors. Simpler classes, such as L or LQ, fit smoother, more constrained responses and are often safer for small datasets. More complex combinations, such as LQH or LQHP, can capture more flexible ecological responses but may overfit when occurrence records are limited. This pipeline tests all values provided here and selects the best-performing combination using the parameter selection method configured in the MaxEnt step. Accepted values are combinations of L (linear), Q (quadratic), P (product), H (hinge) or T (threshold).",

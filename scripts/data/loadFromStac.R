@@ -7,8 +7,6 @@ library("sf")
 library("lubridate")
 library("stars")
 library("terra")
-# sf_use_s2(FALSE)
-print(outputFolder)
 
 input <- biab_inputs()
 
@@ -59,7 +57,8 @@ if (grepl("chelsa", input$collections_items[1], ignore.case = TRUE) && (!is.null
 }
 coord <- st_crs(CRS)
 # Load the CRS object
-if (!is.null(CRS) & !is.null(input$spatial_res)) {
+
+if (!is.null(CRS) && !is.null(input$spatial_res)) {
   # Check for inconsistencies between CRS type and resolution
   if (st_is_longlat(coord) && input$spatial_res > 1) {
     biab_error_stop("CRS is in degrees and resolution is in meters.")
@@ -177,6 +176,16 @@ for (coll_it in collections_items) { # Loop through input array
     if (is.null(input$spatial_res)) {
       resolution <- res(r)
       resolution <- resolution[[1]]
+      if (!is.null(CRS)) {
+        # Check for inconsistencies between CRS type and resolution
+        if (st_is_longlat(coord) && resolution > 1) {
+          biab_error_stop("CRS is in degrees and resolution is in meters.")
+        }
+
+        if (st_is_longlat(coord) == FALSE && resolution < 1) {
+          biab_error_stop("CRS is in meters and resolution is in degrees.")
+        }
+      }
     } else {
       resolution <- as.numeric(input$spatial_res)
     }
@@ -255,13 +264,12 @@ for (coll_it in collections_items) { # Loop through input array
       print(spatial.res)
 
       if (st_is_longlat(coord) == FALSE && spatial.res < 1) {
-      biab_error_stop("CRS is in meters and resolution is in degrees.")
+        biab_error_stop("CRS is in meters and resolution is in degrees.")
       }
 
       if (st_is_longlat(coord) && spatial.res > 1) {
-      biab_error_stop("CRS is in degrees and resolution is in meters.")
+        biab_error_stop("CRS is in degrees and resolution is in meters.")
       }
-
     } else {
       spatial.res <- input$spatial_res
     }
