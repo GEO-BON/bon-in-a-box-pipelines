@@ -301,11 +301,11 @@
     "references": [
       {
         "text": "Schuman et al., EcoEvoRxiv.",
-        "doi": "https://doi.org/10.32942/X2RS58"
+        "link": "https://doi.org/10.32942/X2RS58"
       },
       {
         "text": "ESA. Land Cover CCI Product User Guide Version 2. Tech. Rep. (2017)",
-        "doi": "https://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Ph2-PUGv2_2.0.pdf"
+        "link": "https://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Ph2-PUGv2_2.0.pdf"
       }
     ]
   }

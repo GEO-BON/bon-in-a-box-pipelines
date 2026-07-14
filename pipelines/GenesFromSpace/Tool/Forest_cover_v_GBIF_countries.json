@@ -257,11 +257,11 @@
     "references": [
       {
         "text": "Schuman et al., EcoEvoRxiv.",
-        "doi": "https://doi.org/10.32942/X2RS58"
+        "link": "https://doi.org/10.32942/X2RS58"
       },
       {
         "text": "Hansen et al., Science (2013)",
-        "doi": "https://doi.org/10.1126/science.1244693"
+        "link": "https://doi.org/10.1126/science.1244693"
       }
     ]
   }

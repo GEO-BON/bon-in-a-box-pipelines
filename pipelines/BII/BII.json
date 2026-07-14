@@ -473,15 +473,15 @@
     "references": [
       {
         "text": "De Palma et al. 2024",
-        "doi": "https://doi.org/10.5519/k33reyb6"
+        "link": "https://doi.org/10.5519/k33reyb6"
       },
       {
         "text": "Newbold et al. 2016",
-        "doi": "https://doi.org/10.1126/science.aaf2201"
+        "link": "https://doi.org/10.1126/science.aaf2201"
       },
       {
         "text": "Bastion 2023",
-        "doi": "https://doi.org/10.32614/CRAN.package.exactextractr"
+        "link": "https://doi.org/10.32614/CRAN.package.exactextractr"
       }
     ]
   }
