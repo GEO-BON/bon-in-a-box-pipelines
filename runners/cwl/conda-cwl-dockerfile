@@ -17,7 +17,7 @@ RUN set -ex; \
 
 
 WORKDIR /data/bon-in-a-box-pipelines
-RUN cp runner-sample.env runner.env
+RUN touch runner.env
 RUN set -ex; \
     git clone -n https://github.com/GEO-BON/bon-in-a-box-pipeline-engine.git --branch $SERVER_BRANCH --single-branch --depth 1 .server \
     && cd .server \
