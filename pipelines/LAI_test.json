@@ -4,8 +4,8 @@
       "id": "1",
       "type": "io",
       "position": {
-        "x": 962.1075027048788,
-        "y": -70.40780323376683
+        "x": 640,
+        "y": 60.333333333333336
       },
       "data": {
         "descriptionFile": "LAI>calculateLAI.yml"
@@ -15,8 +15,8 @@
       "id": "2",
       "type": "userInput",
       "position": {
-        "x": 261,
-        "y": 12
+        "x": 180,
+        "y": 47
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -29,7 +29,7 @@
       "type": "userInput",
       "position": {
         "x": 12,
-        "y": 96
+        "y": 12
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -40,8 +40,8 @@
       "id": "4",
       "type": "userInput",
       "position": {
-        "x": 298,
-        "y": 138
+        "x": 332,
+        "y": 82
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -53,8 +53,8 @@
       "id": "5",
       "type": "userInput",
       "position": {
-        "x": 298,
-        "y": 187
+        "x": 338,
+        "y": 162.66666666666669
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -66,8 +66,8 @@
       "id": "6",
       "type": "userInput",
       "position": {
-        "x": 482.54101969475477,
-        "y": 371.57463686092683
+        "x": 264,
+        "y": 197.66666666666669
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -79,8 +79,8 @@
       "id": "8",
       "type": "output",
       "position": {
-        "x": 1195.9999694824219,
-        "y": 130.06665802001953
+        "x": 1250,
+        "y": 37.833333333333336
       },
       "data": {
         "label": "Output"
@@ -90,8 +90,8 @@
       "id": "14",
       "type": "constant",
       "position": {
-        "x": 543.5669838916042,
-        "y": 554.3535196947547
+        "x": 787,
+        "y": 272.33333333333337
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -112,8 +112,8 @@
       "id": "15",
       "type": "constant",
       "position": {
-        "x": 509.6255634916653,
-        "y": 461.57052863043276
+        "x": 787,
+        "y": 225.33333333333334
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -134,8 +134,8 @@
       "id": "16",
       "type": "constant",
       "position": {
-        "x": 921.3000500881479,
-        "y": 506.5119490303718
+        "x": 886,
+        "y": 319.33333333333337
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -147,8 +147,8 @@
       "id": "19",
       "type": "io",
       "position": {
-        "x": 1465.595407420985,
-        "y": 412.7480271526362
+        "x": 1250,
+        "y": 139.33333333333334
       },
       "data": {
         "descriptionFile": "summarise_layers>summarise_layers.yml"
@@ -158,8 +158,8 @@
       "id": "20",
       "type": "output",
       "position": {
-        "x": 2002.1945058343208,
-        "y": 411.5147105153522
+        "x": 1744,
+        "y": 60.333333333333336
       },
       "data": {
         "label": "Output"

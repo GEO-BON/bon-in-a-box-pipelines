@@ -53,8 +53,9 @@ for (ra in rasters) {
 
 rasts <- terra::rast(rasts)
 
-rasts
+
 env_df <- sample_spatial_obj(rasts, nb_points = input$nb_sample)
+
 nc_names <- detect_collinearity(
   env_df = env_df,
   method = method,

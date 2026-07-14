@@ -3,11 +3,11 @@ library(terra)
 
 input <- biab_inputs()
 
-# Accept LAI rasters from calculateLAI output handle; keep fallback for legacy wiring.
+# Setting up inputs
 raster_paths <- input$layers
-
 bands <- input$bands
 
+# Input checks
 if (is.null(raster_paths) || length(raster_paths) == 0) {
   raster_paths <- input$rasters
 }
@@ -46,6 +46,8 @@ if (is.null(temporal_aggregation_method) || identical(temporal_aggregation_metho
   biab_error_stop("No temporal aggregation method provided. Please provide a valid input for 'temporal_aggregation_method'.")
 }
 
+# Function to parse date from raster file path
+# will change when we have a more robust way to get the date from the raster metadata
 parse_date_from_path <- function(p) {
   name <- basename(p)
 
@@ -64,6 +66,7 @@ parse_date_from_path <- function(p) {
   NA_character_
 }
 
+# Function to normalise input date strings
 normalise_input_date <- function(x, is_end = FALSE) {
   if (is.null(x) || identical(x, "")) {
     return(NA_character_)
@@ -84,14 +87,15 @@ normalise_input_date <- function(x, is_end = FALSE) {
   NA_character_
 }
 
+# Normalise start and end dates from input
 start_date <- normalise_input_date(input$start_year, is_end = FALSE)
 end_date <- normalise_input_date(input$end_year, is_end = TRUE)
 
+# Initialize date_time vector with NA values
 date_time <- rep(NA_character_, length(raster_paths))
 
 print(paste("start_date:", start_date))
 print(paste("end_date:", end_date))
-print(paste("date_time:", paste(date_time, collapse = ", ")))
 
 # Prefer the same date inputs when they match layer count.
 if (!is.na(start_date) && !is.na(end_date)) {
@@ -105,20 +109,21 @@ if (!is.na(start_date) && !is.na(end_date)) {
 
 print(paste("date_time after start/end year check:", paste(date_time, collapse = ", ")))
 
+# If any date_time values are still NA, attempt to parse dates from raster file paths.
 if (any(is.na(date_time))) {
   date_time <- vapply(raster_paths, parse_date_from_path, character(1))
 }
 
 print(paste("date_time after parsing from raster paths:", paste(date_time, collapse = ", ")))
 
-
+# create image collection with the raster paths, date_time, and band names
 col <- gdalcubes::create_image_collection(
   files = raster_paths,
   date_time = date_time,
-  bands = bands
+  band_names = bands
 )
 
-
+# Determine spatial resolution (dx, dy) based on input or native raster resolution
 if (is.na(spatial_resolution)) {
   native_res <- terra::res(terra::rast(raster_paths[1]))
   dx <- native_res[1]
@@ -131,6 +136,7 @@ if (is.na(spatial_resolution)) {
 print(paste("dx:", dx, "dy:", dy))
 print(paste("spatial resolution:", spatial_resolution))
 
+# Create a cube view with the specified parameters
 v <- gdalcubes::cube_view(
   extent = list(
     left = bbox[1],
@@ -151,13 +157,15 @@ v <- gdalcubes::cube_view(
 print(min(date_time))
 print(max(date_time))
 
+# Create a raster cube from the image collection and cube view
 cube <- gdalcubes::raster_cube(col, v)
 
-# One output layer: max LAI per pixel across all temporal layers.
+# Reduce the raster cube over time using the specified temporal aggregation method and bands
 cube_summary <- gdalcubes::reduce_time(cube, paste0(temporal_aggregation_method, "(", paste(bands, collapse = ","), ")"))
 
 print(cube_summary)
 
+# Write the aggregated raster cube to GeoTIFF files with specified options
 out <- gdalcubes::write_tif(
   cube_summary,
   dir = outputFolder,

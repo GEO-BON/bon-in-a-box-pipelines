@@ -7,31 +7,31 @@ author:
 license: CC BY
 description: |
     This script summarizes multiple time series layers through space and time for a selected spatial resolution and time period using the specified aggregation methods. The resulting
-    output will give you a spatially aggregated and temporally averaged layer. 
+    output will give you a spatially aggregated and temporally aggregated layer. 
 inputs:
   layers:
     label: layers
-    description: Object containing the raster layers.
+    description: Path to the raster layers to be summarized. The layers should be in GeoTIFF format. The layers should have the same spatial resolution and extent.
     type: image/tiff;application=geotiff[]
     example:
   bbox_crs:
     label: Bounding box and CRS
-    description: Object containing the chosen bounding box and CRS.
+    description: Bounding box and coordinate reference system defining the analysis extent.
     type: bboxCRS
     example:
   start_year:
     label: Start year
-    description: Start date for time series.
+    description: Start year for the time series.
     type: text
     example: "2017"
   end_year:
     label: End year
-    description: End date for time series.
+    description: End year for the time series.
     type: text
     example: "2024"
   spatial_resolution:
     label: Spatial resolution
-    description: Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).
+    description: Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). If this is left blank it will attempt to use the native resolution of the rasters, however the input CRS units must match the units of the native resolution. If the spatial resolution is coarser than the native resolution of the rasters, the layers will be resampled with using method bilinear.
     type: float
     example: 1000
   spatial_aggregation_method:
@@ -62,14 +62,14 @@ inputs:
     example: mean
   bands:
     label: Bands
-    description: Bands to use for the aggregation. 
+    description: Name of bands to use for the aggregation. 
     type: text
     example: "LAI"
 outputs:
   rasters:
     label: summarised rasters
     description: |
-      The output will be a single raster layer that is the result of the spatial and temporal aggregation of the input layers. The output will be in GeoTIFF format.
+      A single raster layer that is the result of the spatial and temporal aggregation of the input layers. The output is in GeoTIFF format.
     type: image/tiff;application=geotiff[]
 conda:
   channels:

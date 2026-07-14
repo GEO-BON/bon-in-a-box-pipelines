@@ -6,9 +6,8 @@ author:
     identifier: https://orcid.org/0009-0005-9134-9981
 license: CC BY
 description: |
-    This script calculates and summarizes the LAI for every pixel within a given region and for a selected
-    time period. The data is pulled using the OpenEO Python client connected to the Copernicus Data Space Ecosystem backend. The resulting
-    raster will give you the maximum LAI in each pixel of a given region over a given time period. You can read more about the LAI layers [here](https://algorithm-catalogue.apex.esa.int/apps/udp_obsgession_w23_lai#eo4diversity-evi-lai)."
+    This script calculates and summarises the LAI for every pixel within a given region and for a selected
+    time period. The data is pulled using the OpenEO Python client connected to the Copernicus Data Space Ecosystem backend. The result of this script will provide a time series of LAI rasters for the specified time period and spatial extent. Each raster represents the maximum LAI value for that pixel over the selected binning period. You can read more about the LAI layers [here](https://algorithm-catalogue.apex.esa.int/apps/udp_obsgession_w23_lai#eo4diversity-evi-lai)."
 inputs:
   bbox_crs:
     label: Bounding box and CRS
@@ -21,13 +20,13 @@ inputs:
     type: application/geopackage+sqlite3
     example: null
   start_year:
-    label: Start year
-    description: Start date for LAI time series.
+    label: Start date
+    description: Start date for LAI time series. Can be in the format "YYYY-MM-DD" or "YYYY". If only the year is provided, it will default to January 1st of that year.
     type: text
     example: "2017"
   end_year:
-    label: End year
-    description: End date for LAI time series.
+    label: End date
+    description: End date for LAI time series. Can be in the format "YYYY-MM-DD" or "YYYY". If only the year is provided, it will default to December 31st of that year.
     type: text
     example: "2024"
   spatial_resolution:
@@ -35,12 +34,20 @@ inputs:
     description: Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).
     type: float
     example: 1000
+  binning_period:
+    label: Binning period
+    description: The time period over which to bin the LAI data. Options are "year", "month", or "day". If left blank, the default is "year".
+    type: options
+    options:
+      - year
+      - month
+      - day
+    example: year
 outputs:
   rasters:
     label: LAI rasters
     description: |
-      Rasters of LAI layers, with one raster taken as the max LAI values over the period of interest.
-      Will either be the raw raster layers or resampled to the spatial resolution input by the user.
+      Time series of LAI rasters for the specified time period and spatial extent. Each raster represents the maximum LAI value for that pixel over the selected binning period. The output is in GeoTIFF format.
     type: image/tiff;application=geotiff[]
 conda:
   channels:

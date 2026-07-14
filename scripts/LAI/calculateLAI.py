@@ -6,9 +6,14 @@ from pyproj import CRS
 from shapely.geometry import box
 
 # Reading inputs
-
-print("********** Starting LAI calculation script *****")
 data = biab_inputs()
+
+binning_period = data['binning_period']
+
+# input checks
+
+if (binning_period is None or binning_period == ""):
+    binning_period = "year"
 
 if (data['bbox_crs']['bbox'] is not None):
     bbox = data['bbox_crs']['bbox']
@@ -102,7 +107,7 @@ cube = connection.datacube_from_process(
     start_date = start_date,
     end_date = end_date,
     spatial_extent = aoi,
-    binning_period = "year",
+    binning_period = binning_period,
     temp_aggregator = "max",
     epsg = udp_epsg
 )
