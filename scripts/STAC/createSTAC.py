@@ -14,7 +14,7 @@ if inputs["stac_name"] == "biab-stac" or inputs["stac_name"] is None:
 else:
     stac_name = inputs["stac_name"]
 
-catalog = pystac.Catalog(id=stac_name, description="STAC catalog derived from collections in biab")
+catalog = pystac.Catalog(id=stac_name, description="STAC catalog derived from collections in BON in a Box")
 
 for collection in collections:
     stac_obj = pystac.read_file(collection)
@@ -23,7 +23,7 @@ for collection in collections:
         stac_obj.validate_all()
         print(f"STAC collection {stac_obj.id} validation successful")
     except pystac.STACValidationError as e:
-        biab_error(f"STAC collection {stac_obj.id} validation failed: {e}")
+        biab_error_stop(f"STAC collection {stac_obj.id} validation failed: {e}")
 
     # Add collection to STAC catalog
     catalog.add_child(stac_obj)
@@ -36,7 +36,7 @@ try:
     catalog.validate_all()
     print("Catalog validation successful")
 except pystac.STACValidationError as e:
-    biab_error(f"STAC catalog validation failed: {e}")
+    biab_error_stop(f"STAC catalog validation failed: {e}")
 
 biab_output("stac_catalog", str(output_dir / "catalog.json"))
 

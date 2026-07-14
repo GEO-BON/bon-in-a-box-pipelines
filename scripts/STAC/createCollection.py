@@ -11,7 +11,6 @@ inputs = biab_inputs()
 output_dir = Path(sys.argv[1])
 output_dir.mkdir(parents=True, exist_ok=True)
 items = []
-all_band_names = []
 spatial_extent_bbox = [float("inf"), float("inf"), -float("inf"), -float("inf")]
 temporal_start: Optional[datetime] = None
 temporal_end: Optional[datetime] = None
@@ -75,6 +74,9 @@ for file_path in inputs["tiff_files"]:
 
     items.append(item)
 
+if len(items) == 0:
+    biab_error_stop("No valid GeoTIFF files found to create a STAC collection.")
+
 spatial_extent = pystac.SpatialExtent(
     bboxes=[spatial_extent_bbox] if not math.isinf(spatial_extent_bbox[0]) else [[-180, -90, 180, 90]]
 )
@@ -104,6 +106,6 @@ try:
     collection.validate_all()
     print("pystac validation successful")
 except Exception as e:
-    print(f"pystac validation failed: {e}")
+    biab_error_stop(f"pystac validation failed: {e}")
 
 biab_output("stac_collection", str(collection_path))

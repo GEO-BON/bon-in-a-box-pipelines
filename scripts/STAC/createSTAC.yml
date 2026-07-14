@@ -20,7 +20,7 @@ inputs:
 outputs:
   stac_catalog:
     label: STAC Catalog
-    description: STAC catalog JSON created from the STAC collection(s)
+    description: JSON file representing a STAC Catalog linking to the provided collections
     type: application/json
 conda:
   channels:
