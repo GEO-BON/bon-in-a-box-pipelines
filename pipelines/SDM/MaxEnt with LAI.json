@@ -1317,9 +1317,7 @@
       }
     ],
     "license": "MIT",
-    "external_link": [
-      "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/runMaxent.R"
-    ],
+    "external_link": "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/runMaxent.R",
     "references": [
       {
         "text": "Vollering et al. 2019",
