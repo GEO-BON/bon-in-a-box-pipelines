@@ -4,8 +4,8 @@
       "id": "1",
       "type": "io",
       "position": {
-        "x": 652,
-        "y": 127.5
+        "x": 962.1075027048788,
+        "y": -70.40780323376683
       },
       "data": {
         "descriptionFile": "LAI>calculateLAI.yml"
@@ -66,8 +66,8 @@
       "id": "6",
       "type": "userInput",
       "position": {
-        "x": 241,
-        "y": 236
+        "x": 482.54101969475477,
+        "y": 371.57463686092683
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -87,33 +87,11 @@
       }
     },
     {
-      "id": "9",
-      "type": "io",
-      "position": {
-        "x": 1254.2332850165672,
-        "y": 200.00219893996262
-      },
-      "data": {
-        "descriptionFile": "summarise_layers>summarise_layers.yml"
-      }
-    },
-    {
-      "id": "10",
-      "type": "output",
-      "position": {
-        "x": 1826.9999694824219,
-        "y": 199.06665802001953
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "14",
       "type": "constant",
       "position": {
-        "x": 964,
-        "y": 275.8125
+        "x": 543.5669838916042,
+        "y": 554.3535196947547
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -134,8 +112,8 @@
       "id": "15",
       "type": "constant",
       "position": {
-        "x": 960,
-        "y": 268.8125
+        "x": 509.6255634916653,
+        "y": 461.57052863043276
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -156,13 +134,35 @@
       "id": "16",
       "type": "constant",
       "position": {
-        "x": 940,
-        "y": 300.8125
+        "x": 921.3000500881479,
+        "y": 506.5119490303718
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
         "value": "LAI"
+      }
+    },
+    {
+      "id": "19",
+      "type": "io",
+      "position": {
+        "x": 1465.595407420985,
+        "y": 412.7480271526362
+      },
+      "data": {
+        "descriptionFile": "summarise_layers>summarise_layers.yml"
+      }
+    },
+    {
+      "id": "20",
+      "type": "output",
+      "position": {
+        "x": 2002.1945058343208,
+        "y": 411.5147105153522
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
@@ -206,64 +206,57 @@
     {
       "source": "1",
       "sourceHandle": "rasters",
-      "target": "9",
-      "targetHandle": "lai_layers",
-      "id": "xy-edge__1rasters-9lai_layers"
+      "target": "19",
+      "targetHandle": "layers",
+      "id": "xy-edge__1rasters-19layers"
     },
     {
       "source": "2",
-      "target": "9",
+      "target": "19",
       "targetHandle": "bbox_crs",
-      "id": "xy-edge__2-9bbox_crs"
+      "id": "xy-edge__2-19bbox_crs"
     },
     {
       "source": "4",
-      "target": "9",
+      "target": "19",
       "targetHandle": "start_year",
-      "id": "xy-edge__4-9start_year"
+      "id": "xy-edge__4-19start_year"
     },
     {
       "source": "5",
-      "target": "9",
+      "target": "19",
       "targetHandle": "end_year",
-      "id": "xy-edge__5-9end_year"
+      "id": "xy-edge__5-19end_year"
     },
     {
       "source": "6",
-      "target": "9",
+      "target": "19",
       "targetHandle": "spatial_resolution",
-      "id": "xy-edge__6-9spatial_resolution"
-    },
-    {
-      "source": "9",
-      "sourceHandle": "rasters",
-      "target": "10",
-      "id": "xy-edge__9rasters-10"
-    },
-    {
-      "source": "1",
-      "sourceHandle": "rasters",
-      "target": "9",
-      "targetHandle": "layers",
-      "id": "xy-edge__1rasters-9layers"
-    },
-    {
-      "source": "14",
-      "target": "9",
-      "targetHandle": "temporal_aggregation_method",
-      "id": "xy-edge__14-9temporal_aggregation_method"
+      "id": "xy-edge__6-19spatial_resolution"
     },
     {
       "source": "15",
-      "target": "9",
+      "target": "19",
       "targetHandle": "spatial_aggregation_method",
-      "id": "xy-edge__15-9spatial_aggregation_method"
+      "id": "xy-edge__15-19spatial_aggregation_method"
+    },
+    {
+      "source": "14",
+      "target": "19",
+      "targetHandle": "temporal_aggregation_method",
+      "id": "xy-edge__14-19temporal_aggregation_method"
     },
     {
       "source": "16",
-      "target": "9",
+      "target": "19",
       "targetHandle": "bands",
-      "id": "xy-edge__16-9bands"
+      "id": "xy-edge__16-19bands"
+    },
+    {
+      "source": "19",
+      "sourceHandle": "rasters",
+      "target": "20",
+      "id": "xy-edge__19rasters-20"
     }
   ],
   "inputs": {
@@ -310,9 +303,9 @@
       "type": "image/tiff;application=geotiff[]",
       "weight": 0
     },
-    "summarise_layers>summarise_layers.yml@9|rasters": {
-      "description": "Rasters of LAI layers, with one raster taken as the max LAI values over the period of interest.\nWill either be the raw raster layers or resampled to the spatial resolution input by the user.\n",
-      "label": "LAI rasters",
+    "summarise_layers>summarise_layers.yml@19|rasters": {
+      "description": "The output will be a single raster layer that is the result of the spatial and temporal aggregation of the input layers. The output will be in GeoTIFF format.\n",
+      "label": "summarised rasters",
       "type": "image/tiff;application=geotiff[]",
       "weight": 1
     }

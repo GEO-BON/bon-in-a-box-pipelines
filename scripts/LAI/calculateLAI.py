@@ -115,6 +115,9 @@ try:
 except Exception as e:
     biab_error_stop(f"UDP job failed: {e}")
 
+logs = udp_job.logs() # print logs to stdout
+print(logs, flush=True)
+
 print(f"UDP job finished: {udp_job.job_id}", flush=True)
 
 
