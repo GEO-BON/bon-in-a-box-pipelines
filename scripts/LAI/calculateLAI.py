@@ -115,13 +115,21 @@ cube = connection.datacube_from_process(
 udp_job = cube.save_result(format="GTiff").create_job(
     title=f"LAI UDP GeoTIFF {start_year}-{end_year}"
 )
+
 try:
     udp_job.start_and_wait()
 except Exception as e:
+    # Fetch and print logs BEFORE stopping, so you actually see them
+    try:
+        for entry in udp_job.logs(level = "error"):
+            print(f"[{entry.get('level')}]: {entry.get('message')}", flush=True)
+    except Exception as log_err:
+        print(f"Could not retrieve logs: {log_err}", flush=True)
     biab_error_stop(f"UDP job failed: {e}")
 
-logs = udp_job.logs() # print logs to stdout
-print(logs, flush=True)
+# If it succeeded, you can still print logs (e.g. warnings/info) here
+for entry in udp_job.logs(level = "warning"):
+    print(f"[{entry.get('level')}]: {entry.get('message')}", flush=True)
 
 print(f"UDP job finished: {udp_job.job_id}", flush=True)
 
