@@ -32,7 +32,7 @@ if spatial_resolution == "":
 
 
 # Start date
-if start_year is None or start_year < 2015:
+if start_year is None or int(start_year) < 2015:
     start_year = 2015
     biab_warning("Start year for LAI is set to 2015, as the data is only available from 2015 onwards.")
 
