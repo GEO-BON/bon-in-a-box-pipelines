@@ -162,28 +162,6 @@
       }
     },
     {
-      "id": "14",
-      "type": "io",
-      "position": {
-        "x": 799,
-        "y": 241
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
-      "id": "15",
-      "type": "io",
-      "position": {
-        "x": 1252,
-        "y": 401.5
-      },
-      "data": {
-        "descriptionFile": "STAC>createCollection.yml"
-      }
-    },
-    {
       "id": "16",
       "type": "constant",
       "position": {
@@ -193,39 +171,113 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "Colombia_chelsa"
+        "value": "Colombia-chelsa"
       }
     },
     {
-      "id": "17",
+      "id": "26",
       "type": "constant",
       "position": {
-        "x": 910,
-        "y": 403
+        "x": 814.4971531446139,
+        "y": 221.13817996692632
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "Albania_chelsa"
+        "value": "A STAC collection created from GeoTIFF files."
       }
     },
     {
-      "id": "21",
+      "id": "27",
+      "type": "constant",
+      "position": {
+        "x": 860.2350891178423,
+        "y": 274.2532023874495
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "proprietary"
+      }
+    },
+    {
+      "id": "28",
       "type": "io",
       "position": {
-        "x": 1776,
-        "y": 353
+        "x": 1303.1872780014903,
+        "y": 672.681895271789
+      },
+      "data": {
+        "descriptionFile": "STAC>createCollection.yml"
+      }
+    },
+    {
+      "id": "29",
+      "type": "io",
+      "position": {
+        "x": 797.7560928194301,
+        "y": 531.3287176977526
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "30",
+      "type": "constant",
+      "position": {
+        "x": 868.8015279943957,
+        "y": 684.6758630291442
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Albania-chelsa"
+      }
+    },
+    {
+      "id": "31",
+      "type": "constant",
+      "position": {
+        "x": 793.046965114563,
+        "y": 720.3553474256065
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "A STAC collection created from GeoTIFF files."
+      }
+    },
+    {
+      "id": "32",
+      "type": "constant",
+      "position": {
+        "x": 768.8488102940303,
+        "y": 787.2675890212658
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "proprietary"
+      }
+    },
+    {
+      "id": "33",
+      "type": "io",
+      "position": {
+        "x": 1995.490806428792,
+        "y": 361.6217330286835
       },
       "data": {
         "descriptionFile": "STAC>createSTAC.yml"
       }
     },
     {
-      "id": "22",
+      "id": "34",
       "type": "constant",
       "position": {
-        "x": 1434,
-        "y": 354.5
+        "x": 1659.6330807284812,
+        "y": 378.6984371061569
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -234,11 +286,11 @@
       }
     },
     {
-      "id": "23",
+      "id": "35",
       "type": "output",
       "position": {
-        "x": 2155,
-        "y": 413.5
+        "x": 2411.453197902782,
+        "y": 359.53525506334415
       },
       "data": {
         "label": "Output"
@@ -308,112 +360,136 @@
       "id": "xy-edge__13-2study_area"
     },
     {
-      "source": "5",
-      "target": "14",
-      "targetHandle": "stac_url",
-      "id": "xy-edge__5-14stac_url"
-    },
-    {
-      "source": "6",
-      "target": "14",
-      "targetHandle": "collections_items",
-      "id": "xy-edge__6-14collections_items"
-    },
-    {
-      "source": "7",
-      "target": "14",
-      "targetHandle": "t0",
-      "id": "xy-edge__7-14t0"
-    },
-    {
-      "source": "8",
-      "target": "14",
-      "targetHandle": "t1",
-      "id": "xy-edge__8-14t1"
-    },
-    {
-      "source": "9",
-      "target": "14",
-      "targetHandle": "temporal_res",
-      "id": "xy-edge__9-14temporal_res"
-    },
-    {
-      "source": "10",
-      "target": "14",
-      "targetHandle": "spatial_res",
-      "id": "xy-edge__10-14spatial_res"
-    },
-    {
-      "source": "11",
-      "target": "14",
-      "targetHandle": "resampling",
-      "id": "xy-edge__11-14resampling"
-    },
-    {
-      "source": "12",
-      "target": "14",
-      "targetHandle": "aggregation",
-      "id": "xy-edge__12-14aggregation"
-    },
-    {
-      "source": "13",
-      "target": "14",
-      "targetHandle": "study_area",
-      "id": "xy-edge__13-14study_area"
-    },
-    {
-      "source": "14",
-      "sourceHandle": "rasters",
-      "target": "15",
-      "targetHandle": "tiff_files",
-      "id": "xy-edge__14rasters-15tiff_files"
-    },
-    {
       "source": "16",
       "target": "0",
       "targetHandle": "collection_name",
       "id": "xy-edge__16-0collection_name"
     },
     {
-      "source": "17",
-      "target": "15",
+      "source": "26",
+      "target": "0",
+      "targetHandle": "collection_description",
+      "id": "xy-edge__26-0collection_description"
+    },
+    {
+      "source": "27",
+      "target": "0",
+      "targetHandle": "collection_license",
+      "id": "xy-edge__27-0collection_license"
+    },
+    {
+      "source": "29",
+      "sourceHandle": "rasters",
+      "target": "28",
+      "targetHandle": "tiff_files",
+      "id": "xy-edge__29rasters-28tiff_files"
+    },
+    {
+      "source": "30",
+      "target": "28",
       "targetHandle": "collection_name",
-      "id": "xy-edge__17-15collection_name"
+      "id": "xy-edge__30-28collection_name"
     },
     {
-      "source": "22",
-      "target": "21",
-      "targetHandle": "stac_name",
-      "id": "xy-edge__22-21stac_name"
+      "source": "31",
+      "target": "28",
+      "targetHandle": "collection_description",
+      "id": "xy-edge__31-28collection_description"
     },
     {
-      "source": "15",
-      "sourceHandle": "stac_collection",
-      "target": "21",
-      "targetHandle": "stac_collections",
-      "id": "xy-edge__15stac_collection-21stac_collections"
+      "source": "32",
+      "target": "28",
+      "targetHandle": "collection_license",
+      "id": "xy-edge__32-28collection_license"
+    },
+    {
+      "source": "5",
+      "target": "29",
+      "targetHandle": "stac_url",
+      "id": "xy-edge__5-29stac_url"
+    },
+    {
+      "source": "6",
+      "target": "29",
+      "targetHandle": "collections_items",
+      "id": "xy-edge__6-29collections_items"
+    },
+    {
+      "source": "7",
+      "target": "29",
+      "targetHandle": "t0",
+      "id": "xy-edge__7-29t0"
+    },
+    {
+      "source": "8",
+      "target": "29",
+      "targetHandle": "t1",
+      "id": "xy-edge__8-29t1"
+    },
+    {
+      "source": "9",
+      "target": "29",
+      "targetHandle": "temporal_res",
+      "id": "xy-edge__9-29temporal_res"
+    },
+    {
+      "source": "10",
+      "target": "29",
+      "targetHandle": "spatial_res",
+      "id": "xy-edge__10-29spatial_res"
+    },
+    {
+      "source": "11",
+      "target": "29",
+      "targetHandle": "resampling",
+      "id": "xy-edge__11-29resampling"
+    },
+    {
+      "source": "12",
+      "target": "29",
+      "targetHandle": "aggregation",
+      "id": "xy-edge__12-29aggregation"
+    },
+    {
+      "source": "13",
+      "target": "29",
+      "targetHandle": "study_area",
+      "id": "xy-edge__13-29study_area"
     },
     {
       "source": "0",
       "sourceHandle": "stac_collection",
-      "target": "21",
+      "target": "33",
       "targetHandle": "stac_collections",
-      "id": "xy-edge__0stac_collection-21stac_collections"
+      "id": "xy-edge__0stac_collection-33stac_collections"
     },
     {
-      "source": "21",
+      "source": "28",
+      "sourceHandle": "stac_collection",
+      "target": "33",
+      "targetHandle": "stac_collections",
+      "id": "xy-edge__28stac_collection-33stac_collections"
+    },
+    {
+      "source": "34",
+      "target": "33",
+      "targetHandle": "stac_name",
+      "id": "xy-edge__34-33stac_name"
+    },
+    {
+      "source": "33",
       "sourceHandle": "stac_catalog",
-      "target": "23",
-      "id": "xy-edge__21stac_catalog-23"
+      "target": "35",
+      "id": "xy-edge__33stac_catalog-35"
     }
   ],
   "inputs": {
-    "data>loadFromStac.yml@14|bbox_crs": {
+    "data>loadFromStac.yml@29|bbox_crs": {
       "description": "Object containing the chosen bounding box and CRS.",
       "label": "Bounding box and CRS",
       "type": "bboxCRS",
-      "example": null,
-      "weight": 0
+      "weight": 0,
+      "example": null
     },
     "data>loadFromStac.yml@2|bbox_crs": {
       "description": "Object containing the chosen bounding box and CRS.",
@@ -424,8 +500,8 @@
     }
   },
   "outputs": {
-    "STAC>createSTAC.yml@21|stac_catalog": {
-      "description": "STAC catalog JSON created from the STAC collection(s)",
+    "STAC>createSTAC.yml@33|stac_catalog": {
+      "description": "JSON file representing a STAC Catalog linking to the provided collections",
       "label": "STAC Catalog",
       "type": "application/json",
       "weight": 0
