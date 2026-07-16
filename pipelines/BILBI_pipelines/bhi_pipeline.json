@@ -495,9 +495,9 @@
     },
     "pipeline@19": {
       "label": "Spatial resolution (optional)",
-      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).\n\nLeave blank to use the original spatial resolution of the layers. If left blank, CRS must be EPSG:4326.",
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). \n\nIf this is left blank it will use the native resolution of the rasters. \n\nIf the spatial resolution is coarser than the native resolution of the rasters, the layers will be resampled with the resampling method chosen below.",
       "type": "float",
-      "example": null,
+      "example": 0.008833,
       "weight": 5
     },
     "pipeline@18": {
