@@ -42,12 +42,18 @@ for (ra in rasters) {
       template,
       method = "bilinear"
     )
+
+     output_path <- file.path(
+      outputFolder, paste0(tools::file_path_sans_ext(basename(ra)), "_reprojected.tif")
+    )
+
+    terra::writeRaster(thisras, output_path, overwrite = TRUE)
   }
 
   rasts <- c(rasts, thisras)
 
   for (nm in names(thisras)) {
-    names_file[[nm]] <- ra
+    names_file[[nm]] <- output_path
   }
 }
 
