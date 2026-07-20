@@ -5,7 +5,16 @@ class: CommandLineTool
 # To run this proof of concept:
 # cwltool <path/url to cwl file> --envFolder="./env" [optional inputs] --environment="path/to/runner.env"
 # envFolder will keep conda environments between runs.
-# environment file is necessary for GBIF credentials.
+# environment file is necessary when the script requires credentials.
+
+label: GBIF Observations from Download API
+doc:
+  - "Description:
+    Load complete GBIF data from GBIF download API"
+  - "Lifecycle tag: LifecycleMetadata(status=CORE, message=null)"
+  - "Authors:
+    Guillaume Larocque (https://orcid.org/0000-0002-5967-9156)"
+
 
 requirements:
   InlineJavascriptRequirement:
@@ -15,10 +24,25 @@ requirements:
           if (!outputFiles || outputFiles.length === 0) return null;
           return JSON.parse(outputFiles[0].contents)[key];
         }
+        function extractOutputs(outputFiles, key) {
+          var value = extractOutput(outputFiles, key, true);
+          if (value === undefined || value === null) return null;
+
+          return Array.isArray(value) ? value : [value];
+        }
         function extractOutputFile(outputFiles, key) {
           var value = extractOutput(outputFiles, key, true);
           if(value === undefined || value === null) return null;
           return { class: "File", location: "file://" + value };
+        }
+        function extractOutputFiles(outputFiles, key) {
+          var value = extractOutput(outputFiles, key, true);
+          if (value === undefined || value === null) return null;
+
+          var filePaths = Array.isArray(value) ? value : [value];
+          return filePaths.map(function (filePath) {
+            return { class: "File", location: "file://" + filePath };
+          });
         }
   InplaceUpdateRequirement:
     inplaceUpdate: true
@@ -80,13 +104,7 @@ arguments:
     ${
       return JSON.stringify({
         taxa: inputs.taxa,
-        bbox_crs: {
-          bbox: inputs.bbox,
-          CRS: {
-            authority: "EPSG",
-            code: inputs.crs_code
-          },
-        },
+        bbox_crs: inputs.bbox_crs,
         min_year: inputs.min_year,
         max_year: inputs.max_year,
       }, null, 2);
@@ -96,17 +114,12 @@ arguments:
     echo "Inputs:" | tee -a $log
     cat $OUTPUT_LOCATION/input.json | tee -a $log
 
-    # This script does not really need the conda environment. Switch the comments to test with Conda.
-    # source $SCRIPT_STUBS_LOCATION/system/condaEnvironment.sh $OUTPUT_LOCATION rbase 2>&1 >> $log
-    source $SCRIPT_STUBS_LOCATION/system/condaEnvironment.sh $OUTPUT_LOCATION data__getGBIFObservations__getGBIFObservations "
-      name: data__getGBIFObservations__getGBIFObservations
-      channels:
-        - conda-forge
-      dependencies:
-        - pygbif
-        - pandas
-        - pyproj
-    " /conda-envs $(inputs.condaPackURL) 2>&1 >> $log
+    source $SCRIPT_STUBS_LOCATION/system/condaEnvironment.sh $OUTPUT_LOCATION forCWL__getGBIFObservations \
+      "
+        channels: [conda-forge]
+        dependencies: [pygbif, pandas, pyproj]
+        name: forCWL__getGBIFObservations
+      " /conda-envs $(inputs.condaPackURL) 2>&1 >> $log
 
     python3 \
       $SCRIPT_STUBS_LOCATION/system/scriptWrapper.py \
@@ -116,7 +129,7 @@ arguments:
     scriptExitCode=\${PIPESTATUS[0]}
     echo "Script exited with code $scriptExitCode" | tee -a $log
 
-    source $SCRIPT_STUBS_LOCATION/system/condaPackEnvironment.sh data__getGBIFObservations__getGBIFObservations /conda-envs 2>&1 >> $log
+    source $SCRIPT_STUBS_LOCATION/system/condaPackEnvironment.sh forCWL__getGBIFObservations /conda-envs 2>&1 >> $log
 
     exit "$scriptExitCode"
 
@@ -130,33 +143,48 @@ inputs:
     doc: Comma-separated list of [taxa](https://en.wikipedia.org/wiki/Taxon). Each value could be a species name, order, class, genus, kingdom or family, as long as it is an exact match with the GBIF taxonomic backbone. Individual species can be looked up [on the GBIF website](https://www.gbif.org/species/).
     default: [Acer saccharum, Acer nigrum]
 
-  bbox:
-    type: int[]
-    label: Bounding Box
-    doc: Bounding box for the area of interest, in the format "minLon,minLat,maxLon,maxLat".
-    default:
-      - 2296842
-      - 7275965
-      - 2717150
-      - 7678409
-
-  crs_code:
-    type: int
-    label: CRS code
-    doc: EPSG code of the coordinate reference system for the bounding box.
-    default: 2953
+  bbox_crs:
+    label: Bounding box and CRS
+    doc: Select a bounding box and CRS
+    type:
+      type: record
+      name: crsBBox
+      fields:
+      - name: CRS
+        type:
+          name: CRSDefinition
+          type: record
+          fields:
+          - name: unit
+            type: string?
+          - name: code
+            type: int?
+          - name: authority
+            type: string?
+          - name: name
+            type: string?
+          - name: CRSBboxWGS84
+            type: int[]?
+          - name: proj4Def
+            type: string?
+          - name: wktDef
+            type: string?
+      - name: bbox
+        type: float[]
 
   min_year:
+    type: int
     label: minimum year
     doc: Min year observations wanted
-    type: int
     default: 2010
 
   max_year:
+    type: int
     label: maximum year
     doc: Max year observations wanted
-    type: int
     default: 2024
+
+
 
   ###################
   # Run environment #
@@ -200,13 +228,6 @@ inputs:
     doc: Root folder for scripts. Use this to override the image's scripts while debugging.
 
 outputs:
-  output_file:
-    type: File
-    label: outputs
-    doc: Output file
-    outputBinding:
-      glob: "$((inputs.runFolder ? inputs.runFolder.basename + '/' : '') + 'output.json')"
-
   observations_file:
     type: File
     label: Observations
@@ -233,6 +254,7 @@ outputs:
       glob: "$((inputs.runFolder ? inputs.runFolder.basename + '/' : '') + 'output.json')"
       loadContents: true
       outputEval: $(extractOutput(self, "gbif_doi"))
+
 
   logs:
     type: File

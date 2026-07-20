@@ -3,8 +3,27 @@ cwlVersion: v1.2
 class: CommandLineTool
 
 # To run this proof of concept:
-# cwltool <path/url to cwl file> --envFolder="./env" --species=<array of species> --expert_source="IUCN"
+# cwltool <path/url to cwl file> --envFolder="./env" [optional inputs] --environment="path/to/runner.env"
 # envFolder will keep conda environments between runs.
+# environment file is necessary when the script requires credentials.
+
+label: Get species range map
+doc:
+  - "Description:
+    This script downloads the range map of the species according to the expert source chosen."
+  - "Lifecycle tag: LifecycleMetadata(status=CORE, message=null)"
+  - "Authors:
+    Maria Isabel Arce-Plata (https://orcid.org/0000-0003-4024-9268)
+    Guillaume Larocque (https://orcid.org/0000-0002-5967-9156)"
+  - "References:
+    Mammal Diversity Database. (2020). Mammal Diversity Database (Version 1.2) [Data set]. Zenodo. http://doi.org/10.5281/zenodo.4139818
+
+    Map of Life. (2021). Mammal range maps harmonised to the Mammals Diversity Database [Data set]. Map of Life. https://doi.org/10.48600/MOL-48VZ-P413
+
+    IUCN. 2022. The IUCN Red List of Threatened Species. Version 2022-2. Accessed on May 2022. https://www.iucnredlist.org/resources/spatial-data-download
+
+    Ministère de l’Environnement, Lutte contre les changements climatiques, Faune et Parcs. Aires de répartition des mammifères terrestres, des reptiles, des amphibiens et des poissons d'eau douce . Acessed on May 2022. https://www.donneesquebec.ca/recherche/dataset/aires-de-repartition-faune"
+
 
 requirements:
   InlineJavascriptRequirement:
@@ -14,10 +33,25 @@ requirements:
           if (!outputFiles || outputFiles.length === 0) return null;
           return JSON.parse(outputFiles[0].contents)[key];
         }
+        function extractOutputs(outputFiles, key) {
+          var value = extractOutput(outputFiles, key, true);
+          if (value === undefined || value === null) return null;
+
+          return Array.isArray(value) ? value : [value];
+        }
         function extractOutputFile(outputFiles, key) {
           var value = extractOutput(outputFiles, key, true);
           if(value === undefined || value === null) return null;
           return { class: "File", location: "file://" + value };
+        }
+        function extractOutputFiles(outputFiles, key) {
+          var value = extractOutput(outputFiles, key, true);
+          if (value === undefined || value === null) return null;
+
+          var filePaths = Array.isArray(value) ? value : [value];
+          return filePaths.map(function (filePath) {
+            return { class: "File", location: "file://" + filePath };
+          });
         }
   InplaceUpdateRequirement:
     inplaceUpdate: true
@@ -78,8 +112,8 @@ arguments:
     cat > "$OUTPUT_LOCATION/input.json" <<'JSON'
     ${
       return JSON.stringify({
-        "expert_source": inputs.expert_source,
-        "species": inputs.species
+        species: inputs.species,
+        expert_source: inputs.expert_source,
       }, null, 2);
     }
     JSON
@@ -87,21 +121,12 @@ arguments:
     echo "Inputs:" | tee -a $log
     cat $OUTPUT_LOCATION/input.json | tee -a $log
 
-    # This script does not really need the conda environment. Switch the comments to test with Conda.
-    # source $SCRIPT_STUBS_LOCATION/system/condaEnvironment.sh $OUTPUT_LOCATION rbase 2>&1 >> $log
-    source $SCRIPT_STUBS_LOCATION/system/condaEnvironment.sh $OUTPUT_LOCATION data__getRangeMap "
-      name: data__getRangeMap
-      channels:
-        - conda-forge
-        - r
-      dependencies:
-        - r-rjson
-        - r-dplyr
-        - r-tidyr
-        - r-purrr
-        - r-sf
-        - r-stringr
-    " /conda-envs $(inputs.condaPackURL) 2>&1 >> $log
+    source $SCRIPT_STUBS_LOCATION/system/condaEnvironment.sh $OUTPUT_LOCATION forCWL__getRangeMap \
+      "
+        channels: [conda-forge, r]
+        dependencies: [r-rjson, r-dplyr, r-tidyr, r-purrr, r-sf, r-stringr]
+        name: forCWL__getRangeMap
+      " /conda-envs $(inputs.condaPackURL) 2>&1 >> $log
 
     Rscript \
       $SCRIPT_STUBS_LOCATION/system/scriptWrapper.R \
@@ -111,7 +136,7 @@ arguments:
     scriptExitCode=\${PIPESTATUS[0]}
     echo "Script exited with code $scriptExitCode" | tee -a $log
 
-    source $SCRIPT_STUBS_LOCATION/system/condaPackEnvironment.sh data__getRangeMap /conda-envs 2>&1 >> $log
+    source $SCRIPT_STUBS_LOCATION/system/condaPackEnvironment.sh forCWL__getRangeMap /conda-envs 2>&1 >> $log
 
     exit "$scriptExitCode"
 
@@ -119,6 +144,11 @@ inputs:
   #################
   # Script inputs #
   #################
+  species:
+    type: string[]
+    label: species
+    doc: Scientific name of the species. Multiple species names can be specified, separated with a comma.
+    default: [Myrmecophaga tridactyla]
 
   expert_source:
     type:
@@ -127,11 +157,13 @@ inputs:
         - MOL
         - IUCN
         - QC
+    label: source of expert range map
+    doc: >
+      Source of the expert range map for the species. The options are:
+      Map of Life (MOL), International union for conservation of nature (IUCN) and range maps from the Ministère de l’Environnement du Québec (QC).
     default: IUCN
 
-  species:
-    type: string[]
-    default: ["Myrmecophaga tridactyla"]
+
 
   ###################
   # Run environment #
@@ -176,11 +208,14 @@ inputs:
 
 outputs:
   sf_range_map:
-    type: File
+    type: File[]
+    label: expert range map
+    doc: Polygon with expected area for the species.
     outputBinding:
       glob: "$((inputs.runFolder ? inputs.runFolder.basename + '/' : '') + 'output.json')"
       loadContents: true
-      outputEval: $(extractOutputFile(self, "sf_range_map"))
+      outputEval: $(extractOutputFiles(self, "sf_range_map"))
+
 
   logs:
     type: File
