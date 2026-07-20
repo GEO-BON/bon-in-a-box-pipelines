@@ -7,8 +7,17 @@ from shapely.geometry import box
 
 # Reading inputs
 data = biab_inputs()
-
+    
+start_year = data['start_year']
+end_year = data['end_year']
+polygon = data['study_area_polygon']
+spatial_resolution = data['spatial_resolution']
+crs = data['bbox_crs']['CRS']['authority']+':'+str(data['bbox_crs']['CRS']['code'])
 binning_period = data['binning_period']
+id = os.getenv("CDSE_CLIENT_ID")
+secret = os.getenv("CDSE_CLIENT_SECRET")
+if spatial_resolution == "":
+    spatial_resolution = None
 
 # input checks
 
@@ -19,21 +28,10 @@ if (data['bbox_crs']['bbox'] is not None):
     bbox = data['bbox_crs']['bbox']
 else:
     biab_error_stop("No bounding box specified in bbox_crs input.")
-    
-start_year = data['start_year']
-end_year = data['end_year']
-polygon = data['study_area_polygon']
-spatial_resolution = data['spatial_resolution']
-crs = data['bbox_crs']['CRS']['authority']+':'+str(data['bbox_crs']['CRS']['code'])
-id = os.getenv("CDSE_CLIENT_ID")
-secret = os.getenv("CDSE_CLIENT_SECRET")
-if spatial_resolution == "":
-    spatial_resolution = None
-
 
 # Start date
 if start_year is None or int(start_year) < 2015:
-    start_year = 2015
+    start_year = "2015"
     biab_warning("Start year for LAI is set to 2015, as the data is only available from 2015 onwards.")
 
 if "-" in str(start_year):
