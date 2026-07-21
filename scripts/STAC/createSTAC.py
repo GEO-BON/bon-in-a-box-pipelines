@@ -4,7 +4,7 @@ import sys
 
 inputs = biab_inputs()
 collections = inputs['stac_collections']
-output_dir = Path(sys.argv[1])
+output_dir = Path(sys.argv[1])/"Catalog"
 output_dir.mkdir(parents=True, exist_ok=True)
 
 # Create STAC catalog
