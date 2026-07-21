@@ -158,19 +158,6 @@
       }
     },
     {
-      "id": "64",
-      "type": "constant",
-      "position": {
-        "x": 1983.8602567085231,
-        "y": 15.061958027760227
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 0
-      }
-    },
-    {
       "id": "66",
       "type": "output",
       "position": {
@@ -462,7 +449,7 @@
       "label": "Sampling locations",
       "description": "Sampling locations/site in lat lon format, including a \"vini\" column (defining well-known sites as \"1\" and demand/historic sites as \"0\", which will be selected for the sampling optimization)",
       "type": "text/csv",
-      "example": "Sample Peru",
+      "example": "/scripts/site_optz_stepwise\\site_optz_stepwise_EXAMPLE_samp_loc_peru.csv",
       "weight": 3
     },
     "pipeline@53": {
