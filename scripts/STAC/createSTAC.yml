@@ -20,8 +20,11 @@ inputs:
 outputs:
   stac_catalog:
     label: STAC Catalog
-    description: JSON file representing a STAC Catalog linking to the provided collections
-    type: application/json
+    description: |
+      STAC Catalog linking to the provided collections.
+
+      The official MIME type is application/json however, we use application/stac+json to indicate that this is a STAC catalog and differentiate from other json files.
+    type: application/stac+json
 conda:
   channels:
     - conda-forge
