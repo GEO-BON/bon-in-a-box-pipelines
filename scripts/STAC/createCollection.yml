@@ -24,9 +24,9 @@ inputs:
     example: A STAC collection created from GeoTIFF files.
   collection_license:
     label: Collection License
-    description: License for the STAC collection to be created. Default is "proprietary".
+    description: License for the STAC collection to be created. Default is "CC-BY".
     type: text
-    example: proprietary
+    example: CC-BY
 outputs:
   stac_collection:
     label: STAC Collection
