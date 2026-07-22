@@ -96,11 +96,11 @@ arguments:
     echo "Inputs:" | tee -a $log
     cat $OUTPUT_LOCATION/input.json | tee -a $log
 
-    source $SCRIPT_STUBS_LOCATION/system/condaEnvironment.sh $OUTPUT_LOCATION forCWL__getGBIFObservations \
+    source $SCRIPT_STUBS_LOCATION/system/condaEnvironment.sh $OUTPUT_LOCATION data__getGBIFObservations \
       "
         channels: [conda-forge]
         dependencies: [pygbif, pandas, pyproj]
-        name: forCWL__getGBIFObservations
+        name: data__getGBIFObservations
       " /conda-envs $(inputs.condaPackURL) 2>&1 >> $log
 
     python3 \
@@ -111,7 +111,7 @@ arguments:
     scriptExitCode=\${PIPESTATUS[0]}
     echo "Script exited with code $scriptExitCode" | tee -a $log
 
-    source $SCRIPT_STUBS_LOCATION/system/condaPackEnvironment.sh forCWL__getGBIFObservations /conda-envs 2>&1 >> $log
+    source $SCRIPT_STUBS_LOCATION/system/condaPackEnvironment.sh data__getGBIFObservations /conda-envs 2>&1 >> $log
 
     exit "$scriptExitCode"
 
