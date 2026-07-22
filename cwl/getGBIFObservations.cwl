@@ -22,27 +22,9 @@ requirements:
       - |
         function extractOutput(outputFiles, key) {
           if (!outputFiles || outputFiles.length === 0) return null;
-          return JSON.parse(outputFiles[0].contents)[key];
-        }
-        function extractOutputs(outputFiles, key) {
-          var value = extractOutput(outputFiles, key, true);
-          if (value === undefined || value === null) return null;
-
-          return Array.isArray(value) ? value : [value];
-        }
-        function extractOutputFile(outputFiles, key) {
-          var value = extractOutput(outputFiles, key, true);
-          if(value === undefined || value === null) return null;
-          return { class: "File", location: "file://" + value };
-        }
-        function extractOutputFiles(outputFiles, key) {
-          var value = extractOutput(outputFiles, key, true);
-          if (value === undefined || value === null) return null;
-
-          var filePaths = Array.isArray(value) ? value : [value];
-          return filePaths.map(function (filePath) {
-            return { class: "File", location: "file://" + filePath };
-          });
+          var value = JSON.parse(outputFiles[0].contents)[key]
+          if (value === undefined) return null
+          return value;
         }
   InplaceUpdateRequirement:
     inplaceUpdate: true
@@ -164,7 +146,7 @@ inputs:
           - name: name
             type: string?
           - name: CRSBboxWGS84
-            type: int[]?
+            type: float[]?
           - name: proj4Def
             type: string?
           - name: wktDef
@@ -235,7 +217,12 @@ outputs:
     outputBinding:
       glob: "$((inputs.runFolder ? inputs.runFolder.basename + '/' : '') + 'output.json')"
       loadContents: true
-      outputEval: $(extractOutputFile(self, "observations_file"))
+      outputEval: |
+        ${
+          var value = extractOutput(self, "observations_file");
+          if (value === null) return null;
+          return { class: "File", location: "file://" + value };
+        }
 
   total_records:
     type: int
@@ -244,7 +231,12 @@ outputs:
     outputBinding:
       glob: "$((inputs.runFolder ? inputs.runFolder.basename + '/' : '') + 'output.json')"
       loadContents: true
-      outputEval: $(parseInt(extractOutput(self, "total_records")))
+      outputEval: |
+        ${
+          var value = extractOutput(self, "total_records");
+          if (value === null) return null;
+          return parseInt(value);
+        }
 
   gbif_doi:
     type: string
@@ -253,7 +245,11 @@ outputs:
     outputBinding:
       glob: "$((inputs.runFolder ? inputs.runFolder.basename + '/' : '') + 'output.json')"
       loadContents: true
-      outputEval: $(extractOutput(self, "gbif_doi"))
+      outputEval: |
+        ${
+          var value = extractOutput(self, "gbif_doi");
+          return value;
+        }
 
 
   logs:
