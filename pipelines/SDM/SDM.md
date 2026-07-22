@@ -8,13 +8,19 @@ Review status: Under development
 
 ### **Introcution:**
   The MaxEnt pipeline builds a species distribution model using occurrence
-  records from the Global Biodiversity Information Facility (GBIF) and
-  environmental raster layers from a STAC catalog. The pipeline retrieves GBIF
+  records from the [Global Biodiversity Information Facility (GBIF)](https://www.gbif.org/) and
+  environmental raster layers from the [GEO BON STAC catalog](https://stac.geobon.org/). The pipeline retrieves GBIF
   observations for the selected taxon or taxa, cleans occurrence coordinates,
   removes highly collinear environmental predictors, generates background
-  points, and fits a MaxEnt model using the ENMeval R package. MaxEnt is a
+  points, and fits a MaxEnt model using the ENMeval R package (Kass et al. 2021). MaxEnt is a
   presence-background modeling approach, meaning it compares known species
-  presences with background environmental conditions across the study area.   
+  presences with background environmental conditions across the study area. The MaxEnt SDM is run by 1\) partitioning
+  occurrence and background points into subsets for training and evaluation, 2\)
+  building the model with different algorithmic settings (model tuning), and 3\)
+  evaluating their performance ([see package
+  vignette](https://jamiemkass.github.io/ENMeval/articles/ENMeval-2.0-vignette.html#partition)).
+  Lastly, the pipeline computes the 95% confidence interval using bootstrapping
+  and cross validation techniques.  
 
   The pipeline evaluates different MaxEnt settings, including feature classes
   and regularization multipliers, and selects a tuned model based on model
@@ -68,13 +74,24 @@ Review status: Under development
   predictors, and more model runs increase computation time and memory use.
 
 ## **Before you start:**
-A GBIF API key is required to run this pipeline and can be added into the runner.env file.
 
-Before running the pipeline, choose the taxon or taxa you want to model and make sure the names match the GBIF taxonomic backbone. Species names can be checked on the GBIF website.
+  A GBIF API key is required to run this pipeline and can be added into the
+  runner.env file.  
 
-Select a study area using the bounding box and CRS input. The CRS and spatial resolution determine the scale of the analysis, so choose a CRS appropriate for the region and make sure the spatial resolution is in the units of that CRS.
+  Before running the pipeline, choose the taxon or taxa you want to model and
+  make sure the names match the GBIF taxonomic backbone. Species names can be
+  checked on the [GBIF website](https://www.gbif.org/).  
 
-Choose environmental predictor layers from the STAC catalog that are ecologically relevant to the species being modeled. For example, climate, vegetation, elevation, land cover, or habitat-related predictors may be appropriate depending on the species. Avoid including many predictors that represent the same underlying environmental gradient.
+  Select a study area using the bounding box and CRS input. The CRS and spatial
+  resolution determine the scale of the analysis, so choose a CRS appropriate
+  for the region and make sure the spatial resolution is in the units of that
+  CRS.  
+
+  Choose environmental predictor layers from the [STAC catalog](https://stac.geobon.org/) that are
+  ecologically relevant to the species being modeled. For example, climate,
+  vegetation, elevation, land cover, or habitat-related predictors may be
+  appropriate depending on the species. Avoid including many predictors that
+  represent the same underlying environmental gradient.
 
 ## **Running the pipeline:**
 ### Pipeline inputs
@@ -99,32 +116,37 @@ The BON in a Box pipeline allows you to run an SDM for a specific region and spe
 - **Feature classes:** MaxEnt feature classes control the shapes of relationships the model can learn between species occurrence and environmental predictors. Simpler classes, such as L or LQ, fit smoother, more constrained responses and are often safer for small datasets. More complex combinations, such as LQH or LQHP, can capture more flexible ecological responses but may overfit when occurrence records are limited. This pipeline tests all values provided here and selects the best-performing combination using the parameter selection method configured in the MaxEnt step. Accepted values are combinations of L (linear), Q (quadratic), P (product), H (hinge) or T (threshold).
 - **Regularization multiplier:** Regularization multiplier values to evaluate for MaxEnt model tuning. The regularization multiplier controls how strongly MaxEnt penalizes model complexity. Lower values allow a more flexible model that may fit local patterns closely. Higher values produce smoother, more generalized predictions and reduce overfitting risk. 
 - **Partition type:** ENMeval partitioning method used to evaluate MaxEnt parameter combinations. This option controls how ENMeval partitions presence and background data while tuning MaxEnt parameters. 
-  - Block \- partitions the bounding box into four equally sized quadrants and assigns groups by quadrant
-  - Checkerboard 1 \- Generates checkerboard from the study area and assigns groups based on what square the points fall in
-  - Checkerboard 2 \- Similar to checkerboard 1 but performs this separately for occurrence and background points
-  - Jackknife \- Does not partition the background points into testing and training (uses them all), performs leave one out cross validation (recommended for small datasets only)
-  - Random k-fold \- Does not partition the background points into testing and training, partitions groups randomly into a user specified (K) number of bins, and runs the model k times, with each bin used once as testing.
-  - **Number of runs:** The number of SDMs to run to compute the 95% confidence interval through cross validation.
+  - `Block`: partitions the bounding box into four equally sized quadrants and assigns groups by quadrant
+  - `Checkerboard 1`: Generates checkerboard from the study area and assigns groups based on what square the points fall in
+  - `Checkerboard 2`: Similar to checkerboard 1 but performs this separately for occurrence and background points
+  - `Jackknife`: Does not partition the background points into testing and training (uses them all), performs leave one out cross validation (recommended for small datasets only)
+  - `Random k-fold`: Does not partition the background points into testing and training, partitions groups randomly into a user specified (K) number of bins, and runs the model k times, with each bin used once as testing.
+- **Number of folds:** Number of folds for random k-fold MaxEnt partitioning when partition type = random k-fold.
+- **Number of runs:** The number of SDMs to run to compute the 95% confidence interval through cross validation.
 
 ### Pipeline steps
 
-#### **1. Pulling occurences from GBIF and loading environmental layers**
+#### **1. Input data: pulling occurences from GBIF and loading environmental layers**
 
-This step pulls occurrences of the species of interest from GBIF and environmental raster layers from the GEO BON STAC catalog. 
+This step retrieves occurrence records for the target species from GBIF and downloads environmental predictor layers from the GEO BON STAC catalog. Environmental layers may include climatic, topographic, and land-cover variables used to characterize habitat suitability.
  
 #### **2. Cleaning input data**
 
-This step cleans the GBIF data by only including one occurrence per pixel and removes collinearity between the environmental layers. 
+This step cleans the GBIF occurence records by multiple empirical tests. Environmental predictors are also screened for collinearity, and highly correlated variables are removed to reduce model overfitting.
 
 #### **3. Generating background points**
 
-This step creates a set of pseudo-absences (background points) and combines this with presences and the environmental predictors to create a dataset that is ready to be input into the SDM model. 
- 
-#### **4. Running the MaxEnt model**
+This step creates a set of pseudo-absences (background points) using one of the five available methods: random, inclusion buffer, weighted raster, unweighted raster, thickening. 
 
- This step runs the SDM on the clean data using the MaxEnt algorithm using the ENMeval R package (Kass et al. 2021). The MaxEnt SDM is run by 1\) partitioning occurrence and background points into subsets for training and evaluation, 2\) building the model with different algorithmic settings (model tuning), and 3\) evaluating their performance ([see package vignette](https://jamiemkass.github.io/ENMeval/articles/ENMeval-2.0-vignette.html#partition)). 
+#### **4. Setting up the SDM data**
+
+This step extracts environmental predictor values at species occurrence and background locations and combines them into a modelling dataset suitable for species distribution modelling.
  
-#### **5. Prediction range**
+#### **5. Running the MaxEnt model**
+
+ This step runs the SDM on the clean data using the MaxEnt algorithm using the ENMeval R package (Kass et al. 2021). The MaxEnt SDM is run by 1\) partitioning occurrence and background points into subsets for training and evaluation, 2\) building the model with different algorithmic settings (model tuning), and 3\) evaluating their performance ([see package vignette](https://jamiemkass.github.io/ENMeval/articles/ENMeval-2.0-vignette.html#partition)). This step produces spatial predictions of habitat suitability across the study area.
+ 
+#### **6. Generating uncertainty estimates**
  
  This step computes the 95% confidence interval using bootstrapping and cross validation techniques.
 
