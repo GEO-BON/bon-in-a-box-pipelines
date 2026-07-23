@@ -58,7 +58,7 @@ conda:
   dependencies:
     - r-base
     - r-rjson
-    - r-gdalcubes=0.7.1
+    - r-gdalcubes=0.7.4
     - r-terra
     - r-sf
     - r-lubridate

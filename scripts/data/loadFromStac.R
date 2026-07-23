@@ -281,12 +281,20 @@ for (coll_it in collections_items) { # Loop through input array
         srs.cube <- paste0("EPSG:", it_obj$features[[1]]$properties$`proj:epsg`)
         print("srs_cube")
         print(srs.cube)
+      }
+      if ("proj:code" %in% names(it_obj$features[[1]]$properties)) {
+        srs.cube <- toupper(it_obj$features[[1]]$properties$`proj:code`)
+        print("srs_cube")
+        print(srs.cube)
       } else if (`proj:wkt2` %in% names(it_obj$features[[1]]$properties)) {
         srs.cube <- it_obj$features[[1]]$properties$`proj:wkt2`
       }
     } else {
       srs.cube <- CRS
     }
+
+  print("*******************")
+  print(srs.cube)
 
     # Extract date
     dates <- vapply(it_obj$features, function(x) x$properties$`datetime`, character(1))
