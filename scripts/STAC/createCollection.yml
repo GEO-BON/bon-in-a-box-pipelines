@@ -1,0 +1,47 @@
+script: createCollection.py
+name: TIFF to STAC Collection
+description: Converts GeoTIFF files into a STAC collection
+author:
+  - name: Laetitia Tremblay
+    email: laetitia.tremblay@mcgill.ca
+lifecycle:
+  status: in_development
+inputs:
+  tiff_files:
+    label: GeoTIFF files
+    description: GeoTIFFs to be added to the collection
+    type: image/tiff;application=geotiff[]
+    example: null
+  collection_name:
+    label: Collection Name
+    description: Name of the STAC collection to be created. The collection name should be unique, using lowercase letters and hyphens only. Default is "biab-collection".
+    type: text
+    example: biab-collection
+  collection_description:
+    label: Collection Description
+    description: Description of the STAC collection to be created.
+    type: text
+    example: A STAC collection created from GeoTIFF files.
+  collection_license:
+    label: Collection License
+    description: License for the STAC collection to be created. Default is "CC-BY".
+    type: text
+    example: CC-BY
+outputs:
+  stac_collection:
+    label: STAC Collection
+    description: JSON file representing a STAC collection containing the provided GeoTIFFs
+    type: application/json
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - pystac
+    - gdal
+    - jsonschema
+    - rasterio
+    - shapely
+    - pyproj
+    - geopandas
+    - rasterstats
+    - numpy
