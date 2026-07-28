@@ -81,6 +81,12 @@ def stac_create_item(file_path, file_url, name, datetime, collection, properties
                       collection=collection,
                       )
 
+    item.add_asset(
+	    #key=name,
+		key="data",
+	    asset=asset
+	)
+
     ProjectionExtension.add_to(item)
     proj_ext = ProjectionExtension.ext(item)
     if (isinstance(crs, int)):
