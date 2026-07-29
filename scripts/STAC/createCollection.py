@@ -3,6 +3,7 @@ from stac_builder_utils import *
 from datetime import datetime, timezone
 from pathlib import Path
 import sys
+import shutil
 
 inputs = biab_inputs()
 print(f"Inputs: {inputs}")
@@ -37,7 +38,7 @@ for file_path in inputs["tiff_files"]:
     item_datetime = extracted if extracted is not None else datetime.now(timezone.utc)
     dates.append(item_datetime)
 
-    item = stac_create_item(file_path, file, file.stem, item_datetime, collection)
+    item = stac_create_item(file_path, f"{file.name}", file.stem, item_datetime, collection)
     bboxes.append(item.bbox)
 
     items.append(item)
@@ -77,6 +78,12 @@ collection.extent = collection_extent
 
 # Save collection
 collection.save(catalog_type=pystac.CatalogType.SELF_CONTAINED)
+
+for file_path in inputs["tiff_files"]:
+    file = Path(file_path)
+    if not file.exists():
+        continue
+    shutil.copy(file, f"{output_dir}/{file.stem}/")
 
 collection_path = output_dir / f"collection.json"
 print(f"Collection written to {collection_path}")

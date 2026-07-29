@@ -1,11 +1,11 @@
 script: createCollection.py
 name: TIFF to STAC Collection
-description: Converts GeoTIFF files into a STAC collection
+description: Converts GeoTIFF files into a STAC collection. A STAC collection is JSON file aggregating spatial temporal data in the form of geospatial files and their metadata.
 author:
   - name: Laetitia Tremblay
     email: laetitia.tremblay@mcgill.ca
 lifecycle:
-  status: in_development
+  status: core
 inputs:
   tiff_files:
     label: GeoTIFF files

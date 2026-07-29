@@ -1,11 +1,11 @@
 script: createSTAC.py
-name: Collection to STAC
-description: Converts STAC collection(s) into a STAC catalog.
+name: STAC Collection to Catalog
+description: Converts STAC collection(s) into a STAC catalog. A STAC catalog is an aggregation of STAC collections.
 author:
   - name: Laetitia Tremblay
     email: laetitia.tremblay@mcgill.ca
 lifecycle:
-  status: in_development
+  status: core
 inputs:
   stac_collections:
     label: STAC collections
