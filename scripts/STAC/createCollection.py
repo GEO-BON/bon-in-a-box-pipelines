@@ -38,9 +38,20 @@ for file_path in inputs["tiff_files"]:
     item_datetime = extracted if extracted is not None else datetime.now(timezone.utc)
     dates.append(item_datetime)
 
-    item = stac_create_item(file_path, f"{file.name}", file.stem, item_datetime, collection)
-    bboxes.append(item.bbox)
+    item_dir = output_dir / file.stem
+    item_dir.mkdir(parents=True, exist_ok=True)
 
+    # Asset href is relative to the item JSON folder (same folder as the .tif)
+    asset_href = f"./{file.name}"
+    item = stac_create_item(str(file), asset_href, file.stem, item_datetime, collection)
+
+    # Self href must match the on-disk item JSON path so asset hrefs stay relative
+    item.set_self_href(str(item_dir / f"{file.stem}.json"))
+    item.make_asset_hrefs_relative()
+
+    shutil.copy(file, item_dir / file.name)
+
+    bboxes.append(item.bbox)
     items.append(item)
 
 if len(items) == 0:
@@ -48,7 +59,6 @@ if len(items) == 0:
 
 # Add items to the collection
 collection.add_items(items)
-collection.normalize_hrefs(str(output_dir))
 
 # Add a start and end date to the collection's temporal extent based on the items' dates
 if len(dates) > 1:
@@ -76,16 +86,14 @@ spatial_extent = pystac.SpatialExtent(bboxes=[spatial_extent_bbox])
 collection_extent = pystac.Extent(spatial=spatial_extent, temporal=temporal_extent)
 collection.extent = collection_extent
 
-# Save collection
-collection.save(catalog_type=pystac.CatalogType.SELF_CONTAINED)
+# Save collection under the run output directory with relative links
+collection_path = output_dir / "collection.json"
+collection.set_self_href(str(collection_path))
+collection.normalize_and_save(
+    root_href=str(output_dir),
+    catalog_type=pystac.CatalogType.SELF_CONTAINED,
+)
 
-for file_path in inputs["tiff_files"]:
-    file = Path(file_path)
-    if not file.exists():
-        continue
-    shutil.copy(file, f"{output_dir}/{file.stem}/")
-
-collection_path = output_dir / f"collection.json"
 print(f"Collection written to {collection_path}")
 
 try:

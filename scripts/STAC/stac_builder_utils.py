@@ -94,7 +94,9 @@ def stac_create_item(file_path, file_url, name, datetime, collection, properties
     else:
         proj_ext.epsg = None
         proj_ext.wkt2 = crs
-    item.set_self_href('./' + collection.id + '/' + name + '.json')
+
+    # Caller should set_self_href() to the real item JSON path so asset hrefs
+    # can stay relative to that folder (e.g. "./file.tif" next to the item JSON).
 
     print('Created STAC Item:', item.to_dict())
     return item
