@@ -40,7 +40,7 @@ dependencies:
   - r-stars
   - r-stringr
   - r-stringr
-  - r-terra
+  - r-terra=1.8.70
   - r-this.path
   - r-tidyselect  ssh -i ~/.ssh/id_rsa ubuntu@130.60.24.27
   - r-tidyverse
@@ -51,3 +51,4 @@ dependencies:
   - r-ggeffects
   - r-glmmTMB
   - r-patchwork
+  - r-geosphere

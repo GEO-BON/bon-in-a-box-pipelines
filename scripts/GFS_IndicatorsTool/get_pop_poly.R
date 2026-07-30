@@ -1,4 +1,4 @@
-packages <- c("sf","rjson", "spatialEco", 'rnaturalearth','rnaturalearthdata')
+packages <- c("sf","rjson", "spatialEco", 'rnaturalearth','rnaturalearthdata', 'readr')
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
@@ -12,7 +12,7 @@ library("readr")
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 
 # load points from file
-obs_data = read_tsv(input$species_obs )
+obs_data = read.delim(input$species_obs, sep = "\t", header = TRUE, row.names = 1)
 
 
 # restrict observation to countries of interest, if specified
@@ -24,7 +24,7 @@ radius <- input$buffer_size  # in kilometers
 
 print(obs_data)
 ###clean point
-points = obs_data[c("decimal_longitude", "decimal_latitude")]
+points = obs_data[c("decimallongitude", "decimallatitude")]
 colnames(points) = c("longitude","latitude")
 print(nrow(points))
 

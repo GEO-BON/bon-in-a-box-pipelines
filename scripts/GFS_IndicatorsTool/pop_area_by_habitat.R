@@ -24,12 +24,12 @@ habitat_p = input$habitat_map
 ## Calculate Area of populations
 sf_use_s2(F)
 POP_AREA = st_area(pop_poly)/1000000
-names(POP_AREA) = pop_poly$name
+names(POP_AREA) = pop_poly$pop
 
 ### Extract habitat size over time for every pop
 POP_HABITAT_AREA = c() # initialize container
 
-for (name in pop_poly$name) {
+for (name in pop_poly$pop) {
   print(name)
   ## get habitat map
   habitat = rast(paste0(habitat_p,name,'.tif'))
@@ -46,7 +46,7 @@ for (name in pop_poly$name) {
 
 }
 
-
+print(POP_HABITAT_AREA)
 
 
 ## Write output

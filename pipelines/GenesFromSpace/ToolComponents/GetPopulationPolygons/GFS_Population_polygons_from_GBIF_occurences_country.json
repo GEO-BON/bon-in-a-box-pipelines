@@ -23,17 +23,6 @@
       }
     },
     {
-      "id": "10",
-      "type": "io",
-      "position": {
-        "x": 714,
-        "y": 89
-      },
-      "data": {
-        "descriptionFile": "data>getObservations.yml"
-      }
-    },
-    {
       "id": "12",
       "type": "userInput",
       "position": {
@@ -44,19 +33,6 @@
       "data": {
         "type": "text",
         "value": "Glyptemys insculpta"
-      }
-    },
-    {
-      "id": "14",
-      "type": "userInput",
-      "position": {
-        "x": 441,
-        "y": 89
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 1990
       }
     },
     {
@@ -73,67 +49,11 @@
       }
     },
     {
-      "id": "17",
-      "type": "constant",
-      "position": {
-        "x": -658.3843837901529,
-        "y": 596.0145197091705
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "present",
-        "options": [
-          "present",
-          "absent",
-          "present absent"
-        ]
-      }
-    },
-    {
-      "id": "18",
-      "type": "constant",
-      "position": {
-        "x": 333,
-        "y": 302
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 2000
-      }
-    },
-    {
-      "id": "19",
-      "type": "constant",
-      "position": {
-        "x": 333,
-        "y": 344
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 0
-      }
-    },
-    {
-      "id": "20",
-      "type": "constant",
-      "position": {
-        "x": 324,
-        "y": 47
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text"
-      }
-    },
-    {
       "id": "21",
       "type": "io",
       "position": {
-        "x": 298,
-        "y": 179
+        "x": 400.8709597669732,
+        "y": 321.61321489632246
       },
       "data": {
         "descriptionFile": "GFS_IndicatorsTool>get_bbox.yml"
@@ -154,6 +74,77 @@
           "Guatemala"
         ]
       }
+    },
+    {
+      "id": "23",
+      "type": "io",
+      "position": {
+        "x": 764.3862658240798,
+        "y": 55.87267480642912
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>GBIF_obs.yml"
+      }
+    },
+    {
+      "id": "24",
+      "type": "userInput",
+      "position": {
+        "x": 402.1001173760703,
+        "y": 71.40238199801719
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          2010
+        ]
+      }
+    },
+    {
+      "id": "25",
+      "type": "userInput",
+      "position": {
+        "x": 413.32759935004725,
+        "y": 107.89169841344183
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          2015
+        ]
+      }
+    },
+    {
+      "id": "26",
+      "type": "constant",
+      "position": {
+        "x": 384.3232709172737,
+        "y": 142.50976783320365
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          0.1
+        ]
+      }
+    },
+    {
+      "id": "27",
+      "type": "constant",
+      "position": {
+        "x": 393.6795058955877,
+        "y": 200.51842469875052
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          0.1
+        ]
+      }
     }
   ],
   "edges": [
@@ -163,69 +154,6 @@
       "target": "9",
       "targetHandle": null,
       "id": "reactflow__edge-5population_polygons-9"
-    },
-    {
-      "source": "10",
-      "sourceHandle": "presence",
-      "target": "5",
-      "targetHandle": "species_obs",
-      "id": "reactflow__edge-10presence-5species_obs"
-    },
-    {
-      "source": "12",
-      "sourceHandle": null,
-      "target": "10",
-      "targetHandle": "species",
-      "id": "reactflow__edge-12-10species"
-    },
-    {
-      "source": "14",
-      "sourceHandle": null,
-      "target": "10",
-      "targetHandle": "year_start",
-      "id": "reactflow__edge-14-10year_start"
-    },
-    {
-      "source": "16",
-      "sourceHandle": null,
-      "target": "10",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-16-10proj"
-    },
-    {
-      "source": "17",
-      "sourceHandle": null,
-      "target": "10",
-      "targetHandle": "occurrence_status",
-      "id": "reactflow__edge-17-10occurrence_status"
-    },
-    {
-      "source": "18",
-      "sourceHandle": null,
-      "target": "10",
-      "targetHandle": "limit",
-      "id": "reactflow__edge-18-10limit"
-    },
-    {
-      "source": "19",
-      "sourceHandle": null,
-      "target": "10",
-      "targetHandle": "bbox_buffer",
-      "id": "reactflow__edge-19-10bbox_buffer"
-    },
-    {
-      "source": "20",
-      "sourceHandle": null,
-      "target": "10",
-      "targetHandle": "country",
-      "id": "reactflow__edge-20-10country"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "bbox",
-      "target": "10",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-21bbox-10bbox"
     },
     {
       "source": "22",
@@ -247,6 +175,56 @@
       "target": "21",
       "targetHandle": "proj",
       "id": "reactflow__edge-16-21proj"
+    },
+    {
+      "source": "12",
+      "target": "23",
+      "targetHandle": "species",
+      "id": "xy-edge__12-23species"
+    },
+    {
+      "source": "21",
+      "sourceHandle": "bbox",
+      "target": "23",
+      "targetHandle": "bbox",
+      "id": "xy-edge__21bbox-23bbox"
+    },
+    {
+      "source": "22",
+      "target": "23",
+      "targetHandle": "countries",
+      "id": "xy-edge__22-23countries"
+    },
+    {
+      "source": "23",
+      "sourceHandle": "observation_data",
+      "target": "5",
+      "targetHandle": "species_obs",
+      "id": "xy-edge__23observation_data-5species_obs"
+    },
+    {
+      "source": "24",
+      "target": "23",
+      "targetHandle": "start_year",
+      "id": "xy-edge__24-23start_year"
+    },
+    {
+      "source": "25",
+      "target": "23",
+      "targetHandle": "end_year",
+      "id": "xy-edge__25-23end_year"
+    },
+    {
+      "source": "26",
+      "target": "23",
+      "targetHandle": "coordinate_precision",
+      "id": "xy-edge__26-23coordinate_precision"
+    },
+    {
+      "source": "27",
+      "target": "23",
+      "targetHandle": "coordinate_uncertainty",
+      "id": "xy-edge__27-23coordinate_uncertainty"
     }
   ],
   "inputs": {
@@ -257,26 +235,19 @@
       "example": "Quercus sartorii",
       "weight": 0
     },
-    "pipeline@14": {
-      "label": "Start year",
-      "description": "Integer, 4 digit year, start date to retrieve occurrences",
-      "type": "int",
-      "example": 1980,
-      "weight": 1
-    },
     "GFS_IndicatorsTool>get_pop_poly.yml@5|buffer_size": {
       "description": "Radius size [in km] to determine population presence around the coordinates of species observations.",
       "label": "Size of buffer",
       "type": "float",
       "example": 10,
-      "weight": 2
+      "weight": 1
     },
     "GFS_IndicatorsTool>get_pop_poly.yml@5|pop_distance": {
       "description": "Distance [in km] to separate species observations in different populations.",
       "label": "Distance between populations",
       "type": "float",
       "example": 50,
-      "weight": 3
+      "weight": 2
     },
     "pipeline@22": {
       "label": "Countries list",
@@ -286,13 +257,24 @@
         "Mexico",
         "Guatemala"
       ],
+      "weight": 3
+    },
+    "pipeline@24": {
+      "label": "Start year",
+      "description": "start year of interest",
+      "type": "float[]",
+      "example": [
+        2010
+      ],
       "weight": 4
     },
-    "data>getObservations.yml@10|year_end": {
-      "description": "Integer, 4 digit year, end date to retrieve occurrences",
-      "label": "end year",
-      "type": "int",
-      "example": 2020,
+    "pipeline@25": {
+      "label": "End year",
+      "description": "end year of interest",
+      "type": "float[]",
+      "example": [
+        2015
+      ],
       "weight": 5
     }
   },

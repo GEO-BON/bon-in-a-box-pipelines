@@ -35,5 +35,18 @@ outputs:
     description: ID of LC classes used to evaluate habitat change (empty in this script)
     type: text
 
+conda: 
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-base
+    - r-sf
+    - r-rjson
+    - r-rnaturalearth
+    - r-geosphere
+    - r-rlang
+    - gdal
+
 
 

@@ -1,7 +1,11 @@
 #packages <- c("sf","rjson", 'rnaturalearth','rnaturalearthdata' )
 #new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 #if(length(new.packages)) install.packages(new.packages)
-
+install.packages(
+  "rnaturalearthhires",
+  repos = "https://ropensci.r-universe.dev",
+  type = "source"
+)
 library("rjson")
 library("sf")
 library("geosphere")
