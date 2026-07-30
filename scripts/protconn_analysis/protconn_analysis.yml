@@ -164,3 +164,7 @@ references:
       UNEP-WCMC and IUCN (2026), Protected Planet: The World Database on
       Protected Areas (WDPA), Cambridge, UK: UNEP-WCMC and IUCN.
     doi: https://doi.org/10.34892/6fwd-af11
+
+compute:
+  mem: 25G
+  cpus-per-task: 4

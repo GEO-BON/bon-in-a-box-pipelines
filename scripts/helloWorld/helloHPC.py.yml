@@ -46,7 +46,8 @@ outputs:
       This will not be printed if job times out.
     type: int
     example: 4
-hpc:
+compute:
+  hpc: true
   mem: 1G
   cpus-per-task: 1
   time: "00:03:00"
