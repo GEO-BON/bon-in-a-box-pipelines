@@ -100,7 +100,7 @@ conda:
     - r-lubridate
     - proj
     - r-proj
-    - r-gdalcubes=0.7.1
+    - r-gdalcubes=0.7.4
     - r-rstac
     - r-dplyr
     - r-rcurl
