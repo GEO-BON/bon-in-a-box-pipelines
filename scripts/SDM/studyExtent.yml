@@ -16,7 +16,7 @@ inputs:
   bbox_crs:
     description: Select a bounding box and CRS
     label: Bounding box and CRS
-    type: bboxCRS
+    type: crsBBox
     example:
   method:
     label: study extent method

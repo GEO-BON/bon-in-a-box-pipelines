@@ -467,7 +467,7 @@
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "bboxCRS"
+        "type": "crsBBox"
       }
     },
     {
@@ -841,7 +841,7 @@
     "pipeline@140": {
       "label": "Bounding box and CRS",
       "description": "Select a bounding box and CRS",
-      "type": "bboxCRS",
+      "type": "crsBBox",
       "example": null,
       "weight": 1
     },

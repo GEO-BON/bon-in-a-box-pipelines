@@ -65,7 +65,7 @@ inputs:
   crs:
     label: CRS
     description: Object containing CRS.
-    type: bboxCRS
+    type: CRS
     example:
   n_folds:
     label: number of folds
