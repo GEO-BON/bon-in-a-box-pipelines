@@ -11,7 +11,7 @@ on:
       server_branch:
         description: 'BON in a Box Server branch to use'
         required: true
-        default: &server_branch_default 'cwl-export'
+        default: &server_branch_default 'cwl-pipelines'
       pipelines_branch:
         description: 'BON in a Box Pipelines branch to use'
         required: true
