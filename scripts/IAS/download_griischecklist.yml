@@ -1,7 +1,8 @@
 script: download_griischecklist.R
 name: Download GRIIS Checklist
-description: "This script downloads the GRIIS checklist for a specified country and attaches metadata. This currently combines the country with all affiliated regions (e.g., territories, overseas regions) to produce a single checklist for the country."
+description: "Download the latest national GRIIS checklist for a specified country and its affiliated regions, retain each checklist's ISO3 metadata, and combine the records. Protected-area checklists are excluded."
 author:
+  - name: Saxbee Affleck
   - name: Samara Manzin
     email: samara.manzin@mcgill.ca
 inputs:
@@ -50,3 +51,4 @@ conda:
     - r-rvest
     - r-rjson
     - r-readxl
+    - r-countrycode

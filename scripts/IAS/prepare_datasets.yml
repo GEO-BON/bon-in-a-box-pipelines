@@ -1,10 +1,18 @@
 script: prepare_datasets.R
 name: SInAS Prepare Datasets
-description: "Prepare and standardise input datasets (Step 1) for the SInAS workflow using pipeline-provided column mappings."
+description: "Run original P3 Steps 1-5 for one country: prepare and roll up mapped First Records regions to the parent country, standardise columns, terminology, locations, GBIF taxonomy and event dates, apply packaged corrections, and report unmatched or excluded records."
 author:
+  - name: Manuela Gomez-Suarez
+  - name: Hanno Seebens
+  - name: Saxbee Affleck
   - name: Samara Manzin
     email: samara.manzin@mcgill.ca
 inputs:
+  country_name:
+    label: Country
+    type: country
+    description: Country represented by this cleaning run.
+    example: NULL
   griis_checklist:
     label: GRIIS checklist
     type: text/csv
@@ -15,96 +23,44 @@ inputs:
     type: text/csv
     description: First records table to include in Step 1 preparation.
     example: NULL
-  dataset:
-    label: Dataset names
-    type: text[]
-    description: Dataset brief names in the same order as provided datasets, e.g. ["GRIIS", "FirstRecords"].
-    example: ["GRIIS", "FirstRecords"]
-  taxon_group:
-    label: Taxon group
-    type: text
-    description: Taxon group label to attach to outputs.
-    example: "All"
-  column_recordid:
-    label: Record ID column
-    type: text[]
-    description: Record ID column name(s), one per dataset or a single value for all datasets.
-    example: ["linkID", "linkID"]
-  column_taxon:
-    label: Taxon column
-    type: text[]
-    description: Taxon column name(s), one per dataset.
-    example: ["scientificName", "taxon"]
-  column_author:
-    label: Author column
-    type: text[]
-    description: Optional author column name(s), one per dataset.
-    example: ["", ""]
-  column_scientificname:
-    label: Scientific name column
-    type: text[]
-    description: Optional scientific name column(s); used if different from column_taxon.
-    example: ["", ""]
-  column_location:
-    label: Location column
-    type: text[]
-    description: Required location column name(s), one per dataset.
-    example: ["checklistName", "location"]
-  column_kingdom:
-    label: Kingdom column
-    type: text[]
-    description: Optional kingdom column name(s), one per dataset.
-    example: ["kingdom", "kingdom"]
-  column_country_iso:
-    label: Country ISO column
-    type: text[]
-    description: Optional ISO3 column name(s), one per dataset.
-    example: ["ISO3", ""]
-  column_eventdate1:
-    label: Event date column
-    type: text[]
-    description: Optional primary event date column name(s), one per dataset.
-    example: ["", "eventDate"]
-  column_eventdate2:
-    label: Event date 2 column
-    type: text[]
-    description: Optional secondary event date column name(s), one per dataset.
-    example: ["", ""]
-  column_establishmentmeans:
-    label: Establishment means column
-    type: text[]
-    description: Optional establishment means column name(s), one per dataset.
-    example: ["establishmentMeans", ""]
-  column_occurrencestatus:
-    label: Occurrence status column
-    type: text[]
-    description: Optional occurrence status column name(s), one per dataset.
-    example: ["occurrenceStatus", ""]
-  column_degreeofestablishment:
-    label: Degree of establishment column
-    type: text[]
-    description: Optional degree of establishment column name(s), one per dataset.
-    example: ["", ""]
-  column_pathway:
-    label: Pathway column
-    type: text[]
-    description: Optional pathway column name(s), one per dataset.
-    example: ["", ""]
-  column_habitat:
-    label: Habitat column
-    type: text[]
-    description: Optional habitat column name(s), one per dataset.
-    example: ["habitat", "habitat"]
-  column_bibliographiccitation:
-    label: Bibliographic citation column
-    type: text[]
-    description: Optional bibliographic citation column name(s), one per dataset.
-    example: ["", "bibliographicCitation"]
-  column_additional:
-    label: Additional columns
-    type: text[]
-    description: Optional additional column names as '; ' separated text, one entry per dataset.
-    example: ["isInvasive; isInvasiveInCountry"]
+  kingdoms:
+    label: Kingdoms
+    type: options[]
+    description: Kingdoms to retain in both the GRIIS and First Records datasets.
+    options:
+      - "PLANTAE"
+      - "ANIMALIA"
+    example:
+      - "PLANTAE"
+      - "ANIMALIA"
+  habitats:
+    label: Habitat types
+    type: options[]
+    description: Habitat values to retain in both the GRIIS and First Records datasets.
+    options:
+      - "TERRESTRIAL"
+      - "FRESHWATER"
+      - "FRESHWATER|BRACKISH"
+      - "TERRESTRIAL|FRESHWATER"
+      - "MARINE|FRESHWATER|BRACKISH"
+      - "TERRESTRIAL|BRACKISH"
+      - "TERRESTRIAL|FRESHWATER|BRACKISH"
+      - "TERRESTRIAL|MARINE|FRESHWATER"
+      - "TERRESTRIAL|MARINE|BRACKISH"
+      - "MARINE|FRESHWATER"
+      - "TERRESTRIAL|MARINE"
+    example:
+      - "TERRESTRIAL"
+      - "FRESHWATER"
+      - "FRESHWATER|BRACKISH"
+      - "TERRESTRIAL|FRESHWATER"
+      - "MARINE|FRESHWATER|BRACKISH"
+      - "TERRESTRIAL|BRACKISH"
+      - "TERRESTRIAL|FRESHWATER|BRACKISH"
+      - "TERRESTRIAL|MARINE|FRESHWATER"
+      - "TERRESTRIAL|MARINE|BRACKISH"
+      - "MARINE|FRESHWATER"
+      - "TERRESTRIAL|MARINE"
 outputs:
   griis_clean:
     label: cleaned GRIIS dataset
@@ -117,6 +73,34 @@ outputs:
   file_info:
     label: File information
     description: Table containing information about the input datasets columns
+    type: text/csv
+  translated_locations:
+    label: Translated locations
+    description: Original and standardised location-name pairs.
+    type: text/csv
+  full_taxa_list:
+    label: SInAS taxon matching
+    description: Complete GBIF taxonomic matching and correction results.
+    type: text/csv
+  translated_event_dates:
+    label: Translated event dates
+    description: Original and standardised event-date values.
+    type: text/csv
+  cleaning_summary:
+    label: Cleaning summary
+    description: Input, output, and unresolved-record counts for both datasets.
+    type: text/csv
+  qc_status:
+    label: Quality-control status
+    description: PASS or WARNING summary for terminology, locations, taxonomy, and event dates. Warnings do not block merging.
+    type: text/csv
+  unmatched_values:
+    label: Unmatched values
+    description: Consolidated report of terminology, location, taxon, and event-date values that could not be standardised, including the action taken and whether they can enter the merge.
+    type: text/csv
+  excluded_records:
+    label: SInAS excluded records
+    description: Complete records excluded from the merged dataset because their locations could not be standardised to a locationID.
     type: text/csv
 conda:
   channels:

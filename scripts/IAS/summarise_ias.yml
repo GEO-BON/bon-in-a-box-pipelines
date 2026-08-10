@@ -2,6 +2,7 @@ script: summarise_ias.R
 name: Summarise IAS data
 description: "Summarise merged IAS data and annual GBIF observation counts."
 author:
+  - name: Saxbee Affleck
   - name: Samara Manzin
     email: samara.manzin@mcgill.ca
 inputs:

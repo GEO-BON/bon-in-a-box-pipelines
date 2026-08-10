@@ -9,7 +9,7 @@
 ## all other warnings treated as warnings
 
 fit_snc_model <- function(model_name, y, data, growth, type, pi) {
-  warnings <- NA_character_
+  warnings <- character(0)
   error_msg <- NA_character_     # store critical warning or error text
   error_occurred <- FALSE
   
@@ -73,8 +73,6 @@ fit_snc_model <- function(model_name, y, data, growth, type, pi) {
       error_msg <- "did not converge"
       result <- NA
     }
-  } else {
-    error_msg <- "no errors"
   }
   
   # Save model, warnings, and error messages to global environment

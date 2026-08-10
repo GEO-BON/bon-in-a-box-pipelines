@@ -4,8 +4,8 @@
       "id": "37",
       "type": "io",
       "position": {
-        "x": 603,
-        "y": 34.5
+        "x": 548,
+        "y": 196
       },
       "data": {
         "descriptionFile": "IAS>download_firstrecords.yml"
@@ -15,41 +15,19 @@
       "id": "38",
       "type": "io",
       "position": {
-        "x": 508,
-        "y": 1004.5
+        "x": 453,
+        "y": 72
       },
       "data": {
         "descriptionFile": "IAS>download_griischecklist.yml"
       }
     },
     {
-      "id": "39",
-      "type": "io",
-      "position": {
-        "x": 1306,
-        "y": 369.5
-      },
-      "data": {
-        "descriptionFile": "IAS>prepare_datasets.yml"
-      }
-    },
-    {
-      "id": "40",
-      "type": "output",
-      "position": {
-        "x": 1306,
-        "y": 12
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "41",
       "type": "userInput",
       "position": {
-        "x": 110,
-        "y": 28.25
+        "x": 94,
+        "y": 159.14285714285717
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -61,7 +39,7 @@
       "type": "constant",
       "position": {
         "x": 12,
-        "y": 1008.5
+        "y": 75.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -70,99 +48,11 @@
       }
     },
     {
-      "id": "43",
-      "type": "output",
-      "position": {
-        "x": 1306,
-        "y": 1358
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "44",
-      "type": "output",
-      "position": {
-        "x": 1306,
-        "y": 1218
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "45",
-      "type": "output",
-      "position": {
-        "x": 1306,
-        "y": 1323
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "46",
-      "type": "output",
-      "position": {
-        "x": 1306,
-        "y": 1288
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "47",
-      "type": "output",
-      "position": {
-        "x": 1306,
-        "y": 1253
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "49",
-      "type": "output",
-      "position": {
-        "x": 2000,
-        "y": 654
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "50",
-      "type": "output",
-      "position": {
-        "x": 2000,
-        "y": 689
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "51",
-      "type": "output",
-      "position": {
-        "x": 2000,
-        "y": 724
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "52",
       "type": "io",
       "position": {
-        "x": 2000,
-        "y": 37
+        "x": 1831,
+        "y": 402
       },
       "data": {
         "descriptionFile": "IAS>merge_datasets.yml"
@@ -172,314 +62,19 @@
       "id": "53",
       "type": "output",
       "position": {
-        "x": 2596,
-        "y": 14.5
+        "x": 2620,
+        "y": 379
       },
       "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "54",
-      "type": "constant",
-      "position": {
-        "x": 802,
-        "y": 126.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "GRIIS",
-          "FirstRecords"
-        ]
-      }
-    },
-    {
-      "id": "55",
-      "type": "constant",
-      "position": {
-        "x": 852,
-        "y": 168.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "All"
-      }
-    },
-    {
-      "id": "56",
-      "type": "constant",
-      "position": {
-        "x": 802,
-        "y": 217.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "linkID",
-          "linkID"
-        ]
-      }
-    },
-    {
-      "id": "57",
-      "type": "constant",
-      "position": {
-        "x": 802,
-        "y": 259.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "scientificName",
-          "taxon"
-        ]
-      }
-    },
-    {
-      "id": "58",
-      "type": "constant",
-      "position": {
-        "x": 802,
-        "y": 324.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "",
-          ""
-        ]
-      }
-    },
-    {
-      "id": "59",
-      "type": "constant",
-      "position": {
-        "x": 802,
-        "y": 408.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "checklistName",
-          "location"
-        ]
-      }
-    },
-    {
-      "id": "60",
-      "type": "constant",
-      "position": {
-        "x": 802,
-        "y": 366.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "",
-          ""
-        ]
-      }
-    },
-    {
-      "id": "61",
-      "type": "constant",
-      "position": {
-        "x": 802,
-        "y": 473.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "kingdom",
-          "kingdom"
-        ]
-      }
-    },
-    {
-      "id": "62",
-      "type": "constant",
-      "position": {
-        "x": 802,
-        "y": 515.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "ISO3",
-          ""
-        ]
-      }
-    },
-    {
-      "id": "63",
-      "type": "constant",
-      "position": {
-        "x": 802,
-        "y": 599.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "",
-          ""
-        ]
-      }
-    },
-    {
-      "id": "64",
-      "type": "constant",
-      "position": {
-        "x": 802,
-        "y": 557.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "",
-          "eventDate"
-        ]
-      }
-    },
-    {
-      "id": "65",
-      "type": "constant",
-      "position": {
-        "x": 802,
-        "y": 641.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "establishmentMeans",
-          ""
-        ]
-      }
-    },
-    {
-      "id": "66",
-      "type": "constant",
-      "position": {
-        "x": 802,
-        "y": 706.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "occurrenceStatus",
-          ""
-        ]
-      }
-    },
-    {
-      "id": "67",
-      "type": "constant",
-      "position": {
-        "x": 802,
-        "y": 790.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "",
-          ""
-        ]
-      }
-    },
-    {
-      "id": "68",
-      "type": "constant",
-      "position": {
-        "x": 802,
-        "y": 748.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "",
-          ""
-        ]
-      }
-    },
-    {
-      "id": "69",
-      "type": "constant",
-      "position": {
-        "x": 802,
-        "y": 832.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "habitat",
-          "habitat"
-        ]
-      }
-    },
-    {
-      "id": "70",
-      "type": "constant",
-      "position": {
-        "x": 802,
-        "y": 874.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "",
-          "bibliographicCitation"
-        ]
-      }
-    },
-    {
-      "id": "71",
-      "type": "constant",
-      "position": {
-        "x": 802,
-        "y": 939.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "isInvasive; isInvasiveInCountry"
-        ]
-      }
-    },
-    {
-      "id": "72",
-      "type": "io",
-      "position": {
-        "x": 565,
-        "y": 1111.5
-      },
-      "data": {
-        "descriptionFile": "data>getGBIFObservations>get_GBIF_country.yml"
+        "label": "SInAS merged dataset"
       }
     },
     {
       "id": "73",
       "type": "userInput",
       "position": {
-        "x": 189,
-        "y": 1119
+        "x": 1511,
+        "y": 102
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -491,8 +86,8 @@
       "id": "74",
       "type": "userInput",
       "position": {
-        "x": 195,
-        "y": 1154
+        "x": 1517,
+        "y": 138
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -501,68 +96,139 @@
       }
     },
     {
-      "id": "75",
-      "type": "output",
-      "position": {
-        "x": 1306,
-        "y": 1183
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "76",
       "type": "io",
       "position": {
-        "x": 2596,
-        "y": 109
+        "x": 2813,
+        "y": 269
       },
       "data": {
         "descriptionFile": "IAS>summarise_ias.yml"
       }
     },
     {
-      "id": "77",
+      "id": "80",
+      "type": "io",
+      "position": {
+        "x": 1175,
+        "y": 230
+      },
+      "data": {
+        "descriptionFile": "IAS>prepare_datasets.yml"
+      }
+    },
+    {
+      "id": "81",
+      "type": "io",
+      "position": {
+        "x": 2620,
+        "y": 71
+      },
+      "data": {
+        "descriptionFile": "IAS>model_data.yml"
+      }
+    },
+    {
+      "id": "82",
       "type": "output",
       "position": {
-        "x": 3086,
-        "y": 168.5
+        "x": 3308,
+        "y": 48
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "78",
+      "id": "83",
       "type": "output",
       "position": {
-        "x": 3086,
-        "y": 37
+        "x": 3308,
+        "y": 12
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "79",
+      "id": "85",
       "type": "output",
       "position": {
-        "x": 3086,
-        "y": 203.5
+        "x": 3308,
+        "y": 246
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "86",
+      "type": "output",
+      "position": {
+        "x": 3308,
+        "y": 210
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "87",
+      "type": "output",
+      "position": {
+        "x": 3308,
+        "y": 174
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "88",
+      "type": "output",
+      "position": {
+        "x": 2620,
+        "y": 343
+      },
+      "data": {
+        "label": "SInAS data-quality report"
+      }
+    },
+    {
+      "id": "89",
+      "type": "output",
+      "position": {
+        "x": 1831,
+        "y": 528
+      },
+      "data": {
+        "label": "SInAS excluded records"
+      }
+    },
+    {
+      "id": "90",
+      "type": "output",
+      "position": {
+        "x": 2620,
+        "y": 505
+      },
+      "data": {
+        "label": "SInAS run summary"
+      }
+    },
+    {
+      "id": "91",
+      "type": "io",
+      "position": {
+        "x": 1874,
+        "y": 121
+      },
+      "data": {
+        "descriptionFile": "data>getGBIFObservations>get_GBIF_country_SQL.yml"
       }
     }
   ],
   "edges": [
-    {
-      "source": "37",
-      "sourceHandle": "firstrecords_cleaned",
-      "target": "40",
-      "id": "xy-edge__37firstrecords_cleaned-40"
-    },
     {
       "source": "41",
       "target": "37",
@@ -582,225 +248,10 @@
       "id": "xy-edge__42-38compendium_countries"
     },
     {
-      "source": "37",
-      "sourceHandle": "firstrecords_cleaned",
-      "target": "39",
-      "targetHandle": "first_records",
-      "id": "xy-edge__37firstrecords_cleaned-39first_records"
-    },
-    {
-      "source": "38",
-      "sourceHandle": "griis_checklist",
-      "target": "43",
-      "id": "xy-edge__38griis_checklist-43"
-    },
-    {
-      "source": "38",
-      "sourceHandle": "griis_summary",
-      "target": "44",
-      "id": "xy-edge__38griis_summary-44"
-    },
-    {
-      "source": "38",
-      "sourceHandle": "griis_directory",
-      "target": "45",
-      "id": "xy-edge__38griis_directory-45"
-    },
-    {
-      "source": "38",
-      "sourceHandle": "all_data_summary",
-      "target": "46",
-      "id": "xy-edge__38all_data_summary-46"
-    },
-    {
-      "source": "38",
-      "sourceHandle": "per_list_summary",
-      "target": "47",
-      "id": "xy-edge__38per_list_summary-47"
-    },
-    {
-      "source": "38",
-      "sourceHandle": "griis_checklist",
-      "target": "39",
-      "targetHandle": "griis_checklist",
-      "id": "xy-edge__38griis_checklist-39griis_checklist"
-    },
-    {
-      "source": "39",
-      "sourceHandle": "first_records_clean",
-      "target": "49",
-      "id": "xy-edge__39first_records_clean-49"
-    },
-    {
-      "source": "39",
-      "sourceHandle": "griis_clean",
-      "target": "50",
-      "id": "xy-edge__39griis_clean-50"
-    },
-    {
-      "source": "39",
-      "sourceHandle": "file_info",
-      "target": "51",
-      "id": "xy-edge__39file_info-51"
-    },
-    {
-      "source": "39",
-      "sourceHandle": "griis_clean",
-      "target": "52",
-      "targetHandle": "griis_clean",
-      "id": "xy-edge__39griis_clean-52griis_clean"
-    },
-    {
-      "source": "39",
-      "sourceHandle": "first_records_clean",
-      "target": "52",
-      "targetHandle": "first_records_clean",
-      "id": "xy-edge__39first_records_clean-52first_records_clean"
-    },
-    {
-      "source": "39",
-      "sourceHandle": "file_info",
-      "target": "52",
-      "targetHandle": "file_info",
-      "id": "xy-edge__39file_info-52file_info"
-    },
-    {
       "source": "52",
       "sourceHandle": "merged_dataset",
       "target": "53",
       "id": "xy-edge__52merged_dataset-53"
-    },
-    {
-      "source": "54",
-      "target": "39",
-      "targetHandle": "dataset",
-      "id": "xy-edge__54-39dataset"
-    },
-    {
-      "source": "55",
-      "target": "39",
-      "targetHandle": "taxon_group",
-      "id": "xy-edge__55-39taxon_group"
-    },
-    {
-      "source": "56",
-      "target": "39",
-      "targetHandle": "column_recordid",
-      "id": "xy-edge__56-39column_recordid"
-    },
-    {
-      "source": "57",
-      "target": "39",
-      "targetHandle": "column_taxon",
-      "id": "xy-edge__57-39column_taxon"
-    },
-    {
-      "source": "58",
-      "target": "39",
-      "targetHandle": "column_author",
-      "id": "xy-edge__58-39column_author"
-    },
-    {
-      "source": "59",
-      "target": "39",
-      "targetHandle": "column_location",
-      "id": "xy-edge__59-39column_location"
-    },
-    {
-      "source": "60",
-      "target": "39",
-      "targetHandle": "column_scientificname",
-      "id": "xy-edge__60-39column_scientificname"
-    },
-    {
-      "source": "61",
-      "target": "39",
-      "targetHandle": "column_kingdom",
-      "id": "xy-edge__61-39column_kingdom"
-    },
-    {
-      "source": "62",
-      "target": "39",
-      "targetHandle": "column_country_iso",
-      "id": "xy-edge__62-39column_country_iso"
-    },
-    {
-      "source": "63",
-      "target": "39",
-      "targetHandle": "column_eventdate2",
-      "id": "xy-edge__63-39column_eventdate2"
-    },
-    {
-      "source": "64",
-      "target": "39",
-      "targetHandle": "column_eventdate1",
-      "id": "xy-edge__64-39column_eventdate1"
-    },
-    {
-      "source": "65",
-      "target": "39",
-      "targetHandle": "column_establishmentmeans",
-      "id": "xy-edge__65-39column_establishmentmeans"
-    },
-    {
-      "source": "66",
-      "target": "39",
-      "targetHandle": "column_occurrencestatus",
-      "id": "xy-edge__66-39column_occurrencestatus"
-    },
-    {
-      "source": "67",
-      "target": "39",
-      "targetHandle": "column_pathway",
-      "id": "xy-edge__67-39column_pathway"
-    },
-    {
-      "source": "68",
-      "target": "39",
-      "targetHandle": "column_degreeofestablishment",
-      "id": "xy-edge__68-39column_degreeofestablishment"
-    },
-    {
-      "source": "69",
-      "target": "39",
-      "targetHandle": "column_habitat",
-      "id": "xy-edge__69-39column_habitat"
-    },
-    {
-      "source": "70",
-      "target": "39",
-      "targetHandle": "column_bibliographiccitation",
-      "id": "xy-edge__70-39column_bibliographiccitation"
-    },
-    {
-      "source": "71",
-      "target": "39",
-      "targetHandle": "column_additional",
-      "id": "xy-edge__71-39column_additional"
-    },
-    {
-      "source": "41",
-      "target": "72",
-      "targetHandle": "country_name",
-      "id": "xy-edge__41-72country_name"
-    },
-    {
-      "source": "73",
-      "target": "72",
-      "targetHandle": "start_year",
-      "id": "xy-edge__73-72start_year"
-    },
-    {
-      "source": "74",
-      "target": "72",
-      "targetHandle": "end_year",
-      "id": "xy-edge__74-72end_year"
-    },
-    {
-      "source": "72",
-      "sourceHandle": "gbif_country_observations",
-      "target": "75",
-      "id": "xy-edge__72gbif_country_observations-75"
     },
     {
       "source": "52",
@@ -810,29 +261,165 @@
       "id": "xy-edge__52merged_dataset-76merged_dataset"
     },
     {
-      "source": "72",
+      "source": "41",
+      "target": "52",
+      "targetHandle": "country_name",
+      "id": "xy-edge__41-52country_name"
+    },
+    {
+      "source": "38",
+      "sourceHandle": "griis_checklist",
+      "target": "80",
+      "targetHandle": "griis_checklist",
+      "id": "xy-edge__38griis_checklist-80griis_checklist"
+    },
+    {
+      "source": "37",
+      "sourceHandle": "firstrecords_cleaned",
+      "target": "80",
+      "targetHandle": "first_records",
+      "id": "xy-edge__37firstrecords_cleaned-80first_records"
+    },
+    {
+      "source": "41",
+      "target": "80",
+      "targetHandle": "country_name",
+      "id": "xy-edge__41-80country_name"
+    },
+    {
+      "source": "80",
+      "sourceHandle": "griis_clean",
+      "target": "52",
+      "targetHandle": "griis_clean",
+      "id": "xy-edge__80griis_clean-52griis_clean"
+    },
+    {
+      "source": "80",
+      "sourceHandle": "first_records_clean",
+      "target": "52",
+      "targetHandle": "first_records_clean",
+      "id": "xy-edge__80first_records_clean-52first_records_clean"
+    },
+    {
+      "source": "80",
+      "sourceHandle": "full_taxa_list",
+      "target": "52",
+      "targetHandle": "full_taxa_list",
+      "id": "xy-edge__80full_taxa_list-52full_taxa_list"
+    },
+    {
+      "source": "80",
+      "sourceHandle": "cleaning_summary",
+      "target": "52",
+      "targetHandle": "cleaning_summary",
+      "id": "xy-edge__80cleaning_summary-52cleaning_summary"
+    },
+    {
+      "source": "80",
+      "sourceHandle": "qc_status",
+      "target": "52",
+      "targetHandle": "qc_status",
+      "id": "xy-edge__80qc_status-52qc_status"
+    },
+    {
+      "source": "80",
+      "sourceHandle": "unmatched_values",
+      "target": "52",
+      "targetHandle": "unmatched_values",
+      "id": "xy-edge__80unmatched_values-52unmatched_values"
+    },
+    {
+      "source": "41",
+      "target": "81",
+      "targetHandle": "country_name",
+      "id": "xy-edge__41-81country_name"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "merged_dataset",
+      "target": "81",
+      "targetHandle": "integrated_data",
+      "id": "xy-edge__52merged_dataset-81integrated_data"
+    },
+    {
+      "source": "81",
+      "sourceHandle": "model_outputs",
+      "target": "82",
+      "id": "xy-edge__81model_outputs-82"
+    },
+    {
+      "source": "81",
+      "sourceHandle": "model_decision",
+      "target": "83",
+      "id": "xy-edge__81model_decision-83"
+    },
+    {
+      "source": "81",
+      "sourceHandle": "data_summary",
+      "target": "85",
+      "id": "xy-edge__81data_summary-85"
+    },
+    {
+      "source": "81",
+      "sourceHandle": "quantitative_plot",
+      "target": "86",
+      "id": "xy-edge__81quantitative_plot-86"
+    },
+    {
+      "source": "81",
+      "sourceHandle": "qualitative_plot",
+      "target": "87",
+      "id": "xy-edge__81qualitative_plot-87"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "data_quality_report",
+      "target": "88",
+      "id": "xy-edge__52data_quality_report-88"
+    },
+    {
+      "source": "80",
+      "sourceHandle": "excluded_records",
+      "target": "89",
+      "id": "xy-edge__80excluded_records-89"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "run_summary",
+      "target": "90",
+      "id": "xy-edge__52run_summary-90"
+    },
+    {
+      "source": "74",
+      "target": "91",
+      "targetHandle": "end_year",
+      "id": "xy-edge__74-91end_year"
+    },
+    {
+      "source": "73",
+      "target": "91",
+      "targetHandle": "start_year",
+      "id": "xy-edge__73-91start_year"
+    },
+    {
+      "source": "41",
+      "target": "91",
+      "targetHandle": "country_name",
+      "id": "xy-edge__41-91country_name"
+    },
+    {
+      "source": "91",
+      "sourceHandle": "gbif_country_observations",
+      "target": "81",
+      "targetHandle": "covariate_data",
+      "id": "xy-edge__91gbif_country_observations-81covariate_data"
+    },
+    {
+      "source": "91",
       "sourceHandle": "gbif_country_observations",
       "target": "76",
       "targetHandle": "gbif_country_observations",
-      "id": "xy-edge__72gbif_country_observations-76gbif_country_observations"
-    },
-    {
-      "source": "76",
-      "sourceHandle": "ias_annual_summary",
-      "target": "77",
-      "id": "xy-edge__76ias_annual_summary-77"
-    },
-    {
-      "source": "76",
-      "sourceHandle": "ias_summary",
-      "target": "78",
-      "id": "xy-edge__76ias_summary-78"
-    },
-    {
-      "source": "76",
-      "sourceHandle": "ias_summary_table",
-      "target": "79",
-      "id": "xy-edge__76ias_summary_table-79"
+      "id": "xy-edge__91gbif_country_observations-76gbif_country_observations"
     }
   ],
   "inputs": {
@@ -856,92 +443,108 @@
       "type": "int",
       "example": 2025,
       "weight": 2
+    },
+    "IAS>prepare_datasets.yml@80|kingdoms": {
+      "label": "Kingdoms",
+      "description": "Kingdoms to retain in both the GRIIS and First Records datasets.",
+      "type": "options[]",
+      "options": [
+        "PLANTAE",
+        "ANIMALIA"
+      ],
+      "example": [
+        "PLANTAE",
+        "ANIMALIA"
+      ],
+      "weight": 3
+    },
+    "IAS>prepare_datasets.yml@80|habitats": {
+      "label": "Habitat types",
+      "description": "Habitat values to retain in both the GRIIS and First Records datasets.",
+      "type": "options[]",
+      "options": [
+        "TERRESTRIAL",
+        "FRESHWATER",
+        "FRESHWATER|BRACKISH",
+        "TERRESTRIAL|FRESHWATER",
+        "MARINE|FRESHWATER|BRACKISH",
+        "TERRESTRIAL|BRACKISH",
+        "TERRESTRIAL|FRESHWATER|BRACKISH",
+        "TERRESTRIAL|MARINE|FRESHWATER",
+        "TERRESTRIAL|MARINE|BRACKISH",
+        "MARINE|FRESHWATER",
+        "TERRESTRIAL|MARINE"
+      ],
+      "example": [
+        "TERRESTRIAL",
+        "FRESHWATER",
+        "FRESHWATER|BRACKISH",
+        "TERRESTRIAL|FRESHWATER",
+        "MARINE|FRESHWATER|BRACKISH",
+        "TERRESTRIAL|BRACKISH",
+        "TERRESTRIAL|FRESHWATER|BRACKISH",
+        "TERRESTRIAL|MARINE|FRESHWATER",
+        "TERRESTRIAL|MARINE|BRACKISH",
+        "MARINE|FRESHWATER",
+        "TERRESTRIAL|MARINE"
+      ],
+      "weight": 4
     }
   },
   "outputs": {
-    "IAS>download_firstrecords.yml@37|firstrecords_cleaned": {
-      "description": "Cleaned first records data for the specified country.",
-      "label": "First Records Cleaned",
+    "IAS>merge_datasets.yml@52|merged_dataset": {
+      "description": "One record per standardised taxon-location-establishment combination.",
+      "label": "SInAS merged dataset",
       "type": "text/csv",
       "weight": 0
     },
-    "IAS>download_griischecklist.yml@38|griis_checklist": {
-      "description": "GRIIS checklist for the specified country.",
-      "label": "GRIIS checklist",
+    "IAS>merge_datasets.yml@52|data_quality_report": {
+      "description": "Combined quality-control status, unmatched values, and merge conflicts, including the action taken for each issue.",
+      "label": "SInAS data-quality report",
       "type": "text/csv",
       "weight": 1
     },
-    "IAS>download_griischecklist.yml@38|griis_summary": {
-      "description": "Summary of the GRIIS checklist for the specified country.",
-      "label": "GRIIS summary",
+    "IAS>prepare_datasets.yml@80|excluded_records": {
+      "description": "Complete source records excluded from the merge because their locations could not be standardised.",
+      "label": "SInAS excluded records",
       "type": "text/csv",
       "weight": 2
     },
-    "IAS>download_griischecklist.yml@38|griis_directory": {
-      "description": "Directory where the GRIIS checklist is saved.",
-      "label": "GRIIS directory",
+    "IAS>merge_datasets.yml@52|run_summary": {
+      "description": "Preparation and merge record counts, warning counts, exclusions, and overall quality-control status.",
+      "label": "SInAS run summary",
       "type": "text/csv",
       "weight": 3
     },
-    "IAS>download_griischecklist.yml@38|all_data_summary": {
-      "description": "GRIIS checklist summary for all data.",
-      "label": "GRIIS checklist summary (all data)",
+    "IAS>model_data.yml@81|model_outputs": {
+      "description": "Model assumptions, parameters, fit statistics, convergence status, estimated trend direction, interpretation, and caveats for every model option. First-record trends are not automatically equivalent to introduction trends.",
+      "label": "Model outputs",
       "type": "text/csv",
       "weight": 4
     },
-    "IAS>download_griischecklist.yml@38|per_list_summary": {
-      "description": "GRIIS checklist summary for each list.",
-      "label": "GRIIS checklist summary (per list)",
+    "IAS>model_data.yml@81|model_decision": {
+      "description": "Selected data scenario, adequacy criteria, supported level of inference, interpretation guidance, shared scope, and references.",
+      "label": "Modelling decision",
       "type": "text/csv",
       "weight": 5
     },
-    "IAS>prepare_datasets.yml@39|first_records_clean": {
-      "description": "Cleaned First Records dataset with standardised column names and values.",
-      "label": "cleaned First Records dataset",
+    "IAS>model_data.yml@81|data_summary": {
+      "description": "Data-adequacy statistics for the selected country. First-record completeness is the percentage of GRIIS taxa flagged invasive anywhere that have a first-record year; it is not overall checklist completeness.",
+      "label": "Modelling data summary",
       "type": "text/csv",
       "weight": 6
     },
-    "IAS>prepare_datasets.yml@39|griis_clean": {
-      "description": "Cleaned GRIIS dataset with standardised column names and values.",
-      "label": "cleaned GRIIS dataset",
-      "type": "text/csv",
+    "IAS>model_data.yml@81|quantitative_plot": {
+      "description": "Fitted annual discovery records from models with alternative detection assumptions. Compare fit statistics only among converged models fitted to the same country and time series.",
+      "label": "Quantitative model comparison",
+      "type": "image/png",
       "weight": 7
     },
-    "IAS>prepare_datasets.yml@39|file_info": {
-      "description": "Table containing information about the input datasets columns",
-      "label": "File information",
-      "type": "text/csv",
+    "IAS>model_data.yml@81|qualitative_plot": {
+      "description": "Descriptive comparison of annual IAS first records with the GBIF observation proxy. Similar patterns may indicate an observation-effort effect; this plot is not a corrected introduction-rate estimate.",
+      "label": "Qualitative model plot",
+      "type": "image/png",
       "weight": 8
-    },
-    "IAS>merge_datasets.yml@52|merged_dataset": {
-      "description": "Merged dataset with standardised column names and values.",
-      "label": "Merged dataset",
-      "type": "text/csv",
-      "weight": 9
-    },
-    "data>getGBIFObservations>get_GBIF_country.yml@72|gbif_country_observations": {
-      "description": "Number of GBIF occurrences for each year within the specified country.",
-      "label": "GBIF country observations",
-      "type": "text/csv",
-      "weight": 10
-    },
-    "IAS>summarise_ias.yml@76|ias_annual_summary": {
-      "description": "Annual table combining GBIF occurrence counts and IAS first-record counts.",
-      "label": "IAS annual summary",
-      "type": "text/csv",
-      "weight": 11
-    },
-    "IAS>summarise_ias.yml@76|ias_summary": {
-      "description": "Summary statistics for the merged IAS dataset.",
-      "label": "IAS summary",
-      "type": "text/csv",
-      "weight": 12
-    },
-    "IAS>summarise_ias.yml@76|ias_summary_table": {
-      "description": "HTML summary table for the merged IAS dataset.",
-      "label": "IAS summary table",
-      "type": "text/html",
-      "weight": 13
     }
   },
   "metadata": {

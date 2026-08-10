@@ -1,7 +1,8 @@
 script: download_firstrecords.R
 name: Download First Records Data
-description: "This script downloads the first records data for a country"
+description: "Stream the pinned SInAS 3.1.1 release for all mapped locations associated with a selected country, preserve source locations, add GBIF kingdom matches, and standardise habitat terminology for GRIIS integration."
 author:
+  - Saxbee Affleck
   - name: Samara Manzin
     email: samara.manzin@mcgill.ca
 inputs:
@@ -26,3 +27,4 @@ conda:
     - r-rjson
     - r-stringr
     - r-rgbif
+    - r-openxlsx

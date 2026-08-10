@@ -3,6 +3,8 @@ import pandas as pd
 import pycountry
 from pathlib import Path
 import datetime
+import time
+from requests.exceptions import RequestException
 
 data = biab_inputs()
 
@@ -15,8 +17,17 @@ if country_code=='' or country_code==None or len(country_code)==0:
     biab_error_stop("Please specify country code")
 
 def iso3_to_iso2(iso3):
-    country = pycountry.countries.get(alpha_3=iso3.upper())
-    return country.alpha_2 if country else biab_error_stop("No ISO2 code found for the provided ISO3 code")
+    # Some BON country records include a version suffix (for example AUS_1).
+    normalized_iso3 = str(iso3).strip().upper().split("_", 1)[0]
+    if len(normalized_iso3) != 3 or not normalized_iso3.isalpha():
+        biab_error_stop(
+            f"Invalid ISO3 country code '{iso3}' after normalization"
+        )
+
+    country = pycountry.countries.get(alpha_3=normalized_iso3)
+    return country.alpha_2 if country else biab_error_stop(
+        f"No ISO2 code found for ISO3 country code '{normalized_iso3}'"
+    )
 
 iso2=iso3_to_iso2(country_code)
 print(iso2)
@@ -43,22 +54,66 @@ basis_of_record = [
     "MATERIAL_SAMPLE",
     "HUMAN_OBSERVATION",
     "MACHINE_OBSERVATION",
-    "OCCURRENCE",
+    "OCCURRENCE"
+]
+
+issues = [
+    "COORDINATE_INVALID",
+    "ZERO_COORDINATE",
+    "COORDINATE_OUT_OF_RANGE",
+    "COUNTRY_COORDINATE_MISMATCH"
 ]
 
 results = []
+normalized_iso3 = str(country_code).strip().upper().split("_", 1)[0]
+
+def get_gbif_count(year, kingdom_key, maximum_attempts=4):
+    """Return one GBIF count, retrying temporary API failures."""
+    for attempt in range(1, maximum_attempts + 1):
+        try:
+            return occ.search(
+                year=year,
+                country=iso2,
+                kingdomKey=kingdom_key,
+                basisOfRecord=basis_of_record,
+                hasCoordinate=True,
+                issue=issues,
+                limit=0,
+                timeout=120,
+            )["count"]
+        except RequestException as error:
+            response = getattr(error, "response", None)
+            status_code = getattr(response, "status_code", None)
+            retryable = (
+                status_code is None
+                or status_code == 429
+                or 500 <= status_code <= 599
+            )
+
+            if not retryable or attempt == maximum_attempts:
+                message = (
+                    "GBIF count request failed for "
+                    f"year {year}, kingdom key {kingdom_key}, after "
+                    f"{attempt} attempt(s): {error}"
+                )
+                biab_error_stop(message)
+                raise RuntimeError(message)
+
+            wait_seconds = 5 * (2 ** (attempt - 1))
+            print(
+                "Temporary GBIF error for "
+                f"year {year}, kingdom key {kingdom_key} "
+                f"(attempt {attempt}/{maximum_attempts}, "
+                f"HTTP {status_code or 'connection error'}). "
+                f"Retrying in {wait_seconds} seconds..."
+            )
+            time.sleep(wait_seconds)
 
 for year in range(start_year, end_year + 1):
-    count = occ.search(
-        year=year,
-        country=iso2,                     # 2-letter GBIF country code
-        kingdomKey=[1, 6],                 # Animalia = 1, Plantae = 6
-        basisOfRecord=basis_of_record,     # pygbif repeats this param for OR logic
-        occurrenceStatus="PRESENT",
-        hasCoordinate=True,                # decimalLongitude/Latitude IS NOT NULL
-        hasGeospatialIssue=False,          # excludes COORDINATE_INVALID, ZERO_COORDINATE, etc.
-        limit=0,
-    )["count"]
+    print(f"Getting GBIF counts for {year}...")
+    # The two kingdoms are disjoint, so summing these smaller requests is
+    # equivalent to the SQL condition kingdom IN ('Animalia', 'Plantae').
+    count = sum(get_gbif_count(year, kingdom_key) for kingdom_key in (1, 6))
 
     results.append({"year": year, "RecordsCount": count})
 

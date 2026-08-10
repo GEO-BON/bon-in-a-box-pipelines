@@ -99,7 +99,7 @@ plot_comp_all <- function() {
       breaks = scales::breaks_pretty(n = 5),
       labels = scales::label_comma()
     ) +
-    ylab("Number of new IAS") +
+    ylab("Annual IAS first records") +
     xlab("Year") +
     theme_classic() +
     theme(
@@ -112,5 +112,4 @@ plot_comp_all <- function() {
   
   return(p)
 }
-
 

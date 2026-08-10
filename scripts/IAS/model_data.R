@@ -10,24 +10,326 @@
 ## ------------------------------------------------------
 ## ------------------------------------------------------
 
-## NOTE: This script should be run from the P6_runWorkflow.R script
+## NOTE: The original script was run from P6_runWorkflow.R. The BON in a Box
+## adaptation below replaces only the desktop input/output setup.
 
-#arrange country list in alphabetical order + pre-create vector list for outputs
-Countries <- input$ISO3
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(ggplot2)
+  library(tidyr)
+})
+
+input <- biab_inputs()
+
+read_input_table <- function(path, label) {
+  if (is.null(path) || length(path) != 1 || !file.exists(path)) {
+    biab_error_stop(paste0(label, " input does not exist: ", path))
+  }
+
+  separator <- if (grepl("\\.tsv$", path, ignore.case = TRUE)) "\t" else ","
+  data <- read.table(
+    path,
+    header = TRUE,
+    sep = separator,
+    quote = "\"",
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
+
+  if (ncol(data) == 1 && separator == ",") {
+    data <- read.table(
+      path,
+      header = TRUE,
+      stringsAsFactors = FALSE,
+      check.names = FALSE
+    )
+  }
+
+  data
+}
+
+required_columns <- function(data, columns, label) {
+  missing_columns <- setdiff(columns, colnames(data))
+  if (length(missing_columns) > 0) {
+    biab_error_stop(paste(
+      label, "is missing required column(s):",
+      paste(missing_columns, collapse = ", ")
+    ))
+  }
+}
+
+interpretation_scope <- paste(
+  "Results cover 1970-2020 and use GRIIS checklist taxa flagged invasive",
+  "anywhere that have a standardised first-record year. A first record is",
+  "the first documented detection, not necessarily the true introduction or",
+  "establishment year."
+)
+
+interpretation_references <- paste(
+  "McGeoch et al. (2023), doi:10.1111/conl.12981;",
+  "Buba et al. (2024), doi:10.1111/geb.13859;",
+  "SInAS 3.1.1, doi:10.5281/zenodo.18220953"
+)
+
+model_guidance <- tibble::tribble(
+  ~model, ~modelDescription, ~modelAssumption, ~interpretationCaveat,
+  "naive",
+  "Poisson trend fitted directly to annual IAS first-record counts.",
+  "Introductions are detected without delay and detection is effectively perfect.",
+  paste(
+    "The trend can reflect changing observation effort or detection delay,",
+    "not introductions alone."
+  ),
+  "ConstDet",
+  "Introduction-rate model with a constant probability of detecting introduced species.",
+  "Detection probability remains constant through time.",
+  "The trend can be biased when survey effort or detectability changes through time.",
+  "SC",
+  "Solow and Costello model estimating introduction and time-varying detection processes.",
+  "Detection changes through time and with post-introduction population growth.",
+  paste(
+    "The additional detection and growth parameters require a long,",
+    "information-rich first-record series and may be unstable with sparse data."
+  ),
+  "Sampling",
+  "Introduction-rate model using annual GBIF records as an external sampling-effort proxy.",
+  "GBIF record volume tracks the observation effort affecting IAS discovery.",
+  paste(
+    "GBIF records are an indirect proxy, not direct IAS survey effort; inference",
+    "depends on how well the proxy represents the process that produced first records."
+  )
+)
+
+interpret_model_result <- function(model, status, b1) {
+  if (is.na(status) || status != "fitted") {
+    return("No fitted result is available to interpret; see status and issues.")
+  }
+  if (is.na(b1)) {
+    return("The model fitted, but its time-trend coefficient is unavailable.")
+  }
+
+  direction <- if (b1 > 0) {
+    "increased"
+  } else if (b1 < 0) {
+    "decreased"
+  } else {
+    "showed no estimated change"
+  }
+  response <- if (model == "naive") {
+    "observed annual first-record rate"
+  } else {
+    "model-estimated annual introduction rate"
+  }
+  paste0(
+    "The ", response, " ", direction,
+    " over 1970-2020 (b1 = ", format(signif(b1, 4), trim = TRUE),
+    "). Interpret the direction together with uncertainty, model fit, convergence, ",
+    "and the stated detection assumption."
+  )
+}
+
+select_modelling_decision <- function(nonZeroYears, firstRecordCompleteness) {
+  modellingDecision <- if (
+    nonZeroYears >= 25 && firstRecordCompleteness >= 25
+  ) {
+    "model all"
+  } else if (
+    nonZeroYears >= 15 && nonZeroYears < 25 &&
+      firstRecordCompleteness >= 25
+  ) {
+    "model subset"
+  } else if (
+    nonZeroYears >= 15 && firstRecordCompleteness < 25
+  ) {
+    "qualitative"
+  } else if (
+    nonZeroYears >= 10 && nonZeroYears < 15 &&
+      firstRecordCompleteness >= 25
+  ) {
+    "qualitative"
+  } else {
+    "nothing"
+  }
+
+  modellingDecision_Formatted <- switch(
+    modellingDecision,
+    "model all" = "Model all model options",
+    "model subset" = "Model subset of models (excluding S&C)",
+    "qualitative" = "Qualitative approach",
+    "Too data sparse to model IAS rate"
+  )
+
+  decisionReason <- switch(
+    modellingDecision,
+    "model all" = paste(
+      "At least 25 years contain first records and first-record",
+      "completeness is at least 25%."
+    ),
+    "model subset" = paste(
+      "Between 15 and 24 years contain first records and first-record",
+      "completeness is at least 25%; the S&C growth model is excluded."
+    ),
+    "qualitative" = if (firstRecordCompleteness < 25) {
+      paste(
+        "At least 15 years contain first records, but first-record",
+        "completeness is below 25%; only the qualitative approach is used."
+      )
+    } else {
+      paste(
+        "Between 10 and 14 years contain first records and first-record",
+        "completeness is at least 25%; only the qualitative approach is used."
+      )
+    },
+    paste(
+      "The data do not meet the minimum combination of 10 non-zero years",
+      "and 25% first-record completeness required for modelling."
+    )
+  )
+
+  interpretationFlag <- (
+    nonZeroYears >= 15 &&
+      firstRecordCompleteness >= 25 &&
+      firstRecordCompleteness < 50
+  )
+
+  list(
+    decision = modellingDecision,
+    formatted = modellingDecision_Formatted,
+    reason = decisionReason,
+    interpretWithCaution = interpretationFlag
+  )
+}
+
+ensure_alien_package <- function() {
+  if (!requireNamespace("alien", quietly = TRUE)) {
+    cli::cli_alert_info(
+      "Installing the CRAN alien package required by the selected quantitative models."
+    )
+    remotes::install_version(
+      "alien",
+      version = "1.0.2",
+      repos = "https://cloud.r-project.org",
+      dependencies = NA,
+      upgrade = "never",
+      quiet = TRUE
+    )
+  }
+
+  if (!requireNamespace("alien", quietly = TRUE)) {
+    biab_error_stop(
+      "The CRAN alien package could not be installed, so quantitative models cannot run."
+    )
+  }
+}
+
+function_file <- function(filename) {
+  candidates <- c(
+    file.path("/scripts/IAS/Functions", filename),
+    file.path("scripts/IAS/Functions", filename),
+    file.path("Functions", filename)
+  )
+  existing <- candidates[file.exists(candidates)]
+  if (length(existing) == 0) {
+    biab_error_stop(paste("Required modeling function was not found:", filename))
+  }
+  existing[[1]]
+}
+
+country <- input$country_name$country
+Countries <- country$ISO3
+CountryNames <- country$englishName
+
+if (length(Countries) != 1 || is.null(Countries) || is.na(Countries)) {
+  biab_error_stop("Select exactly one country before running this step.")
+}
+
+IntegratedDataInput <- read_input_table(input$integrated_data, "Integrated IAS data")
+CovariateDataInput <- read_input_table(input$covariate_data, "GBIF covariate data")
+
+required_columns(
+  IntegratedDataInput,
+  c("origDB", "eventDate", "kingdom"),
+  "Integrated IAS data"
+)
+
+if (!"isInvasiveAnywhere" %in% colnames(IntegratedDataInput)) {
+  if ("isInvasiveInCountry" %in% colnames(IntegratedDataInput)) {
+    IntegratedDataInput$isInvasiveAnywhere <-
+      IntegratedDataInput$isInvasiveInCountry
+  } else {
+    biab_error_stop(paste(
+      "Integrated IAS data must contain either isInvasiveAnywhere",
+      "or isInvasiveInCountry."
+    ))
+  }
+}
+
+if (!"linkID" %in% colnames(IntegratedDataInput)) {
+  IntegratedDataInput$linkID <- ifelse(
+    grepl("GRIIS", IntegratedDataInput$origDB, ignore.case = TRUE),
+    "G",
+    "F"
+  )
+}
+
+IntegratedDataInput$eventDate <- suppressWarnings(
+  as.integer(IntegratedDataInput$eventDate)
+)
+IntegratedDataInput$kingdom <- tools::toTitleCase(
+  tolower(as.character(IntegratedDataInput$kingdom))
+)
+IntegratedDataInput$isInvasiveAnywhere <- toupper(
+  as.character(IntegratedDataInput$isInvasiveAnywhere)
+)
+
+required_columns(CovariateDataInput, "year", "GBIF covariate data")
+CovariateDataInput$year <- suppressWarnings(
+  as.integer(CovariateDataInput$year)
+)
+
+covariate_count_column <- intersect(
+  c("recordscount", "RecordsCount", "gbifRecordsCount", "count"),
+  colnames(CovariateDataInput)
+)
+
+if (length(covariate_count_column) == 0) {
+  CovariateDataInput <- CovariateDataInput %>%
+    dplyr::filter(!is.na(year)) %>%
+    dplyr::count(year, name = "recordscount")
+} else {
+  covariate_count_column <- covariate_count_column[[1]]
+  CovariateDataInput <- CovariateDataInput %>%
+    dplyr::transmute(
+      year = year,
+      recordscount = suppressWarnings(
+        as.numeric(.data[[covariate_count_column]])
+      )
+    ) %>%
+    dplyr::filter(!is.na(year)) %>%
+    dplyr::group_by(year) %>%
+    dplyr::summarise(
+      recordscount = sum(recordscount, na.rm = TRUE),
+      .groups = "drop"
+    )
+}
+
+# Pre-create lists for the original country loop and BON outputs.
 datalist <- vector("list", length = length(Countries))
+decisionlist <- vector("list", length = length(Countries))
+summarylist <- vector("list", length = length(Countries))
+inputlist <- vector("list", length = length(Countries))
 
 ## ------------------------------------------------------
 ## ADD REQUIRED FUNCTIONS TO GLOBAL ENVIRONMENT
 ## ------------------------------------------------------
 
-source(file.path("scripts/IAS","Functions","plot_comp_all.R"))
-source(file.path("scripts/IAS","Functions","plot_qual_raw.R"))
-source(file.path("scripts/IAS","Functions","create_dummy_variables.R"))
-source(file.path("scripts/IAS","Functions","summarise_snc_models.R"))
-source(file.path("scripts/IAS","Functions","check_convergence.R"))
-source(file.path("scripts/IAS","Functions","format_stat.R"))
-source(file.path("scripts/IAS","Functions","run_covariate_glm.R"))
-source(file.path("scripts/IAS","Functions","fit_snc_model.R"))
+source(function_file("plot_comp_all.R"))
+source(function_file("plot_qual_raw.R"))
+source(function_file("create_dummy_variables.R"))
+source(function_file("check_convergence.R"))
+source(function_file("format_stat.R"))
+source(function_file("run_covariate_glm.R"))
+source(function_file("fit_snc_model.R"))
 ## ------------------------------------------------------
 ## LOOP THROUGH ALL COUNTRIES
 ## ------------------------------------------------------ 
@@ -43,17 +345,18 @@ for (i in seq_along(Countries)) {
   
   
   x <- Countries[[i]]
-  CountryName <- countrycode::countrycode(x, origin = "iso3c", destination = "country.name")
+  CountryName <- CountryNames[[i]]
+  CountryCode <- x
   
   ## ------------------------------------------------------
   ## LOAD REQUIRED DATA
   ## ------------------------------------------------------ 
   
   # Copy and load .csv integrated IAS data file from P5
-  IntegratedData <- input$IntegratedData
+  IntegratedData <- IntegratedDataInput
   
   # Copy and load .rds covariate data file from P5 - SQL method file 
-  CovariateData <- input$CovariateData
+  CovariateData <- CovariateDataInput
   
   ### OR this is where you could use occ_download_get with existing GBIF covariate download keys to load in existing downloaded data 
   ### e.g. survey effort proxy data for JAPAN - doi is https://doi.org/10.15468/dl.3f9a3e, download key is (0030163-251009101135966) 
@@ -116,7 +419,11 @@ for (i in seq_along(Countries)) {
     # filter out species with no/unknown first record
     dplyr::filter(!is.na(eventDate))
   
-  firstRecordCompleteness = (nrow(IASWithFirstRecords)/nrow(allIAS))*100
+  firstRecordCompleteness <- if (nrow(allIAS) == 0) {
+    0
+  } else {
+    (nrow(IASWithFirstRecords) / nrow(allIAS)) * 100
+  }
   
   ## CRITERIA 2 - NON-ZERO YEARS
   
@@ -126,29 +433,22 @@ for (i in seq_along(Countries)) {
   
   ## Modelling decision framework for combinations of criteria 1 and criteria 2 
   
-  decisionCriteria = data.frame(
+  decisionCriteria <- data.frame(
     ModellingDecisions = c("NonZeroYears_<10", "NonZeroYears_10to15", "NonZeroYears_15to25", "NonZeroYears_>25"), 
     firstRecordComp_50to100pcnt = c("Too data sparse to model IAS rate", "Qualitative approach", "Model subset of models (excluding S&C)", "Model all model options"), 
     firstRecordComp_25to50pcnt = c("Too data sparse to model IAS rate", "Qualitative approach", "Model subset of models (excluding S&C), but interpret with caution", "Model all model options, but interpret with caution"), 
     firstRecordComp_0to25pcnt = c("Too data sparse to model IAS rate", "Too data sparse to model IAS rate", "Qualitative approach", "Qualitative approach")
   )
-    
-  view(decisionCriteria)
-  
-  # modelling decision for the data based on modelling criteria outlined in table above
-  # will impact the approach taken for each country's data based on how criteria are met 
-  modellingDecision <- if (nonZeroYears >= 25 & firstRecordCompleteness >= 25) {"model all" 
-  } else if (nonZeroYears >= 15 & nonZeroYears < 25 & firstRecordCompleteness >= 25) {"model subset" 
-  } else if (nonZeroYears >= 15 & firstRecordCompleteness < 25) {"qualitative" 
-  } else if (nonZeroYears >= 10 & nonZeroYears < 15 & firstRecordCompleteness >= 25) {"qualitative"
-  } else {"nothing"}
-  
-  # logical flag for results requiring a note about low first records completeness potentially 
-  # impacting the quality and surety in the model results - results where interpretationFlag == TRUE 
-  # should be flagged to be interpreted with caution 
-  interpretationFlag <- if (nonZeroYears >= 15 & firstRecordCompleteness >= 50) {FALSE 
-  } else if (nonZeroYears >= 15 & firstRecordCompleteness >= 25 & firstRecordCompleteness < 50) {TRUE
-  } else {FALSE}
+
+  # Apply the original thresholds and record why BON selected this branch.
+  decision_result <- select_modelling_decision(
+    nonZeroYears,
+    firstRecordCompleteness
+  )
+  modellingDecision <- decision_result$decision
+  modellingDecision_Formatted <- decision_result$formatted
+  decisionReason <- decision_result$reason
+  interpretationFlag <- decision_result$interpretWithCaution
   
   if (interpretationFlag == TRUE) {
     cli::cli_alert_warning("A large number of species in the country checklist do not have a date 
@@ -156,14 +456,7 @@ for (i in seq_along(Countries)) {
                            data modelling, and therefore results must be interpreted with caution.")
   }
   
-  decision <<- modellingDecision
-  
-  
-  modellingDecision_Formatted<- if (modellingDecision == "model all") {"Model all model options"
-  } else if (modellingDecision == "model subset") {"Model subset of models (excluding S&C)"
-  } else if (modellingDecision == "qualitative") {"Qualitative approach"
-  } else if (modellingDecision == "qualitative") {"qualitative"
-  } else {"Too data sparse to model IAS rate"}
+  decision <- modellingDecision
   
   
   ### NOTE - data summary table below is optional, this code outputs a HTML table of some of 
@@ -226,13 +519,55 @@ for (i in seq_along(Countries)) {
                modellingDecision_Formatted, 
                totalCovariateRecords))
   
-  data_summary_table <- gt::gt(summary[1:2]) %>%
-    gt::tab_options(column_labels.hidden = TRUE) %>% 
-    gt::tab_header(
-      title = gt::md(paste0("**","Data Summary: ", CountryName," (",x,")","**"))) 
-  
-  ## Save summary table
-  #gt::gtsave(data_summary_table, file.path(workingDirectory,subDirectory,"Output",x,"Modelled IAS Rates",paste0(x,"_Data_Summary_Table.html")))
+  summarylist[[i]] <- summary %>%
+    dplyr::rename(value = dplyr::all_of(x)) %>%
+    dplyr::mutate(country = CountryName, ISO = x, .before = 1)
+
+  decisionlist[[i]] <- tibble::tibble(
+    ISO = x,
+    country = CountryName,
+    firstRecordCompleteness = round(firstRecordCompleteness, 2),
+    nonZeroYears = nonZeroYears,
+    modellingDecision = modellingDecision,
+    modellingDecisionFormatted = modellingDecision_Formatted,
+    decisionReason = decisionReason,
+    interpretWithCaution = interpretationFlag,
+    interpretationLevel = dplyr::case_when(
+      modellingDecision %in% c("model all", "model subset") ~
+        "quantitative model comparison",
+      modellingDecision == "qualitative" ~ "descriptive comparison only",
+      TRUE ~ "no introduction-rate inference"
+    ),
+    interpretationGuidance = dplyr::case_when(
+      modellingDecision %in% c("model all", "model subset") ~ paste(
+        "Interpret only fitted, converged models. Compare AIC only among models",
+        "fitted to this same country and time series; lower AIC indicates stronger",
+        "relative support, not that model assumptions are true."
+      ),
+      modellingDecision == "qualitative" ~ paste(
+        "Compare first-record and GBIF-record patterns descriptively. This branch",
+        "does not provide a survey-effort-corrected introduction-rate estimate."
+      ),
+      TRUE ~ paste(
+        "The available first-record series is too sparse or incomplete for a",
+        "defensible introduction-rate interpretation."
+      )
+    ),
+    interpretationScope = interpretation_scope,
+    references = interpretation_references,
+    modelsSelected = dplyr::case_when(
+      modellingDecision == "model all" ~
+        "naive; ConstDet; SC; Sampling",
+      modellingDecision == "model subset" ~
+        "naive; ConstDet; Sampling",
+      modellingDecision == "qualitative" ~
+        "naive (with survey-effort comparison)",
+      TRUE ~ "none"
+    )
+  )
+
+  inputlist[[i]] <- input_Anywhere %>%
+    dplyr::mutate(country = CountryName, ISO = x, .before = 1)
   
   
   
@@ -280,6 +615,8 @@ for (i in seq_along(Countries)) {
     ## --------------------------------------------------------------
     ## MODEL 3-5 - S&C MODEL, CONSTANT DETECTION MODEL & SAMPLING MODEL
     ## --------------------------------------------------------------
+
+    ensure_alien_package()
     
     ### INFO: 
     ## models have either 3, 4 or 5 parameters being maximised by the likelihood estimation function
@@ -318,19 +655,32 @@ for (i in seq_along(Countries)) {
       }
     )
     
-    # summarise_snc_models()
-    # 
-    # SNC_model_summary
-    
-    
     ## ------------------------------------------------------
     ## PLOTS OF MODELS - QUALITATIVE APPROACH (SURVEY EFFORT + NAIVE)
     ## ------------------------------------------------------ 
     
     p1 <- plot_qual_raw()
     
-    p1.title <- p1 + patchwork::plot_annotation(title = paste0("Qualitative Model Plot: ",CountryName," (",x,")"))
-    ggplot2::ggsave(filename = paste0(x,"_qualitative.png"), plot = p1.title, bg = "white", path = (paste0(workingDirectory, "/", subDirectory, "/", "Output/",x,"/Modelled IAS Rates/")), width = 6, height = 4, units = "in")
+    p1.title <- p1 + ggplot2::labs(
+      title = paste0("First records and GBIF observation proxy: ", CountryName, " (", x, ")"),
+      subtitle = "Descriptive comparison; parallel trends can indicate changing observation effort.",
+      caption = paste(
+        "First record means first documented detection, not necessarily introduction.",
+        "GBIF records are an indirect survey-effort proxy."
+      )
+    )
+    qualitative_plot_path <- file.path(
+      outputFolder,
+      paste0(x, "_qualitative.png")
+    )
+    ggplot2::ggsave(
+      filename = qualitative_plot_path,
+      plot = p1.title,
+      bg = "white",
+      width = 6,
+      height = 4,
+      units = "in"
+    )
     
     ## ------------------------------------------------------
     ## PLOTS OF MODELS - COMPARATIVE APPROACH (NAIVE + S&C + SAMPLING + CONSTANT DETECTION)
@@ -338,8 +688,23 @@ for (i in seq_along(Countries)) {
     
     p2 <- plot_comp_all()
     
-    p2.title <- p2 + patchwork::plot_annotation(title = paste0("Best Fit Model Plots: ",CountryName," (",x,")"))
-    ggplot2::ggsave(filename = paste0(x,"_quantitative.png"), plot = p2.title, bg = "white", path = (paste0(workingDirectory, "/", subDirectory, "/", "Output/",x,"/Modelled IAS Rates/")), width = 6, height = 4, units = "in")
+    p2.title <- p2 + ggplot2::labs(
+      title = paste0("First-record model comparison: ", CountryName, " (", x, ")"),
+      subtitle = "Fitted annual discovery records under alternative detection assumptions.",
+      caption = "Compare AIC only among fitted models for this same country and time series."
+    )
+    quantitative_plot_path <- file.path(
+      outputFolder,
+      paste0(x, "_quantitative.png")
+    )
+    ggplot2::ggsave(
+      filename = quantitative_plot_path,
+      plot = p2.title,
+      bg = "white",
+      width = 6,
+      height = 4,
+      units = "in"
+    )
   
    
     ## ------------------------------------------------------
@@ -387,6 +752,8 @@ for (i in seq_along(Countries)) {
     ## ---------------------------------------------------------------------------------------------
     ## MODEL 3-4 - CONSTANT DETECTION & BUBA SAMPLING MODEL (WITH COVARIATE)
     ## ---------------------------------------------------------------------------------------------
+
+    ensure_alien_package()
     ### INFO: 
     ## models have either 3 or 4 parameters being maximised by the likelihood estimation function
     
@@ -423,19 +790,32 @@ for (i in seq_along(Countries)) {
       }
     )
     
-    # summarise_snc_models()
-    # 
-    # SNC_model_summary
-    
-    
     ## ------------------------------------------------------
     ## PLOTS OF MODELS - QUALITATIVE APPROACH (SURVEY EFFORT + NAIVE)
     ## ------------------------------------------------------ 
     
     p1 <- plot_qual_raw()
     
-    p1.title <- p1 + patchwork::plot_annotation(title = paste0("Qualitative Model Plot: ",CountryName," (",x,")"))
-    ggplot2::ggsave(filename = paste0(x,"_qualitative.png"), plot = p1.title, bg = "white", path = (paste0(workingDirectory, "/", subDirectory, "/", "Output/",x,"/Modelled IAS Rates/")), width = 6, height = 4, units = "in")
+    p1.title <- p1 + ggplot2::labs(
+      title = paste0("First records and GBIF observation proxy: ", CountryName, " (", x, ")"),
+      subtitle = "Descriptive comparison; parallel trends can indicate changing observation effort.",
+      caption = paste(
+        "First record means first documented detection, not necessarily introduction.",
+        "GBIF records are an indirect survey-effort proxy."
+      )
+    )
+    qualitative_plot_path <- file.path(
+      outputFolder,
+      paste0(x, "_qualitative.png")
+    )
+    ggplot2::ggsave(
+      filename = qualitative_plot_path,
+      plot = p1.title,
+      bg = "white",
+      width = 6,
+      height = 4,
+      units = "in"
+    )
     
     ## ------------------------------------------------------
     ## PLOTS OF MODELS - COMPARATIVE APPROACH (NAIVE + SAMPLING + CONSTANT DETECTION)
@@ -443,8 +823,23 @@ for (i in seq_along(Countries)) {
     
     p2 <- plot_comp_all()
     
-    p2.title <- p2 + patchwork::plot_annotation(title = paste0("Best Fit Model Plots: ",CountryName," (",x,")"))
-    ggplot2::ggsave(filename = paste0(x,"_quantitative.png"), plot = p2.title, bg = "white", path = (paste0(workingDirectory, "/", subDirectory, "/", "Output/",x,"/Modelled IAS Rates/")), width = 6, height = 4, units = "in")
+    p2.title <- p2 + ggplot2::labs(
+      title = paste0("First-record model comparison: ", CountryName, " (", x, ")"),
+      subtitle = "Fitted annual discovery records under alternative detection assumptions.",
+      caption = "Compare AIC only among fitted models for this same country and time series."
+    )
+    quantitative_plot_path <- file.path(
+      outputFolder,
+      paste0(x, "_quantitative.png")
+    )
+    ggplot2::ggsave(
+      filename = quantitative_plot_path,
+      plot = p2.title,
+      bg = "white",
+      width = 6,
+      height = 4,
+      units = "in"
+    )
     
     
     ## ------------------------------------------------------
@@ -504,8 +899,26 @@ for (i in seq_along(Countries)) {
     
     p1 <- plot_qual_raw()
     
-    p1.title <- p1 + patchwork::plot_annotation(title = paste0("Qualitative Model Plot: ",CountryName," (",x,")"))
-    ggplot2::ggsave(filename = paste0(x,"_qualitative.png"), plot = p1.title, bg = "white", path = (paste0(workingDirectory, "/", subDirectory, "/", "Output/",x,"/Modelled IAS Rates/")), width = 6, height = 4, units = "in")
+    p1.title <- p1 + ggplot2::labs(
+      title = paste0("First records and GBIF observation proxy: ", CountryName, " (", x, ")"),
+      subtitle = "Descriptive comparison only; it is not a corrected introduction-rate estimate.",
+      caption = paste(
+        "First record means first documented detection, not necessarily introduction.",
+        "GBIF records are an indirect survey-effort proxy."
+      )
+    )
+    qualitative_plot_path <- file.path(
+      outputFolder,
+      paste0(x, "_qualitative.png")
+    )
+    ggplot2::ggsave(
+      filename = qualitative_plot_path,
+      plot = p1.title,
+      bg = "white",
+      width = 6,
+      height = 4,
+      units = "in"
+    )
     
     
     ## ------------------------------------------------------
@@ -525,7 +938,9 @@ for (i in seq_along(Countries)) {
     
   } else {
     
-    cli::cli_alert_warning("Model Decision = No modelling completed due to sparcity and/or incompleteness of data. No outputs produced.")
+    cli::cli_alert_warning(
+      "Model Decision = No modelling completed due to sparsity and/or incompleteness of data. Decision and data-summary outputs will still be produced."
+    )
     
     ## ------------------------------------------------------
     ## DUMMY VARIBALES FOR ALL MODELS
@@ -549,76 +964,171 @@ for (i in seq_along(Countries)) {
   ## end up being formatted very differently for the pipeline purposes! 
 
   
-  naive_row <- tibble::tibble(p = tryCatch({coef(naive_summary)[2, 4]}, error = function(e) NA_real_),
-                              prob_b1_zero = NA_real_,
-                              b0_est = tryCatch({coef(naive_summary)[1, 1]}, error = function(e) NA_real_),
-                              b1_est = tryCatch({coef(naive_summary)[2, 1]}, error = function(e) NA_real_),
-                              gam0_est = NA_real_,
-                              gam1_est = NA_real_,
-                              gam2_est = NA_real_,
-                              b0_se = tryCatch({coef(naive_summary)[1, 2]}, error = function(e) NA_real_),
-                              b1_se = tryCatch({coef(naive_summary)[2, 2]}, error = function(e) NA_real_),
-                              gam0_se = NA_real_,
-                              gam1_se = NA_real_,
-                              gam2_se = NA_real_,
-                              aic = tryCatch({naive_summary$aic}, error = function(e) NA_real_),
-                              bias = tryCatch({mean(input_Anywhere$n - predict(naive_glm, type = "response"))}, error = function(e) NA_real_),
-                              mse = tryCatch({mean((input_Anywhere$n - predict(naive_glm, type = "response"))^2)}, error = function(e) NA_real_),
-                              predictedIAS = tryCatch({mean(fitted(naive_glm))}, error = function(e) NA_real_),
-                              predictedIAS_se = tryCatch({sd(fitted(naive_glm))/sqrt(length(fitted(naive_glm)))}, error = function(e) NA_real_),
-                              rsquared = tryCatch({as.numeric(1 - (naive_summary$deviance / naive_summary$null.deviance))}, error = function(e) NA_real_),
-                              issues = NA_character_) |>
-    tibble::add_column(model = "naive", .before = "p")
-  
-  
+  empty_model_row <- function(method, status, issues) {
+    tibble::tibble(
+      model = method,
+      p = NA_real_,
+      prob_b1_zero = NA_real_,
+      b0_est = NA_real_,
+      b1_est = NA_real_,
+      gam0_est = NA_real_,
+      gam1_est = NA_real_,
+      gam2_est = NA_real_,
+      b0_se = NA_real_,
+      b1_se = NA_real_,
+      gam0_se = NA_real_,
+      gam1_se = NA_real_,
+      gam2_se = NA_real_,
+      aic = NA_real_,
+      bias = NA_real_,
+      mse = NA_real_,
+      predictedIAS = NA_real_,
+      predictedIAS_se = NA_real_,
+      rsquared = NA_real_,
+      status = status,
+      issues = issues
+    )
+  }
+
+  models_selected <- switch(
+    decision,
+    "model all" = c("naive", "ConstDet", "SC", "Sampling"),
+    "model subset" = c("naive", "ConstDet", "Sampling"),
+    "qualitative" = "naive",
+    character(0)
+  )
+
+  naive_fitted <- (
+    exists("naive_glm", inherits = FALSE) &&
+      inherits(naive_glm, "glm")
+  )
+
+  if (naive_fitted) {
+    naive_row <- tibble::tibble(
+      model = "naive",
+      p = tryCatch(coef(naive_summary)[2, 4], error = function(e) NA_real_),
+      prob_b1_zero = NA_real_,
+      b0_est = tryCatch(coef(naive_summary)[1, 1], error = function(e) NA_real_),
+      b1_est = tryCatch(coef(naive_summary)[2, 1], error = function(e) NA_real_),
+      gam0_est = NA_real_,
+      gam1_est = NA_real_,
+      gam2_est = NA_real_,
+      b0_se = tryCatch(coef(naive_summary)[1, 2], error = function(e) NA_real_),
+      b1_se = tryCatch(coef(naive_summary)[2, 2], error = function(e) NA_real_),
+      gam0_se = NA_real_,
+      gam1_se = NA_real_,
+      gam2_se = NA_real_,
+      aic = tryCatch(naive_summary$aic, error = function(e) NA_real_),
+      bias = tryCatch(
+        mean(input_Anywhere$n - predict(naive_glm, type = "response")),
+        error = function(e) NA_real_
+      ),
+      mse = tryCatch(
+        mean((input_Anywhere$n - predict(naive_glm, type = "response"))^2),
+        error = function(e) NA_real_
+      ),
+      predictedIAS = tryCatch(
+        mean(fitted(naive_glm)),
+        error = function(e) NA_real_
+      ),
+      predictedIAS_se = tryCatch(
+        sd(fitted(naive_glm)) / sqrt(length(fitted(naive_glm))),
+        error = function(e) NA_real_
+      ),
+      rsquared = tryCatch(
+        as.numeric(1 - (naive_summary$deviance / naive_summary$null.deviance)),
+        error = function(e) NA_real_
+      ),
+      status = "fitted",
+      issues = NA_character_
+    )
+  } else {
+    naive_row <- empty_model_row(
+      "naive",
+      "not selected",
+      "Not run under the selected modelling decision."
+    )
+  }
+
   est_names <- c("b0_est", "b1_est", "gam0_est", "gam1_est", "gam2_est")
   ses_names <- c("b0_se", "b1_se", "gam0_se", "gam1_se", "gam2_se")
-  
-  snc_rows <- lapply(list(ConstDet, SC, Sampling), function(mod) {
-    
-    method <- dplyr::case_when(
-      identical(mod, ConstDet) ~ "ConstDet",
-      identical(mod, SC) ~ "SC",
-      identical(mod, Sampling) ~ "Sampling"
-    )
-    
-    model <- tryCatch(get(mod, envir = .GlobalEnv), error = function(e) NULL)
-    warnings <- tryCatch(get(paste0(mod, "_warnings"), envir = .GlobalEnv), error = function(e) character(0))
-    errors <- tryCatch(get(paste0(mod, "_error"), envir = .GlobalEnv), error = function(e) character(0))
-    warn_flag <- length(warnings) > 0
 
-    
-    if (any(is.na(mod))){
-      mod_row <- rep(NA,16) #number of parameters here
-      names(mod_row) <- c("predictedIAS", "predictedIAS_se", "b0_est", "b1_est", "gam0_est", "gam1_est", "gam2_est", 
-                          "b0_se", "b1_se", "gam0_se", "gam1_se", "gam2_se", 
-                          "aic", "bias", "mse", "prob_b1_zero")
-      mod_row <- dplyr::bind_rows(mod_row) |> 
-        tibble::add_column(model = method, .before = "b0_est") |>
-        tibble::add_column(rsquared = NA, .before = "prob_b1_zero") |>
-        tibble::add_column(p = NA, .after = "rsquared") |>
-        tibble::add_column(issues = paste0("did not run/converge"), .after = "p") 
-      
-    } else {
-      
-      par <- mod$coefficients$Estimate |> `names<-`(est_names[1:nrow(mod$coefficients)]) |> dplyr::bind_rows()
-      ses <- mod$coefficients$`Std.Err` |> `names<-`(ses_names[1:nrow(mod$coefficients)])  |> dplyr::bind_rows()
-      ## ALIEN R PACKAGE CODE outputs the minimised negative LL rather than the maximised LL - to calculate AIC, formula switches from - to + 
-      ## AIC = 2 * k + 2 * (minimised Neg LL)
-      aic <- tibble::tibble(aic = ((2 * nrow(mod$coefficients)) + (2 * mod$`log-likelihood`))) |> dplyr::bind_rows()
-      bias <- tibble::tibble(bias = mean(mod$records - mod$fitted.values)) |> dplyr::bind_rows()
-      mse <- tibble::tibble(mse = Metrics::mse(mod$records, mod$fitted.values)) |> dplyr::bind_rows() 
-      predictedIAS <- tibble::tibble(predictedIAS = (mean(mod$fitted.values))) |> dplyr::bind_rows()
-      predictedIAS_se <- tibble::tibble(predictedIAS_se = (sd(mod$fitted.values)/sqrt(length(mod$fitted.values)))) |> dplyr::bind_rows()
-      prob_b1_zero <- tibble::tibble(prob_b1_zero = alien::summary_snc(mod)[2, 3]) |> dplyr::bind_rows()
-      mod_row <- dplyr::bind_cols(prob_b1_zero, par, ses, aic, bias, mse, predictedIAS, predictedIAS_se) |> 
-        tibble::add_column(model = method, .before = "prob_b1_zero") |>
-        tibble::add_column(rsquared = NA) |>
-        tibble::add_column(p = NA) |>
-        tibble::add_column(issues = NA_character_)
+  snc_rows <- lapply(c("ConstDet", "SC", "Sampling"), function(method) {
+    mod <- get0(method, envir = .GlobalEnv, ifnotfound = NA)
+    warnings <- get0(
+      paste0(method, "_warnings"),
+      envir = .GlobalEnv,
+      ifnotfound = character(0)
+    )
+    errors <- get0(
+      paste0(method, "_error"),
+      envir = .GlobalEnv,
+      ifnotfound = character(0)
+    )
+    warnings <- as.character(warnings[!is.na(warnings) & nzchar(warnings)])
+    errors <- as.character(errors[!is.na(errors) & nzchar(errors)])
+
+    valid_model <- is.list(mod) && !is.null(mod$coefficients)
+    selected <- method %in% models_selected
+
+    if (!valid_model) {
+      issue_text <- if (!selected) {
+        "Not run under the selected modelling decision."
+      } else if (length(errors) > 0) {
+        paste(unique(errors), collapse = "; ")
+      } else {
+        "Selected model did not run or converge."
+      }
+      return(empty_model_row(
+        method,
+        if (selected) "failed" else "not selected",
+        issue_text
+      ))
     }
-  }
-  )
+
+    estimates <- stats::setNames(rep(NA_real_, length(est_names)), est_names)
+    standard_errors <- stats::setNames(
+      rep(NA_real_, length(ses_names)),
+      ses_names
+    )
+    parameter_count <- min(nrow(mod$coefficients), length(est_names))
+    estimates[seq_len(parameter_count)] <-
+      as.numeric(mod$coefficients$Estimate[seq_len(parameter_count)])
+    standard_errors[seq_len(parameter_count)] <-
+      as.numeric(mod$coefficients$`Std.Err`[seq_len(parameter_count)])
+
+    fitted_values <- mod$fitted.values
+    if (is.null(fitted_values) && !is.null(mod$predict$mean)) {
+      fitted_values <- mod$predict$mean
+    }
+
+    issues <- unique(c(warnings, errors))
+    issues <- if (length(issues) == 0) {
+      NA_character_
+    } else {
+      paste(issues, collapse = "; ")
+    }
+
+    tibble::tibble(
+      model = method,
+      p = NA_real_,
+      prob_b1_zero = tryCatch(
+        as.numeric(alien::summary_snc(mod)[2, 3]),
+        error = function(e) NA_real_
+      ),
+      !!!as.list(estimates),
+      !!!as.list(standard_errors),
+      # alien outputs minimized negative log-likelihood, so AIC uses + 2LL.
+      aic = (2 * nrow(mod$coefficients)) + (2 * mod$`log-likelihood`),
+      bias = mean(mod$records - fitted_values),
+      mse = Metrics::mse(mod$records, fitted_values),
+      predictedIAS = mean(fitted_values),
+      predictedIAS_se = sd(fitted_values) / sqrt(length(fitted_values)),
+      rsquared = NA_real_,
+      status = "fitted",
+      issues = issues
+    )
+  })
   
   params <- dplyr::bind_rows(naive_row, snc_rows) |>
     tibble::add_column(firstRecordCompleteness = firstRecordCompleteness, .before = "model") |>
@@ -626,9 +1136,32 @@ for (i in seq_along(Countries)) {
     tibble::add_column(modellingDecision = decision, .before = "nonZeroYears") |>
     tibble::add_column(interpretWithCaution = interpretationFlag, .before = "modellingDecision") |>
     tibble::add_column(country = CountryName, .before = "interpretWithCaution") |>
-    tibble::add_column(ISO = x, .before = "country") |> 
-    tibble::add_column(notes = case_when(isTRUE(interpretationFlag) ~ "interpret result with caution", 
-                                         TRUE ~ ""), .after = "issues")
+    tibble::add_column(ISO = x, .before = "country") |>
+    dplyr::left_join(model_guidance, by = "model") |>
+    dplyr::mutate(
+      trendDirection = dplyr::case_when(
+        status != "fitted" | is.na(b1_est) ~ "not available",
+        b1_est > 0 ~ "increasing",
+        b1_est < 0 ~ "decreasing",
+        TRUE ~ "no estimated change"
+      ),
+      resultInterpretation = mapply(
+        interpret_model_result, model, status, b1_est,
+        USE.NAMES = FALSE
+      ),
+      interpretationScope = interpretation_scope,
+      references = interpretation_references
+    ) |>
+    tibble::add_column(
+      notes = dplyr::case_when(
+        isTRUE(interpretationFlag) ~ paste(
+          "First-record completeness is below 50%; interpret quantitative",
+          "estimates with additional caution."
+        ),
+        TRUE ~ ""
+      ),
+      .after = "issues"
+    )
   
   datalist[[i]] <- params # add it to list
   
@@ -636,6 +1169,32 @@ for (i in seq_along(Countries)) {
 }
 
 out <- dplyr::bind_rows(datalist)
+model_decision <- dplyr::bind_rows(decisionlist)
+data_summary <- dplyr::bind_rows(summarylist)
+model_input <- dplyr::bind_rows(inputlist)
 
+model_outputs_path <- file.path(outputFolder, "model_outputs.csv")
+model_decision_path <- file.path(outputFolder, "model_decision.csv")
+data_summary_path <- file.path(outputFolder, "data_summary.csv")
+model_input_path <- file.path(outputFolder, "model_input.csv")
 
+write.csv(out, model_outputs_path, row.names = FALSE, na = "")
+write.csv(model_decision, model_decision_path, row.names = FALSE, na = "")
+write.csv(data_summary, data_summary_path, row.names = FALSE, na = "")
+write.csv(model_input, model_input_path, row.names = FALSE, na = "")
 
+biab_output("model_outputs", model_outputs_path)
+biab_output("model_decision", model_decision_path)
+biab_output("data_summary", data_summary_path)
+biab_output("model_input", model_input_path)
+
+if (exists("qualitative_plot_path") && file.exists(qualitative_plot_path)) {
+  biab_output("qualitative_plot", qualitative_plot_path)
+} else {
+  biab_output("qualitative_plot", NULL)
+}
+if (exists("quantitative_plot_path") && file.exists(quantitative_plot_path)) {
+  biab_output("quantitative_plot", quantitative_plot_path)
+} else {
+  biab_output("quantitative_plot", NULL)
+}

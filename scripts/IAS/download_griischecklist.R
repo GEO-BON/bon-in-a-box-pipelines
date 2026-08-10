@@ -1,3 +1,6 @@
+# This script downloads the GRIIS checklist for a specified country and attaches metadata. This currently combines the country with all affiliated regions (e.g., territories, overseas regions) to produce a single checklist for the country.
+
+# load packages
 library(tidyRSS)
 library(dplyr)
 library(tidyr)
@@ -5,21 +8,28 @@ library(rvest)
 library(stringr)
 library(XML)
 library(readxl)
+library(countrycode)
 
+# load inputs
 input <- biab_inputs()
 
 country_name <- input$country_name$country$englishName
-## need to inlcude a check so that it fails if the country is not in the compendium
-
-iso3 <- input$country_name$country$ISO3
-print(iso3)
-if (is.null(iso3) || is.na(iso3) || iso3 == "") {
-stop(paste0("ISO3 is missing for selected country: ", country_name))
-}
-print(country_name)
-print(class(country_name))
 compendium_countries <- read_excel(input$compendium_countries)
+iso3 <- input$country_name$country$ISO3
 
+# input checks
+
+# check if selected country is in the compendium
+ifelse(!country_name %in% compendium_countries$country,
+      biab_error_stop(paste0("The selected country is not in the compendium: ", country_name)),
+      print(paste0("The selected country is in the compendium: ", country_name)))
+
+# check if selected country has an ISO3 code
+if (is.null(iso3) || is.na(iso3) || iso3 == "") {
+  biab_error_stop(paste0("ISO3 is missing for selected country: ", country_name))
+}
+
+# Link to GRIIS data
 feed_url <- "https://cloud.gbif.org/griis/rss.do"
 
 feed <- tidyRSS::tidyfeed(feed_url)
@@ -47,18 +57,38 @@ feed <-
       stringr::str_detect(item_type, "PA ") ~ "protectedArea",
       TRUE ~ "national"
     ),
-    country = trimws(country)
+    country = stringr::str_squish(country)
   )
 
 # Match requested country
 feed_match <- feed %>%
   dplyr::filter(
+    item_type == "national",
     country == country_name |
-      stringr::str_ends(
-        stringr::str_squish(country),
-        paste0(", ", country_name)
-      )
+      stringr::str_ends(stringr::str_squish(country), paste0(", ", country_name)) |
+      (iso3 == "USA" & country == "United States of America, Contiguous") |
+      (iso3 == "SWZ" & country == "Eswatini, Swaziland") |
+      (iso3 == "PRK" & country == "Korea, Democratic People's Republic of")
   )
+
+# The RSS feed can contain more than one release of a checklist. Convert each
+# dotted version to a zero-padded key so that, for example, 1.10 sorts after 1.9.
+version_key <- function(version) {
+  parts <- stringr::str_extract_all(as.character(version), "[0-9]+")[[1]]
+  if (length(parts) == 0) return("")
+  paste(sprintf("%08d", as.integer(parts)), collapse = ".")
+}
+
+feed_match <- feed_match %>%
+  dplyr::mutate(
+    version = stringr::str_trim(version),
+    versionKey = vapply(version, version_key, character(1))
+  ) %>%
+  dplyr::group_by(country, item_type) %>%
+  dplyr::filter(versionKey == max(versionKey)) %>%
+  dplyr::slice_head(n = 1) %>%
+  dplyr::ungroup() %>%
+  dplyr::select(-versionKey)
 print("feed match")
 print(feed_match)
 
@@ -67,8 +97,35 @@ summary_list <- vector("list", nrow(feed_match))
 directory_list <- vector("list", nrow(feed_match))
 
 if (nrow(feed_match) == 0) {
-  stop(sprintf("No GRIIS checklists found for %s.", country_name))
+  stop(sprintf("No national GRIIS checklists found for %s.", country_name))
 }
+
+# These primary national checklist titles contain commas and were manually
+# corrected in the original P1 workflow. All other comma-separated national
+# titles represent secondary/affiliated checklists.
+primary_checklist_names <- c(
+  "United States of America, Contiguous",
+  "Eswatini, Swaziland",
+  "Korea, Democratic People's Republic of"
+)
+
+# Matches retained from the original P1 ISO3 corrections. countrycode handles
+# the remaining checklist names directly.
+custom_iso3 <- c(
+  "Rapa Nui, Isla de Pascua, Easter Island" = "CHL",
+  "Curacao, Netherlands" = "CUW",
+  "French Southern and Antarctic Lands Terres australes et antarctiques françaises, TAAF, France" = "ATF",
+  "French Southern and Antarctic Territories, TAAF, Scattered Islands, Îles Éparses, France" = "ATF",
+  "Mayotte, France" = "MYT",
+  "New Caledonia, France" = "NCL",
+  "Pitcairn Islands, Great Britain" = "PCN",
+  "Sint Maarten, Netherlands" = "SXM",
+  "Svalbard, Norway" = "SJM",
+  "Jeju Island, Republic of Korea" = "KOR",
+  "United States of America, Contiguous" = "USA",
+  "Eswatini, Swaziland" = "SWZ",
+  "Korea, Democratic People's Republic of" = "PRK"
+)
 
 for (i in seq_len(nrow(feed_match))) {
 
@@ -78,8 +135,22 @@ for (i in seq_len(nrow(feed_match))) {
 
 # Get details of checklist
 name <- feed_match[i, ] %>% dplyr::pull(country)
-name <- stringr::str_trim(name, side = c("both"))
-checklist_level <- ifelse(stringr::str_detect(name, ","), "Secondary", "Primary")
+name <- stringr::str_squish(name)
+checklist_iso3 <- countrycode::countrycode(
+  name,
+  origin = "country.name",
+  destination = "iso3c",
+  custom_match = custom_iso3,
+  warn = FALSE
+)
+if (is.na(checklist_iso3)) {
+  biab_error_stop(paste0("Could not assign an ISO3 code to GRIIS checklist: ", name))
+}
+checklist_level <- ifelse(
+  !stringr::str_detect(name, ",") || name %in% primary_checklist_names,
+  "Primary",
+  "Secondary"
+)
 name <- gsub("[^[:alnum:]]", "_", name)
 
 type <- feed_match[i, ] %>% dplyr::pull(item_type)
@@ -145,8 +216,8 @@ DATE <- Sys.Date()
 summary_list[[i]] <- tidyr::tibble(
   downloadDate = DATE,
   name = gsub("_", " ", gsub("__", ", ", name)),
-  ISO3 = iso3,
-  countryInCompendium = ifelse(iso3 %in% compendium_countries$ISO3, TRUE, FALSE),
+  ISO3 = checklist_iso3,
+  countryInCompendium = checklist_iso3 %in% compendium_countries$ISO3,
   checklistType = type,
   checklistLevel = checklist_level,
   version = version,
@@ -160,8 +231,8 @@ directory_list[[i]] <- tidyr::tibble(
   fileName = paste0(name, "_v", version, ".csv"),
   downloadDate = DATE,
   name = gsub("_", " ", gsub("__", ", ", name)),
-  ISO3 = iso3,
-  countryInCompendium = ifelse(iso3 %in% compendium_countries$ISO3, TRUE, FALSE),
+  ISO3 = checklist_iso3,
+  countryInCompendium = checklist_iso3 %in% compendium_countries$ISO3,
   checklistType = type,
   checklistLevel = checklist_level,
   version = version,
@@ -216,7 +287,6 @@ griis_checklist <- griis_checklist %>% dplyr::mutate(kingdom = toupper(kingdom))
 # Clean isInvasive variable
 griis_checklist <- griis_checklist %>% dplyr::mutate(isInvasive = toupper(isInvasive))
 preClean_invasive_summary_allData <- griis_checklist %>% dplyr::group_by(isInvasive) %>% dplyr::count()
-preClean_invasive_summary_natPA <- griis_checklist %>% dplyr::group_by(isInvasive,checklistType) %>% dplyr::count()
 
 griis_checklist <- griis_checklist %>% dplyr::mutate(isInvasive = toupper(isInvasive)) %>% 
   dplyr::mutate(isInvasive = dplyr::case_when(isInvasive %in% c("INVASIVE","YES","TRUE","INVASIVE IN THE NORTH OF THE ISLAND (122).") ~ "INVASIVE",
@@ -242,26 +312,19 @@ griis_checklist <- griis_checklist %>%
 # Summary for all data
 # Taxonomic breakdown
 kingdom_summary_allData <- griis_checklist %>% dplyr::group_by(kingdom) %>% dplyr::count() 
-kingdom_summary_natPA <- griis_checklist %>% dplyr::group_by(kingdom,checklistType) %>% dplyr::count() 
 
 # Habitat breakdown 
 habitat_summary_allData <- griis_checklist %>% dplyr::group_by(habitat) %>% dplyr::count() 
-habitat_summary_natPA <-griis_checklist %>% dplyr::group_by(habitat,checklistType) %>% dplyr::count() 
 
 # isInvasive breakdown 
 invasive_summary_allData <- griis_checklist %>% dplyr::group_by(isInvasive) %>% dplyr::count() 
-invasive_summary_natPA <- griis_checklist %>% dplyr::group_by(isInvasive,checklistType) %>% dplyr::count() 
 
 # Combine all all-data summaries into one sheet using a "category" label column
 all_data_summary <- dplyr::bind_rows(
   kingdom_summary_allData  %>% dplyr::mutate(category = "Kingdom",  breakdownBy = "All Data") %>% dplyr::rename(group = kingdom),
-  kingdom_summary_natPA    %>% dplyr::mutate(category = "Kingdom",  breakdownBy = "By Type")  %>% dplyr::rename(group = kingdom),
   habitat_summary_allData  %>% dplyr::mutate(category = "Habitat",  breakdownBy = "All Data") %>% dplyr::rename(group = habitat),
-  habitat_summary_natPA    %>% dplyr::mutate(category = "Habitat",  breakdownBy = "By Type")  %>% dplyr::rename(group = habitat),
   invasive_summary_allData %>% dplyr::mutate(category = "Invasive", breakdownBy = "All Data") %>% dplyr::rename(group = isInvasive),
-  invasive_summary_natPA   %>% dplyr::mutate(category = "Invasive", breakdownBy = "By Type")  %>% dplyr::rename(group = isInvasive),
-  preClean_invasive_summary_allData %>% dplyr::mutate(category = "Invasive_preCleaning", breakdownBy = "All Data") %>% dplyr::rename(group = isInvasive),
-  preClean_invasive_summary_natPA   %>% dplyr::mutate(category = "Invasive_preCleaning", breakdownBy = "By Type")  %>% dplyr::rename(group = isInvasive)
+  preClean_invasive_summary_allData %>% dplyr::mutate(category = "Invasive_preCleaning", breakdownBy = "All Data") %>% dplyr::rename(group = isInvasive)
 ) %>%
   dplyr::relocate(category, breakdownBy)
 

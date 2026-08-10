@@ -14,69 +14,227 @@ library(stringi)
 library(dplyr)
 library(openxlsx)
 
-
 input <- biab_inputs()
 country_name <- input$country_name$country$englishName
-
 iso3 <- input$country_name$country$ISO3
-print(iso3)
+
+selected_filter_values <- function(values, label) {
+  values <- unique(trimws(as.character(unlist(values, use.names = FALSE))))
+  values <- values[!is.na(values) & nzchar(values)]
+  if (length(values) == 0) {
+    stop("Select at least one ", label, " for the SInAS preparation step.")
+  }
+  values
+}
+
+selected_kingdoms <- selected_filter_values(input$kingdoms, "kingdom")
+selected_habitats <- selected_filter_values(input$habitats, "habitat type")
+
+# Match the original P3 country-level policy: First Records from every mapped
+# region contribute to the parent country, while only the primary national
+# GRIIS checklist defines the GRIIS species list. Set this to FALSE in a future
+# strict-geography implementation to retain the original regional locations.
+roll_up_first_records_to_parent <- TRUE
+
+config_file <- function(filename) {
+  candidates <- c(
+    file.path("/scripts/IAS/Config", filename),
+    file.path("scripts/IAS/Config", filename),
+    file.path("Config", filename)
+  )
+  existing <- candidates[file.exists(candidates)]
+  if (length(existing) == 0) {
+    stop("Required SInAS configuration file was not found: ", filename)
+  }
+  existing[[1]]
+}
+
+read_input_table <- function(path, label) {
+  if (is.null(path) || !file.exists(path)) {
+    stop(label, " input does not exist: ", path)
+  }
+  dat <- read.csv(path, stringsAsFactors = FALSE, check.names = FALSE)
+  if (ncol(dat) == 1) {
+    dat <- read.table(
+      path, header = TRUE, stringsAsFactors = FALSE, check.names = FALSE
+    )
+  }
+  dat
+}
+
+message("Running the SInAS cleaning workflow for ", country_name, " (", iso3, ").")
+
 # Loading in datasets
-griis <- read.csv(input$griis_checklist)
-firstrecords <- read.csv(input$first_records)
+griis <- read_input_table(input$griis_checklist, "GRIIS")
+firstrecords <- read_input_table(input$first_records, "First Records")
 #griis <- read.csv("C:/Users/Samara/Desktop/bon-in-a-box-pipelines/output/IAS/P1_ChecklistDownload/download_checklist/24WCclDWWTOfF_TezBFTZE32-OPe/GRIIS_checklist.csv")
 #firstrecords <- read.csv("C:/Users/Samara/Desktop/bon-in-a-box-pipelines/output/IAS/P2_FirstRecordsData/standardise_data/MvoeUdjrbO9xW2gLxy9qcQhDgtHB/FirstRecords_cleaned.csv")
 
 # Loading in config files
 
-# Specifying column names for each dataset
-Dataset_brief_name <- input$dataset
-Taxon_group <- input$taxon_group
-Column_recordID <- input$column_recordid
-Column_taxon <- input$column_taxon
-Column_author <- input$column_author
-Column_scientificName <- input$column_scientificname
-Column_location <- input$column_location
-Column_kingdom <- input$column_kingdom
-Column_country_ISO <- input$column_country_iso
-Column_eventDate1 <- input$column_eventdate1
-Column_eventDate2 <- input$column_eventdate2
-Column_establishmentMeans <- input$column_establishmentmeans
-Column_occurrenceStatus <- input$column_occurrencestatus
-Column_degreeOfEstablishment <- input$column_degreeofestablishment
-Column_pathway <- input$column_pathway
-Column_habitat <- input$column_habitat
-Column_bibliographicCitation <- input$column_bibliographiccitation
-Column_additional <- input$column_additional
+# GRIIS and First Records are produced by fixed upstream BON in a Box steps, so
+# their source mappings are configuration, not user inputs. Optional known
+# fields are used automatically when they are present.
+validate_columns <- function(dat, required, dataset_name) {
+  missing <- setdiff(required, names(dat))
+  if (length(missing) > 0) {
+    stop(
+      dataset_name, " is missing expected columns: ",
+      paste(missing, collapse = ", "),
+      ". Check that the matching BON in a Box download step was used."
+    )
+  }
+}
+validate_columns(
+  griis,
+  c(
+    "countryInCompendium", "checklistType", "checklistLevel", "kingdom",
+    "habitat", "scientificName", "checklistName"
+  ),
+  "GRIIS"
+)
+validate_columns(
+  firstrecords,
+  c("kingdom", "habitat", "taxon", "location", "eventDate"),
+  "First Records"
+)
+
+known_column <- function(dat, column) {
+  if (column %in% names(dat)) column else NA_character_
+}
+known_additional <- function(dat, columns) {
+  present <- intersect(columns, names(dat))
+  if (length(present) == 0) NA_character_ else paste(present, collapse = "; ")
+}
+
+Dataset_brief_name <- c("GRIIS", "FirstRecords")
+Taxon_group <- "All"
+Column_recordID <- c("linkID", "linkID")
+Column_taxon <- c("scientificName", "taxon")
+Column_author <- c(NA_character_, NA_character_)
+Column_scientificName <- c(NA_character_, NA_character_)
+Column_location <- c("checklistName", "location")
+Column_kingdom <- c("kingdom", "kingdom")
+Column_country_ISO <- c(
+  known_column(griis, "ISO3"), known_column(firstrecords, "ISO3")
+)
+Column_eventDate1 <- c(
+  known_column(griis, "eventDate"), "eventDate"
+)
+Column_eventDate2 <- c(
+  known_column(griis, "eventDate2"), known_column(firstrecords, "eventDate2")
+)
+Column_establishmentMeans <- c(
+  known_column(griis, "establishmentMeans"),
+  known_column(firstrecords, "establishmentMeans")
+)
+Column_occurrenceStatus <- c(
+  known_column(griis, "occurrenceStatus"),
+  known_column(firstrecords, "occurrenceStatus")
+)
+Column_degreeOfEstablishment <- c(
+  known_column(griis, "degreeOfEstablishment"),
+  known_column(firstrecords, "degreeOfEstablishment")
+)
+Column_pathway <- c(
+  known_column(griis, "pathway"), known_column(firstrecords, "pathway")
+)
+Column_habitat <- c("habitat", "habitat")
+Column_bibliographicCitation <- c(
+  known_column(griis, "bibliographicCitation"),
+  known_column(firstrecords, "bibliographicCitation")
+)
+Column_additional <- c(
+  known_additional(
+    griis,
+    c("isInvasive", "isInvasiveInCountry", "isInvasiveAnywhere")
+  ),
+  known_additional(
+    firstrecords,
+    c(
+      "taxaGroup", "sourceLocation", "sourceLocationID",
+      "sourceVersion", "sourceDOI", "sourceFile"
+    )
+  )
+)
 
 # Filter GRIIS data set 
 GRIIS <- griis %>% 
   dplyr::filter(countryInCompendium == TRUE) %>% 
   dplyr::filter(checklistType == "national") %>% 
-  dplyr::filter(checklistLevel != "Secondary") %>% 
-  dplyr::filter(kingdom %in% c("PLANTAE","ANIMALIA")) %>% 
-  dplyr::filter(habitat %in% c("TERRESTRIAL","FRESHWATER","FRESHWATER|BRACKISH",
-                               "TERRESTRIAL|FRESHWATER", "MARINE|FRESHWATER|BRACKISH",
-                               "TERRESTRIAL|BRACKISH", "TERRESTRIAL|FRESHWATER|BRACKISH",
-                               "TERRESTRIAL|MARINE|FRESHWATER", "TERRESTRIAL|MARINE|BRACKISH",
-                               "MARINE|FRESHWATER", "TERRESTRIAL|MARINE")) 
+  dplyr::filter(checklistLevel == "Primary") %>%
+  dplyr::filter(kingdom %in% selected_kingdoms) %>%
+  dplyr::filter(habitat %in% selected_habitats)
+
+if (nrow(GRIIS) == 0) {
+  stop(
+    "No eligible GRIIS records remain for ", country_name,
+    ". This workflow requires a national, Primary GRIIS checklist matching ",
+    "the selected kingdoms (", paste(selected_kingdoms, collapse = ", "),
+    ") and habitats (", paste(selected_habitats, collapse = ", "), ")."
+  )
+}
 
 # Filter First Records data set 
 FirstRecords <- firstrecords %>% 
-  dplyr::filter(kingdom %in% c("PLANTAE","ANIMALIA")) %>% 
-  dplyr::filter(habitat %in% c("TERRESTRIAL","FRESHWATER","FRESHWATER|BRACKISH",
-                               "TERRESTRIAL|FRESHWATER", "MARINE|FRESHWATER|BRACKISH",
-                               "TERRESTRIAL|BRACKISH", "TERRESTRIAL|FRESHWATER|BRACKISH",
-                               "TERRESTRIAL|MARINE|FRESHWATER", "TERRESTRIAL|MARINE|BRACKISH",
-                               "MARINE|FRESHWATER", "TERRESTRIAL|MARINE"))
+  dplyr::filter(kingdom %in% selected_kingdoms) %>%
+  dplyr::filter(habitat %in% selected_habitats)
 
-print("************")
+# Confirm that the supplied First Records locations belong to the selected
+# country according to the same mapping used by the original P3 workflow.
+first_records_locations <- openxlsx::read.xlsx(
+  config_file("AllLocations.xlsx"), sheet = 2, na.strings = ""
+)
+required_location_columns <- c("locationID", "ISO3", "gadm0_name")
+missing_location_columns <- setdiff(
+  required_location_columns, names(first_records_locations)
+)
+if (length(missing_location_columns) > 0) {
+  stop(
+    "AllLocations.xlsx is missing required columns: ",
+    paste(missing_location_columns, collapse = ", ")
+  )
+}
+country_location_map <- first_records_locations %>%
+  dplyr::filter(ISO3 == iso3)
+if (nrow(country_location_map) == 0) {
+  stop("No First Records locations are mapped to selected ISO3 ", iso3, ".")
+}
+if (!"locationID" %in% names(firstrecords)) {
+  stop(
+    "First Records input must contain locationID so its country association ",
+    "can be validated before P3 preparation."
+  )
+}
+input_location_ids <- unique(as.character(firstrecords$locationID))
+input_location_ids <- input_location_ids[
+  !is.na(input_location_ids) & nzchar(trimws(input_location_ids))
+]
+allowed_location_ids <- unique(as.character(country_location_map$locationID))
+unexpected_location_ids <- setdiff(input_location_ids, allowed_location_ids)
+if (length(unexpected_location_ids) > 0) {
+  stop(
+    "First Records contains locationID values not mapped to ", country_name,
+    " (", iso3, "): ", paste(unexpected_location_ids, collapse = ", ")
+  )
+}
+
+## The source workflow creates country-specific IDs before standardisation. They
+## are required to trace every QC decision back to the downloaded source row.
+if (!"linkID" %in% names(GRIIS)) {
+  GRIIS$linkID <- paste0(iso3, "_G", seq_len(nrow(GRIIS)))
+}
+if (!"linkID" %in% names(FirstRecords)) {
+  FirstRecords$linkID <- paste0(iso3, "_F", seq_len(nrow(FirstRecords)))
+}
+
 #######################
 ## Step 1: Prepare datasets
 #######################
 
 # removing duplicates from a given country
 
- if (any(duplicated(FirstRecords$taxonID))) {
+ if ("taxonID" %in% colnames(FirstRecords) && any(duplicated(FirstRecords$taxonID))) {
     
     ## remove duplicate records for single species within country for First Records database - keep earliest eventDate 
     FirstRecords_COUNTRY <- FirstRecords %>% mutate(original_order = row_number())
@@ -110,6 +268,41 @@ print("************")
       dplyr::relocate(taxonID, .before = eventDate)
     
   } else {FirstRecords_COUNTRY <- FirstRecords}
+
+# Preserve the source geography for traceability before reproducing the
+# original P3 roll-up of regional first records to the parent country.
+FirstRecords_COUNTRY <- FirstRecords_COUNTRY %>%
+  dplyr::mutate(
+    sourceLocation = as.character(location),
+    sourceLocationID = as.character(locationID)
+  )
+
+if (roll_up_first_records_to_parent) {
+  parent_location <- country_location_map$gadm0_name
+  parent_location <- unique(
+    parent_location[!is.na(parent_location) & nzchar(trimws(parent_location))]
+  )
+  if (length(parent_location) == 0) {
+    stop("No parent-country gadm0_name is configured for ISO3 ", iso3, ".")
+  }
+  if (length(parent_location) > 1) {
+    stop(
+      "Multiple parent-country gadm0_name values are configured for ISO3 ",
+      iso3, ": ", paste(parent_location, collapse = ", ")
+    )
+  }
+  FirstRecords_COUNTRY$location <- parent_location[[1]]
+}
+
+# sourceLocation/sourceLocationID are created during the country roll-up, after
+# the initial dynamic mappings are assembled, so refresh this optional mapping.
+Column_additional[[2]] <- known_additional(
+  FirstRecords_COUNTRY,
+  c(
+    "taxaGroup", "sourceLocation", "sourceLocationID",
+    "sourceVersion", "sourceDOI", "sourceFile"
+  )
+)
 
 
 
@@ -199,13 +392,15 @@ PrepareDatasets <- function(FileInfo=NULL){
     
     if (!is.na(FileInfo[i,"Column_recordID"]) & FileInfo[i,"Column_recordID"]!=""){
       col_recordID <- FileInfo[i,"Column_recordID"]
-      colnames(dat)[col_names_import==col_recordID] <- paste("recordID",FileInfo[i,"Dataset_brief_name"],sep="_")
-      all_column_names <- c(all_column_names,paste("recordID",FileInfo[i,"Dataset_brief_name"],sep="_"))
+      if (col_recordID %in% colnames(dat) && col_recordID != "linkID") {
+        dat$linkID <- as.character(dat[[col_recordID]])
+      }
+      all_column_names <- c(all_column_names,"linkID")
     }
     
     if (!is.na(FileInfo[i,"Column_taxon"]) & FileInfo[i,"Column_taxon"]!=""){
       col_spec_names <- FileInfo[i,"Column_taxon"]
-      all_column_names <- col_spec_names
+      all_column_names <- c(all_column_names, col_spec_names)
       if (is.na(col_spec_names)) stop(paste("Column with taxon names not found in",FileInfo[i,"Dataset_brief_name"],"file!"))
       if (!is.na(FileInfo[i,"Column_author"]) & FileInfo[i,"Column_author"]!=""){
         col_author <- FileInfo[i,"Column_author"]
@@ -218,7 +413,7 @@ PrepareDatasets <- function(FileInfo=NULL){
     if (!is.na(FileInfo[i,"Column_scientificName"]) & FileInfo[i,"Column_scientificName"]!=""){
       col_spec_names <- FileInfo[i,"Column_scientificName"]
       if (is.na(col_spec_names)) stop(paste("Column with taxon names not found in",FileInfo[i,"Dataset_brief_name"],"file!"))
-      all_column_names <- col_spec_names
+      all_column_names <- c(all_column_names, col_spec_names)
     }
 
     col_reg_names <- FileInfo[i,"Column_location"]
@@ -255,7 +450,7 @@ PrepareDatasets <- function(FileInfo=NULL){
     }
     if (!is.na(FileInfo[i,"Column_occurrenceStatus"]) & FileInfo[i,"Column_occurrenceStatus"]!=""){
       col_occurrenceStatus <- FileInfo[i,"Column_occurrenceStatus"]
-      if (col_establishmentMeans==col_occurrenceStatus){ # check if same column has been assigned before in establishmentMeans
+      if (exists("col_establishmentMeans") && col_establishmentMeans==col_occurrenceStatus){ # check if same column has been assigned before in establishmentMeans
         dat$occurrenceStatus <- dat$establishmentMeans # if yes, duplicate column
       } else {
         colnames(dat)[col_names_import==col_occurrenceStatus] <- "occurrenceStatus"
@@ -265,9 +460,9 @@ PrepareDatasets <- function(FileInfo=NULL){
     }
     if (!is.na(FileInfo[i,"Column_degreeOfEstablishment"]) & FileInfo[i,"Column_degreeOfEstablishment"]!=""){
       col_degreeOfEstablishment <- FileInfo[i,"Column_degreeOfEstablishment"]
-      if (col_establishmentMeans==col_degreeOfEstablishment){ # check if same column has been assigned before in establishmentMeans
+      if (exists("col_establishmentMeans") && col_establishmentMeans==col_degreeOfEstablishment){ # check if same column has been assigned before in establishmentMeans
         dat$degreeOfEstablishment <- dat$establishmentMeans # if yes, duplicate column
-      } else if (col_establishmentMeans==col_occurrenceStatus){
+      } else if (exists("col_occurrenceStatus") && col_occurrenceStatus==col_degreeOfEstablishment){
         dat$degreeOfEstablishment <- dat$occurrenceStatus # if yes, duplicate column
       } else {
         colnames(dat)[col_names_import==col_degreeOfEstablishment] <- "degreeOfEstablishment"
@@ -306,6 +501,12 @@ PrepareDatasets <- function(FileInfo=NULL){
         )
       }
       all_column_names <- c(all_column_names, colnames(dat)[matched_idx[!is.na(matched_idx)]])
+    }
+
+    ## Always retain the traceability ID even when a caller leaves the optional
+    ## record-ID mapping blank.
+    if ("linkID" %in% colnames(dat)) {
+      all_column_names <- c(all_column_names, "linkID")
     }
 
     all_column_names <- unique(all_column_names)
@@ -360,20 +561,66 @@ PrepareDatasets <- function(FileInfo=NULL){
   return(results)
 }
 
+message("SInAS 1/5: preparing columns")
 results <- PrepareDatasets(FileInfo=FileInfo)
-print(names(results))
+
 
 StandardiseTerms <- function(FileInfo=NULL){
 
  inputfiles <- results
   
   ## translation tables
-  translation_estabmeans <- read.xlsx("/scripts/IAS/Config/Translation_establishmentMeans.xlsx",sheet=1)
-  translation_occurrence <- read.xlsx("/scripts/IAS/Config/Translation_occurrenceStatus.xlsx",sheet=1)
-  translation_degrEstab <- read.xlsx("/scripts/IAS/Config/Translation_degreeOfEstablishment.xlsx",sheet=1)
-  translation_pathway <- read.xlsx("/scripts/IAS/Config/Translation_pathway.xlsx",sheet=1)
-  translation_habitat <- read.xlsx("/scripts/IAS/Config/Translation_habitat.xlsx",sheet=1)
-  
+  translation_estabmeans <- read.xlsx(config_file("Translation_establishmentMeans.xlsx"),sheet=1)
+  translation_occurrence <- read.xlsx(config_file("Translation_occurrenceStatus.xlsx"),sheet=1)
+  translation_degrEstab <- read.xlsx(config_file("Translation_degreeOfEstablishment.xlsx"),sheet=1)
+  translation_pathway <- read.xlsx(config_file("Translation_pathway.xlsx"),sheet=1)
+  translation_habitat <- read.xlsx(config_file("Translation_habitat.xlsx"),sheet=1)
+
+  ## A value containing both native and alien means that origin is uncertain.
+  ## This occurs in multiple GRIIS country checklists and otherwise becomes a
+  ## blank that the merge incorrectly defaults to introduced.
+  if (!any(tolower(translation_estabmeans$origTerm) == "native|alien", na.rm = TRUE)) {
+    translation_estabmeans <- rbind(
+      translation_estabmeans,
+      data.frame(origTerm = "native|alien", newTerm = "uncertain")
+    )
+  }
+
+  term_key <- function(x, column) {
+    x <- trimws(tolower(as.character(x)))
+    x[is.na(x)] <- ""
+    if (column != "habitat") return(x)
+    vapply(strsplit(x, "\\s*[|;]\\s*"), function(parts) {
+      parts <- sort(unique(parts[nzchar(parts)]))
+      paste(parts, collapse = "|")
+    }, character(1))
+  }
+
+  unresolved_term_rows <- function(raw, final, translation, column) {
+    raw <- as.character(raw)
+    raw[is.na(raw)] <- ""
+    accepted <- unique(c(
+      term_key(translation$origTerm, column),
+      term_key(translation$newTerm, column)
+    ))
+    raw_key <- term_key(raw, column)
+    unresolved <- nzchar(trimws(raw)) & !raw_key %in% accepted
+    values <- sort(unique(raw[unresolved]))
+    if (length(values) == 0) return(NULL)
+    dplyr::bind_rows(lapply(values, function(value) {
+      rows <- raw == value
+      result <- sort(unique(as.character(final[rows])))
+      result[is.na(result)] <- ""
+      data.frame(
+        column = column,
+        original_value = value,
+        affected_records = sum(rows),
+        resulting_value = paste(result, collapse = "; "),
+        stringsAsFactors = FALSE
+      )
+    }))
+  }
+
   clean_datasets <- list()
   unresolved_terms <- list()
   
@@ -392,10 +639,12 @@ StandardiseTerms <- function(FileInfo=NULL){
     resolved_degreeOfEstablishment <- vector()
     resolved_pathway <- vector()
     resolved_habitat <- vector()
+    term_issues <- list()
     
     ## Darwin Core: establishmentMeans
     if (any(colnames(dat)=="establishmentMeans")){
       dat$establishmentMeans <- gsub("^\\s+|\\s+$", "",dat$establishmentMeans) # trim leading and trailing whitespace
+      raw_estabmeans <- dat$establishmentMeans
       # identify matches of alternative terms...
       ind <- match(tolower(dat$establishmentMeans),tolower(translation_estabmeans$origTerm)) # identify matches
       unresolved_estabmeans <- unique(dat$establishmentMeans[is.na(ind)]) # store mis-matches
@@ -407,11 +656,16 @@ StandardiseTerms <- function(FileInfo=NULL){
       ind <- match(tolower(dat$establishmentMeans),tolower(translation_estabmeans$newTerm)) # identify matches with Darwin Core
       dat$establishmentMeans <- translation_estabmeans$newTerm[ind] # replace strings
       dat$establishmentMeans[is.na(ind)] <- "" # indicate mis-matches
+      term_issues$establishmentMeans <- unresolved_term_rows(
+        raw_estabmeans, dat$establishmentMeans,
+        translation_estabmeans, "establishmentMeans"
+      )
     }
 
     ## Darwin Core: occurrenceStatus
     if (any(colnames(dat)=="occurrenceStatus")){
       dat$occurrenceStatus <- gsub("^\\s+|\\s+$", "",dat$occurrenceStatus) # trim leading and trailing whitespace
+      raw_occurrence <- dat$occurrenceStatus
       # identify matches of alternative terms...
       ind <- match(tolower(dat$occurrenceStatus),tolower(translation_occurrence$origTerm)) # identify matches
       unresolved_occurrenceStatus <- unique(dat$occurrenceStatus[is.na(ind)]) # store mis-matches
@@ -421,11 +675,16 @@ StandardiseTerms <- function(FileInfo=NULL){
       dat$occurrenceStatus[!indNA] <- translated[!indNA]  # replace strings
       # identify matches of Darwin Core
       dat$occurrenceStatus[dat$occurrenceStatus!="absent"] <- "present" # Assumption (!) that all species are present if not listed otherwise
+      term_issues$occurrenceStatus <- unresolved_term_rows(
+        raw_occurrence, dat$occurrenceStatus,
+        translation_occurrence, "occurrenceStatus"
+      )
     }
     
     ## Darwin Core: degreeOfEstablishment (not officially accepted by Darwin Core)
     if (any(colnames(dat)=="degreeOfEstablishment")){
       dat$degreeOfEstablishment <- gsub("^\\s+|\\s+$", "",dat$degreeOfEstablishment) # trim leading and trailing whitespace
+      raw_degree <- dat$degreeOfEstablishment
       # identify matches of alternative terms...
       ind <- match(tolower(dat$degreeOfEstablishment),tolower(translation_degrEstab$origTerm)) # identify matches of translated terms
       unresolved_degreeOfEstablishment <- unique(dat$degreeOfEstablishment[is.na(ind)]) # store mis-matches
@@ -437,11 +696,16 @@ StandardiseTerms <- function(FileInfo=NULL){
       ind <- match(tolower(dat$degreeOfEstablishment),tolower(translation_degrEstab$newTerm)) # identify matches with Darwin Core
       dat$degreeOfEstablishment <- translation_degrEstab$newTerm[ind] # replace strings
       dat$degreeOfEstablishment[is.na(ind)] <- "" # indicate mis-matches
+      term_issues$degreeOfEstablishment <- unresolved_term_rows(
+        raw_degree, dat$degreeOfEstablishment,
+        translation_degrEstab, "degreeOfEstablishment"
+      )
     }
     
     ## Darwin Core: pathway
     if (any(colnames(dat)=="pathway")){
       dat$pathway <- gsub("^\\s+|\\s+$", "",dat$pathway) # trim leading and trailing whitespace
+      raw_pathway <- dat$pathway
       # identify matches of alternative terms...
       ind <- match(tolower(dat$pathway),tolower(translation_pathway$origTerm)) # identify matches of translated terms
       unresolved_pathway <- unique(dat$pathway[is.na(ind)]) # store mis-matches
@@ -453,37 +717,38 @@ StandardiseTerms <- function(FileInfo=NULL){
       ind <- match(tolower(dat$pathway),tolower(translation_pathway$newTerm)) # identify matches with Darwin Core
       dat$pathway <- translation_pathway$newTerm[ind] # replace strings
       dat$pathway[is.na(ind)] <- "" # indicate mis-matches
+      term_issues$pathway <- unresolved_term_rows(
+        raw_pathway, dat$pathway,
+        translation_pathway, "pathway"
+      )
     }
     
     ## Darwin Core: habitat
     if (any(colnames(dat)=="habitat")){
       dat$habitat <- gsub("^\\s+|\\s+$", "",dat$habitat) # trim leading and trailing whitespace
+      raw_habitat <- dat$habitat
       # identify matches of alternative terms...
-      ind <- match(tolower(dat$habitat),tolower(translation_habitat$origTerm)) # identify matches of translated terms
+      ind <- match(term_key(dat$habitat, "habitat"), term_key(translation_habitat$origTerm, "habitat")) # identify matches of translated terms
       unresolved_habitat <- unique(dat$habitat[is.na(ind)]) # store mis-matches
       resolved_habitat <- unique(dat$habitat[!is.na(ind)]) # store matches
       translated <- translation_habitat$newTerm[ind]
       indNA <- is.na(translated)
       dat$habitat[!indNA] <- translated[!indNA]  # replace strings
       # identify matches of Darwin Core
-      ind <- match(tolower(dat$habitat),tolower(translation_habitat$newTerm)) # identify matches with Darwin Core
+      ind <- match(term_key(dat$habitat, "habitat"), term_key(translation_habitat$newTerm, "habitat")) # identify matches with Darwin Core
       dat$habitat <- translation_habitat$newTerm[ind] # replace strings
       dat$habitat[is.na(ind)] <- "" # indicate mis-matches
+      term_issues$habitat <- unresolved_term_rows(
+        raw_habitat, dat$habitat,
+        translation_habitat, "habitat"
+      )
     }
     
     
     ## Output ###########################
     
-    all_unresolved <- unique(c(unresolved_estabmeans, unresolved_occurrenceStatus,
-                                unresolved_degreeOfEstablishment, unresolved_pathway))
-    all_unresolved <- all_unresolved[!all_unresolved %in% resolved_estabmeans]
-    all_unresolved <- all_unresolved[!all_unresolved %in% resolved_occurrenceStatus]
-    all_unresolved <- all_unresolved[!all_unresolved %in% resolved_degreeOfEstablishment]
-    all_unresolved <- all_unresolved[!all_unresolved %in% resolved_pathway]
-    all_unresolved <- all_unresolved[!all_unresolved %in% resolved_habitat]
-    
     clean_datasets[[dataset_name]] <- dat
-    unresolved_terms[[dataset_name]] <- all_unresolved
+    unresolved_terms[[dataset_name]] <- dplyr::bind_rows(term_issues)
   }
   
   return(list(clean_datasets = clean_datasets, unresolved_terms = unresolved_terms))
@@ -494,12 +759,14 @@ StandardiseLocationNames <- function(FileInfo = NULL, step2_output = NULL){
   inputfiles <- step2_output$clean_datasets  # named list from StandardiseTerms()
   
   ## load location tables #################################################
-  regions <- read.xlsx("/scripts/IAS/Config/AllLocations.xlsx", sheet = 2, na.strings = "")
+  regions <- read.xlsx(config_file("AllLocations.xlsx"), sheet = 2, na.strings = "")
+  regions <- regions[regions$ISO3 == iso3, , drop = FALSE]
   regions <- regions[, c("locationID", "location", "location_var")]
   regions$location_var <- tolower(regions$location_var)
   regions$location_lower <- tolower(regions$location)
   
-  subregions <- read.xlsx("/scripts/IAS/Config/AllLocations.xlsx", sheet = 3, na.strings = "")
+  subregions <- read.xlsx(config_file("AllLocations.xlsx"), sheet = 3, na.strings = "")
+  subregions <- subregions[subregions$ISO3 == iso3, , drop = FALSE]
   subregions <- subregions[, c("locationID", "location", "location_var", "gadm1_name", "gadm1_var")]
   subregions$gadm1_var <- tolower(subregions$gadm1_var)
   subregions$gadm1_lower <- tolower(subregions$gadm1_name)
@@ -612,6 +879,217 @@ StandardiseLocationNames <- function(FileInfo = NULL, step2_output = NULL){
   ))
 }
 
+ApplyLocationCorrections <- function(location_output) {
+  corrections <- read_optional_table(input$location_corrections)
+  if (is.null(corrections) || nrow(corrections) == 0) return(location_output)
+  required <- c("location_orig", "location", "locationID")
+  if (!all(required %in% names(corrections))) {
+    stop(
+      "Location corrections must contain: ",
+      paste(required, collapse = ", ")
+    )
+  }
+
+  translated <- list(location_output$translated_locations)
+  for (dataset_name in names(location_output$clean_datasets)) {
+    dat <- location_output$clean_datasets[[dataset_name]]
+    available <- corrections
+    if ("dataset" %in% names(available)) {
+      available <- available[
+        is.na(available$dataset) | available$dataset == "" |
+          available$dataset == dataset_name,
+        , drop = FALSE
+      ]
+    }
+    for (j in seq_len(nrow(available))) {
+      rows <- tolower(trimws(as.character(dat$location_orig))) ==
+        tolower(trimws(as.character(available$location_orig[j])))
+      if (!any(rows, na.rm = TRUE)) next
+      if (!is.na(available$location[j]) && available$location[j] != "") {
+        dat$location[rows] <- as.character(available$location[j])
+      }
+      if (!is.na(available$locationID[j]) && available$locationID[j] != "") {
+        dat$locationID[rows] <- as.character(available$locationID[j])
+      }
+      translated[[length(translated) + 1]] <- data.frame(
+        location = as.character(available$location[j]),
+        location_orig = as.character(available$location_orig[j]),
+        origDB = dataset_name,
+        locationID = as.character(available$locationID[j]),
+        stringsAsFactors = FALSE
+      )
+    }
+    location_output$clean_datasets[[dataset_name]] <- dat
+    missing <- dat$location_orig[
+      is.na(dat$locationID) | trimws(as.character(dat$locationID)) == ""
+    ]
+    if (length(missing) == 0) {
+      location_output$missing_locations[[dataset_name]] <- NULL
+    } else {
+      location_output$missing_locations[[dataset_name]] <- sort(unique(missing))
+    }
+  }
+  translated <- lapply(translated, function(dat) {
+    if (!is.null(dat) && "locationID" %in% names(dat)) {
+      dat$locationID <- as.character(dat$locationID)
+    }
+    dat
+  })
+  location_output$translated_locations <- unique(dplyr::bind_rows(translated))
+  location_output
+}
+
+ApplyLocationFallbacks <- function(location_output) {
+  ## This pipeline handles one country at a time. When a source location cannot
+  ## be matched more precisely, retain the record at the selected country level
+  ## and flag the fallback instead of dropping it during the merge.
+  location_output$clean_datasets <- lapply(
+    location_output$clean_datasets,
+    function(dat) {
+      ## First Records inputs commonly lack an ISO column; add explicit country
+      ## provenance so canonical location aliases are still validated correctly.
+      if (!"ISO3" %in% names(dat)) dat$ISO3 <- iso3
+      dat
+    }
+  )
+  regions <- read.xlsx(config_file("AllLocations.xlsx"), sheet = 2, na.strings = "")
+  country_rows <- regions[regions$ISO3 == iso3, , drop = FALSE]
+  exact <- country_rows[
+    tolower(trimws(as.character(country_rows$location))) ==
+      tolower(trimws(as.character(country_name))),
+    , drop = FALSE
+  ]
+  if (nrow(exact) == 0 && "location_var" %in% names(country_rows)) {
+    selected_name <- tolower(trimws(as.character(country_name)))
+    alias_match <- vapply(
+      as.character(country_rows$location_var),
+      function(value) {
+        if (is.na(value)) return(FALSE)
+        selected_name %in% tolower(trimws(unlist(strsplit(value, ";"))))
+      },
+      logical(1)
+    )
+    exact <- country_rows[alias_match, , drop = FALSE]
+  }
+  if (nrow(exact) == 0 && nrow(country_rows) == 1) exact <- country_rows
+
+  if (nrow(exact) != 1) {
+    warning(
+      "No unambiguous country-level location was found for ", country_name,
+      " (", iso3, "). Unresolved locations remain in the warning report and ",
+      "will be omitted from the merge."
+    )
+    return(location_output)
+  }
+
+  translations <- list(location_output$translated_locations)
+  for (dataset_name in names(location_output$clean_datasets)) {
+    dat <- location_output$clean_datasets[[dataset_name]]
+    unresolved <- is.na(dat$locationID) |
+      trimws(as.character(dat$locationID)) == ""
+    if (!any(unresolved)) {
+      location_output$clean_datasets[[dataset_name]] <- dat
+      next
+    }
+
+    if (!"locationQCnote" %in% names(dat)) dat$locationQCnote <- NA_character_
+    source_location <- as.character(dat$location_orig[unresolved])
+    source_location[is.na(source_location) | !nzchar(trimws(source_location))] <-
+      "<missing>"
+    dat$location[unresolved] <- as.character(exact$location[[1]])
+    dat$locationID[unresolved] <- as.character(exact$locationID[[1]])
+    dat$locationQCnote[unresolved] <- paste0(
+      "Unresolved source location '", source_location,
+      "' assigned to selected country '", exact$location[[1]], "'"
+    )
+    location_output$clean_datasets[[dataset_name]] <- dat
+
+    translations[[length(translations) + 1]] <- data.frame(
+      location = as.character(exact$location[[1]]),
+      location_orig = source_location,
+      origDB = dataset_name,
+      locationID = as.character(exact$locationID[[1]]),
+      stringsAsFactors = FALSE
+    )
+  }
+  translations <- lapply(translations, function(dat) {
+    if (!is.null(dat) && "locationID" %in% names(dat)) {
+      dat$locationID <- as.character(dat$locationID)
+    }
+    dat
+  })
+  combined_translations <- dplyr::bind_rows(translations)
+  if (ncol(combined_translations) > 0) {
+    location_output$translated_locations <- unique(combined_translations)
+  }
+  location_output
+}
+
+gbif_match_cache <- new.env(parent = emptyenv())
+
+gbif_error_result <- function(error_message) {
+  placeholder <- data.frame(
+    canonicalName = NA_character_, scientificName = NA_character_,
+    status = "GBIF_API_ERROR", matchType = "NONE", rank = NA_character_,
+    confidence = NA_real_, usageKey = NA_real_, species = NA_character_,
+    genus = NA_character_, family = NA_character_, class = NA_character_,
+    order = NA_character_, phylum = NA_character_, kingdom = NA_character_,
+    note = error_message, stringsAsFactors = FALSE
+  )
+  list(
+    data = placeholder,
+    alternatives = placeholder[0, , drop = FALSE],
+    request_error = error_message
+  )
+}
+
+safe_name_backbone_verbose <- function(name, strict = NULL) {
+  strict_key <- if (is.null(strict)) "NULL" else as.character(strict)
+  cache_key <- paste0(as.character(name), "||strict=", strict_key)
+  if (exists(cache_key, envir = gbif_match_cache, inherits = FALSE)) {
+    return(get(cache_key, envir = gbif_match_cache, inherits = FALSE))
+  }
+
+  attempts <- 3L
+  last_error <- NULL
+  for (attempt in seq_len(attempts)) {
+    request_args <- list(
+      name = name,
+      curlopts = list(
+        http_version = 2,
+        connecttimeout_ms = 15000,
+        timeout_ms = 45000
+      )
+    )
+    if (!is.null(strict)) request_args$strict <- strict
+    result <- tryCatch(
+      do.call(rgbif::name_backbone_verbose, request_args),
+      error = function(condition) condition
+    )
+    if (!inherits(result, "error")) {
+      assign(cache_key, result, envir = gbif_match_cache)
+      return(result)
+    }
+
+    last_error <- conditionMessage(result)
+    if (attempt < attempts) {
+      message(
+        "GBIF request failed for '", name, "' (attempt ", attempt, "/",
+        attempts, "): ", last_error, ". Retrying."
+      )
+      Sys.sleep(c(2, 5)[attempt])
+    }
+  }
+
+  message(
+    "GBIF request could not be completed for '", name,
+    "' after ", attempts, " attempts. It will be reported as unmatched."
+  )
+  result <- gbif_error_result(last_error)
+  assign(cache_key, result, envir = gbif_match_cache)
+  result
+}
+
 CheckGBIFTax <- function(taxon_names=NULL,
                          column_name_taxa=NULL){
   
@@ -667,7 +1145,8 @@ CheckGBIFTax <- function(taxon_names=NULL,
   
   if (!is.na(kingdom_user_col)){
     taxlist_lifeform <- unique(dat[,c("taxon", kingdom_user_col)])
-    taxlist <- taxlist_lifeform$taxon
+    taxlist <- as.character(taxlist_lifeform$taxon)
+    taxlist_kingdom <- as.character(taxlist_lifeform[[kingdom_user_col]])
   } else if (any(colnames(dat)=="Author")){
     taxlist <- unique(paste(dat$taxon,dat$Author))
   } else {
@@ -681,13 +1160,26 @@ CheckGBIFTax <- function(taxon_names=NULL,
   options(warn=-1) # the use of 'tibbles' data frame generates warnings as a bug; if solved this options() should be turned off
   
   mismatches <- data.frame(taxon=NA,status=NA,matchType=NA)
-  for (j in 1:n_taxa){# loop over all species names; takes some hours...
+  for (j in seq_len(n_taxa)){# loop over all species names; takes some hours...
     
     # select species name and download taxonomy
-    ind_tax <- which(dat$taxon==taxlist[j])
-    db_all <- name_backbone_verbose(taxlist[j],strict=T) # check for names and synonyms
+    if (!is.na(kingdom_user_col)) {
+      ind_tax <- which(
+        dat$taxon == taxlist[j] &
+          tolower(as.character(dat[[kingdom_user_col]])) ==
+            tolower(taxlist_kingdom[j])
+      )
+    } else {
+      ind_tax <- which(dat$taxon==taxlist[j])
+    }
+    db_all <- safe_name_backbone_verbose(taxlist[j], strict = TRUE) # check for names and synonyms
     db <- db_all[["data"]]
     alternatives <- db_all$alternatives
+    if (!is.null(db_all$request_error)) {
+      dat$GBIFstatus[ind_tax] <- "GBIF_API_ERROR"
+      dat$GBIFmatchtype[ind_tax] <- "NONE"
+      dat$GBIFnote[ind_tax] <- db_all$request_error
+    }
     
     if (any(db$status=="ACCEPTED" & db$matchType=="EXACT" & colnames(db)=="canonicalName")){ 
       
@@ -748,7 +1240,7 @@ CheckGBIFTax <- function(taxon_names=NULL,
         dat$GBIFtaxonRank[ind_tax]      <- db[db$status=="SYNONYM" & db$matchType=="EXACT",]$rank[1]
         dat$GBIFusageKey[ind_tax]      <- db[db$status=="SYNONYM" & db$matchType=="EXACT",]$usageKey[1]
         
-        db_all_2 <- name_backbone_verbose(dat$taxon[ind_tax][1],strict=T) # get scientific name
+        db_all_2 <- safe_name_backbone_verbose(dat$taxon[ind_tax][1], strict = TRUE) # get scientific name
         db_2 <- db_all_2[["data"]]
 
         if (db_2$matchType=="EXACT"){ # exact matches
@@ -800,24 +1292,63 @@ CheckGBIFTax <- function(taxon_names=NULL,
         
         ## check information of kingdom provided by user and selected respective author
         if (!is.na(kingdom_user_col)) {
-          if (length(unique(alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$family))>1) print(paste(taxlist[j],"name occurrs in more than one family! To resolve this, you may provide information about author in original database, or kingdom or taxonomic group in DatabaseInfo.xlsx."))
-          
-          dat$taxon[ind_tax] <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT",]$species[1]
-          
-          dat$scientificName[ind_tax] <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$scientificName[1]
-          dat$GBIFstatus[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$status[1]
-          dat$GBIFmatchtype[ind_tax]   <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$matchType[1]
-          dat$GBIFtaxonRank[ind_tax]        <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$rank[1]
-          dat$GBIFusageKey[ind_tax]        <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$usageKey[1]
+          accepted_exact <- alternatives[
+            alternatives$status == "ACCEPTED" &
+              alternatives$matchType == "EXACT",
+            ,
+            drop = FALSE
+          ]
+          selected <- accepted_exact[
+            !is.na(accepted_exact$kingdom) &
+              tolower(as.character(accepted_exact$kingdom)) ==
+                tolower(taxlist_kingdom[j]),
+            ,
+            drop = FALSE
+          ]
 
-          try(dat$species[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$species[1],silent=T)
-          try(dat$genus[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$genus[1],silent=T)
-          try(dat$family[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$family[1],silent=T)
-          try(dat$class[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$class[1],silent=T)
-          try(dat$order[ind_tax]       <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$order[1],silent=T)
-          try(dat$phylum[ind_tax]      <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$phylum[1],silent=T)
-          try(dat$kingdom[ind_tax]     <- alternatives[alternatives$status=="ACCEPTED" & alternatives$matchType=="EXACT" & alternatives$kingdom==taxlist_lifeform[j,2],]$kingdom[1],silent=T)
-          
+          if (nrow(selected) == 0) {
+            warning(
+              "No GBIF homonym candidate for '", taxlist[j],
+              "' matched the supplied kingdom '", taxlist_kingdom[j], "'."
+            )
+            mismatches <- rbind(
+              mismatches,
+              data.frame(
+                taxon = taxlist[j],
+                status = "AMBIGUOUS",
+                matchType = "KINGDOM_MISMATCH"
+              )
+            )
+            next
+          }
+          if (length(unique(selected$family)) > 1) {
+            warning(
+              taxlist[j],
+              " occurs in more than one GBIF family within kingdom ",
+              taxlist_kingdom[j],
+              ". Add author information to resolve it."
+            )
+          }
+
+          selected <- selected[1, , drop = FALSE]
+          dat$taxon[ind_tax] <- if (
+            "canonicalName" %in% names(selected) &&
+              !is.na(selected$canonicalName[1])
+          ) selected$canonicalName[1] else selected$species[1]
+          dat$scientificName[ind_tax] <- selected$scientificName[1]
+          dat$GBIFstatus[ind_tax] <- selected$status[1]
+          dat$GBIFmatchtype[ind_tax] <- selected$matchType[1]
+          dat$GBIFtaxonRank[ind_tax] <- selected$rank[1]
+          dat$GBIFusageKey[ind_tax] <- selected$usageKey[1]
+
+          for (column in c(
+            "species", "genus", "family", "class", "order", "phylum", "kingdom"
+          )) {
+            if (column %in% names(selected)) {
+              dat[[column]][ind_tax] <- selected[[column]][1]
+            }
+          }
+
           next
         }
         
@@ -977,7 +1508,7 @@ CheckGBIFTax <- function(taxon_names=NULL,
       dat$GBIFnote[ind_tax] <- "Synonym without an exact match of an accepted name on GBIF"  # set as default in this case; potentially over-written in next step
       
       ## try to get author name of synonym (not provided in 'db')
-      db_all_2 <- name_backbone_verbose(dat$taxon[ind_tax][1])
+      db_all_2 <- safe_name_backbone_verbose(dat$taxon[ind_tax][1])
       db_2 <- db_all_2[["data"]]
       
       if (db_2$status=="ACCEPTED" & db_2$matchType=="EXACT"){
@@ -1058,12 +1589,12 @@ StandardiseTaxonNames <- function(FileInfo = NULL, step3_output = NULL){
     
     #### check names using 'rgbif' GBIF taxonomy ###########
     cat(paste0("\n    Working on ",dataset_name,"... \n"))
+
     checked_taxa <- CheckGBIFTax(dat)
-    
     DB <- checked_taxa[[1]]
     mismatches <- checked_taxa[[2]]
     mismatches <- mismatches[!(is.na(mismatches$taxon) & is.na(mismatches$status) & is.na(mismatches$matchType)),]
-    
+
     ## collect full species list with original names and names assigned by GBIF
     present_taxon_list_cols <- taxon_list_cols[taxon_list_cols %in% colnames(DB)]
     fullspeclist <- rbind(fullspeclist, unique(DB[, present_taxon_list_cols, drop = FALSE]))
@@ -1078,8 +1609,9 @@ StandardiseTaxonNames <- function(FileInfo = NULL, step3_output = NULL){
     }
     
     clean_datasets[[dataset_name]] <- DB
+
   }
-  
+
   if (is.null(fullspeclist) || nrow(fullspeclist) == 0) {
     return(list(
       clean_datasets = clean_datasets,
@@ -1090,20 +1622,23 @@ StandardiseTaxonNames <- function(FileInfo = NULL, step3_output = NULL){
   
   oo <- order(fullspeclist$kingdom, fullspeclist$phylum, fullspeclist$class, fullspeclist$order, fullspeclist$taxon)
   fullspeclist <- unique(fullspeclist[oo,])
-  
+
   ## assign taxon ID unique to individual taxa #############
   ## identify unique taxa (obtained from GBIF)
   fullspeclist$sequence <- 1:nrow(fullspeclist)
   uni_taxa <- unique(fullspeclist$scientificName)
   uni_taxa <- data.frame(scientificName = uni_taxa[!is.na(uni_taxa)], stringsAsFactors = FALSE)
-  uni_taxa$taxonID <- 1:nrow(uni_taxa)
+  uni_taxa$taxonID <- seq_len(nrow(uni_taxa))
 
   ## merge taxonID with full taxa list
   fullspeclist_2 <- merge(fullspeclist, uni_taxa, by = "scientificName", all = TRUE)
   missing_taxon_id <- which(is.na(fullspeclist_2$taxonID))
   if (length(missing_taxon_id) > 0) {
-    max_taxon_id <- max(fullspeclist_2$taxonID, na.rm = TRUE)
-    if (!is.finite(max_taxon_id)) max_taxon_id <- 0
+    available_taxon_ids <- fullspeclist_2$taxonID[
+      !is.na(fullspeclist_2$taxonID)
+    ]
+    max_taxon_id <- if (length(available_taxon_ids) == 0) 0 else
+      max(available_taxon_ids)
     fullspeclist_2$taxonID[missing_taxon_id] <- seq_along(missing_taxon_id) + max_taxon_id
   }
   
@@ -1127,11 +1662,11 @@ StandardiseTaxonNames <- function(FileInfo = NULL, step3_output = NULL){
 GeteventDate <- function(FileInfo = NULL, step3_output = NULL){
   
   inputfiles <- step3_output$clean_datasets
-  replacements <- read.xlsx("/scripts/IAS/Config/Guidelines_eventDates.xlsx")
+  replacements <- read.xlsx(config_file("Guidelines_eventDates.xlsx"))
   replacements$Entry <- as.character(replacements$Entry)
   replacements$Replacement <- as.character(replacements$Replacement)
   replacements$Replacement[is.na(replacements$Replacement)] <- ""
-  
+
   clean_datasets <- list()
   nonnumeric_eventDates <- list()
   translated_eventDates <- list()
@@ -1246,22 +1781,242 @@ GeteventDate <- function(FileInfo = NULL, step3_output = NULL){
   ))
 }
 
+read_taxon_corrections <- function(path) {
+  if (is.null(path) || length(path) == 0) {
+    return(NULL)
+  }
+  path <- as.character(path[[1]])
+  if (is.na(path) || !file.exists(path)) return(NULL)
+  if (grepl("[.]csv$", path, ignore.case = TRUE)) {
+    out <- read.csv(path, stringsAsFactors = FALSE, check.names = FALSE)
+  } else {
+    out <- read.xlsx(path, na.strings = "")
+  }
+  out[] <- lapply(out, as.character)
+  out$correction_source <- rep(basename(path), nrow(out))
+  out
+}
+
+LoadTaxonCorrections <- function() {
+  resolution_directories <- c(
+    "/scripts/IAS/P3_SInASworkflow/QualityControl/Outputs/ResolvedHarmonisations",
+    "scripts/IAS/P3_SInASworkflow/QualityControl/Outputs/ResolvedHarmonisations"
+  )
+  resolution_directories <- resolution_directories[
+    dir.exists(resolution_directories)
+  ]
+
+  reviewed <- NULL
+  country_reviewed <- NULL
+  if (length(resolution_directories) > 0) {
+    resolution_directory <- resolution_directories[[1]]
+    files <- list.files(
+      resolution_directory, pattern = "[.]xlsx$", full.names = TRUE
+    )
+    reviewed <- dplyr::bind_rows(lapply(files, read_taxon_corrections))
+    country_path <- file.path(resolution_directory, paste0(iso3, ".xlsx"))
+    country_reviewed <- read_taxon_corrections(country_path)
+  }
+
+  ## Reuse a correction from another country only when all prior reviews agree
+  ## on both the canonical and scientific names.
+  reusable <- NULL
+  if (!is.null(reviewed) && nrow(reviewed) > 0 &&
+      "taxon_orig" %in% names(reviewed)) {
+    reviewed <- reviewed[
+      !is.na(reviewed$taxon_orig) & reviewed$taxon_orig != "", , drop = FALSE
+    ]
+    reviewed$correction_signature <- paste(
+      ifelse(is.na(reviewed$New_taxon), "", reviewed$New_taxon),
+      ifelse(is.na(reviewed$New_scientificName), "", reviewed$New_scientificName),
+      sep = "||"
+    )
+    reusable <- reviewed |>
+      dplyr::group_by(taxon_orig) |>
+      dplyr::filter(dplyr::n_distinct(correction_signature) == 1) |>
+      dplyr::slice(1) |>
+      dplyr::ungroup() |>
+      dplyr::select(-correction_signature)
+  }
+
+  packaged <- read_taxon_corrections(
+    config_file("UserDefinedTaxonNames.xlsx")
+  )
+  ## Later tables have higher priority: the selected country's reviewed file,
+  ## then packaged and unambiguous cross-country corrections.
+  corrections <- dplyr::bind_rows(
+    reusable, packaged, country_reviewed
+  )
+  if (nrow(corrections) == 0 || !"taxon_orig" %in% names(corrections)) {
+    return(NULL)
+  }
+  corrections <- corrections[
+    !is.na(corrections$taxon_orig) & corrections$taxon_orig != "",
+    ,
+    drop = FALSE
+  ]
+  corrections <- corrections[
+    !duplicated(corrections$taxon_orig, fromLast = TRUE), , drop = FALSE
+  ]
+  corrections
+}
+
+ApplyTaxonCorrections <- function(taxon_output) {
+  corrections <- LoadTaxonCorrections()
+  if (is.null(corrections) || nrow(corrections) == 0) return(taxon_output)
+
+  correction_map <- c(
+    taxon = "New_taxon",
+    scientificName = "New_scientificName",
+    species = "species",
+    genus = "genus",
+    family = "family",
+    order = "order",
+    class = "class",
+    phylum = "phylum",
+    kingdom = "kingdom",
+    GBIFstatus = "GBIFstatus",
+    GBIFstatus_Synonym = "GBIFstatus_Synonym",
+    GBIFmatchtype = "GBIFmatchtype",
+    GBIFtaxonRank = "GBIFtaxonRank",
+    GBIFusageKey = "GBIFusageKey",
+    GBIFnote = "GBIFnote"
+  )
+
+  apply_to_table <- function(dat) {
+    if (is.null(dat) || nrow(dat) == 0 || !"taxon_orig" %in% names(dat)) {
+      return(dat)
+    }
+    for (i in seq_len(nrow(corrections))) {
+      rows <- dat$taxon_orig == corrections$taxon_orig[i]
+      if (!any(rows, na.rm = TRUE)) next
+      for (target in names(correction_map)) {
+        source <- correction_map[[target]]
+        if (!source %in% names(corrections)) next
+        value <- corrections[[source]][i]
+        if (is.na(value) || trimws(as.character(value)) == "") next
+        if (!target %in% names(dat)) dat[[target]] <- NA_character_
+        dat[[target]][rows] <- as.character(value)
+      }
+    }
+    dat
+  }
+
+  taxon_output$clean_datasets <- lapply(
+    taxon_output$clean_datasets, apply_to_table
+  )
+  taxon_output$full_taxa_list <- apply_to_table(taxon_output$full_taxa_list)
+  taxon_output$applied_corrections <- corrections
+  taxon_output
+}
+
+BuildTaxonQualityControl <- function(taxon_output) {
+  full <- taxon_output$full_taxa_list
+  if (is.null(full) || nrow(full) == 0 || !"scientificName" %in% names(full)) {
+    taxon_output$missing_taxa <- list()
+    return(taxon_output)
+  }
+
+  unresolved <- is.na(full$scientificName) |
+    trimws(as.character(full$scientificName)) == ""
+  lookup_columns <- intersect(
+    c("taxon_orig", "GBIFstatus", "GBIFstatus_Synonym", "GBIFmatchtype",
+      "GBIFtaxonRank", "GBIFusageKey", "GBIFnote"),
+    names(full)
+  )
+  lookup <- unique(full[unresolved, lookup_columns, drop = FALSE]) |>
+    dplyr::group_by(taxon_orig) |>
+    dplyr::slice(1) |>
+    dplyr::ungroup()
+
+  taxon_output$missing_taxa <- lapply(
+    taxon_output$clean_datasets,
+    function(dat) {
+      bad <- is.na(dat$scientificName) |
+        trimws(as.character(dat$scientificName)) == ""
+      if (!any(bad)) return(NULL)
+      record_columns <- intersect(
+        c("linkID", "taxon_orig", "taxon", "taxonID", "scientificName"),
+        names(dat)
+      )
+      out <- dat[bad, record_columns, drop = FALSE]
+      dplyr::left_join(out, lookup, by = "taxon_orig") |>
+        dplyr::distinct()
+    }
+  )
+  taxon_output
+}
+
+ApplyTaxonFallbacks <- function(taxon_output) {
+  ## Keep the source name when GBIF and reviewed corrections cannot resolve it.
+  ## BuildTaxonQualityControl() runs first so these records remain in the
+  ## warning report and correction template.
+  apply_to_table <- function(dat) {
+    if (is.null(dat) || nrow(dat) == 0 ||
+        !all(c("taxon_orig", "scientificName") %in% names(dat))) {
+      return(dat)
+    }
+    unresolved <- is.na(dat$scientificName) |
+      trimws(as.character(dat$scientificName)) == ""
+    if (!any(unresolved)) return(dat)
+    if (!"taxon" %in% names(dat)) dat$taxon <- NA_character_
+    if (!"taxonQCnote" %in% names(dat)) dat$taxonQCnote <- NA_character_
+    empty_taxon <- unresolved & (
+      is.na(dat$taxon) | trimws(as.character(dat$taxon)) == ""
+    )
+    dat$taxon[empty_taxon] <- as.character(dat$taxon_orig[empty_taxon])
+    dat$scientificName[unresolved] <- as.character(dat$taxon_orig[unresolved])
+    dat$taxonQCnote[unresolved] <-
+      "No GBIF or reviewed match; original taxon name retained"
+    dat
+  }
+
+  taxon_output$clean_datasets <- lapply(
+    taxon_output$clean_datasets, apply_to_table
+  )
+  taxon_output$full_taxa_list <- apply_to_table(taxon_output$full_taxa_list)
+  taxon_output
+}
+
+list_report <- function(items, value_name) {
+  rows <- lapply(names(items), function(dataset_name) {
+    item <- items[[dataset_name]]
+    if (is.null(item) || length(item) == 0) return(NULL)
+    if (is.data.frame(item)) {
+      item$dataset <- dataset_name
+      return(item)
+    }
+    data.frame(
+      dataset = rep(dataset_name, length(item)),
+      value = as.character(item),
+      stringsAsFactors = FALSE
+    )
+  })
+  out <- dplyr::bind_rows(rows)
+  if ("value" %in% names(out)) names(out)[names(out) == "value"] <- value_name
+  if (nrow(out) == 0) {
+    out <- data.frame(dataset = character(), stringsAsFactors = FALSE)
+    out[[value_name]] <- character()
+  }
+  out
+}
+
+message("SInAS 2/5: standardising terminology")
 step2 <- StandardiseTerms(FileInfo = FileInfo)
+message("SInAS 3/5: standardising locations")
 step3 <- StandardiseLocationNames(FileInfo = FileInfo, step2_output = step2)
+step3$clean_datasets <- lapply(step3$clean_datasets, function(dat) {
+  ## First Records commonly lacks an ISO column. The run is country-scoped, so
+  ## retain that provenance without treating an unmatched location as matched.
+  if (!"ISO3" %in% names(dat)) dat$ISO3 <- iso3
+  dat
+})
+message("SInAS 4/5: matching taxa against GBIF")
 step4 <- StandardiseTaxonNames(FileInfo = FileInfo, step3_output = step3)
+step4 <- ApplyTaxonCorrections(step4)
+step4 <- BuildTaxonQualityControl(step4)
+message("SInAS 5/5: standardising event dates")
 step5 <- GeteventDate(FileInfo = FileInfo, step3_output = step4)
-print("*************clean datasets*************")
-print(head(step5$clean_datasets[["GRIIS"]]))
-print("*************missing locations*************")
-print(head(step3$missing_locations[["GRIIS"]]))
-print("*************translated locations*************")
-print(head(step3$translated_locations))
-print("*************missing taxa*************")
-print(head(step4$missing_taxa[["GRIIS"]]))
-print("*************non-numeric event dates*************")
-print(head(step5$nonnumeric_eventDates[["GRIIS"]]))
-print("*************translated event dates*************")
-print(head(step5$translated_eventDates))
 
 griis_clean <- step5$clean_datasets[["GRIIS"]]
 first_records_clean <- step5$clean_datasets[["FirstRecords"]]
@@ -1269,12 +2024,300 @@ first_records_clean <- step5$clean_datasets[["FirstRecords"]]
 griis_path <- file.path(outputFolder, "GRIIS_clean.csv")
 first_records_path <- file.path(outputFolder, "FirstRecords_clean.csv")
 file_info_path <- file.path(outputFolder, "FileInfo.csv")
+translated_locations_path <- file.path(outputFolder, "Translated_location_names.csv")
+full_taxa_list_path <- file.path(
+  outputFolder, paste0(iso3, "_SInAS_taxon_matching.csv")
+)
+translated_dates_path <- file.path(outputFolder, "Translated_event_dates.csv")
+cleaning_summary_path <- file.path(outputFolder, "Cleaning_summary.csv")
+qc_status_path <- file.path(outputFolder, "QC_status.csv")
+unmatched_values_path <- file.path(outputFolder, "Unmatched_values.csv")
+excluded_records_path <- file.path(
+  outputFolder, paste0(iso3, "_SInAS_excluded_records.csv")
+)
 
-write.csv(griis_clean, griis_path, row.names = FALSE)
-write.csv(first_records_clean, first_records_path, row.names = FALSE)
-write.csv(FileInfo, file_info_path, row.names = FALSE)
+unresolved_terms <- list_report(step2$unresolved_terms, "term")
+missing_locations <- list_report(step3$missing_locations, "location_orig")
+missing_taxa <- list_report(step4$missing_taxa, "taxon")
+nonnumeric_dates <- list_report(step5$nonnumeric_eventDates, "event_date")
+
+translated_locations <- step3$translated_locations
+if (is.null(translated_locations)) {
+  translated_locations <- data.frame(
+    location = character(), location_orig = character(),
+    origDB = character(), locationID = character()
+  )
+}
+translated_dates <- step5$translated_eventDates
+if (is.null(translated_dates)) {
+  translated_dates <- data.frame(
+    eventDate = character(), eventDate2 = character(),
+    eventDate_orig = character(), eventDate2_orig = character(),
+    note = character(), origDB = character()
+  )
+}
+full_taxa_list <- step4$full_taxa_list
+if (is.null(full_taxa_list)) {
+  full_taxa_list <- data.frame(taxon_orig = character())
+}
+
+## Consolidate all unmatched values into one report. These audit fields remain
+## separate from the cleaned and merged datasets.
+empty_unmatched <- data.frame(
+  dataset = character(), check = character(), field = character(),
+  original_value = character(), standardised_value = character(),
+  affected_records = integer(), details = character(), action = character(),
+  included_in_merge = character(), stringsAsFactors = FALSE
+)
+
+term_report <- NULL
+if (nrow(unresolved_terms) > 0) {
+  term_report <- data.frame(
+    dataset = unresolved_terms$dataset,
+    check = "terminology",
+    field = unresolved_terms$column,
+    original_value = unresolved_terms$original_value,
+    standardised_value = ifelse(
+      unresolved_terms$column == "establishmentMeans",
+      "introduced",
+      unresolved_terms$resulting_value
+    ),
+    affected_records = unresolved_terms$affected_records,
+    details = "Not found in the packaged SInAS translation table",
+    action = dplyr::case_when(
+      unresolved_terms$column == "occurrenceStatus" ~
+        "Set to present using the original SInAS assumption",
+      unresolved_terms$column == "establishmentMeans" ~
+        "Set to introduced during merge because the source is an alien-species database",
+      TRUE ~ "Standardised value left missing"
+    ),
+    included_in_merge = "yes_if_location_matched",
+    stringsAsFactors = FALSE
+  )
+}
+
+location_report <- NULL
+if (nrow(missing_locations) > 0) {
+  location_report <- data.frame(
+    dataset = missing_locations$dataset,
+    check = "locations",
+    field = "location",
+    original_value = missing_locations$location_orig,
+    standardised_value = "",
+    affected_records = vapply(
+      seq_len(nrow(missing_locations)),
+      function(i) {
+        dat <- step3$clean_datasets[[missing_locations$dataset[i]]]
+        sum(
+          as.character(dat$location_orig) ==
+            as.character(missing_locations$location_orig[i]),
+          na.rm = TRUE
+        )
+      },
+      integer(1)
+    ),
+    details = "Not found in packaged country, subregion, or location-alias tables",
+    action = "Record excluded from merge because locationID is missing",
+    included_in_merge = "no",
+    stringsAsFactors = FALSE
+  )
+}
+
+taxon_report <- NULL
+if (nrow(missing_taxa) > 0) {
+  taxon_report_input <- missing_taxa
+  detail_columns <- intersect(
+    c(
+      "GBIFstatus", "GBIFstatus_Synonym", "GBIFmatchtype",
+      "GBIFtaxonRank", "GBIFnote"
+    ),
+    names(taxon_report_input)
+  )
+  if (length(detail_columns) == 0) {
+    taxon_report_input$details <- "No reliable GBIF or packaged correction match"
+  } else {
+    taxon_report_input$details <- apply(
+      taxon_report_input[, detail_columns, drop = FALSE],
+      1,
+      function(row) {
+        row <- as.character(row)
+        keep <- !is.na(row) & nzchar(trimws(row))
+        if (!any(keep)) return("No reliable GBIF or packaged correction match")
+        paste(paste0(detail_columns[keep], "=", row[keep]), collapse = "; ")
+      }
+    )
+  }
+  taxon_report <- taxon_report_input |>
+    dplyr::mutate(
+      original_value = as.character(taxon_orig),
+      affected_records = 1L
+    ) |>
+    dplyr::group_by(dataset, original_value) |>
+    dplyr::summarise(
+      affected_records = dplyr::n(),
+      details = paste(sort(unique(details)), collapse = "; "),
+      .groups = "drop"
+    ) |>
+    dplyr::mutate(
+      check = "taxonomy",
+      field = "scientificName",
+      standardised_value = "",
+      action = paste(
+        "Original taxon retained in taxon; scientificName left missing"
+      ),
+      included_in_merge = "yes_if_location_matched"
+    ) |>
+    dplyr::select(
+      dataset, check, field, original_value, standardised_value,
+      affected_records, details, action, included_in_merge
+    )
+}
+
+date_report <- NULL
+if (nrow(nonnumeric_dates) > 0) {
+  date_report <- data.frame(
+    dataset = nonnumeric_dates$dataset,
+    check = "event_dates",
+    field = "eventDate",
+    original_value = nonnumeric_dates$event_date,
+    standardised_value = "",
+    affected_records = 1L,
+    details = "Not numeric after applying the packaged SInAS event-date guidelines",
+    action = "Unconvertible date stored as missing",
+    included_in_merge = "yes_if_location_matched",
+    stringsAsFactors = FALSE
+  )
+}
+
+unmatched_values <- dplyr::bind_rows(
+  term_report, location_report, taxon_report, date_report
+)
+if (nrow(unmatched_values) == 0) unmatched_values <- empty_unmatched
+
+excluded_records <- dplyr::bind_rows(lapply(
+  names(step5$clean_datasets),
+  function(dataset_name) {
+    dat <- step5$clean_datasets[[dataset_name]]
+    excluded <- is.na(dat$locationID) |
+      trimws(as.character(dat$locationID)) == ""
+    if (!any(excluded)) return(NULL)
+    out <- dat[excluded, , drop = FALSE]
+    out$dataset <- dataset_name
+    out$exclusion_reason <- "Unmatched location; locationID is missing"
+    out
+  }
+))
+if (nrow(excluded_records) == 0) {
+  excluded_records <- data.frame(
+    dataset = character(), linkID = character(),
+    exclusion_reason = character(), stringsAsFactors = FALSE
+  )
+}
+
+issue_rows <- function(x) {
+  if (is.null(x) || length(x) == 0) return(0L)
+  if (is.data.frame(x)) return(nrow(x))
+  length(x)
+}
+
+affected_term_records <- if (
+  "affected_records" %in% names(unresolved_terms) && nrow(unresolved_terms) > 0
+) sum(unresolved_terms$affected_records, na.rm = TRUE) else 0L
+
+qc_checks <- data.frame(
+  check = c("terminology", "locations", "taxonomy", "event_dates"),
+  status = c(
+    if (nrow(unresolved_terms) == 0) "PASS" else "WARNING",
+    if (nrow(missing_locations) == 0) "PASS" else "WARNING",
+    if (nrow(missing_taxa) == 0) "PASS" else "WARNING",
+    if (nrow(nonnumeric_dates) == 0) "PASS" else "WARNING"
+  ),
+  issues = c(
+    nrow(unresolved_terms), nrow(missing_locations),
+    length(unique(missing_taxa$taxon_orig)), nrow(nonnumeric_dates)
+  ),
+  affected_records = c(
+    affected_term_records, nrow(missing_locations),
+    nrow(missing_taxa), nrow(nonnumeric_dates)
+  ),
+  action = c(
+    if (nrow(unresolved_terms) == 0) "No action required" else
+      "Unrecognised controlled terms left missing; occurrence status uses the SInAS present assumption",
+    if (nrow(missing_locations) == 0) "No action required" else
+      "Records with missing locationID excluded from merge and written to Excluded_records.csv",
+    if (nrow(missing_taxa) == 0) "No action required" else
+      "Original taxon retained; scientificName left missing",
+    if (nrow(nonnumeric_dates) == 0) "No action required" else
+      "Unconvertible date stored as missing"
+  ),
+  stringsAsFactors = FALSE
+)
+overall_status <- if (all(qc_checks$status == "PASS")) "PASS" else "WARNING"
+qc_status <- rbind(
+  data.frame(
+    check = "overall", status = overall_status,
+    issues = sum(qc_checks$issues),
+    affected_records = sum(qc_checks$affected_records),
+    action = if (overall_status == "PASS") "No action required" else
+      "Merge may continue; review Unmatched_values.csv and Excluded_records.csv",
+    stringsAsFactors = FALSE
+  ),
+  qc_checks
+)
+
+if (overall_status == "WARNING") {
+  warning_checks <- qc_checks$check[qc_checks$status == "WARNING"]
+  warning(
+    "Quality control completed with warnings for: ",
+    paste(warning_checks, collapse = ", "),
+    ". See QC_status.csv, Unmatched_values.csv, and Excluded_records.csv."
+  )
+}
+
+cleaning_summary <- data.frame(
+  country = country_name,
+  ISO3 = iso3,
+  dataset = c("GRIIS", "FirstRecords"),
+  input_records = c(nrow(GRIIS), nrow(FirstRecords_COUNTRY)),
+  clean_records = c(nrow(griis_clean), nrow(first_records_clean)),
+  unresolved_terms = c(
+    issue_rows(step2$unresolved_terms$GRIIS),
+    issue_rows(step2$unresolved_terms$FirstRecords)
+  ),
+  unresolved_locations = c(
+    length(step3$missing_locations$GRIIS),
+    length(step3$missing_locations$FirstRecords)
+  ),
+  unresolved_taxa = c(
+    issue_rows(step4$missing_taxa$GRIIS),
+    issue_rows(step4$missing_taxa$FirstRecords)
+  ),
+  excluded_from_merge = c(
+    sum(excluded_records$dataset == "GRIIS"),
+    sum(excluded_records$dataset == "FirstRecords")
+  ),
+  QC_status = overall_status,
+  stringsAsFactors = FALSE
+)
+
+write.csv(griis_clean, griis_path, row.names = FALSE, na = "")
+write.csv(first_records_clean, first_records_path, row.names = FALSE, na = "")
+write.csv(FileInfo, file_info_path, row.names = FALSE, na = "")
+write.csv(translated_locations, translated_locations_path, row.names = FALSE, na = "")
+write.csv(full_taxa_list, full_taxa_list_path, row.names = FALSE, na = "")
+write.csv(translated_dates, translated_dates_path, row.names = FALSE, na = "")
+write.csv(cleaning_summary, cleaning_summary_path, row.names = FALSE, na = "")
+write.csv(qc_status, qc_status_path, row.names = FALSE, na = "")
+write.csv(unmatched_values, unmatched_values_path, row.names = FALSE, na = "")
+write.csv(excluded_records, excluded_records_path, row.names = FALSE, na = "")
 
 biab_output("griis_clean", griis_path)
 biab_output("first_records_clean", first_records_path)
 biab_output("file_info", file_info_path)
-
+biab_output("translated_locations", translated_locations_path)
+biab_output("full_taxa_list", full_taxa_list_path)
+biab_output("translated_event_dates", translated_dates_path)
+biab_output("cleaning_summary", cleaning_summary_path)
+biab_output("qc_status", qc_status_path)
+biab_output("unmatched_values", unmatched_values_path)
+biab_output("excluded_records", excluded_records_path)

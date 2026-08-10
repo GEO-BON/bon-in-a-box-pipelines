@@ -1,0 +1,67 @@
+script: model_data.R
+name: SInAS model IAS introduction rates
+description: "Select and run the IAS introduction-rate modelling approach supported by one country's data. Outputs explain model assumptions, detection and survey-effort limitations, and how far each result can be interpreted."
+author:
+  - name: Rachel Mason
+  - name: Samara Manzin
+    email: samara.manzin@mcgill.ca
+inputs:
+  country_name:
+    label: Country
+    type: country
+    description: Country for which IAS rate models will be produced.
+    example: NULL
+  integrated_data:
+    label: Integrated IAS data
+    type: text/csv
+    description: Integrated IAS data produced by the SInAS merge-datasets step.
+    example: NULL
+  covariate_data:
+    label: GBIF survey-effort covariate
+    type: text/csv
+    description: GBIF data containing a year column; may contain individual occurrence rows or annual counts.
+    example: NULL
+outputs:
+  model_outputs:
+    label: Model outputs
+    type: text/csv
+    description: Model assumptions, parameters, fit statistics, convergence status, estimated trend direction, interpretation, and caveats for every model option. First-record trends are not automatically equivalent to introduction trends.
+  model_decision:
+    label: Modelling decision
+    type: text/csv
+    description: Selected data scenario, adequacy criteria, supported level of inference, interpretation guidance, shared scope, and references.
+  data_summary:
+    label: Modelling data summary
+    type: text/csv
+    description: Data-adequacy statistics for the selected country. First-record completeness is the percentage of GRIIS taxa flagged invasive anywhere that have a first-record year; it is not overall checklist completeness.
+  model_input:
+    label: Annual model input
+    type: text/csv
+    description: Annual 1970–2020 IAS first-detection counts and GBIF observation counts used as an indirect survey-effort proxy. A zero means no input records for that year, not proof that no introductions occurred.
+  qualitative_plot:
+    label: Qualitative model plot
+    type: image/png
+    description: Descriptive comparison of annual IAS first records with the GBIF observation proxy. Similar patterns may indicate an observation-effort effect; this plot is not a corrected introduction-rate estimate.
+  quantitative_plot:
+    label: Quantitative model comparison
+    type: image/png
+    description: Fitted annual discovery records from models with alternative detection assumptions. Compare fit statistics only among converged models fitted to the same country and time series.
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-base
+    - r-cli
+    - r-dharma
+    - r-dplyr
+    - r-ggeffects
+    - r-ggplot2
+    - r-mass
+    - r-metrics
+    - r-purrr
+    - r-remotes
+    - r-rjson
+    - r-scales
+    - r-tibble
+    - r-tidyr

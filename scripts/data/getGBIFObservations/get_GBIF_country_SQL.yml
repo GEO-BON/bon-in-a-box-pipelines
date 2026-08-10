@@ -1,12 +1,13 @@
-script: get_GBIF_country.py
-name: Get GBIF country observations
-description: Get the number of GBIF occurences for each year within a country
+script: get_GBIF_country_SQL.R
+name: Get GBIF country observations with SQL
+description: Get the number of GBIF occurences for each year within a country using the SQL method.
 author:
+  - name: Saxbee Affleck
+  - name: Rachel Mason
   - name: Samara Manzin
     email: samara.manzin@mcgill.ca
 lifecycle:
   status: core
-
 inputs:
   country_name:
     description: Name of the country for which to get GBIF observations.
@@ -32,8 +33,9 @@ outputs:
 conda:
   channels:
     - conda-forge
+    - r
   dependencies:
-    - pygbif
-    - pandas
-    - pycountry
-    - requests
+    - r-rgbif
+    - r-countrycode
+    - r-readr
+    - r-rjson
