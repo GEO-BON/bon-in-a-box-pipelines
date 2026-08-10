@@ -23,7 +23,7 @@ on:
       - '*staging'
     paths:
       - '.github/workflows/docker_runner-cwl.yml'
-      - 'runners/cwl/conda-cwl-dockerfile'
+      - 'runners/cwl/conda-cwl.dockerfile'
 
 env:
   REGISTRY: ghcr.io
@@ -70,7 +70,7 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: runners/cwl
-          file: runners/cwl/conda-cwl-dockerfile
+          file: runners/cwl/conda-cwl.dockerfile
           push: true
           build-args: |
             CONDA_RUNNER_TAG=${{ github.event.inputs.conda_runner_tag || env.DEFAULT_CONDA_RUNNER_TAG }}
