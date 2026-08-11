@@ -425,21 +425,21 @@
   "inputs": {
     "pipeline@41": {
       "label": "Country name",
-      "description": "Name of the country for which to download the first records data.",
+      "description": "Name of the country for the Invasive Alien Species analysis.",
       "type": "country",
       "example": null,
       "weight": 0
     },
     "pipeline@73": {
       "label": "Start year",
-      "description": "Start year for which to get GBIF observations.",
+      "description": "Start year for which to get GBIF observations. These will be used as a proxy for sampling effort in the given country.",
       "type": "int",
       "example": 1970,
       "weight": 1
     },
     "pipeline@74": {
       "label": "End year",
-      "description": "End year for which to get GBIF observations.",
+      "description": "End year for which to get GBIF observations. These will be used as a proxy for sampling effort in the given country.",
       "type": "int",
       "example": 2025,
       "weight": 2
@@ -549,24 +549,31 @@
   },
   "metadata": {
     "name": "Invasive alien species pipeline",
-    "description": "Invasive alien species pipeline",
+    "description": "## Introduction \nInvasive alien species are a major threat to biodiversity. Reducing the rates of introduction and establishment of invasive species is an important component of Target 6 of the Kunming Montreal Global Biodiversity Framework.\n\nThis pipeline compiles national data on alien and invasive alien species, integrates first records dates, and evaluates temporal patterns in annual first records. It combines data from the Global Record of Introduced and Invasive Species (GRIIS) with First Records Data.\n\nSpecies names, locations, habitats, occurrence information and first-record dates are standardized before the GRIIS and SInAS records are merged. Species names and taxonomic classifications are checked against the GBIF taxonomic backbone. Records that cannot be fully standardized are documented in the pipeline's data-quality outputs.\n\nThe pipeline creates an annual time series of invasive alien species first records. Depending on first-record completeness and the number of years containing records, it selects one of four approaches:\n\n* no modelling when the data are too sparse;\n* a qualitative comparison of first-record and GBIF observation patterns;\n* a reduced set of quantitative models; or\n* the complete set of quantitative models.\n\nThe quantitative approaches include a naive Poisson model, a constant-detection model, a Solow-Costello model, and a sampling model that uses annual GBIF record volume as an indirect proxy for observation effort. Model assumptions and interpretation guidance are included in the outputs.\n\n## Uses\nThis pipeline can be used to:\n\n## Pipeline limitations \n* This pipeline cannot currently be run for the following countries because of\n  unresolved source-data, checklist-name, or location-mapping issues: United\n  States of America (USA), Belgium (BEL), Thailand (THA), Eswatini (SWZ),\n  Hungary (HUN), and Norway (NOR).\n\n* Annual GBIF record counts are used as an indirect proxy for changing\n  observation effort. GBIF record volume is not a direct measurement of\n  invasive alien species survey effort.\n\n* Model results must be interpreted with caution, please read the model interpretation outputs and papers listed below for guidance.\n* Automated taxonomic and location standardization cannot resolve every\n  record. Users should review the data-quality, unmatched-value and\n  excluded-record outputs before interpreting results.\n\n\n## Before you start \nA free GBIF account (username, email, password) is required to run this pipeline and can be added to the runner.env file.",
     "author": [
       {
         "name": "Samara Manzin",
         "email": "samara.manzin@mcgill.ca",
         "identifier": "https://orcid.org/0009-0005-9134-9981"
+      },
+      {
+        "name": "Rachel Mason"
       }
     ],
-    "license": null,
+    "license": "MIT",
     "external_link": null,
     "references": [
       {
-        "text": null,
-        "link": null
+        "text": "Buba et al., (2024)",
+        "link": "https://doi.org/10.1111/geb.13859"
       },
       {
-        "text": null,
-        "link": null
+        "text": "Buba (2024)",
+        "link": "10.32614/CRAN.package.alien"
+      },
+      {
+        "text": "McGeoch et al., (2023)",
+        "link": "https://doi.org/10.1111/conl.1298"
       }
     ]
   }
