@@ -4,8 +4,8 @@
       "id": "14",
       "type": "io",
       "position": {
-        "x": 1783,
-        "y": 328.5
+        "x": 1886,
+        "y": 88.66666666666669
       },
       "data": {
         "descriptionFile": "BII>BIIChange.yml"
@@ -15,8 +15,8 @@
       "id": "15",
       "type": "output",
       "position": {
-        "x": 2502.922667485678,
-        "y": 472.85042144523356
+        "x": 2660,
+        "y": 266.5
       },
       "data": {
         "label": "Output"
@@ -26,8 +26,8 @@
       "id": "25",
       "type": "io",
       "position": {
-        "x": 1976,
-        "y": 665.5
+        "x": 2110,
+        "y": 411.8333333333333
       },
       "data": {
         "descriptionFile": "zonal_statistics>zonal_stats.yml"
@@ -37,8 +37,8 @@
       "id": "56",
       "type": "io",
       "position": {
-        "x": 1368.7567325731761,
-        "y": 392.45450800352006
+        "x": 1421,
+        "y": 237
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -48,8 +48,8 @@
       "id": "57",
       "type": "constant",
       "position": {
-        "x": 859.6500859313794,
-        "y": 117.0631809998606
+        "x": 971,
+        "y": -28
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -61,8 +61,8 @@
       "id": "58",
       "type": "constant",
       "position": {
-        "x": 875.6500859313794,
-        "y": 227.0631809998606
+        "x": 921,
+        "y": 26
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -76,8 +76,8 @@
       "id": "59",
       "type": "constant",
       "position": {
-        "x": 892.2622337466457,
-        "y": 401.1329734474144
+        "x": 898,
+        "y": 241
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -105,8 +105,8 @@
       "id": "60",
       "type": "constant",
       "position": {
-        "x": 845.2750201848235,
-        "y": 437.51017104366395
+        "x": 898,
+        "y": 289
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -125,8 +125,8 @@
       "id": "61",
       "type": "output",
       "position": {
-        "x": 1766.662872369557,
-        "y": 184.38550443642754
+        "x": 1888,
+        "y": 211.83333333333331
       },
       "data": {
         "label": "Output"
@@ -136,8 +136,8 @@
       "id": "63",
       "type": "userInput",
       "position": {
-        "x": 750.0053287271539,
-        "y": 275.5024869625019
+        "x": 987,
+        "y": 72
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -148,8 +148,8 @@
       "id": "64",
       "type": "userInput",
       "position": {
-        "x": 651.6977672355612,
-        "y": 342.47255291045855
+        "x": 995,
+        "y": 110
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -160,8 +160,8 @@
       "id": "66",
       "type": "constant",
       "position": {
-        "x": 895.9533005549715,
-        "y": 358.40573556140333
+        "x": 967,
+        "y": 189
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -173,8 +173,8 @@
       "id": "67",
       "type": "userInput",
       "position": {
-        "x": 14.560022958672334,
-        "y": 407.2202294777127
+        "x": -320,
+        "y": 421.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -185,8 +185,8 @@
       "id": "68",
       "type": "io",
       "position": {
-        "x": 571.9895018016334,
-        "y": 576.7943546043192
+        "x": 199,
+        "y": 469
       },
       "data": {
         "descriptionFile": "data>load_polygons.yml"
@@ -196,8 +196,8 @@
       "id": "69",
       "type": "output",
       "position": {
-        "x": 1255.0726458313782,
-        "y": 661.3618300004938
+        "x": 1037,
+        "y": 350.83333333333326
       },
       "data": {
         "label": "Output"
@@ -207,8 +207,8 @@
       "id": "71",
       "type": "constant",
       "position": {
-        "x": 264.7261507577249,
-        "y": 723.3613677299426
+        "x": -320,
+        "y": 490.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -405,10 +405,10 @@
       "weight": 2
     },
     "data>loadFromStac.yml@56|spatial_res": {
-      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).\nLeave blank to use the original spatial resolution of the layers. If left blank, CRS must be EPSG:4326.",
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). If this is left blank it will use the native resolution of the rasters. If the spatial resolution is coarser than the native resolution of the rasters, the layers will be resampled using method \"near\".",
       "label": "Spatial resolution (optional)",
       "type": "float",
-      "example": null,
+      "example": 0.00833,
       "weight": 3
     },
     "pipeline@63": {
