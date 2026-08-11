@@ -1,0 +1,44 @@
+name: Pack and upload conda environments
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'scripts/**/*.yml'
+
+jobs:
+  pack-and-upload:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/geo-bon/bon-in-a-box-pipelines/runner-conda:latest
+
+    steps:
+      - name: Check out pipeline-repo
+        uses: actions/checkout@v4
+
+      - name: Check out pipeline-engine (script-stubs)
+        uses: actions/checkout@v4
+        with:
+          repository: GEO-BON/bon-in-a-box-pipeline-engine
+          path: pipeline-engine
+          sparse-checkout: script-stubs
+
+      - name: Install s5cmd
+        run: |
+          curl -L "https://github.com/peak/s5cmd/releases/download/v2.3.0/s5cmd_2.3.0_linux_amd64.deb" -o s5cmd.deb
+          dpkg -i s5cmd.deb
+          rm s5cmd.deb
+
+      - name: Pack and upload all conda environments
+        env:
+          SCRIPTS_ROOT: ${{ github.workspace }}/scripts
+          CONDA_ENV_YML_DIR: /conda-env-yml
+          WORK_DIR: /tmp/conda-pack-upload
+          S3_BUCKET: conda-pack
+          AWS_ACCESS_KEY_ID: ${{ secrets.ARBUTUS_S3_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.ARBUTUS_S3_SECRET_ACCESS_KEY }}
+          S3_ENDPOINT_URL: https://object-arbutus.alliancecan.ca
+        run: |
+          GIT_COMMIT=$(git rev-parse --short HEAD) ./pipeline-engine/script-stubs/system/uploadAllCondaPacks.sh
