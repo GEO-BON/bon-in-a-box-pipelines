@@ -22,6 +22,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: GEO-BON/bon-in-a-box-pipeline-engine
+          ref: pack-it-all
           path: pipeline-engine
           sparse-checkout: script-stubs
 
