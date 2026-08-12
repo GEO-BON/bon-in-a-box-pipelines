@@ -174,7 +174,7 @@ inputs:
 
   envFolder:
     type: Directory
-    doc: Folder for conda-pack to export environments. This avoids downloading/resolving the same environement multiple times.
+    doc: Folder for conda-pack to export environments. This avoids downloading/resolving the same environment multiple times.
     default:
       class: Directory
       path: ./envs
