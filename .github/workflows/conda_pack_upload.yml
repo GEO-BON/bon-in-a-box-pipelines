@@ -43,6 +43,6 @@ jobs:
           touch /runner.env
           source /.bashrc
           mamba activate base
-          mamba install -y -c conda-forge conda-pack pyyaml
+          pip install --quiet conda-pack pyyaml
           export GIT_COMMIT=$(git rev-parse --short HEAD)
           ./.github/scripts/uploadAllCondaPacks.sh
