@@ -21,10 +21,10 @@ jobs:
       - name: Check out pipeline-repo
         uses: actions/checkout@v4
 
-      - name: Install s5cmd and pigz
+      - name: Install s5cmd, pigz, and python
         run: |
           apt-get update
-          apt-get install -y --no-install-recommends curl pigz
+          apt-get install -y --no-install-recommends curl pigz python3 python-is-python3
           curl -L "https://github.com/peak/s5cmd/releases/download/v2.3.0/s5cmd_2.3.0_linux_amd64.deb" -o s5cmd.deb
           dpkg -i s5cmd.deb
           rm s5cmd.deb
