@@ -20,6 +20,8 @@ jobs:
 
       - name: Install s5cmd
         run: |
+          apt-get update
+          apt-get install -y --no-install-recommends curl
           curl -L "https://github.com/peak/s5cmd/releases/download/v2.3.0/s5cmd_2.3.0_linux_amd64.deb" -o s5cmd.deb
           dpkg -i s5cmd.deb
           rm s5cmd.deb
