@@ -43,5 +43,5 @@ jobs:
           touch /runner.env
           source /.bashrc
           mamba activate base
-          GIT_COMMIT=$(git rev-parse --short HEAD)
+          export GIT_COMMIT=$(git rev-parse --short HEAD)
           ./.github/scripts/uploadAllCondaPacks.sh
