@@ -39,6 +39,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.ARBUTUS_S3_SECRET_ACCESS_KEY }}
           S3_ENDPOINT_URL: https://object-arbutus.alliancecan.ca
         run: |
+          touch /runner.env
           source /.bashrc
           mamba activate base
           GIT_COMMIT=$(git rev-parse --short HEAD)
