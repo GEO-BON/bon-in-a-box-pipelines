@@ -39,6 +39,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.ARBUTUS_S3_SECRET_ACCESS_KEY }}
           S3_ENDPOINT_URL: https://object-arbutus.alliancecan.ca
         run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
           touch /runner.env
           source /.bashrc
           mamba activate base
