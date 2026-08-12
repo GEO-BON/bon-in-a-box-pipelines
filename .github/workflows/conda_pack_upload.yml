@@ -18,14 +18,6 @@ jobs:
       - name: Check out pipeline-repo
         uses: actions/checkout@v4
 
-      - name: Check out pipeline-engine (script-stubs)
-        uses: actions/checkout@v4
-        with:
-          repository: GEO-BON/bon-in-a-box-pipeline-engine
-          ref: pack-it-all ##CHANGE ONCE MERGED
-          path: pipeline-engine
-          sparse-checkout: script-stubs
-
       - name: Install s5cmd
         run: |
           curl -L "https://github.com/peak/s5cmd/releases/download/v2.3.0/s5cmd_2.3.0_linux_amd64.deb" -o s5cmd.deb
@@ -45,4 +37,4 @@ jobs:
           source /.bashrc
           mamba activate base
           GIT_COMMIT=$(git rev-parse --short HEAD)
-          ./pipeline-engine/script-stubs/system/uploadAllCondaPacks.sh
+          ./.github/scripts/uploadAllCondaPacks.sh
