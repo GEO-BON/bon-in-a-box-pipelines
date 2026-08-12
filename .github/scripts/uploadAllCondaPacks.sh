@@ -59,7 +59,7 @@ function unchangedSincePreviousUpload {
 # top-level `conda:` key. Prints one envName per line.
 # See extractCondaEnvs.py for the envName derivation (matches ScriptStep.kt).
 function extractPerScriptEnvs {
-    python3 "$scriptDir/extractCondaEnvs.py" "$SCRIPTS_ROOT" "$CONDA_ENV_YML_DIR"
+    /opt/conda/bin/python3 "$scriptDir/extractCondaEnvs.py" "$SCRIPTS_ROOT" "$CONDA_ENV_YML_DIR"
 }
 
 # Packs one env to $WORK_DIR/<envName>.tar.gz, uploads commit-tagged + latest
@@ -87,7 +87,7 @@ function packAndUpload {
     echo "Packing conda environment $envName..."
     mamba activate base ; assertSuccess
     tar="$WORK_DIR/$envName.tar"
-    conda-pack --n-threads -1 --quiet -n "$envName" -o "$tar" --compress-level 0
+    /opt/conda/bin/conda-pack --n-threads -1 --quiet -n "$envName" -o "$tar" --compress-level 0
     if [[ $? -ne 0 ]] ; then
         echo "    FAILED to pack $envName."
         failedEnvs+=("$envName")

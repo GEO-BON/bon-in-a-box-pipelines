@@ -24,7 +24,7 @@ jobs:
       - name: Install s5cmd, pigz, and python
         run: |
           apt-get update
-          apt-get install -y --no-install-recommends curl pigz python3 python-is-python3
+          apt-get install -y --no-install-recommends curl pigz
           curl -L "https://github.com/peak/s5cmd/releases/download/v2.3.0/s5cmd_2.3.0_linux_amd64.deb" -o s5cmd.deb
           dpkg -i s5cmd.deb
           rm s5cmd.deb
@@ -43,6 +43,6 @@ jobs:
           touch /runner.env
           source /.bashrc
           mamba activate base
-          pip install --quiet conda-pack pyyaml
+          mamba install -y -n base -c conda-forge conda-pack pyyaml
           export GIT_COMMIT=$(git rev-parse --short HEAD)
           ./.github/scripts/uploadAllCondaPacks.sh
