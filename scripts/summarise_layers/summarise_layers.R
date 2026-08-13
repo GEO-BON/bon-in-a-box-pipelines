@@ -1,9 +1,10 @@
+# loading libraries
 library(gdalcubes)
 library(terra)
 
+# setting inputs
 input <- biab_inputs()
 
-# Setting up inputs
 raster_paths <- input$layers
 bands <- input$bands
 
