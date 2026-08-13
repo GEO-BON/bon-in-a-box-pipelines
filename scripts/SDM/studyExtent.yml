@@ -41,6 +41,6 @@ outputs:
     example: 100.52
   study_extent:
     label: study extent
-    description: Shape file representing the study extent
-    type: application/dbf
-    example: /output/studyExtent/studyExtent_R/9ab734795ba757bdabb32ae6708e18d1/study_extent.shp
+    description: Geopackage representing the study extent
+    type: application/geopackage+sqlite3
+    example: /output/studyExtent/studyExtent_R/9ab734795ba757bdabb32ae6708e18d1/study_extent.gpkg
