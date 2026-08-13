@@ -29,8 +29,10 @@ if (method %in% c("vif.cor", "pearson", "spearman", "kendall") && is.null(cutoff
 rasts <- c()
 names_file <- list()
 # reprojecting to match the first raster in the list, if needed
+if (is.null(rasters) || length(rasters) == 0) {
+  biab_error_stop("No rasters provided. Please provide at least one raster path.")
+}
 template <- terra::rast(rasters[[1]])
-
 for (ra in rasters) {
   thisras <- terra::rast(ra)
   # Keep the real source file path unless a reprojection creates a new file.
