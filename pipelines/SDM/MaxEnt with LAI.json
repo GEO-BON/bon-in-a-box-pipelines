@@ -4,8 +4,8 @@
       "id": "34",
       "type": "io",
       "position": {
-        "x": 2508,
-        "y": 55
+        "x": 2516,
+        "y": 55.5
       },
       "data": {
         "descriptionFile": "filtering>cleanCoordinates.yml"
@@ -15,7 +15,7 @@
       "id": "35",
       "type": "constant",
       "position": {
-        "x": 2104,
+        "x": 2087,
         "y": 33
       },
       "dragHandle": ".dragHandle",
@@ -37,8 +37,8 @@
       "id": "40",
       "type": "io",
       "position": {
-        "x": 3460,
-        "y": 861.3333333333335
+        "x": 3478,
+        "y": 885.8333333333335
       },
       "data": {
         "descriptionFile": "SDM>selectBackground.yml"
@@ -48,8 +48,8 @@
       "id": "44",
       "type": "io",
       "position": {
-        "x": 4043,
-        "y": 970.8333333333335
+        "x": 4065,
+        "y": 1001.8333333333335
       },
       "data": {
         "descriptionFile": "SDM>setupDataSdm.yml"
@@ -59,8 +59,8 @@
       "id": "45",
       "type": "constant",
       "position": {
-        "x": 3580,
-        "y": 992.3333333333335
+        "x": 3602,
+        "y": 1022.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -77,8 +77,8 @@
       "id": "46",
       "type": "userInput",
       "position": {
-        "x": 3713,
-        "y": 1039.3333333333335
+        "x": 3734,
+        "y": 1070.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -90,8 +90,8 @@
       "id": "47",
       "type": "constant",
       "position": {
-        "x": 3622,
-        "y": 1074.3333333333335
+        "x": 3635,
+        "y": 1105.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -103,8 +103,8 @@
       "id": "48",
       "type": "constant",
       "position": {
-        "x": 3636,
-        "y": 1116.3333333333335
+        "x": 3649,
+        "y": 1148.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -116,8 +116,8 @@
       "id": "64",
       "type": "constant",
       "position": {
-        "x": 2097,
-        "y": 167
+        "x": 2096,
+        "y": 168
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -129,8 +129,8 @@
       "id": "68",
       "type": "io",
       "position": {
-        "x": 5095,
-        "y": 1288.3333333333335
+        "x": 5126,
+        "y": 1329.8333333333335
       },
       "data": {
         "descriptionFile": "SDM>rangePredictions.yml"
@@ -140,8 +140,8 @@
       "id": "69",
       "type": "output",
       "position": {
-        "x": 5502,
-        "y": 1347.8333333333335
+        "x": 5537,
+        "y": 1389.3333333333335
       },
       "data": {
         "label": "Output"
@@ -151,8 +151,8 @@
       "id": "97",
       "type": "io",
       "position": {
-        "x": 1870,
-        "y": 951.8333333333335
+        "x": 1874,
+        "y": 979.8333333333335
       },
       "data": {
         "descriptionFile": "SDM>removeCollinearity.yml"
@@ -162,8 +162,8 @@
       "id": "98",
       "type": "constant",
       "position": {
-        "x": 1407,
-        "y": 916.3333333333335
+        "x": 1411,
+        "y": 942.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -182,8 +182,8 @@
       "id": "99",
       "type": "constant",
       "position": {
-        "x": 1407,
-        "y": 963.3333333333335
+        "x": 1411,
+        "y": 990.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -200,8 +200,8 @@
       "id": "100",
       "type": "constant",
       "position": {
-        "x": 1463,
-        "y": 1010.3333333333335
+        "x": 1458,
+        "y": 1038.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -213,8 +213,8 @@
       "id": "101",
       "type": "constant",
       "position": {
-        "x": 1449,
-        "y": 1052.3333333333335
+        "x": 1444,
+        "y": 1081.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -226,8 +226,8 @@
       "id": "102",
       "type": "constant",
       "position": {
-        "x": 1463,
-        "y": 1094.3333333333335
+        "x": 1458,
+        "y": 1124.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -239,8 +239,8 @@
       "id": "104",
       "type": "io",
       "position": {
-        "x": 2979,
-        "y": 797.3333333333335
+        "x": 2992,
+        "y": 817.8333333333335
       },
       "data": {
         "descriptionFile": "SDM>studyExtent.yml"
@@ -250,8 +250,8 @@
       "id": "105",
       "type": "constant",
       "position": {
-        "x": 2536,
-        "y": 818.8333333333335
+        "x": 2549,
+        "y": 838.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -269,8 +269,8 @@
       "id": "107",
       "type": "constant",
       "position": {
-        "x": 2592,
-        "y": 865.8333333333335
+        "x": 2596,
+        "y": 886.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -282,8 +282,8 @@
       "id": "108",
       "type": "io",
       "position": {
-        "x": 4661,
-        "y": 1138.3333333333335
+        "x": 4687,
+        "y": 1171.8333333333335
       },
       "data": {
         "descriptionFile": "SDM>runMaxent.yml"
@@ -293,8 +293,8 @@
       "id": "109",
       "type": "output",
       "position": {
-        "x": 5095,
-        "y": 1115.8333333333335
+        "x": 5126,
+        "y": 1149.3333333333335
       },
       "data": {
         "label": "Output"
@@ -304,8 +304,8 @@
       "id": "115",
       "type": "constant",
       "position": {
-        "x": 4208,
-        "y": 1264.3333333333335
+        "x": 4234,
+        "y": 1297.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -322,8 +322,8 @@
       "id": "116",
       "type": "constant",
       "position": {
-        "x": 4208,
-        "y": 1171.3333333333335
+        "x": 4234,
+        "y": 1203.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -341,8 +341,8 @@
       "id": "121",
       "type": "userInput",
       "position": {
-        "x": 751,
-        "y": 509.8333333333335
+        "x": 750,
+        "y": 523.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -357,7 +357,7 @@
       "type": "output",
       "position": {
         "x": 1066,
-        "y": 514.0000000000001
+        "y": 528.0000000000001
       },
       "data": {
         "label": "Output"
@@ -367,8 +367,8 @@
       "id": "123",
       "type": "output",
       "position": {
-        "x": 2979,
-        "y": 32.5
+        "x": 2992,
+        "y": 33
       },
       "data": {
         "label": "Output"
@@ -378,8 +378,8 @@
       "id": "124",
       "type": "output",
       "position": {
-        "x": 2508,
-        "y": 1101.3333333333335
+        "x": 2516,
+        "y": 1132.8333333333335
       },
       "data": {
         "label": "Output"
@@ -389,8 +389,8 @@
       "id": "128",
       "type": "userInput",
       "position": {
-        "x": 680,
-        "y": 747.8333333333335
+        "x": 679,
+        "y": 765.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -403,7 +403,7 @@
       "type": "constant",
       "position": {
         "x": 573,
-        "y": 878.8333333333335
+        "y": 898.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -423,7 +423,7 @@
       "type": "constant",
       "position": {
         "x": 573,
-        "y": 831.8333333333335
+        "y": 850.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -452,7 +452,7 @@
       "type": "io",
       "position": {
         "x": 1375,
-        "y": 1146.3333333333335
+        "y": 1177.8333333333335
       },
       "data": {
         "descriptionFile": "data>GBIFHeatmapFromSTAC.yml"
@@ -462,8 +462,8 @@
       "id": "140",
       "type": "userInput",
       "position": {
-        "x": 35,
-        "y": 1196.4583333333335
+        "x": 34,
+        "y": 1229.9583333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -475,7 +475,7 @@
       "type": "io",
       "position": {
         "x": 1066,
-        "y": 137.5
+        "y": 135.5
       },
       "data": {
         "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
@@ -485,8 +485,8 @@
       "id": "143",
       "type": "output",
       "position": {
-        "x": 1870,
-        "y": 209.0000000000001
+        "x": 1874,
+        "y": 211
       },
       "data": {
         "label": "Output"
@@ -496,8 +496,8 @@
       "id": "144",
       "type": "io",
       "position": {
-        "x": 1400,
-        "y": 752.3333333333335
+        "x": 1399,
+        "y": 770.8333333333335
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -507,8 +507,8 @@
       "id": "145",
       "type": "userInput",
       "position": {
-        "x": 605,
-        "y": 169.16666666666674
+        "x": 691,
+        "y": 167.16666666666674
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -520,8 +520,8 @@
       "id": "146",
       "type": "userInput",
       "position": {
-        "x": 608,
-        "y": 362.0000000000001
+        "x": 697,
+        "y": 369.0000000000001
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -533,8 +533,8 @@
       "id": "147",
       "type": "userInput",
       "position": {
-        "x": 4339,
-        "y": 1229.3333333333335
+        "x": 4364,
+        "y": 1262.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -547,7 +547,7 @@
       "type": "userInput",
       "position": {
         "x": 515,
-        "y": 925.8333333333335
+        "y": 946.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -559,7 +559,7 @@
       "type": "io",
       "position": {
         "x": 1266,
-        "y": 377.0000000000001
+        "y": 384.0000000000001
       },
       "data": {
         "descriptionFile": "summarise_layers>summarise_layers.yml"
@@ -569,8 +569,8 @@
       "id": "156",
       "type": "constant",
       "position": {
-        "x": 672,
-        "y": 638.8333333333335
+        "x": 669,
+        "y": 654.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -583,7 +583,7 @@
       "type": "constant",
       "position": {
         "x": 573,
-        "y": 591.8333333333335
+        "y": 606.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -605,7 +605,7 @@
       "type": "constant",
       "position": {
         "x": 573,
-        "y": 544.8333333333335
+        "y": 558.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -626,8 +626,8 @@
       "id": "159",
       "type": "constant",
       "position": {
-        "x": 672,
-        "y": 698.8333333333335
+        "x": 669,
+        "y": 715.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -638,8 +638,8 @@
       "id": "160",
       "type": "constant",
       "position": {
-        "x": 672,
-        "y": 782.8333333333335
+        "x": 669,
+        "y": 800.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -651,8 +651,8 @@
       "id": "161",
       "type": "io",
       "position": {
-        "x": 565,
-        "y": 255.0000000000001
+        "x": 561,
+        "y": 257.0000000000001
       },
       "data": {
         "descriptionFile": "LAI.udp"
@@ -662,8 +662,8 @@
       "id": "162",
       "type": "constant",
       "position": {
-        "x": 18,
-        "y": 327.008099873861
+        "x": 12,
+        "y": 1264.9583333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -682,7 +682,7 @@
       "type": "constant",
       "position": {
         "x": 12,
-        "y": 276.5000000000001
+        "y": 278.0000000000001
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -702,8 +702,8 @@
       "id": "165",
       "type": "userInput",
       "position": {
-        "x": 182,
-        "y": 206.5
+        "x": 143,
+        "y": 208
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -715,8 +715,8 @@
       "id": "167",
       "type": "userInput",
       "position": {
-        "x": 188,
-        "y": 241.5000000000001
+        "x": 150,
+        "y": 243.0000000000001
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -1191,7 +1191,7 @@
     },
     "pipeline@140": {
       "label": "Bounding box and CRS",
-      "description": "Bounding box and coordinate reference system defining the analysis extent. This extent is used to retrieve GBIF occurrences, environmental predictor rasters, the GBIF sampling-effort heatmap, and the study extent for modelling.\n* Note that for this pipeline LAI data is only available for the temperate forest in Europe. See map here for the area that this pipeline can be run.\n\nThe extent you choose affects how results should be interpreted and may change which predictors emerge as important.\n* Larger than the species' range: results lean toward occurrence/accessibility. Predictors tied to broad-scale distributional limits (climate, biogeography) may dominate.\n* Similar to or smaller than the species' range: results lean toward habitat suitability. Predictors tied to local habitat structure (vegetation, soil) may matter more.",
+      "description": "Bounding box and coordinate reference system defining the analysis extent. This extent is used to retrieve GBIF occurrences, environmental predictor rasters, the GBIF sampling-effort heatmap, and the study extent for modelling.\n* Note that for this pipeline LAI data is only available for the temperate forest in Europe. See map [here](https://github.com/user-attachments/assets/a9150fcb-22ca-4a90-bbf2-74fe8f9d840b) for the area that this pipeline can be run.\n\nThe extent you choose affects how results should be interpreted and may change which predictors emerge as important.\n* Larger than the species' range: results lean toward occurrence/accessibility. Predictors tied to broad-scale distributional limits (climate, biogeography) may dominate.\n* Similar to or smaller than the species' range: results lean toward habitat suitability. Predictors tied to local habitat structure (vegetation, soil) may matter more.",
       "type": "bboxCRS",
       "example": null,
       "weight": 2
@@ -1291,7 +1291,7 @@
     },
     "pipeline@46": {
       "label": "Number of runs",
-      "description": "Number of bootstrap or cross-validation runs used when preparing SDM training and testing data.",
+      "description": "Number of bootstrap or cross-validation runs used when preparing SDM training and testing data. The number of runs correspond to the number of times the occurrence and background data are partitioned into training/testing subsets during model tuning (cross-validation) or resampled to estimate prediction uncertainty (bootstrap). Higher values can provide smoother confidence intervals but will increase run time proportionately. ",
       "type": "int",
       "example": 2,
       "weight": 14
@@ -1303,7 +1303,8 @@
       "example": [
         "L",
         "LQ",
-        "LQHP"
+        "LQHP",
+        "LQHPT"
       ],
       "weight": 15
     },
@@ -1388,7 +1389,7 @@
   },
   "metadata": {
     "name": "Species distribution modeling with MaxEnt using Leaf Area Index",
-    "description": "## Introduction \nSpecies distributions are an important Essential Biodiversity Variable (EBV) in the species populations class. Knowing where species are likely to occur is essential for understanding biodiversity patterns, identifying conservation priorities, assessing potential impacts of environmental change, and supporting biodiversity indicators. However, species occurrence data are often sparse, unevenly distributed, and affected by spatial and taxonomic sampling bias. Species distribution models (SDMs) help fill these gaps by estimating where suitable environmental conditions occur for a species based on known observations and environmental predictors.  \n\nThe MaxEnt pipeline builds a species distribution model using occurrence records from the Global Biodiversity Information Facility (GBIF) and environmental raster layers. The pipeline retrieves GBIF observations for the selected taxon or taxa, cleans occurrence coordinates, removes highly collinear environmental predictors, generates background points, and fits a MaxEnt model using the ENMeval R package. MaxEnt is a presence-background modeling approach, meaning it compares known species presences with background environmental conditions across the [study area](https://github.com/user-attachments/assets/a9150fcb-22ca-4a90-bbf2-74fe8f9d840b). \n\nThis use case demonstrates how [Leaf Area Index (LAI)](https://algorithm-catalogue.apex.esa.int/apps/udp_obsgession_w23_lai) can be incorporated as an environmental predictor in the BON in a Box MaxEnt species distribution modeling pipeline. LAI is a measure of vegetation canopy density and structure that influences habitat quality, microclimate, and resource availability for many species (Boegh et al., 2002). Including LAI alongside other environmental variables allows users to investigate whether vegetation structure improves predictions of habitat suitability. \n\nThe pipeline evaluates different MaxEnt settings, including feature classes and regularization multipliers, and selects a tuned model based on model performance. It produces a habitat suitability prediction raster, cleaned occurrence records, selected environmental predictors, a GBIF download DOI, and a raster summarizing variability among model runs.  \n## Uses\nThe MaxEnt pipeline can be used to estimate the potential distribution or relative habitat suitability of one or more species within a selected study area. Outputs can support conservation planning, sampling prioritization, identification of biodiversity hotspots, protected area planning, risk assessment for species of conservation concern, and environmental impact assessments.\n\nThis use case is particularly relevant for species whose distributions are influenced by vegetation structure or forest condition. LAI provides information on canopy density and productivity that complements traditional predictors such as climate, elevation, or land cover. The workflow can be used to assess the contribution of vegetation structure to habitat suitability and compare models with and without LAI predictors. Note that for this pipeline LAI data is only available for the temperate forest in Europe. See map here for the area that this pipeline can be run.\n\nThe results can also be used as inputs to other biodiversity analyses and indicators, such as identifying areas where species are likely to occur, comparing predicted habitat suitability across regions, or highlighting areas where additional occurrence sampling may be needed. Because the pipeline retrieves both GBIF observations and environmental predictor layers, it provides a reproducible workflow for generating species distribution maps from public biodiversity and environmental data. \n\nSDMs predict where species are likely to occur based on a suite of environmental variables that are associated with known occurrences (Peterson, 2001; Elith and Leathwick, 2009). The MaxEnt pipeline pulls occurrences of the species of interest from GBIF and environmental raster layers from the GEO BON STAC catalog. Then, the pipeline cleans the GBIF data by only including one occurrence per pixel and removes collinearity between the environmental layers. Third, the pipeline creates a set of pseudo-absences (background points) and combines this with presences and the environmental predictors to create a dataset that is ready to be input into the SDM model. The pipeline runs the SDM on this data using the MaxEnt algorithm using the ENMeval R package (Kass et al. 2021). The MaxEnt SDM is run by 1\\) partitioning occurrence and background points into subsets for training and evaluation, 2\\) building the model with different algorithmic settings (model tuning), and 3\\) evaluating their performance ([see package vignette](https://jamiemkass.github.io/ENMeval/articles/ENMeval-2.0-vignette.html#partition)). Lastly, the pipeline computes the 95% confidence interval using bootstrapping and cross validation techniques.\n## Pipeline limitations\n* The [LAI layers](https://algorithm-catalogue.apex.esa.int/apps/udp_obsgession_w23_lai) are optimized for temperate forests from 2015 onwards. See map here for the area that this pipeline can be run.\n* MaxEnt uses presence-background data, not confirmed absence data. Predictions should be interpreted as relative habitat suitability or relative occurrence potential, not confirmed species presence or absence.\n* GBIF records may contain spatial, taxonomic, and temporal biases. The pipeline applies coordinate-cleaning steps, but users should still inspect the cleaned presences and interpret results cautiously, especially for poorly sampled taxa or regions.\n* Model quality depends strongly on the number and quality of occurrence records. Very small numbers of cleaned presences may produce unreliable predictions.\n* The choice of environmental predictors, background sampling method, feature classes, regularization multipliers, and partitioning method can affect model outputs. Users should treat the model as sensitive to these settings, especially for final analyses.\n* Environmental predictors must be ecologically relevant to the species being modeled. Including many correlated or irrelevant predictors can reduce interpretability and increase overfitting risk.\n* The pipeline estimates suitability based on the predictor layers supplied by the user. It does not directly account for dispersal limits, biotic interactions, land-use barriers, species detectability, or future environmental change unless those factors are represented in the input data.\n* Larger study areas, finer spatial resolutions, more environmental predictors, and more model runs increase computation time and memory use.\n## Before you start\nA GBIF API key and Copernicus Data Space Ecosystem client ID and client secret are  required to run this pipeline and can be added into the runner.env file.  \n\nBefore running the pipeline, choose the taxon or taxa you want to model and make sure the names match the GBIF taxonomic backbone. Species names can be checked on the GBIF website.  \n\nSelect a study area using the bounding box and CRS input. The CRS and spatial resolution determine the scale of the analysis, so choose a CRS appropriate for the region and make sure the spatial resolution is in the units of that CRS.  \n\nChoose environmental predictor layers from the STAC catalog that are ecologically relevant to the species being modeled. For example, climate, vegetation, elevation, land cover, or habitat-related predictors may be appropriate depending on the species. Avoid including many predictors that represent the same underlying environmental gradient.",
+    "description": "## Introduction \nSpecies distributions are an important Essential Biodiversity Variable (EBV) in the species populations class. Knowing where species are likely to occur is essential for understanding biodiversity patterns, identifying conservation priorities, assessing potential impacts of environmental change, and supporting biodiversity indicators. However, species occurrence data are often sparse, unevenly distributed, and affected by spatial and taxonomic sampling bias. Species distribution models (SDMs) help fill these gaps by estimating where suitable environmental conditions occur for a species based on known observations and environmental predictors.  \n\nThe MaxEnt pipeline builds a species distribution model using occurrence records from the [Global Biodiversity Information Facility (GBIF)](https://www.gbif.org/) and environmental raster layers. The pipeline retrieves GBIF observations for the selected taxon or taxa, cleans occurrence coordinates, removes highly collinear environmental predictors, generates background points, and fits a MaxEnt model using the ENMeval R package. MaxEnt is a presence-background modeling approach, meaning it compares known species presences with background environmental conditions across the [study area](https://github.com/user-attachments/assets/a9150fcb-22ca-4a90-bbf2-74fe8f9d840b). \n\nThis use case demonstrates how [Leaf Area Index (LAI)](https://algorithm-catalogue.apex.esa.int/apps/udp_obsgession_w23_lai) can be incorporated as an environmental predictor in the BON in a Box MaxEnt species distribution modeling pipeline. LAI is a measure of vegetation canopy density and structure that influences habitat quality, microclimate, and resource availability for many species (Boegh et al., 2002). Including LAI alongside other environmental variables allows users to investigate whether vegetation structure improves predictions of habitat suitability. \n\nThe pipeline evaluates different MaxEnt settings, including feature classes and regularization multipliers, and selects a tuned model based on model performance. It produces a habitat suitability prediction raster, cleaned occurrence records, selected environmental predictors, a GBIF download DOI, and a raster summarizing variability among model runs.  \n## Uses\nThe MaxEnt pipeline can be used to estimate the potential distribution or relative habitat suitability of one or more species within a selected study area. Outputs can support conservation planning, sampling prioritization, identification of biodiversity hotspots, protected area planning, risk assessment for species of conservation concern, and environmental impact assessments.\n\nThis use case is particularly relevant for species whose distributions are influenced by vegetation structure or forest condition. LAI provides information on canopy density and productivity that complements traditional predictors such as climate, elevation, or land cover. The workflow can be used to assess the contribution of vegetation structure to habitat suitability and compare models with and without LAI predictors. Note that for this pipeline LAI data is only available for the temperate forest in Europe. See map [here](https://github.com/user-attachments/assets/a9150fcb-22ca-4a90-bbf2-74fe8f9d840b) for the area that this pipeline can be run.\n\nThe results can also be used as inputs to other biodiversity analyses and indicators, such as identifying areas where species are likely to occur, comparing predicted habitat suitability across regions, or highlighting areas where additional occurrence sampling may be needed. Because the pipeline retrieves both GBIF observations and environmental predictor layers, it provides a reproducible workflow for generating species distribution maps from public biodiversity and environmental data. \n\nSDMs predict where species are likely to occur based on a suite of environmental variables that are associated with known occurrences (Peterson, 2001; Elith and Leathwick, 2009). The MaxEnt pipeline pulls occurrences of the species of interest from GBIF and environmental raster layers from the GEO BON STAC catalog. Then, the pipeline cleans the GBIF data by only including one occurrence per pixel and removes collinearity between the environmental layers. Third, the pipeline creates a set of pseudo-absences (background points) and combines this with presences and the environmental predictors to create a dataset that is ready to be input into the SDM model. The pipeline runs the SDM on this data using the MaxEnt algorithm using the ENMeval R package (Kass et al. 2021). The MaxEnt SDM is run by 1\\) partitioning occurrence and background points into subsets for training and evaluation, 2\\) building the model with different algorithmic settings (model tuning), and 3\\) evaluating their performance ([see package vignette](https://jamiemkass.github.io/ENMeval/articles/ENMeval-2.0-vignette.html#partition)). Lastly, the pipeline computes the 95% confidence interval using bootstrapping and cross validation techniques.\n## Pipeline limitations\n* The [LAI layers](https://algorithm-catalogue.apex.esa.int/apps/udp_obsgession_w23_lai) are optimized for temperate forests from 2015 onwards. See map [here](https://github.com/user-attachments/assets/a9150fcb-22ca-4a90-bbf2-74fe8f9d840b) for the area that this pipeline can be run.\n* MaxEnt uses presence-background data, not confirmed absence data. Predictions should be interpreted as relative habitat suitability or relative occurrence potential, not confirmed species presence or absence.\n* GBIF records may contain spatial, taxonomic, and temporal biases. The pipeline applies coordinate-cleaning steps, but users should still inspect the cleaned presences and interpret results cautiously, especially for poorly sampled taxa or regions.\n* Model quality depends strongly on the number and quality of occurrence records. Very small numbers of cleaned presences may produce unreliable predictions.\n* The choice of environmental predictors, background sampling method, feature classes, regularization multipliers, and partitioning method can affect model outputs. Users should treat the model as sensitive to these settings, especially for final analyses.\n* Environmental predictors must be ecologically relevant to the species being modeled. Including many correlated or irrelevant predictors can reduce interpretability and increase overfitting risk.\n* The pipeline estimates suitability based on the predictor layers supplied by the user. It does not directly account for dispersal limits, biotic interactions, land-use barriers, species detectability, or future environmental change unless those factors are represented in the input data.\n* Larger study areas, finer spatial resolutions, more environmental predictors, and more model runs increase computation time and memory use.\n## Before you start\nA GBIF API key and Copernicus Data Space Ecosystem client ID and client secret are  required to run this pipeline and can be added into the runner.env file.  \n\nBefore running the pipeline, choose the taxon or taxa you want to model and make sure the names match the GBIF taxonomic backbone. Species names can be checked on the [GBIF website](https://www.gbif.org/).  \n\nSelect a study area using the bounding box and CRS input. The CRS and spatial resolution determine the scale of the analysis, so choose a CRS appropriate for the region and make sure the spatial resolution is in the units of that CRS.  \n\nChoose environmental predictor layers from the STAC catalog that are ecologically relevant to the species being modeled. For example, climate, vegetation, elevation, land cover, or habitat-related predictors may be appropriate depending on the species. Avoid including many predictors that represent the same underlying environmental gradient.",
     "author": [
       {
         "name": "Sarah Valentin",
