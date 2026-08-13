@@ -28,15 +28,44 @@ if (method %in% c("vif.cor", "pearson", "spearman", "kendall") && is.null(cutoff
 }
 rasts <- c()
 names_file <- list()
+# reprojecting to match the first raster in the list, if needed
+if (is.null(rasters) || length(rasters) == 0) {
+  biab_error_stop("No rasters provided. Please provide at least one raster path.")
+}
+template <- terra::rast(rasters[[1]])
 for (ra in rasters) {
   thisras <- terra::rast(ra)
-  rasts <- c(rasts, thisras)
-  names_file[[names(thisras)]] <- ra
-}
-rasts <- rast(rasts)
+  # Keep the real source file path unless a reprojection creates a new file.
+  output_path <- ra
 
-rasts
+  if (!terra::compareGeom(template, thisras, stopOnError = FALSE)) {
+    print(paste("Aligning raster to template:", ra))
+
+    thisras <- terra::project(
+      thisras,
+      template,
+      method = "bilinear"
+    )
+
+     output_path <- file.path(
+      outputFolder, paste0(tools::file_path_sans_ext(basename(ra)), "_reprojected.tif")
+    )
+
+    terra::writeRaster(thisras, output_path, overwrite = TRUE)
+  }
+
+  rasts <- c(rasts, thisras)
+
+  for (nm in names(thisras)) {
+    names_file[[nm]] <- output_path
+  }
+}
+
+rasts <- terra::rast(rasts)
+
+
 env_df <- sample_spatial_obj(rasts, nb_points = input$nb_sample)
+
 nc_names <- detect_collinearity(
   env_df = env_df,
   method = method,
@@ -50,4 +79,8 @@ nc_names <- detect_collinearity(
 print("Selected variables:")
 print(nc_names)
 
-biab_output("rasters_selected", as.vector(unlist(names_file[nc_names])))
+selected_paths <- as.vector(unlist(names_file[nc_names]))
+print("Selected raster paths:")
+print(selected_paths)
+
+biab_output("rasters_selected", selected_paths)

@@ -14,34 +14,34 @@ inputs:
     type: text[]
     example: [Acer saccharum, Acer nigrum]
   bbox_crs:
-    description: Select a bounding box and CRS
+    description: Select a bounding box and CRS. This defines the geographic extent of the analysis as a bounding box, along with its coordinate reference system (CRS). A larger extent increases computation time.
     label: Bounding box and CRS
     type: bboxCRS
     example:
   min_year:
-    description: Min year observations wanted
-    label: minimum year
-    type: int
-    example: 2010
+    description: Earliest year for GBIF records. Accepts YYYY or YYYY-MM-DD; if a full date is supplied, only the year is used.
+    label: Minimum year or start date
+    type: text
+    example: "2010"
   max_year:
-    description: Max year observations wanted
-    label: maximum year
-    type: int
-    example: 2024
+    description: Latest year for GBIF records. Accepts YYYY or YYYY-MM-DD; if a full date is supplied, only the year is used.
+    label: Maximum year or end date
+    type: text
+    example: "2024"
 outputs:
   observations_file:
     label: Observations
-    description: Output file with observations
+    description: Tab-separated file containing all GBIF occurrence records retrieved for the specified taxa, bounding box, and time range. Each row represents one observation. Used as input to subsequent modeling steps.
     type: text/tab-separated-values
     example: hfn7s62sq.csv
   total_records:
     label: Total number of occurrences
-    description: Total number of GBIF occurrences in csv file
+    description: Count of occurrence records returned by the GBIF query. Use this to gauge data availability before running the model — very low counts (e.g. <20) may produce unreliable results.
     type: int
     example: 1234
   gbif_doi:
     label: DOI of GBIF download
-    description: DOI of GBIF download. Used for citing downloaded data.
+    description: A permanent DOI assigned to this specific GBIF data download. Must be cited in any publication using these data — see [GBIF's citation guidelines](https://www.gbif.org/citation-guidelines).
     type: text
     example: 10.15468/dl.j644h5
 conda:
