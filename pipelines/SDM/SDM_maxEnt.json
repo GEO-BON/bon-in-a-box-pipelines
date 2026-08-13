@@ -1063,27 +1063,27 @@
     "references": [
       {
         "text": "Vollering et al. 2019",
-        "doi": "https://doi.org/10.1111/ecog.04503"
+        "link": "https://doi.org/10.1111/ecog.04503"
       },
       {
         "text": "Phillips et al. 2009",
-        "doi": "https://doi.org/10.1890/07-2153.1"
+        "link": "https://doi.org/10.1890/07-2153.1"
       },
       {
         "text": "Bastion 2023",
-        "doi": "https://doi.org/10.32614/CRAN.package.exactextractr"
+        "link": "https://doi.org/10.32614/CRAN.package.exactextractr"
       },
       {
         "text": "Kass et al. 2021",
-        "doi": "https://doi.org/10.1111/2041-210X.13628"
+        "link": "https://doi.org/10.1111/2041-210X.13628"
       },
       {
         "text": "Elith and Leathwick, 2009",
-        "doi": "https://doi.org/10.1146/annurev.ecolsys.110308.120159"
+        "link": "https://doi.org/10.1146/annurev.ecolsys.110308.120159"
       },
       {
         "text": "Peterson, 2001",
-        "doi": "https://doi.org/10.1641/0006-3568(2001)051[0363:PSIUEN]2.0.CO;2"
+        "link": "https://doi.org/10.1641/0006-3568(2001)051[0363:PSIUEN]2.0.CO;2"
       }
     ]
   }
