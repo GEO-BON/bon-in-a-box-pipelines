@@ -21,7 +21,7 @@ jobs:
       - name: Check out pipeline-repo
         uses: actions/checkout@v4
 
-      - name: Install s5cmd, pigz, and python
+      - name: Install s5cmd and pigz
         run: |
           apt-get update
           apt-get install -y --no-install-recommends curl pigz

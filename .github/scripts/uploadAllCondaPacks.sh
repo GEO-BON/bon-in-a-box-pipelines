@@ -125,10 +125,6 @@ function packAndUpload {
 source /.bashrc
 mkdir -p "$CONDA_ENV_YML_DIR" "$WORK_DIR"
 
-echo "Packing base environments..."
-packAndUpload rbase /data/r-environment.yml
-packAndUpload pythonbase /data/python-environment.yml
-
 echo "Packing per-script environments..."
 while IFS= read -r envName; do
     packAndUpload "$envName" "$CONDA_ENV_YML_DIR/$envName.yml"
