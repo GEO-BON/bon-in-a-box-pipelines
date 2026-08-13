@@ -6,7 +6,7 @@ _Authors: [Sarah Valentin](https://orcid.org/0000-0002-9028-681X), [Guillaume La
 
 Review status: Under development
 
-### **Introcution:**
+### **Introduction:**
   The MaxEnt pipeline builds a species distribution model using occurrence
   records from the [Global Biodiversity Information Facility (GBIF)](https://www.gbif.org/) and
   environmental raster layers from the [GEO BON STAC catalog](https://stac.geobon.org/). The pipeline retrieves GBIF
