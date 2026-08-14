@@ -14,6 +14,7 @@ print("Inputs: ")
 print(input)
 
 presence <- read.table(file = input$presence, sep = "\t", header = TRUE)
+biab_output("n_presence", nrow(presence))
 
 # Import of predictors
 predictors <- terra::rast(unlist(input$predictors))
