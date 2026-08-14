@@ -1,0 +1,23 @@
+script: geoJSONToGPKG.py
+name: GeoPackage to GeoJSON
+description: This script converts a GeoPackage file to GeoJSON file.
+author:
+  - name: Laetitia Tremblay
+    identifier: https://www.linkedin.com/in/laetitia-tremblay-b0619b273/
+inputs:
+  gpkg_file:
+    label: GeoPackage file
+    description: GeoPackage file.
+    type: application/geopackage+sqlite3
+    example: null
+outputs:
+  geojson_file:
+    label: GeoJSON file
+    description: GeoJSON file.
+    type: application/geo+json
+    example: null
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - geopandas
