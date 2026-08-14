@@ -12,7 +12,6 @@ function assertSuccess {
 }
 
 offline=false
-startServer=true
 skipPrompts=""
 while (( $# > 0 )) ; do
   case $1 in
@@ -23,9 +22,6 @@ while (( $# > 0 )) ; do
         cd .server
         ./prod-server.sh version
         exit 0 ;;
-    --initialize)
-        startServer=false
-        ;;
     --licence|--license)
         ./.server/prod-server.sh licence
         exit 0 ;;
@@ -43,10 +39,7 @@ while (( $# > 0 )) ; do
         echo "      --offline       Run the currently installed version of the server. "
         echo "                      Will not attempt to pull the latest version or the containers nor server configuration."
         echo "  -v, --version       Display version information"
-        echo "      --initialize    Initialize the server configuration. This will create a .server folder with the server"
-        echo "                      configuration files, but will not start the server."
-        echo "                      When --offline flag is used, this option will be ignored."
-        echo "      --licence       Display licence information"
+        echo "  --licence           Display licence information"
         echo
         echo "GIT BRANCH:           Refers to the git branch of the server, on https://github.com/GEO-BON/bon-in-a-box-pipeline-engine"
         echo "                      The branch must be available on the GitHub package registry, such as main, edge, and *staging branches."
@@ -104,6 +97,4 @@ else
 
 fi
 
-if [ "$startServer" = true ]; then
-    ./prod-server.sh up $skipPrompts
-fi
+./prod-server.sh up $skipPrompts
