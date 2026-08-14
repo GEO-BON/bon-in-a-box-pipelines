@@ -1,5 +1,5 @@
 script: rangePredictions.R
-name: Predictions Range
+name: Range of Predictions
 description: This script computes the range of a 95% confidence interval of a set of predictions rasters (from different models or from bootstrap/cross-validation procedures).
 author:
   - name: Sarah Valentin
@@ -13,7 +13,7 @@ inputs:
     example: "/output/runSDM/modRunSDM_R/a2cb00aa7fb8278599666812601a9c76/sdm_pred.tif"
 outputs:
   range_predictions:
-    label: range predictions
+    label: range of predictions
     description: range of a 95% confidence interval of a set of predictions
     type: image/tiff;application=geotiff
 conda:

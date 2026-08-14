@@ -8,12 +8,12 @@ author:
 inputs:
   rasters:
     label: rasters
-    description: array of input raster paths
+    description: Array of input raster paths. Environmental predictor rasters to screen for collinearity. Choose rasters that describe candidate environmental variables for the model
     type: image/tiff;application=geotiff[]
     example: []
   method:
     label: method
-    description: Option, method used to compute collinearity between variables
+    description: Method used to compute collinearity between variables. Use `vif.cor` to remove variables using pairwise correlation followed by variance inflation factor checks, or `vif.step` to remove variables iteratively using only VIF. If your variables are skewed or have outliers you should favour the Spearman or Kendall methods. See the [`usdm` VIF documentation](https://babaknaimi.r-universe.dev/usdm/doc/manual.html) and this overview of [Pearson, Spearman, and Kendall correlations](https://library.virginia.edu/data/articles/correlation-pearson-spearman-and-kendalls-tau).
     type: options
     options:
       - vif.cor
@@ -24,7 +24,7 @@ inputs:
     example: vif.cor
   method_cor_vif:
     label: correlation coefficient for vif.cor method
-    description: Option, method to calculate the coefficient of collinearity, only used if method == vif.cor
+    description: Option, method to calculate the coefficient of collinearity, only used if method == vif.cor.
     type: options
     options:
       - pearson
@@ -49,7 +49,7 @@ inputs:
 outputs:
   rasters_selected:
     label: rasters_selected
-    description: array of output raster paths
+    description: Array of output raster paths. Subset of input raster paths retained after removing highly collinear predictors. These rasters represent the environmental variables selected for downstream modeling.
     type: image/tiff;application=geotiff[]
 conda:
   channels:
