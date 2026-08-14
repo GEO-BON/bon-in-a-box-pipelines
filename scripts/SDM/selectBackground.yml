@@ -14,9 +14,9 @@ inputs:
     example: "/scripts/SDM/selectBackground_presence.tsv"
   extent:
     label: extent
-    description: shapefile, representing a study extent
-    type: application/dbf
-    example: "/scripts/SDM/extentToBbox_extent.shp"
+    description: Geopackage, representing a study extent
+    type: application/geopackage+sqlite3
+    example: "/scripts/SDM/extentToBbox_extent.gpkg"
   method_background:
     label: method background
     description: > 
