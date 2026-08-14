@@ -15,7 +15,7 @@ on:
       pipelines_branch:
         description: 'BON in a Box Pipelines branch to use'
         required: true
-        default: &pipelines_branch_default 'cwl-poc'
+        default: &pipelines_branch_default 'edge'
   push:
     branches:
       - main
