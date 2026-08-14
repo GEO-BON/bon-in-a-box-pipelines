@@ -1073,15 +1073,15 @@
       "weight": 5
     },
     "data>loadFromStac.yml@144|stac_url": {
-      "description": "URL of the STAC catalog used to retrieve environmental predictor layers.",
-      "label": "STAC URL",
+      "description": "URL of the first STAC catalog used to retrieve environmental predictor layers.",
+      "label": "STAC 1 URL",
       "type": "text",
       "example": "https://stac.geobon.org/",
       "weight": 6
     },
     "data>loadFromStac.yml@144|collections_items": {
       "description": "To pull a specific collection item, input the collection name followed by | followed by the item ID (e.g. \"chelsa-clim|bio1\").\n\nTo extract a whole collection, type the collection name only (e.g. \"chelsa-clim\").\n\nIf pulling a layer that is tiled (e.g. https://stac.geobon.org/viewer/gfw-lossyear/_80N_180W), enter the collection name (e.g. gfw-lossyear) and a bounding box, and the script will assemble the tiles into a continuous layer automatically.",
-      "label": "STAC collection items",
+      "label": "STAC 1 collection items",
       "type": "text[]",
       "example": [
         "chelsa-clim|bio1",
@@ -1090,15 +1090,15 @@
       "weight": 7
     },
     "data>loadFromStac.yml@150|stac_url": {
-      "description": "URL of the STAC catalog.",
-      "label": "STAC URL",
+      "description": "URL of the second STAC catalog.",
+      "label": "STAC 2 URL",
       "type": "text",
       "example": "https://planetarycomputer.microsoft.com/api/stac/v1/",
       "weight": 8
     },
     "data>loadFromStac.yml@150|collections_items": {
       "description": "Vector of strings. To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. \"chelsa-clim|bio1\"). To extract a whole collection, type the collection name only (e.g. \"chelsa-clim\"). To pull collection items by date, write the collection name and provide a start date, end date, and temporal resolution. If pulling a layer that is tiled (e.g. https://stac.geobon.org/viewer/gfw-lossyear/_80N_180W), enter the collection name (e.g. gfw-lossyear), bounding box and time range if the layer is a time series, and the script will assemble the tiles into a continuous layer automatically.)",
-      "label": "STAC collection items",
+      "label": "STAC 2 collection items",
       "type": "text[]",
       "example": [
         "esa-cci-lc"
