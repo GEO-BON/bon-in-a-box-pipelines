@@ -1093,7 +1093,7 @@
       "description": "URL of the second STAC catalog.",
       "label": "STAC 2 URL",
       "type": "text",
-      "example": "https://planetarycomputer.microsoft.com/api/stac/v1/",
+      "example": "https://io.biodiversite-quebec.ca/stac/",
       "weight": 8
     },
     "data>loadFromStac.yml@150|collections_items": {
@@ -1101,7 +1101,7 @@
       "label": "STAC 2 collection items",
       "type": "text[]",
       "example": [
-        "esa-cci-lc"
+        "chelsa-clim|bio4"
       ],
       "weight": 9
     },
