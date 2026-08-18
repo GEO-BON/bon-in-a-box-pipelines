@@ -54,7 +54,30 @@ for (ra in rasters) {
     terra::writeRaster(thisras, output_path, overwrite = TRUE)
   }
 
+  # Keep the real source file path unless a reprojection creates a new file.
+  output_path <- ra
+
+  if (!terra::compareGeom(template, thisras, stopOnError = FALSE)) {
+    print(paste("Aligning raster to template:", ra))
+
+    thisras <- terra::project(
+      thisras,
+      template,
+      method = "bilinear"
+    )
+
+     output_path <- file.path(
+      outputFolder, paste0(tools::file_path_sans_ext(basename(ra)), "_reprojected.tif")
+    )
+
+    terra::writeRaster(thisras, output_path, overwrite = TRUE)
+  }
+
   rasts <- c(rasts, thisras)
+
+  for (nm in names(thisras)) {
+    names_file[[nm]] <- output_path
+  }
 
   for (nm in names(thisras)) {
     names_file[[nm]] <- output_path
@@ -64,7 +87,11 @@ for (ra in rasters) {
 rasts <- terra::rast(rasts)
 
 
+rasts <- terra::rast(rasts)
+
+
 env_df <- sample_spatial_obj(rasts, nb_points = input$nb_sample)
+
 
 nc_names <- detect_collinearity(
   env_df = env_df,
@@ -79,6 +106,11 @@ nc_names <- detect_collinearity(
 print("Selected variables:")
 print(nc_names)
 
+selected_paths <- as.vector(unlist(names_file[nc_names]))
+print("Selected raster paths:")
+print(selected_paths)
+
+biab_output("rasters_selected", selected_paths)
 selected_paths <- as.vector(unlist(names_file[nc_names]))
 print("Selected raster paths:")
 print(selected_paths)
