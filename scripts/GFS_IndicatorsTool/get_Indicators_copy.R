@@ -74,8 +74,8 @@ Pop_HA_T = as.matrix(apply(pop_habitat_area,1,min))
 # Extract size values and combine them into a matrix
 size_matrix <- do.call(rbind, pop_poly$size)
 
-# Assign row names from pop_poly$pop
-rownames(size_matrix) <- pop_poly$pop
+# Assign row names from pop_poly$name
+rownames(size_matrix) <- pop_poly$name
 
 
 # Print the final matrix

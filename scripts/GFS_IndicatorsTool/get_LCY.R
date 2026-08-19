@@ -100,12 +100,15 @@ dir.create(file.path(outputFolder, "/lcyy/"))
 
 
 #### Create local raster output for every population
-for (name in pop_poly$pop) {
+## Initialize with a conditional so the script works with multiple pipelines
+pop_field <- if ("pop" %in% names(pop_poly)) "pop" else "name"
+ids <- pop_poly[[pop_field]]
+for (name in ids) {
   
   print(name)
   
   # crop rasters to pop extent
-  LC_pop = crop(LC, pop_poly[pop_poly$pop==name,], mask=T)
+  LC_pop = crop(LC, pop_poly[pop_poly[[pop_field]]==name,], mask=T)
   
   LC_pop_cl = (LC_pop%in%user_classes)+0
   

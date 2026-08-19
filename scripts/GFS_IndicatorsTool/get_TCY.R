@@ -115,13 +115,15 @@ tcytot = rast(tcy)
 ###create cover maps for each population
 # create output directory for population maps
 dir.create(file.path(outputFolder, "/tcyy/"))
-for (pop in pop_poly$name) {
+pop_field <- if ("pop" %in% names(pop_poly)) "pop" else "name"
+ids <- pop_poly[[pop_field]]
+for (pop in ids) {
   gc()
   print(pop)
 
   # crop rasters to pop extent
-  TC_pop = crop(TC, pop_poly[pop_poly$name==pop,], mask=T)
-  tree_cover_loss_pop = crop(tree_cover_loss, pop_poly[pop_poly$name==pop,], mask=T)
+  TC_pop = crop(TC, pop_poly[pop_poly[[pop_field]]==pop,], mask=T)
+  tree_cover_loss_pop = crop(tree_cover_loss, pop_poly[pop_poly[[pop_field]]==pop,], mask=T)
   
   # container of rasters
   tcy=c()
