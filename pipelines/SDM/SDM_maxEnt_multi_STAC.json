@@ -4,7 +4,7 @@
       "id": "34",
       "type": "io",
       "position": {
-        "x": 2113,
+        "x": 2558,
         "y": 22
       },
       "data": {
@@ -15,7 +15,7 @@
       "id": "35",
       "type": "constant",
       "position": {
-        "x": 1698,
+        "x": 2141,
         "y": 52
       },
       "dragHandle": ".dragHandle",
@@ -37,8 +37,8 @@
       "id": "40",
       "type": "io",
       "position": {
-        "x": 3075,
-        "y": 33
+        "x": 3520,
+        "y": 108.5
       },
       "data": {
         "descriptionFile": "SDM>selectBackground.yml"
@@ -48,8 +48,8 @@
       "id": "44",
       "type": "io",
       "position": {
-        "x": 3662,
-        "y": 933.4285714285714
+        "x": 4103,
+        "y": 704
       },
       "data": {
         "descriptionFile": "SDM>setupDataSdm.yml"
@@ -59,8 +59,8 @@
       "id": "45",
       "type": "constant",
       "position": {
-        "x": 3199,
-        "y": 954.4285714285714
+        "x": 3640,
+        "y": 725.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -77,8 +77,8 @@
       "id": "46",
       "type": "userInput",
       "position": {
-        "x": 3331,
-        "y": 1002.4285714285714
+        "x": 3773,
+        "y": 772.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -90,8 +90,8 @@
       "id": "47",
       "type": "constant",
       "position": {
-        "x": 3255,
-        "y": 1038.4285714285713
+        "x": 3682,
+        "y": 807.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -103,8 +103,8 @@
       "id": "48",
       "type": "constant",
       "position": {
-        "x": 3269,
-        "y": 1081.4285714285713
+        "x": 3696,
+        "y": 849.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -116,8 +116,8 @@
       "id": "64",
       "type": "constant",
       "position": {
-        "x": 1706,
-        "y": 187
+        "x": 2147,
+        "y": 186
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -129,8 +129,8 @@
       "id": "68",
       "type": "io",
       "position": {
-        "x": 4733,
-        "y": 1242.4285714285713
+        "x": 5165,
+        "y": 1001
       },
       "data": {
         "descriptionFile": "SDM>rangePredictions.yml"
@@ -140,8 +140,8 @@
       "id": "69",
       "type": "output",
       "position": {
-        "x": 5144,
-        "y": 1084.4285714285713
+        "x": 5572,
+        "y": 1060.5
       },
       "data": {
         "label": "Output"
@@ -151,8 +151,8 @@
       "id": "97",
       "type": "io",
       "position": {
-        "x": 1461,
-        "y": 744.4285714285714
+        "x": 1920,
+        "y": 463
       },
       "data": {
         "descriptionFile": "SDM>removeCollinearity.yml"
@@ -162,8 +162,8 @@
       "id": "98",
       "type": "constant",
       "position": {
-        "x": 998,
-        "y": 707.4285714285714
+        "x": 1447,
+        "y": 427.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -182,8 +182,8 @@
       "id": "99",
       "type": "constant",
       "position": {
-        "x": 998,
-        "y": 755.4285714285714
+        "x": 1447,
+        "y": 474.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -200,8 +200,8 @@
       "id": "100",
       "type": "constant",
       "position": {
-        "x": 1068,
-        "y": 803.4285714285714
+        "x": 1503,
+        "y": 521.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -213,8 +213,8 @@
       "id": "101",
       "type": "constant",
       "position": {
-        "x": 1054,
-        "y": 846.4285714285714
+        "x": 1489,
+        "y": 563.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -226,8 +226,8 @@
       "id": "102",
       "type": "constant",
       "position": {
-        "x": 1068,
-        "y": 889.4285714285714
+        "x": 1503,
+        "y": 605.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -239,8 +239,8 @@
       "id": "104",
       "type": "io",
       "position": {
-        "x": 2589,
-        "y": 276.42857142857144
+        "x": 3029,
+        "y": 208
       },
       "data": {
         "descriptionFile": "SDM>studyExtent.yml"
@@ -250,8 +250,8 @@
       "id": "105",
       "type": "constant",
       "position": {
-        "x": 2146,
-        "y": 307.42857142857144
+        "x": 2586,
+        "y": 239
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -269,8 +269,8 @@
       "id": "107",
       "type": "constant",
       "position": {
-        "x": 2216,
-        "y": 355.42857142857144
+        "x": 2642,
+        "y": 286
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -282,8 +282,8 @@
       "id": "108",
       "type": "io",
       "position": {
-        "x": 4294,
-        "y": 1084.4285714285713
+        "x": 4731,
+        "y": 851
       },
       "data": {
         "descriptionFile": "SDM>runMaxent.yml"
@@ -293,8 +293,8 @@
       "id": "109",
       "type": "output",
       "position": {
-        "x": 4733,
-        "y": 1061.4285714285713
+        "x": 5165,
+        "y": 828.5
       },
       "data": {
         "label": "Output"
@@ -304,8 +304,8 @@
       "id": "115",
       "type": "constant",
       "position": {
-        "x": 3831,
-        "y": 1230.4285714285713
+        "x": 4268,
+        "y": 995.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -322,8 +322,8 @@
       "id": "116",
       "type": "constant",
       "position": {
-        "x": 3831,
-        "y": 1135.4285714285713
+        "x": 4268,
+        "y": 902.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -341,8 +341,8 @@
       "id": "121",
       "type": "userInput",
       "position": {
-        "x": 247,
-        "y": 146.33333333333334
+        "x": 248,
+        "y": 45.166666666666664
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -356,8 +356,8 @@
       "id": "122",
       "type": "output",
       "position": {
-        "x": 653,
-        "y": 307.42857142857144
+        "x": 673,
+        "y": 41
       },
       "data": {
         "label": "Output"
@@ -367,8 +367,8 @@
       "id": "123",
       "type": "output",
       "position": {
-        "x": 2589,
-        "y": 421.42857142857144
+        "x": 3029,
+        "y": 93.5
       },
       "data": {
         "label": "Output"
@@ -378,8 +378,8 @@
       "id": "124",
       "type": "output",
       "position": {
-        "x": 2113,
-        "y": 398.42857142857144
+        "x": 2558,
+        "y": 560.5
       },
       "data": {
         "label": "Output"
@@ -389,8 +389,8 @@
       "id": "128",
       "type": "userInput",
       "position": {
-        "x": 176,
-        "y": 952.9285714285714
+        "x": 177,
+        "y": 724.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -403,7 +403,7 @@
       "type": "constant",
       "position": {
         "x": 70,
-        "y": 638.0952380952382
+        "y": 641.8333333333334
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -423,7 +423,7 @@
       "type": "constant",
       "position": {
         "x": 70,
-        "y": 590.0952380952381
+        "y": 594.8333333333334
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -451,8 +451,8 @@
       "id": "139",
       "type": "io",
       "position": {
-        "x": 962,
-        "y": 942.4285714285714
+        "x": 982,
+        "y": 713.5
       },
       "data": {
         "descriptionFile": "data>GBIFHeatmapFromSTAC.yml"
@@ -462,8 +462,8 @@
       "id": "140",
       "type": "userInput",
       "position": {
-        "x": 92,
-        "y": 289
+        "x": 93,
+        "y": 224.42857142857144
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -474,8 +474,8 @@
       "id": "142",
       "type": "io",
       "position": {
-        "x": 653,
-        "y": 155
+        "x": 673,
+        "y": 239
       },
       "data": {
         "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
@@ -485,8 +485,8 @@
       "id": "143",
       "type": "output",
       "position": {
-        "x": 1461,
-        "y": 230
+        "x": 1447,
+        "y": 310.5
       },
       "data": {
         "label": "Output"
@@ -496,8 +496,8 @@
       "id": "144",
       "type": "io",
       "position": {
-        "x": 986,
-        "y": 535.4285714285714
+        "x": 1007,
+        "y": 539.5
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -508,7 +508,7 @@
       "type": "userInput",
       "position": {
         "x": 102,
-        "y": 110.33333333333334
+        "y": 80.16666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -520,8 +520,8 @@
       "id": "146",
       "type": "userInput",
       "position": {
-        "x": 104,
-        "y": 202
+        "x": 105,
+        "y": 115.16666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -533,8 +533,8 @@
       "id": "147",
       "type": "userInput",
       "position": {
-        "x": 3961,
-        "y": 1194.4285714285713
+        "x": 4399,
+        "y": 960.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -546,8 +546,8 @@
       "id": "148",
       "type": "constant",
       "position": {
-        "x": 166,
-        "y": 238
+        "x": 169,
+        "y": 175.42857142857144
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -559,8 +559,8 @@
       "id": "149",
       "type": "constant",
       "position": {
-        "x": 166,
-        "y": 353.76190476190476
+        "x": 169,
+        "y": 368.1666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -572,8 +572,8 @@
       "id": "150",
       "type": "io",
       "position": {
-        "x": 986,
-        "y": 353.42857142857144
+        "x": 1007,
+        "y": 365.5
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -584,7 +584,7 @@
       "type": "userInput",
       "position": {
         "x": 161,
-        "y": 404.7619047619047
+        "y": 417.1666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -596,11 +596,22 @@
       "type": "userInput",
       "position": {
         "x": 12,
-        "y": 686.0952380952382
+        "y": 688.8333333333334
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "application/geopackage+sqlite3"
+      }
+    },
+    {
+      "id": "153",
+      "type": "io",
+      "position": {
+        "x": 1466,
+        "y": 355.5
+      },
+      "data": {
+        "descriptionFile": "summarise_layers>combine_rasters.yml"
       }
     }
   ],
@@ -914,13 +925,6 @@
       "id": "reactflow__edge-140-144bbox_crs"
     },
     {
-      "source": "144",
-      "sourceHandle": "rasters",
-      "target": "97",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-144rasters-97rasters"
-    },
-    {
       "source": "145",
       "target": "142",
       "targetHandle": "min_year",
@@ -949,13 +953,6 @@
       "target": "144",
       "targetHandle": "t1",
       "id": "xy-edge__149-144t1"
-    },
-    {
-      "source": "150",
-      "sourceHandle": "rasters",
-      "target": "97",
-      "targetHandle": "rasters",
-      "id": "xy-edge__150rasters-97rasters"
     },
     {
       "source": "140",
@@ -1016,6 +1013,27 @@
       "target": "144",
       "targetHandle": "study_area",
       "id": "xy-edge__152-144study_area"
+    },
+    {
+      "source": "150",
+      "sourceHandle": "rasters",
+      "target": "153",
+      "targetHandle": "rasters1",
+      "id": "xy-edge__150rasters-153rasters1"
+    },
+    {
+      "source": "144",
+      "sourceHandle": "rasters",
+      "target": "153",
+      "targetHandle": "rasters2",
+      "id": "xy-edge__144rasters-153rasters2"
+    },
+    {
+      "source": "153",
+      "sourceHandle": "combined_rasters",
+      "target": "97",
+      "targetHandle": "rasters",
+      "id": "xy-edge__153combined_rasters-97rasters"
     }
   ],
   "inputs": {
