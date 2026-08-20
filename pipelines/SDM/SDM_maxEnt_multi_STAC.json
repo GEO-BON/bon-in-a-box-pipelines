@@ -602,17 +602,6 @@
       "data": {
         "type": "application/geopackage+sqlite3"
       }
-    },
-    {
-      "id": "153",
-      "type": "io",
-      "position": {
-        "x": 1466,
-        "y": 355.5
-      },
-      "data": {
-        "descriptionFile": "summarise_layers>combine_rasters.yml"
-      }
     }
   ],
   "edges": [
@@ -1017,23 +1006,16 @@
     {
       "source": "150",
       "sourceHandle": "rasters",
-      "target": "153",
-      "targetHandle": "rasters1",
-      "id": "xy-edge__150rasters-153rasters1"
+      "target": "97",
+      "targetHandle": "rasters",
+      "id": "xy-edge__150rasters-97rasters"
     },
     {
       "source": "144",
       "sourceHandle": "rasters",
-      "target": "153",
-      "targetHandle": "rasters2",
-      "id": "xy-edge__144rasters-153rasters2"
-    },
-    {
-      "source": "153",
-      "sourceHandle": "combined_rasters",
       "target": "97",
       "targetHandle": "rasters",
-      "id": "xy-edge__153combined_rasters-97rasters"
+      "id": "xy-edge__144rasters-97rasters"
     }
   ],
   "inputs": {
@@ -1212,14 +1194,14 @@
       "label": "Start date",
       "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name or to extract layers from all available dates.",
       "type": "text",
-      "example": "2018",
+      "example": null,
       "weight": 19
     },
     "pipeline@149": {
       "label": "End date",
       "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name or to extract layers from all available dates.",
       "type": "text",
-      "example": "2019",
+      "example": null,
       "weight": 20
     }
   },
