@@ -462,12 +462,12 @@
       "id": "140",
       "type": "userInput",
       "position": {
-        "x": 34,
-        "y": 786.3333333333334
+        "x": -69.45718370615631,
+        "y": 443.2910926234467
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "bboxCRS"
+        "type": "crsBBox"
       }
     },
     {
@@ -814,13 +814,6 @@
       "id": "reactflow__edge-140-104bbox_crs"
     },
     {
-      "source": "140",
-      "sourceHandle": null,
-      "target": "108",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-140-108crs"
-    },
-    {
       "source": "142",
       "sourceHandle": "gbif_doi",
       "target": "143",
@@ -943,7 +936,7 @@
     "pipeline@140": {
       "label": "Bounding box and CRS",
       "description": "Bounding box and coordinate reference system defining the analysis extent. This extent is used to retrieve GBIF occurrences, environmental predictor rasters, the GBIF sampling-effort heatmap, and the study extent for modelling.\n\nThe extent you choose affects how results should be interpreted and may change which predictors emerge as important.\n* Larger than the species' range: results lean toward occurrence/accessibility. Predictors tied to broad-scale distributional limits (climate, biogeography) may dominate.\n* Similar to or smaller than the species' range: results lean toward habitat suitability. Predictors tied to local habitat structure (vegetation, soil) may matter more.",
-      "type": "bboxCRS",
+      "type": "crsBBox",
       "example": null,
       "weight": 2
     },
@@ -1069,6 +1062,13 @@
       "type": "int",
       "example": 10,
       "weight": 16
+    },
+    "SDM>runMaxent.yml@108|crs": {
+      "description": "Object containing CRS.",
+      "label": "CRS",
+      "type": "CRS",
+      "weight": 17,
+      "example": null
     }
   },
   "outputs": {
@@ -1163,7 +1163,7 @@
       },
       {
         "text": "Peterson, 2001",
-        "doi": "https://doi.org/10.1641/0006-3568%282001%29051%5B0363%3APSIUEN%5D2.0.CO%3B2"
+        "link": "https://doi.org/10.1641/0006-3568%282001%29051%5B0363%3APSIUEN%5D2.0.CO%3B2"
       }
     ]
   }

@@ -544,7 +544,7 @@
     },
     {
       "id": "148",
-      "type": "constant",
+      "type": "userInput",
       "position": {
         "x": 169,
         "y": 175.42857142857144
@@ -557,7 +557,7 @@
     },
     {
       "id": "149",
-      "type": "constant",
+      "type": "userInput",
       "position": {
         "x": 169,
         "y": 368.1666666666667
@@ -601,17 +601,6 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "application/geopackage+sqlite3"
-      }
-    },
-    {
-      "id": "153",
-      "type": "io",
-      "position": {
-        "x": 1466,
-        "y": 355.5
-      },
-      "data": {
-        "descriptionFile": "summarise_layers>combine_rasters.yml"
       }
     }
   ],
@@ -1017,23 +1006,16 @@
     {
       "source": "150",
       "sourceHandle": "rasters",
-      "target": "153",
-      "targetHandle": "rasters1",
-      "id": "xy-edge__150rasters-153rasters1"
+      "target": "97",
+      "targetHandle": "rasters",
+      "id": "xy-edge__150rasters-97rasters"
     },
     {
       "source": "144",
       "sourceHandle": "rasters",
-      "target": "153",
-      "targetHandle": "rasters2",
-      "id": "xy-edge__144rasters-153rasters2"
-    },
-    {
-      "source": "153",
-      "sourceHandle": "combined_rasters",
       "target": "97",
       "targetHandle": "rasters",
-      "id": "xy-edge__153combined_rasters-97rasters"
+      "id": "xy-edge__144rasters-97rasters"
     }
   ],
   "inputs": {
@@ -1207,6 +1189,20 @@
       "type": "int",
       "example": 10,
       "weight": 18
+    },
+    "pipeline@148": {
+      "label": "Start date",
+      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name or to extract layers from all available dates.",
+      "type": "text",
+      "example": null,
+      "weight": 19
+    },
+    "pipeline@149": {
+      "label": "End date",
+      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name or to extract layers from all available dates.",
+      "type": "text",
+      "example": null,
+      "weight": 20
     }
   },
   "outputs": {
