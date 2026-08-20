@@ -462,8 +462,8 @@
       "id": "140",
       "type": "userInput",
       "position": {
-        "x": 34,
-        "y": 786.3333333333334
+        "x": -69.45718370615631,
+        "y": 443.2910926234467
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -814,13 +814,6 @@
       "id": "reactflow__edge-140-104bbox_crs"
     },
     {
-      "source": "140",
-      "sourceHandle": null,
-      "target": "108",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-140-108crs"
-    },
-    {
       "source": "142",
       "sourceHandle": "gbif_doi",
       "target": "143",
@@ -1069,6 +1062,13 @@
       "type": "int",
       "example": 10,
       "weight": 16
+    },
+    "SDM>runMaxent.yml@108|crs": {
+      "description": "Object containing CRS.",
+      "label": "CRS",
+      "type": "CRS",
+      "weight": 17,
+      "example": null
     }
   },
   "outputs": {

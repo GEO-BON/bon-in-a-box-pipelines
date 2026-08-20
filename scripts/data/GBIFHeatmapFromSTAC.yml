@@ -25,7 +25,7 @@ inputs:
   bbox_crs:
     description: Select a bounding box and CRS
     label: Bounding box and CRS
-    type: crsBbox
+    type: crsBBox
     example:
   spatial_res:
     label: Spatial resolution
