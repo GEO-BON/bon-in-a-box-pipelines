@@ -152,7 +152,7 @@
       "type": "io",
       "position": {
         "x": 1373,
-        "y": 512.5
+        "y": 510.5546901051755
       },
       "data": {
         "descriptionFile": "SDM>removeCollinearity.yml"
@@ -905,6 +905,12 @@
       "target": "144",
       "targetHandle": "t1",
       "id": "xy-edge__149-144t1"
+    },
+    {
+      "source": "140",
+      "target": "108",
+      "targetHandle": "crs",
+      "id": "xy-edge__140-108crs"
     }
   ],
   "inputs": {
@@ -1062,13 +1068,6 @@
       "type": "int",
       "example": 10,
       "weight": 16
-    },
-    "SDM>runMaxent.yml@108|crs": {
-      "description": "Object containing CRS.",
-      "label": "CRS",
-      "type": "CRS",
-      "weight": 17,
-      "example": null
     }
   },
   "outputs": {
