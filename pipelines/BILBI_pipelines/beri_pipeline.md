@@ -1,22 +1,13 @@
-_Authors: Jory Griffith_
+_Authors: Jory Griffith, Nina Obiar_
 
 Review status: In review
 
 ## Introduction
 
-The CSIRO Bioclimatic Ecosystem Resilience Index (BERI v2) is a global 30
-arc-second product for the years 2000, 2005, 2010, 2015 and 2020. BERI
-measures the capacity of natural ecosystems to retain species diversity in the
-face of climate change, as a function of ecosystem area, connectivity and
-integrity. The indicator assesses the extent to which any given spatial
-configuration of natural habitat across a landscape will promote or hinder
-climate-induced shifts in biological distributions. It does this by analyzing
-the functional connectivity of each grid-cell of natural habitat to areas of
-habitat in the surrounding landscape which are projected to support a similar
-assemblage of species under climate change to that currently associated with
-the cell of interest. The indicator can then be aggregated and reported by any
-desired spatial unit – e.g. an ecosystem type, a country, or the entire
-planet.
+The CSIRO Bioclimatic Ecosystem Resilience Index (BERI) is a recognised component indicator within the Kunming-Montreal Global Biodiversity Framework (GBF) to directly asses Target 8, to minimize the impacts of climate change on biodiversity and build resilience. BERI measures the capacity of natural ecosystems to retain biodiversity in the face of climate change (Ferrier et al., 2020). The indicator is a function of ecosystem area, connectivity and integrity. The index is a global 30 arc-second product for the years 2000, 2005, 2010, 2015 and 2020 and is based on data for more than 400,000 species of plants, vertebrates, and invertebrates (Harwood et al., 2022). 
+
+BERI assesses how well a landscape's configuration of natural habitat is able to accommodate climate-driven shifts in species distributions. For each grid-cell of natural habitat, the index evaluates the cell's functional connectivity to surrounding areas that are projected to support, under climate change, an assemblage of species similar to the one currently associated with that cell. Cells with well-connected habitat score highly, while isolated areas with no acccessible climatic analogue score poorly. The indicator can then be aggregated and reported by any desired spatial unit – e.g. an ecosystem type, a country, or the entire planet.
+
 
 This pipeline calculates a weighted geometric mean of the BERI indicator over a region of interest.
 The code to calculate the weighted mean was adapted from the "Calculating weighted geometric means of
@@ -24,16 +15,9 @@ CSIRO BILBI indicator" script on the
 [CSIRO data access portal](https://doi.org/10.25919/4vvz-4j96)
 
 ### Uses
+BERI can be used to assess Target 8 of the GBF. This indicator can be used to monitor and report past-to-present trends of the resilience of ecosystem condition and connectivity in the face of ongoing climate change. The index repeatedly recalculates the indicator using the best-available mapping of ecosystem condition or integrity observed at multiple points in time. 
 
-The BERI can be used to monitor and report past-to-present trends in the
-capacity of ecosystems to retain species diversity in the face of ongoing
-climate change by repeatedly recalculating the indicator using best-available
-mapping of ecosystem condition or integrity observed at multiple points in
-time, e.g. for different years. It can also serve as a leading indicator for
-assessing the contribution that proposed or implemented area-based actions are
-expected to make to enhancing the present capacity of ecosystems to retain
-species diversity, thereby providing a foundation for strategic prioritisation
-of such actions by countries.
+It can also identify areas where biodiversity may be especially vulnerable to climate change, which areas are best to protect, and assess how proposed or implemented area-based actions are expected to retain species diversity thereby providing a stronger foundation for strategic prioritisation of such actions by member countries..
 
 ### Pipeline limitations
 
@@ -61,7 +45,7 @@ BON in a Box contains a pipeline to calculate the BERI indicator for a given are
 - **Spatial resolution:** the user can select the spatial resolution of the rasters. This must be in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat-long). To use the original spatial resolution of the layers, the user should leave this input blank. If the spatial resolution is left blank, the CRS selected must be EPSG:4326.
 
 - **Resampling method:** the user must select a resampling method to be used when the analysis requires rescaling to a new spatial resolution and/or reprojecting of the raster layers.
-See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for a description. This input will be ignored if there is no need for resampling.
+For more information on which resampling method (i.e., near, bilinear) to use please visit [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html). This input will be ignored if there is no need for resampling.
 
 - **Aggregation method:** the user must select a method to aggregate items when layers are combined over time, e.g. if a courser temporal resolution is chosen. This input will be ignored if there is no need for aggregation (the temporal resolution of the
 original layers is selected).
@@ -97,7 +81,9 @@ This step calculates the weighted arithmetic mean for the BERI layers to calcula
 Example output available soon.
 
 ## Troubleshooting
+Problems with the pipeline can be directed to @info.boninabox.org
 
 ## References
+Ferrier, Simon; Harwood, Thomas D.; Ware, Chris; Hoskins, Andrew J (2020): A globally applicable indicator of the capacity of terrestrial ecosystems to retain biological diversity under climate change: The bioclimatic ecosystem resilience index. Ecological Indicators. doi: https://doi.org/10.1016/j.ecolind.2020.106554.
 
 Harwood, Tom; Ware, Chris; Hoskins, Andrew; Ferrier, Simon; Bush, Alex; Golebiewski, Maciej; Hill, Samantha; Ota, Noboru; Perry, Justin; Purvis, Andy; & Williams, Kristen (2022): BERI v2: Bioclimatic Ecosystem Resilience Index: 30s global time series. v2. CSIRO. Data Collection. doi: https://doi.org/10.25919/4vvz-4j96
