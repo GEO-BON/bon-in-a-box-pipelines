@@ -140,8 +140,8 @@
       "id": "69",
       "type": "output",
       "position": {
-        "x": 5572,
-        "y": 1060.5
+        "x": 5710,
+        "y": 1010.5
       },
       "data": {
         "label": "Output"
@@ -293,8 +293,8 @@
       "id": "109",
       "type": "output",
       "position": {
-        "x": 5165,
-        "y": 828.5
+        "x": 5185,
+        "y": 772.5
       },
       "data": {
         "label": "Output"
@@ -544,7 +544,7 @@
     },
     {
       "id": "148",
-      "type": "constant",
+      "type": "userInput",
       "position": {
         "x": 169,
         "y": 175.42857142857144
@@ -557,7 +557,7 @@
     },
     {
       "id": "149",
-      "type": "constant",
+      "type": "userInput",
       "position": {
         "x": 169,
         "y": 368.1666666666667
@@ -607,11 +607,22 @@
       "id": "153",
       "type": "io",
       "position": {
-        "x": 1466,
-        "y": 355.5
+        "x": 5546.360897529028,
+        "y": 794.8248772304895
       },
       "data": {
-        "descriptionFile": "summarise_layers>combine_rasters.yml"
+        "descriptionFile": "STAC>createCollection.yml"
+      }
+    },
+    {
+      "id": "154",
+      "type": "output",
+      "position": {
+        "x": 6070.360897529028,
+        "y": 793.8248772304895
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
@@ -1017,23 +1028,29 @@
     {
       "source": "150",
       "sourceHandle": "rasters",
-      "target": "153",
-      "targetHandle": "rasters1",
-      "id": "xy-edge__150rasters-153rasters1"
+      "target": "97",
+      "targetHandle": "rasters",
+      "id": "xy-edge__150rasters-97rasters"
     },
     {
       "source": "144",
       "sourceHandle": "rasters",
+      "target": "97",
+      "targetHandle": "rasters",
+      "id": "xy-edge__144rasters-97rasters"
+    },
+    {
+      "source": "108",
+      "sourceHandle": "sdm_pred",
       "target": "153",
-      "targetHandle": "rasters2",
-      "id": "xy-edge__144rasters-153rasters2"
+      "targetHandle": "tiff_files",
+      "id": "xy-edge__108sdm_pred-153tiff_files"
     },
     {
       "source": "153",
-      "sourceHandle": "combined_rasters",
-      "target": "97",
-      "targetHandle": "rasters",
-      "id": "xy-edge__153combined_rasters-97rasters"
+      "sourceHandle": "stac_collection",
+      "target": "154",
+      "id": "xy-edge__153stac_collection-154"
     }
   ],
   "inputs": {
@@ -1207,6 +1224,41 @@
       "type": "int",
       "example": 10,
       "weight": 18
+    },
+    "pipeline@148": {
+      "label": "Start date",
+      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name or to extract layers from all available dates.",
+      "type": "text",
+      "example": null,
+      "weight": 19
+    },
+    "pipeline@149": {
+      "label": "End date",
+      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name or to extract layers from all available dates.",
+      "type": "text",
+      "example": null,
+      "weight": 20
+    },
+    "STAC>createCollection.yml@153|collection_name": {
+      "description": "Name of the STAC collection to be created as output. The collection name should be unique, using lowercase letters and hyphens only. Default is \"biab-collection\".",
+      "label": "Collection Name",
+      "type": "text",
+      "example": "biab-collection",
+      "weight": 21
+    },
+    "STAC>createCollection.yml@153|collection_description": {
+      "description": "Description of the STAC collection to be created as output.",
+      "label": "Collection Description",
+      "type": "text",
+      "example": "A STAC collection created from GeoTIFF files.",
+      "weight": 22
+    },
+    "STAC>createCollection.yml@153|collection_license": {
+      "description": "License for the STAC collection to be created as output. Default is \"CC-BY\".",
+      "label": "Collection License",
+      "type": "text",
+      "example": "CC-BY",
+      "weight": 23
     }
   },
   "outputs": {
@@ -1253,6 +1305,12 @@
       "type": "text",
       "example": "10.15468/dl.j644h5",
       "weight": 5
+    },
+    "STAC>createCollection.yml@153|stac_collection": {
+      "description": "JSON file representing a STAC collection containing the provided GeoTIFFs",
+      "label": "STAC Collection",
+      "type": "application/json",
+      "weight": 6
     }
   },
   "metadata": {

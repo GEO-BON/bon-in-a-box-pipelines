@@ -16,7 +16,7 @@ inputs:
   bbox_crs:
     description: Select a bounding box and CRS. This defines the geographic extent of the analysis as a bounding box, along with its coordinate reference system (CRS). A larger extent increases computation time.
     label: Bounding box and CRS
-    type: bboxCRS
+    type: crsBBox
     example:
   min_year:
     description: Earliest year for GBIF records. Accepts YYYY or YYYY-MM-DD; if a full date is supplied, only the year is used.

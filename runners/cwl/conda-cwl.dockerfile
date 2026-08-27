@@ -1,0 +1,30 @@
+ARG CONDA_RUNNER_TAG
+FROM ghcr.io/geo-bon/bon-in-a-box-pipelines/runner-conda:${CONDA_RUNNER_TAG}
+
+ARG SERVER_BRANCH
+ARG PIPELINES_BRANCH
+
+# Setup BON in a Box, runner.env and .server folder
+RUN set -ex; \
+    git clone -b $PIPELINES_BRANCH --single-branch --depth 1 https://github.com/GEO-BON/bon-in-a-box-pipelines.git \
+    && rm -rf bon-in-a-box-pipelines/.git \
+    && find bon-in-a-box-pipelines -type f -name "*.tif" -delete \
+    && ln -s /data/bon-in-a-box-pipelines/scripts /scripts \
+    && ln -s /data/bon-in-a-box-pipelines/pipelines /pipelines \
+    && ln -s /data/bon-in-a-box-pipelines/output /output \
+    && ln -s /data/bon-in-a-box-pipelines/userdata /userdata \
+    && ln -s /data/bon-in-a-box-pipelines/runner.env /runner.env
+
+
+WORKDIR /data/bon-in-a-box-pipelines
+RUN touch runner.env
+RUN set -ex; \
+    git clone -n https://github.com/GEO-BON/bon-in-a-box-pipeline-engine.git --branch $SERVER_BRANCH --single-branch --depth 1 .server \
+    && cd .server \
+    && git checkout origin/$SERVER_BRANCH -- prod-server.sh \
+    && ./prod-server.sh checkout $SERVER_BRANCH \
+    && rm -rf .git \
+    && ln -s /data/bon-in-a-box-pipelines/.server/script-stubs /script-stubs
+
+RUN echo Conda Image: $(cat /version.txt) > /version.txt \
+    && echo CWL: $(date +"%Y-%m-%d %R") >> /version.txt

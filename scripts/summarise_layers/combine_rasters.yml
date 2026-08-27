@@ -23,3 +23,7 @@ outputs:
     label: combined_rasters
     description: Path to the combined raster layers. The layers will be in GeoTIFF format.
     type: image/tiff;application=geotiff[]
+conda:
+  channels:
+    - conda-forge
+    - r
