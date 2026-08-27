@@ -179,6 +179,12 @@
       "target": "203",
       "targetHandle": null,
       "id": "reactflow__edge-200pop_area-203"
+    },
+    {
+      "source": "199",
+      "target": "200",
+      "targetHandle": "lc_classes",
+      "id": "xy-edge__199-200lc_classes"
     }
   ],
   "inputs": {

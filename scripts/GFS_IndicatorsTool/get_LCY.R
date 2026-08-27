@@ -21,6 +21,7 @@ yoi = input$yoi
 
 
 
+
 startY = min(as.numeric(yoi))
 endY = max(as.numeric(yoi))
 
@@ -99,6 +100,8 @@ if (length(user_classes)==1&user_classes[1]==0) {
 dir.create(file.path(outputFolder, "/lcyy/"))
 
 
+
+
 #### Create local raster output for every population
 for (name in pop_poly$pop) {
   
@@ -107,14 +110,13 @@ for (name in pop_poly$pop) {
   # crop rasters to pop extent
   LC_pop = crop(LC, pop_poly[pop_poly$pop==name,], mask=T)
   
-  LC_pop_cl = (LC_pop%in%user_classes)+0
+  # LC_pop_cl = (LC_pop%in%user_classes)+0
+  # 
+  LC_pop[is.na(LC_pop)] = NA
   
-  LC_pop_cl[is.na(LC_pop)] = NA
-  
-  lcy = LC_pop_cl
+  lcy = LC_pop
   print(names(lcy))
   print(yoi)
-
   names(lcy)=paste0('y',yoi)
   plot(lcy)
   # write output

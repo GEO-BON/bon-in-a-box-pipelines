@@ -7,6 +7,12 @@ author:
 
 inputs:
 
+  lc_classes:
+    label: Land cover classes to consider as habitat
+    description: List of land cover classes to consider as habitat. The area of these classes will be summed up to calculate the total habitat area per population.
+    type: int[]
+    example: [10, 20, 30, 40, 50, 60]
+    
   population_polygons:
     label: Polygons of populations
     description: Path to geojson file storing polygons of populations.
