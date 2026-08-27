@@ -15,6 +15,11 @@ input <- biab_inputs()
 
 country_name <- input$country_name$country$englishName
 compendium_countries <- read_excel(input$compendium_countries)
+global_invasive_checklist <- read.csv(
+  input$global_invasive_checklist,
+  stringsAsFactors = FALSE,
+  check.names = FALSE
+)
 iso3 <- input$country_name$country$ISO3
 
 # input checks
@@ -28,6 +33,41 @@ ifelse(!country_name %in% compendium_countries$country,
 if (is.null(iso3) || is.na(iso3) || iso3 == "") {
   biab_error_stop(paste0("ISO3 is missing for selected country: ", country_name))
 }
+
+required_global_columns <- c(
+  "scientificName", "taxon", "isInvasiveAnywhere"
+)
+missing_global_columns <- setdiff(
+  required_global_columns, colnames(global_invasive_checklist)
+)
+if (length(missing_global_columns) > 0) {
+  biab_error_stop(paste0(
+    "Global invasive alien species checklist is missing expected columns: ",
+    paste(missing_global_columns, collapse = ", ")
+  ))
+}
+
+# Use a conservative exact-name match after normalising case and whitespace.
+# The global checklist provides both authored scientific names and canonical
+# taxon names, allowing GRIIS names in either form to be recognised without a
+# many-to-many join that could duplicate checklist records.
+normalise_taxon_name <- function(x) {
+  x <- iconv(as.character(x), from = "", to = "UTF-8", sub = "")
+  x <- stringr::str_squish(x)
+  tolower(x)
+}
+
+global_invasive_names <- global_invasive_checklist %>%
+  dplyr::filter(
+    toupper(as.character(isInvasiveAnywhere)) %in% c("TRUE", "YES", "1")
+  ) %>%
+  dplyr::select(scientificName, taxon) %>%
+  unlist(use.names = FALSE) %>%
+  normalise_taxon_name() %>%
+  unique()
+global_invasive_names <- global_invasive_names[
+  !is.na(global_invasive_names) & nzchar(global_invasive_names)
+]
 
 # Link to GRIIS data
 feed_url <- "https://cloud.gbif.org/griis/rss.do"
@@ -293,17 +333,13 @@ griis_checklist <- griis_checklist %>% dplyr::mutate(isInvasive = toupper(isInva
                                               is.na(isInvasive) ~ "NODATA",
                                               TRUE ~ "NULL")) 
 
-# Create isInvasiveInCountry and isInvasiveAnywhere columns
-# Skipping isInvasiveAnywhere for now as this requires checking each species across all checklists
-#isInvasiveAnywhere <- griis_checklist %>% 
-#  dplyr::filter(isInvasive == "INVASIVE") %>% 
-#  dplyr::distinct(scientificName) %>% 
-#  dplyr::pull(scientificName)
-
-griis_checklist <- griis_checklist %>% 
-  dplyr::mutate(isInvasiveInCountry = dplyr::case_when(
-    isInvasive == "INVASIVE" ~ TRUE, 
-    TRUE ~ as.logical(FALSE)))
+# Create country-specific and global invasive-status columns.
+griis_checklist <- griis_checklist %>%
+  dplyr::mutate(
+    isInvasiveInCountry = isInvasive == "INVASIVE",
+    isInvasiveAnywhere = isInvasiveInCountry |
+      normalise_taxon_name(scientificName) %in% global_invasive_names
+  )
 
 ## ------------------------------------------------------
 ## GENERATE AND SAVE SUMMARIES 

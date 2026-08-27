@@ -661,14 +661,8 @@ for (i in seq_along(Countries)) {
     
     p1 <- plot_qual_raw()
     
-    p1.title <- p1 + ggplot2::labs(
-      title = paste0("First records and GBIF observation proxy: ", CountryName, " (", x, ")"),
-      subtitle = "Descriptive comparison; parallel trends can indicate changing observation effort.",
-      caption = paste(
-        "First record means first documented detection, not necessarily introduction.",
-        "GBIF records are an indirect survey-effort proxy."
-      )
-    )
+    qualitative_result <- get_qualitative_interpretation()
+    p1.title <- add_qualitative_title(p1, CountryName, x)
     qualitative_plot_path <- file.path(
       outputFolder,
       paste0(x, "_qualitative.png")
@@ -796,14 +790,8 @@ for (i in seq_along(Countries)) {
     
     p1 <- plot_qual_raw()
     
-    p1.title <- p1 + ggplot2::labs(
-      title = paste0("First records and GBIF observation proxy: ", CountryName, " (", x, ")"),
-      subtitle = "Descriptive comparison; parallel trends can indicate changing observation effort.",
-      caption = paste(
-        "First record means first documented detection, not necessarily introduction.",
-        "GBIF records are an indirect survey-effort proxy."
-      )
-    )
+    qualitative_result <- get_qualitative_interpretation()
+    p1.title <- add_qualitative_title(p1, CountryName, x)
     qualitative_plot_path <- file.path(
       outputFolder,
       paste0(x, "_qualitative.png")
@@ -899,14 +887,8 @@ for (i in seq_along(Countries)) {
     
     p1 <- plot_qual_raw()
     
-    p1.title <- p1 + ggplot2::labs(
-      title = paste0("First records and GBIF observation proxy: ", CountryName, " (", x, ")"),
-      subtitle = "Descriptive comparison only; it is not a corrected introduction-rate estimate.",
-      caption = paste(
-        "First record means first documented detection, not necessarily introduction.",
-        "GBIF records are an indirect survey-effort proxy."
-      )
-    )
+    qualitative_result <- get_qualitative_interpretation()
+    p1.title <- add_qualitative_title(p1, CountryName, x)
     qualitative_plot_path <- file.path(
       outputFolder,
       paste0(x, "_qualitative.png")
@@ -1173,6 +1155,15 @@ model_decision <- dplyr::bind_rows(decisionlist)
 data_summary <- dplyr::bind_rows(summarylist)
 model_input <- dplyr::bind_rows(inputlist)
 
+if (exists("qualitative_result")) {
+  model_decision <- model_decision %>%
+    dplyr::mutate(
+      qualitativeIASTrend = qualitative_result$ias_trend,
+      qualitativeSurveyEffortTrend = qualitative_result$survey_trend,
+      qualitativeInterpretation = qualitative_result$interpretation
+    )
+}
+
 model_outputs_path <- file.path(outputFolder, "model_outputs.csv")
 model_decision_path <- file.path(outputFolder, "model_decision.csv")
 data_summary_path <- file.path(outputFolder, "data_summary.csv")
@@ -1192,6 +1183,18 @@ if (exists("qualitative_plot_path") && file.exists(qualitative_plot_path)) {
   biab_output("qualitative_plot", qualitative_plot_path)
 } else {
   biab_output("qualitative_plot", NULL)
+}
+if (exists("qualitative_result")) {
+  biab_output(
+    "qualitative_interpretation",
+    paste0(
+      qualitative_result$interpretation,
+      " (IAS observations: ", tolower(qualitative_result$ias_trend),
+      "; survey effort: ", tolower(qualitative_result$survey_trend), ")."
+    )
+  )
+} else {
+  biab_output("qualitative_interpretation", NULL)
 }
 if (exists("quantitative_plot_path") && file.exists(quantitative_plot_path)) {
   biab_output("quantitative_plot", quantitative_plot_path)

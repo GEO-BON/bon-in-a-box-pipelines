@@ -16,6 +16,11 @@ inputs:
     type: text/csv
     description: List of countries included in the compendium.
     example: /scripts/IAS/compendiumCountries.xlsx
+  global_invasive_checklist:
+    label: Global invasive alien species checklist
+    type: text/csv
+    description: Global checklist used to identify species that are invasive anywhere.
+    example: /scripts/IAS/Data 1. Global Invasive Alien Species Checklist.csv
 outputs:
   griis_checklist:
     label: GRIIS checklist

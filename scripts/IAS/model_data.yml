@@ -41,7 +41,11 @@ outputs:
   qualitative_plot:
     label: Qualitative model plot
     type: image/png
-    description: Descriptive comparison of annual IAS first records with the GBIF observation proxy. Similar patterns may indicate an observation-effort effect; this plot is not a corrected introduction-rate estimate.
+    description: Descriptive comparison of annual IAS first records with the GBIF observation proxy. The corresponding slope-based interpretation is provided in the Qualitative model interpretation output.
+  qualitative_interpretation:
+    label: Qualitative model interpretation
+    type: text
+    description: Interpretation selected from the fitted IAS-observation and survey-effort trend combination. A trend is classified as stable when its fitted time slope is not significant at alpha = 0.05.
   quantitative_plot:
     label: Quantitative model comparison
     type: image/png

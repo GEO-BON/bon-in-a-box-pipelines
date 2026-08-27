@@ -3,6 +3,74 @@
 ## PLOTS OF MODELS - MERGED - QUALITATIVE APPROACH (p1 + p2) WITH RAW DATA POINTS
 ## ------------------------------------------------------ 
 
+classify_qualitative_slope <- function(model, alpha = 0.05) {
+  coefficient_table <- summary(model)$coefficients
+  if (!"time" %in% rownames(coefficient_table)) {
+    stop("Qualitative trend model does not contain a time coefficient.")
+  }
+
+  estimate <- unname(coefficient_table["time", 1])
+  p_value <- unname(coefficient_table["time", ncol(coefficient_table)])
+
+  if (!is.finite(estimate) || !is.finite(p_value) || p_value >= alpha) {
+    return("Stable")
+  }
+  if (estimate < 0) "Decreasing" else "Increasing"
+}
+
+qualitative_interpretation <- function(ias_trend, survey_trend) {
+  interpretations <- c(
+    "Decreasing|Decreasing" =
+      "Increasing risk of underestimating new IAS introductions",
+    "Decreasing|Stable" =
+      "Adequacy of survey effort unknown and therefore invasion trend unknown",
+    "Decreasing|Increasing" = paste(
+      "Evidence for and increasing certainty in successful",
+      "prevention/management"
+    ),
+    "Stable|Decreasing" =
+      "Increasing risk of underestimating new IAS introductions",
+    "Stable|Stable" = paste(
+      "Interpretation dependent on level and relative level of survey effort",
+      "and IAS introductions"
+    ),
+    "Stable|Increasing" = "Increasing certainty in invasion trends",
+    "Increasing|Decreasing" = paste(
+      "Compound risk of underestimating new IAS introductions"
+    ),
+    "Increasing|Stable" =
+      "High risk of underestimating new IAS introductions",
+    "Increasing|Increasing" = paste(
+      "Maintain survey effort and increase prevention efforts to reduce",
+      "IAS introductions"
+    )
+  )
+
+  key <- paste(ias_trend, survey_trend, sep = "|")
+  unname(interpretations[[key]])
+}
+
+get_qualitative_interpretation <- function() {
+  ias_trend <- classify_qualitative_slope(naive_glm)
+  survey_trend <- classify_qualitative_slope(covariate_glm)
+  list(
+    ias_trend = ias_trend,
+    survey_trend = survey_trend,
+    interpretation = qualitative_interpretation(ias_trend, survey_trend)
+  )
+}
+
+add_qualitative_title <- function(plot, country_name, iso3) {
+  plot + ggplot2::labs(
+    title = paste0(
+      "First records and GBIF observation proxy: ", country_name,
+      " (", iso3, ")"
+    ),
+    subtitle = NULL,
+    caption = NULL
+  )
+}
+
 plot_qual_raw <- function() {
   
   #library(MASS)
