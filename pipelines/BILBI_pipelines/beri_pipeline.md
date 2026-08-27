@@ -4,9 +4,9 @@ Review status: In review
 
 ## Introduction
 
-The CSIRO Bioclimatic Ecosystem Resilience Index (BERI) is a recognised component indicator within the Kunming-Montreal Global Biodiversity Framework (GBF) to directly asses Target 8, to minimize the impacts of climate change on biodiversity and build resilience. BERI measures the capacity of natural ecosystems to retain biodiversity in the face of climate change (Ferrier et al., 2020). The indicator is a function of ecosystem area, connectivity and integrity. The index is a global 30 arc-second product for the years 2000, 2005, 2010, 2015 and 2020 and is based on data for more than 400,000 species of plants, vertebrates, and invertebrates (Harwood et al., 2022). 
+The CSIRO Bioclimatic Ecosystem Resilience Index (BERI) is a recognised component indicator within the Kunming-Montreal Global Biodiversity Framework (GBF) to directly asses Target 8, which aims to minimize the impacts of climate change on biodiversity and build resilience. BERI measures the capacity of natural ecosystems to retain biodiversity in the face of climate change (Ferrier et al., 2020). The indicator is a function of ecosystem area, connectivity and integrity. BERI is a global 30 arc-second product for the years 2000, 2005, 2010, 2015 and 2020 and is based on data for more than 400,000 species of plants, vertebrates, and invertebrates (Harwood et al., 2022). 
 
-BERI assesses how well a landscape's configuration of natural habitat is able to accommodate climate-driven shifts in species distributions. For each grid-cell of natural habitat, the index evaluates the cell's functional connectivity to surrounding areas that are projected to support, under climate change, an assemblage of species similar to the one currently associated with that cell. Cells with well-connected habitat score highly, while isolated areas with no acccessible climatic analogue score poorly. The indicator can then be aggregated and reported by any desired spatial unit – e.g. an ecosystem type, a country, or the entire planet.
+BERI assesses how well a landscape's configuration of natural habitat is able to accommodate climate-driven shifts in species distributions. For each grid-cell of natural habitat, the index evaluates the cell's functional connectivity to surrounding areas that are projected to be able to support an assemblage of species similar to the one currently associated with that cell, in the face of climate change. Cells with well-connected habitat score highly, while isolated areas with no acccessible climatic analogue score poorly. The indicator can then be aggregated and reported by any desired spatial unit – e.g. an ecosystem type, a country, or the entire planet.
 
 
 This pipeline calculates a weighted geometric mean of the BERI indicator over a region of interest.
@@ -17,7 +17,7 @@ CSIRO BILBI indicator" script on the
 ### Uses
 BERI can be used to assess Target 8 of the GBF. This indicator can be used to monitor and report past-to-present trends of the resilience of ecosystem condition and connectivity in the face of ongoing climate change. The index repeatedly recalculates the indicator using the best-available mapping of ecosystem condition or integrity observed at multiple points in time. 
 
-It can also identify areas where biodiversity may be especially vulnerable to climate change, which areas are best to protect, and assess how proposed or implemented area-based actions are expected to retain species diversity thereby providing a stronger foundation for strategic prioritisation of such actions by member countries..
+It can also identify areas where biodiversity may be especially vulnerable to climate change, which areas are best to protect, and assess how proposed or implemented area-based actions are expected to retain species diversity thereby providing a stronger foundation for strategic prioritisation of such actions by member countries.
 
 ### Pipeline limitations
 
@@ -81,7 +81,6 @@ This step calculates the weighted arithmetic mean for the BERI layers to calcula
 Example output available soon.
 
 ## Troubleshooting
-Problems with the pipeline can be directed to @info.boninabox.org
 
 ## References
 Ferrier, Simon; Harwood, Thomas D.; Ware, Chris; Hoskins, Andrew J (2020): A globally applicable indicator of the capacity of terrestrial ecosystems to retain biological diversity under climate change: The bioclimatic ecosystem resilience index. Ecological Indicators. doi: https://doi.org/10.1016/j.ecolind.2020.106554.

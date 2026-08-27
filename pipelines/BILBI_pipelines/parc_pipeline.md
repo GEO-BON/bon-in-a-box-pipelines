@@ -1,4 +1,4 @@
-_Authors: Jory Griffith_
+_Authors: Jory Griffith and Nina Obiar_
 
 Review status: In review
 
@@ -7,8 +7,14 @@ Review status: In review
 The Protected Area Representativeness and Connectedness (PARC) indices measure
 the extent to which terrestrial protected areas, and other effective
 area-based conservation measures (OECMs), are ecologically representative, and
-well-connected (both to one another, and to other areas of intact natural
-ecosystems in the surrounding landscape).
+well-connected - both to one another, and to other areas of intact natural
+ecosystems in the surrounding landscape (Hoskins et al., 2022).
+
+The PARC-representativeness index provides a rigorous measure of the extent to which a system of terrestrial protected areas and OECMs is ecologically representative of the full range of environmental and biological diversity within any given spatial reporting unit (e.g. country, broad ecosystem time). 
+
+The PARC- connectedness index provides a rigorous measure of the extent to which protected areas and OECMs are functionally connected to one another and to other areas of intact natural ecosystems.
+
+Together, the composite PARC indicator offers a measure of progress in the expansion of any system of protected areas and OECMs. The indicator is expressed in proportional (or percent) coverage with the position of any given reporting unit on this scale rigorously adjusted for the effects of both representativeness and connectedness.
 
 This pipeline calculates a weighted geometric mean of the PARC indicator over a region of interest. 
 The code to calculate the weighted mean was adapted from the "Calculating weighted geometric means of 
@@ -17,8 +23,7 @@ CSIRO BILBI indicator" script on the
 
 ## Uses
 
-The PARC indices, whether generated separately or as a composite, are used to
-monitor and report past-to-present trends in representativeness and
+The PARC indices assess Goal A and Target 3 of the GBF, whether generated separately or as a composite, are used to monitor and report past-to-present trends in representativeness and
 connectedness by repeated calculation using best-available mapping of
 protected areas and OECMs at multiple points in time, e.g. for different
 years. They can also provide a foundation for assessing the contribution that
@@ -89,5 +94,7 @@ Example output available soon.
 ## Troubleshooting
 
 ## References
-
 Harwood, Tom; Ware, Chris; Hoskins, Andrew; Ferrier, Simon; Bush, Alex; Golebiewski, Maciej; Ota, Noboru; Perry, Justin; & Williams, Kristen (2022): PARC: Protected Area Representativeness Index: 30s global time series. v2. CSIRO. Data Collection. https://doi.org/10.25919/edwj-4b67
+
+Hoskins, Andrew J.; Harwood, Thomas D.; Ware, Chris; Williams, Kristen J.; Perry, Justin J.; Ota, Noburu; Croft, Jim R.; Yeates, David K.; Jetz, Walter; Golebiewski, Maciej; Purvis, Andy; Ferrier, Simon. (2020). BILBI: Supporting global biodiversity assessment through high-resolution macroecological modelling. Environmental Modelling & Software 132:104806. doi: https://doi.org/10.1016/j.envsoft.2020.104806 
+
