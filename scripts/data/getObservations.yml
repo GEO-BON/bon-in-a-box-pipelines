@@ -75,4 +75,15 @@ outputs:
     description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
     type: float[]
     example: [-2316297, -1971146,  1015207,  1511916]
-
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - r-devtools
+    - r-rgbif
+    - r-dplyr
+    - r-raster
+    - r-rjson
+    - r-stringr
+    - r-terra
+    - r-sp

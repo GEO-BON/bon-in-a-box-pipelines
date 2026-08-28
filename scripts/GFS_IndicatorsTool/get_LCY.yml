@@ -41,3 +41,10 @@ outputs:
     description: List of years for which land cover information is available.
     type: text[]
     
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - r-rjson
+    - r-terra
+    - r-sf

@@ -39,3 +39,11 @@ outputs:
     label: uncertainty
     description: credible interval of the posterior distribution
     type: image/tiff;application=geotiff
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - r-terra
+    - r-rjson
+    - r-raster
+    - r-dplyr

@@ -37,3 +37,14 @@ outputs:
     label: Density raster
     description: Array with output raster path
     type: image/tiff;application=geotiff
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - r-rjson
+    - r-dplyr
+    - r-gdalcubes
+    - r-sf
+    - r-lubridate
+    - r-stars
+    - r-terra

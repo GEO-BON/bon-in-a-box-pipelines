@@ -40,4 +40,13 @@ outputs:
     label: consensus
     description: consensus
     type: image/tiff;application=geotiff
-
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - r-terra
+    - r-rjson
+    - r-raster
+    - r-dplyr
+    - r-dismo
+    - r-tidyr

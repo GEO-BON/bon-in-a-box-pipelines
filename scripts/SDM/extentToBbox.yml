@@ -72,3 +72,13 @@ outputs:
     label: bbox
     description: vector of float, containing the coordinates of the bbox
     type: float[]
+
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - r-rjson
+    - r-raster
+    - r-dplyr
+    - r-terra
+    - r-sp

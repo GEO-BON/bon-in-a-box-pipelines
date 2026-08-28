@@ -31,3 +31,11 @@ outputs:
     description: Table of estimated habitat area by population (rows). If available, time points are displayed as columns.
     type: text/tab-separated-values
 
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - r-gdalutils
+    - r-rjson
+    - r-terra
+    - r-sf

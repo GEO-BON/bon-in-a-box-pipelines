@@ -26,3 +26,10 @@ outputs:
     label: Change in BII
     description: Raster plot of change in BII. Higher numbers indicate greater percentage BII loss.
     type: image/tiff;application=geotiff[]
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - r-rjson
+    - r-terra
+    - r-dplyr

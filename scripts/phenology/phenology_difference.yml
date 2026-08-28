@@ -41,4 +41,12 @@ outputs:
     label: Plot of phenology change
     description: Plot of the summarised phenology values over time for the bands of interest
     type: image/png
-
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - r-terra
+    - r-rjson
+    - r-dplyr
+    - r-tidyr
+    - r-ggplot2

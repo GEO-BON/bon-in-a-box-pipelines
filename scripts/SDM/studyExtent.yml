@@ -44,3 +44,12 @@ outputs:
     description: Geopackage representing the study extent
     type: application/geopackage+sqlite3
     example: /output/studyExtent/studyExtent_R/9ab734795ba757bdabb32ae6708e18d1/study_extent.gpkg
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - r-rjson
+    - r-sf
+    - r-terra
+    - r-dplyr
+    - r-sp
