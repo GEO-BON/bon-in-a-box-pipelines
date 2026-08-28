@@ -54,20 +54,20 @@ RUN mkdir /.R && echo "MAKEFLAGS = -j4" > /.R/Makevars && chmod a+r /.R/Makevars
 RUN mkdir /root/.R && echo "MAKEFLAGS = -j" > /root/.R/Makevars
 
 
-RUN bash --login -c "mamba activate rbase \
-    && R -e ' \
-## ADD CRAN PACKAGES HERE (uncomment for packages not found in anaconda.org) \
-        # install.packages(c(\"CoordinateCleaner\", \
-        # ), repos=\"https://cloud.r-project.org/\"); \
-        # \
-## ADD GITHUB PACKAGES HERE (for packages not found in anaconda.org nor CRAN) \
-        devtools::install_github(\"connectscape/Makurhini\"); \
-    ' \
-    # Remove documentation files from /opt/conda/envs/rbase/lib/R/library \
-    # || true at the end just makes sure that this step doesn't fail the build if none were found \
-    && (find /opt/conda/envs/rbase/lib/R/library -name 'help' -prune -type d | xargs -r -i -P 16 rm -r \"{}\" || true) \
-    && (find /opt/conda/envs/rbase/lib/R/library -name 'html' -prune -type d | xargs -r -i -P 16 rm -r \"{}\" || true) \
-    && (find /opt/conda/envs/rbase/lib/R/library -name 'doc' -prune -type d | xargs -r -i -P 16 rm -r \"{}\" || true)"
+# RUN bash --login -c "mamba activate rbase \
+#     && R -e ' \
+# ## ADD CRAN PACKAGES HERE (for packages not found in anaconda.org) \
+#         install.packages(c(\"...\", \"...\", \
+#         ), dependencies=FALSE, repos=\"https://cloud.r-project.org/\"); \
+#         \
+# ## ADD GITHUB PACKAGES HERE (for packages not found in anaconda.org nor CRAN) \
+#         remotes::install_github(\"...\", dependencies = FALSE); \
+#     ' \
+#     # Remove documentation files from /opt/conda/envs/rbase/lib/R/library \
+#     # || true at the end just makes sure that this step doesn't fail the build if none were found \
+#     && (find /opt/conda/envs/rbase/lib/R/library -name 'help' -prune -type d | xargs -r -i -P 16 rm -r \"{}\" || true) \
+#     && (find /opt/conda/envs/rbase/lib/R/library -name 'html' -prune -type d | xargs -r -i -P 16 rm -r \"{}\" || true) \
+#     && (find /opt/conda/envs/rbase/lib/R/library -name 'doc' -prune -type d | xargs -r -i -P 16 rm -r \"{}\" || true)"
 
 # Load python base environment
 ADD ./python-environment.yml /data/python-environment.yml
