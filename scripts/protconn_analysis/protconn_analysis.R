@@ -1,3 +1,26 @@
+# These packages are not on Anaconda, so we install them from CRAN or GitHub
+biab_ensure_package(
+    "samc", # required by Makurhini
+    installer = function() {
+        install.packages(c("samc"), dependencies=FALSE); 
+    }
+)
+
+biab_ensure_package(
+    "graph4lg", # required by Makurhini
+    installer = function() {
+        install.packages(c("graph4lg"), dependencies=FALSE); 
+    }
+)
+
+biab_ensure_package(
+    "Makurhini",
+    installer = function() {
+        remotes::install_github("connectscape/Makurhini@1dc5bd3ce9f141656f058778eac0cb08a166269e", dependencies = FALSE)
+    }
+)
+
+
 # Script for analyzing ProtConn with the function
 packages_list <- list("sf", "terra", "tidyverse", "ggrepel", "rjson", "Makurhini", "PROJ")
 
