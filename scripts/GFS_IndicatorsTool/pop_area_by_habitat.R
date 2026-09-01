@@ -32,7 +32,8 @@ pop_poly <-st_read(input$population_polygons)
 habitat_p = input$habitat_map
 print(lc_classes)
 POP_HABITAT_AREA=c()
-for (name in pop_poly$pop) {
+print(pop_poly)
+for (name in pop_poly$name) {
   print(name)
   ## get habitat map
   habitat = rast(paste0(habitat_p,name,'.tif'))
