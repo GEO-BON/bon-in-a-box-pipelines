@@ -4,8 +4,8 @@
       "id": "37",
       "type": "io",
       "position": {
-        "x": 613,
-        "y": 241
+        "x": 635,
+        "y": 235.5
       },
       "data": {
         "descriptionFile": "IAS>download_firstrecords.yml"
@@ -15,8 +15,8 @@
       "id": "38",
       "type": "io",
       "position": {
-        "x": 443,
-        "y": 335
+        "x": 465,
+        "y": 327.5
       },
       "data": {
         "descriptionFile": "IAS>download_griischecklist.yml"
@@ -26,8 +26,8 @@
       "id": "41",
       "type": "userInput",
       "position": {
-        "x": 94,
-        "y": 215.14285714285717
+        "x": 116,
+        "y": 210.21428571428572
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -39,7 +39,7 @@
       "type": "constant",
       "position": {
         "x": 12,
-        "y": 315.5
+        "y": 308
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -52,7 +52,7 @@
       "type": "constant",
       "position": {
         "x": 12,
-        "y": 358.5
+        "y": 351
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -64,8 +64,8 @@
       "id": "52",
       "type": "io",
       "position": {
-        "x": 1896,
-        "y": 427
+        "x": 1918,
+        "y": 419.5
       },
       "data": {
         "descriptionFile": "IAS>merge_datasets.yml"
@@ -75,8 +75,8 @@
       "id": "53",
       "type": "output",
       "position": {
-        "x": 2715,
-        "y": 368
+        "x": 2737,
+        "y": 362
       },
       "data": {
         "label": "SInAS merged dataset"
@@ -86,8 +86,8 @@
       "id": "73",
       "type": "userInput",
       "position": {
-        "x": 1586,
-        "y": 147
+        "x": 1608,
+        "y": 143.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -99,8 +99,8 @@
       "id": "74",
       "type": "userInput",
       "position": {
-        "x": 1592,
-        "y": 183
+        "x": 1614,
+        "y": 178.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -112,8 +112,8 @@
       "id": "76",
       "type": "io",
       "position": {
-        "x": 2910,
-        "y": 567
+        "x": 2933,
+        "y": 559.5
       },
       "data": {
         "descriptionFile": "IAS>summarise_ias.yml"
@@ -123,8 +123,8 @@
       "id": "80",
       "type": "io",
       "position": {
-        "x": 1250,
-        "y": 305
+        "x": 1272,
+        "y": 297.5
       },
       "data": {
         "descriptionFile": "IAS>prepare_datasets.yml"
@@ -134,7 +134,7 @@
       "id": "81",
       "type": "io",
       "position": {
-        "x": 2715,
+        "x": 2737,
         "y": 12
       },
       "data": {
@@ -145,8 +145,8 @@
       "id": "82",
       "type": "output",
       "position": {
-        "x": 3685.7400309668637,
-        "y": 184.77664832335955
+        "x": 3427,
+        "y": 199.5
       },
       "data": {
         "label": "Output"
@@ -156,8 +156,8 @@
       "id": "83",
       "type": "output",
       "position": {
-        "x": 3559.121840928084,
-        "y": 205.06471485406817
+        "x": 3427,
+        "y": 269.5
       },
       "data": {
         "label": "Output"
@@ -167,8 +167,8 @@
       "id": "85",
       "type": "output",
       "position": {
-        "x": 3562.163719367454,
-        "y": 127.98604052020997
+        "x": 3427,
+        "y": 129.5
       },
       "data": {
         "label": "Output"
@@ -178,8 +178,8 @@
       "id": "86",
       "type": "output",
       "position": {
-        "x": 3578.133581174147,
-        "y": 98.07867433385819
+        "x": 3427,
+        "y": 164.5
       },
       "data": {
         "label": "Output"
@@ -189,8 +189,8 @@
       "id": "87",
       "type": "output",
       "position": {
-        "x": 3593.596463240945,
-        "y": 196.44162080839894
+        "x": 3427,
+        "y": 234.5
       },
       "data": {
         "label": "Output"
@@ -200,8 +200,8 @@
       "id": "93",
       "type": "output",
       "position": {
-        "x": 3529.210036274278,
-        "y": 27.6306828257215
+        "x": 3427,
+        "y": 339.5
       },
       "data": {
         "label": "Qualitative model interpretation"
@@ -211,8 +211,8 @@
       "id": "88",
       "type": "output",
       "position": {
-        "x": 2715,
-        "y": 404
+        "x": 2737,
+        "y": 397
       },
       "data": {
         "label": "SInAS data-quality report"
@@ -222,8 +222,8 @@
       "id": "89",
       "type": "output",
       "position": {
-        "x": 1896,
-        "y": 577
+        "x": 1918,
+        "y": 569.5
       },
       "data": {
         "label": "SInAS excluded records"
@@ -233,8 +233,8 @@
       "id": "90",
       "type": "output",
       "position": {
-        "x": 2715,
-        "y": 641
+        "x": 2737,
+        "y": 633.5
       },
       "data": {
         "label": "SInAS run summary"
@@ -244,8 +244,8 @@
       "id": "91",
       "type": "io",
       "position": {
-        "x": 1939,
-        "y": 166
+        "x": 1961,
+        "y": 161
       },
       "data": {
         "descriptionFile": "data>getGBIFObservations>get_GBIF_country_SQL.yml"
@@ -255,8 +255,8 @@
       "id": "94",
       "type": "output",
       "position": {
-        "x": 3544.9264082110235,
-        "y": 198.47841670288702
+        "x": 3427,
+        "y": 304.5
       },
       "data": {
         "label": "Output"
@@ -608,19 +608,23 @@
   },
   "metadata": {
     "name": "Invasive alien species pipeline",
-    "description": "## Introduction \nInvasive alien species are a major threat to biodiversity. Reducing the rates of introduction and establishment of invasive species is an important component of Target 6 of the Kunming Montreal Global Biodiversity Framework.\n\nThis pipeline compiles national information on alien and invasive alien species and evaluates temporal patterns in their first documented records. It combines national checklist data from the Global Register of Introduced and Invasive Species (GRIIS) with the Alien Species First Records database.\n\nThe pipeline applies the Standardising and Integrating Alien Species data (SInAS) workflow to standardize and merge these source datasets. Species names, locations, habitats, occurrence information and first-record dates are standardized before the GRIIS and First Records data are merged. Species names and taxonomic classifications are checked against the GBIF taxonomic backbone. Records that cannot be fully standardized are documented in the pipeline's data-quality outputs.\n\nThe pipeline creates an annual time series of invasive alien species first records for the selected country. A first record represents the first documented detection of a species; it does not necesarrily represent the year that the species was introduced, established, or became invasive.\n\nDepending on first-record completeness and the number of years containing records, the pipeline selects one of four approaches:\n- no modelling when the available data are too sparse;\n- a qualitative comparison of first-record and GBIF observation patterns;\n- a reduced set of quantitative models; or\n- the complete set of quantitative models.\n\nThe quantitative approaches include a naive Poisson model, a constant-detection model, a Solow–Costello model, and a sampling model that uses annual GBIF record volume as an indirect proxy for observation effort. The outputs describe the assumptions, fit, estimated trend, interpretation, and limitations of each model. For more information about estimating introduction rates from first-record data, see McGeoch et al. (2023) and Buba et al. (2024).\n\n## Uses\nThis pipeline can be used to:\n- Compile and standardize national GRIIS and First Records data to produce a taxonomically standardized national dataset of alien and invasive\n  alien species.\n\n- Identify unmatched, excluded, or potentially problematic records for\n  data-quality review.\n\n- Summarize and examine temporal patterns in observed first records.\n- Compare models with different assumptions about detection and observation\n  effort.\n\n- Support national assessment and reporting related to Target 6 of the\n  Kunming–Montreal Global Biodiversity Framework.\n\n## Pipeline limitations \n* This pipeline cannot currently be run for the following countries because of\n  unresolved source-data, checklist-name, or location-mapping issues: United\n  States of America (USA), Belgium (BEL), Thailand (THA), Eswatini (SWZ),\n  Hungary (HUN), and Norway (NOR).\n\n* Annual GBIF record counts are used as an indirect proxy for changing\n  observation effort. GBIF record volume is not a direct measurement of\n  invasive alien species survey effort.\n\n* Model results must be interpreted with caution, please read the model interpretation outputs and papers listed below for guidance.\n* Automated taxonomic and location standardization cannot resolve every\n  record. Users should review the data-quality, unmatched-value and\n  excluded-record outputs before interpreting results.\n\n* When a first-record date is supplied as a range, the pipeline uses its mean\n  year. This estimated year does not represent a precisely documented\n  detection date.\n\n* The results depend on the versions and coverage of the underlying GRIIS,\n  First Records, GBIF, and configuration data.\n\n\n## Before you start \nA free GBIF account is required to obtain the GBIF observation data used by this pipeline. Add your GBIF username, password, and account email address to the `runner.env` file using the following environment variables: `GBIF_USER`, `GBIF_PWD`, and `GBIF_EMAIL`.\n\nUsers should note the versions of the source databases and workflow used for an analysis. Any modifications to the workflow, configuration tables, or source data should also be reported to support transparency and reproducibility.\n\nReview the unmatched-value, excluded-record, taxonomic-matching, merge-conflict, and other data-quality outputs before interpreting the results.",
+    "description": "## Introduction \nInvasive alien species are a major threat to biodiversity. Reducing the rates of introduction and establishment of invasive species is an important component of Target 6 of the Kunming Montreal Global Biodiversity Framework (GBF).\n\n\nThe pipeline compiles national information on alien and invasive species and evaluates patterns across time from their first documented records. It combines national checklist data from the Global Register of Introduced and Invasive Species (GRIIS) with the Alien Species First Records database.\n\nThe pipeline applies the Standardising and Integrating Alien Species data (SInAS) workflow to standardize and merge these source datasets. Species names, locations, habitats, occurrence information and first-record dates are standardized before the GRIIS and First Records data are merged. Species names and taxonomic classifications are checked against the GBIF taxonomic backbone. Records that cannot be fully standardized are documented in the pipeline's data-quality outputs.\n\nThe pipeline creates an annual time series of invasive alien species first records for the selected country. A first record represents the first documented detection of a species; it does not necesarrily represent the year that the species was introduced, established, or became invasive.\n\nDepending on first-record completeness and the number of years containing records, the pipeline selects one of four approaches:\n- no modelling when the available data are too sparse;\n- a qualitative comparison of first-record and GBIF observation patterns;\n- a reduced set of quantitative models; or\n- the complete set of quantitative models.\n\nThe quantitative approaches include a naive Poisson model, a constant-detection model, a Solow–Costello model, and a sampling model that uses annual GBIF record volume as an indirect proxy for observation effort. The outputs describe the assumptions, fit, estimated trend, interpretation, and limitations of each model. For more information about estimating introduction rates from first-record data, see McGeoch et al. (2023) and Buba et al. (2024).\n\n## Uses\nThis pipeline can be used to:\n- Compile and standardize national GRIIS and First Records data to produce a taxonomically standardized national dataset of alien and invasive\n  alien species.\n\n- Identify unmatched, excluded, or potentially problematic records for\n  data-quality review.\n\n- Summarize and examine temporal patterns in observed first records.\n- Compare models with different assumptions about detection and observation\n  effort.\n\n- Support national assessment and reporting related to Target 6 of GBF.\n## Pipeline limitations \n* This pipeline cannot currently be run for the following countries because of\n  unresolved source-data, checklist-name, or location-mapping issues: United\n  States of America (USA), Belgium (BEL), Thailand (THA), Eswatini (SWZ),\n  Hungary (HUN), and Norway (NOR).\n\n* Annual GBIF record counts are used as an indirect proxy for changing\n  observation effort. GBIF record volume is not a direct measurement of\n  invasive alien species survey effort.\n\n* Model results must be interpreted with caution, please read the model interpretation outputs and papers listed below for guidance.\n* Automated taxonomic and location standardization cannot resolve every\n  record. Users should review the data-quality, unmatched-value and\n  excluded-record outputs before interpreting results.\n\n* When a first-record date is supplied as a range, the pipeline uses its mean\n  year. This estimated year does not represent a precisely documented\n  detection date.\n\n* The results depend on the versions and coverage of the underlying GRIIS,\n  First Records, GBIF, and configuration data.\n\n\n## Before you start \nA free GBIF account is required to obtain the GBIF observation data used by this pipeline. Add your GBIF username, password, and account email address to the `runner.env` file using the following environment variables: `GBIF_USER`, `GBIF_PWD`, and `GBIF_EMAIL`.\n\nUsers should note the versions of the source databases and workflow used for an analysis. Any modifications to the workflow, configuration tables, or source data should also be reported to support transparency and reproducibility.\n\nReview the unmatched-value, excluded-record, taxonomic-matching, merge-conflict, and other data-quality outputs before interpreting the results.",
     "author": [
       {
-        "name": "Rachel Mason"
+        "name": "Rachel Mason",
+        "identifier": "https://orcid.org/0000-0003-2692-9902"
       },
       {
-        "name": "Saxbee Afleck"
+        "name": "Saxbee Affleck",
+        "identifier": "https://orcid.org/0009-0007-4589-887X"
       },
       {
-        "name": "Manuela Gomez-Suarez"
+        "name": "Manuela Gómez-Suárez",
+        "identifier": "https://orcid.org/0000-0002-6100-9207"
       },
       {
-        "name": "Hanno Seebens"
+        "name": "Hanno Seebens",
+        "identifier": "https://orcid.org/0000-0001-8993-6419"
       },
       {
         "name": "Samara Manzin",
@@ -628,7 +632,8 @@
         "identifier": "https://orcid.org/0009-0005-9134-9981"
       },
       {
-        "name": "Melodie McGeoch"
+        "name": "Melodie McGeoch",
+        "identifier": "https://orcid.org/0000-0003-3388-2241"
       }
     ],
     "license": "MIT",
