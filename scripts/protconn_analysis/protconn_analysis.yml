@@ -164,3 +164,56 @@ references:
       UNEP-WCMC and IUCN (2026), Protected Planet: The World Database on
       Protected Areas (WDPA), Cambridge, UK: UNEP-WCMC and IUCN.
     link: https://doi.org/10.34892/6fwd-af11
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    # Script dependencies
+    - r-ggrepel
+    - r-proj
+    - r-remotes
+    - r-rjson
+    - r-tidyverse
+    - r-units
+
+    # Makurhini 3.0 dependencies
+    - r-boot
+    - r-cpprouting
+    - r-data.table
+    - r-formattable
+    - r-furrr
+    - r-future
+    - r-gdistance
+    - r-ggplot2
+    - r-ggpubr
+    - r-googledrive
+    # - r-graph4lg is not available as a conda-forge package.
+    - r-igraph
+    - r-magrittr
+    - r-ps
+    - r-purrr
+    - r-rappdirs
+    - r-raster
+    - r-rlang
+    - r-rmapshaper
+    # - r-samc is not available as a conda-forge package.
+    - r-sf
+    - r-terra
+
+    # required by samc
+    - r-rcppeigen
+    - r-rcppthread
+
+    # required by graph4lg
+    - r-adegenet
+    - r-ecodist
+    - r-foreign
+    - r-hierfstat
+    - r-pegas
+    - r-spatstat.geom
+    - r-spatstat.linnet
+    - r-vegan
+
+compute:
+  mem: 25G
+  cpus-per-task: 4

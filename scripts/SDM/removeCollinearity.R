@@ -26,11 +26,13 @@ if (!method %in% c("none", "vif.cor", "vif.step", "pearson", "spearman", "kendal
 if (method %in% c("vif.cor", "pearson", "spearman", "kendall") && is.null(cutoff_cor)) {
   cutoff_cor <- 0.8
 }
-rasts <- c()
+rasts <- list()
 names_file <- list()
 # reprojecting to match the first raster in the list, if needed
+if (is.null(rasters) || length(rasters) == 0) {
+  biab_error_stop("No rasters provided. Please provide at least one raster path.")
+}
 template <- terra::rast(rasters[[1]])
-
 for (ra in rasters) {
   thisras <- terra::rast(ra)
   # Keep the real source file path unless a reprojection creates a new file.
@@ -52,17 +54,17 @@ for (ra in rasters) {
     terra::writeRaster(thisras, output_path, overwrite = TRUE)
   }
 
-  rasts <- c(rasts, thisras)
+  rasts[[length(rasts) + 1]] <- thisras
 
   for (nm in names(thisras)) {
     names_file[[nm]] <- output_path
   }
 }
 
-rasts <- terra::rast(rasts)
-
+rasts <- do.call(c, rasts)
 
 env_df <- sample_spatial_obj(rasts, nb_points = input$nb_sample)
+
 
 nc_names <- detect_collinearity(
   env_df = env_df,

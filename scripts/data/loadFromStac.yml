@@ -10,7 +10,7 @@ inputs:
   bbox_crs:
     label: Bounding box and CRS
     description: Object containing the chosen bounding box and CRS.
-    type: bboxCRS
+    type: crsBBox
     example:
   stac_url:
     label: STAC URL
