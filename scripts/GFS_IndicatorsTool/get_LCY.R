@@ -14,6 +14,12 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 pop_poly <-st_read(input$population_polygons)
 
 bbox = st_bbox(pop_poly)
+## Buffer bbox slightly so edge pixels are never clipped
+bbox_buffered = bbox
+bbox_buffered[1] = bbox[1] - 0.01
+bbox_buffered[3] = bbox[3] + 0.01
+bbox_buffered[2] = bbox[2] - 0.01
+bbox_buffered[4] = bbox[4] + 0.01
 
 
 ## get years of interest
@@ -63,7 +69,7 @@ load_stac<-function(staccollection='esacci-lc'){
   raster_server = rast(lcpri_url)
   
   # process rasters from server (crop to study area , reasample)
-  raster = crop(raster_server, bbox[c(1,3,2,4)]) # crop
+  raster = crop(raster_server, bbox_buffered[c(1,3,2,4)]) # crop
   
   return(raster)
 }
