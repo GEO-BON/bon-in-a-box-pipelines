@@ -4,8 +4,8 @@ import sys
 
 inputs = biab_inputs()
 collections = inputs['stac_collections']
-output_dir = Path(sys.argv[1])/"Catalog"
-output_dir.mkdir(parents=True, exist_ok=True)
+catalog_dir = Path(sys.argv[1])/"Catalog"
+catalog_dir.mkdir(parents=True, exist_ok=True)
 
 # Create STAC catalog
 if inputs["stac_name"] == "biab-stac" or inputs["stac_name"] is None:
@@ -29,14 +29,12 @@ for collection in collections:
     catalog.add_child(stac_obj)
 
 # Output STAC catalog
-catalog.normalize_hrefs(str(output_dir))
+catalog.normalize_hrefs(str(catalog_dir))
 catalog.save(catalog_type=pystac.CatalogType.SELF_CONTAINED)
+biab_output("stac_catalog", str(catalog_dir / "catalog.json"))
 
 try:
     catalog.validate_all()
     print("Catalog validation successful")
 except pystac.STACValidationError as e:
     biab_error_stop(f"STAC catalog validation failed: {e}")
-
-biab_output("stac_catalog", str(output_dir / "catalog.json"))
-

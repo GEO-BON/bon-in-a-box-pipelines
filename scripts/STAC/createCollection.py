@@ -20,8 +20,8 @@ collection_title = inputs["collection_name"].replace("-", " ").title()
 # Create collection
 collection = stac_create_collection(collection_id, collection_title, inputs["collection_description"], [-180, -90, 180, 90], "2020-01-01", "2020-12-31", inputs["collection_license"])
 
-output_dir = Path(sys.argv[1])
-output_dir.mkdir(parents=True, exist_ok=True)
+collection_dir = Path(sys.argv[1]) / collection_id
+collection_dir.mkdir(parents=True, exist_ok=True)
 items = []
 dates = []
 bboxes = []
@@ -38,7 +38,7 @@ for file_path in inputs["tiff_files"]:
     item_datetime = extracted if extracted is not None else datetime.now(timezone.utc)
     dates.append(item_datetime)
 
-    item_dir = output_dir / file.stem
+    item_dir = collection_dir / file.stem
     item_dir.mkdir(parents=True, exist_ok=True)
 
     # Asset href is relative to the item JSON folder (same folder as the .tif)
@@ -87,19 +87,18 @@ collection_extent = pystac.Extent(spatial=spatial_extent, temporal=temporal_exte
 collection.extent = collection_extent
 
 # Save collection under the run output directory with relative links
-collection_path = output_dir / "collection.json"
+collection_path = collection_dir / "collection.json"
 collection.set_self_href(str(collection_path))
 collection.normalize_and_save(
-    root_href=str(output_dir),
+    root_href=str(collection_dir),
     catalog_type=pystac.CatalogType.SELF_CONTAINED,
 )
 
 print(f"Collection written to {collection_path}")
+biab_output("stac_collection", str(collection_path))
 
 try:
     collection.validate_all()
     print("pystac validation successful")
 except Exception as e:
     biab_error_stop(f"pystac validation failed: {e}")
-
-biab_output("stac_collection", str(collection_path))
