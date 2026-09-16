@@ -1307,9 +1307,9 @@
       "weight": 5
     },
     "STAC>createCollection.yml@153|stac_collection": {
-      "description": "JSON file representing a STAC collection containing the provided GeoTIFFs",
+      "description": "A STAC collection containing the resulting GeoTIFFs",
       "label": "STAC Collection",
-      "type": "application/json",
+      "type": "application/stac+json",
       "weight": 6
     }
   },
