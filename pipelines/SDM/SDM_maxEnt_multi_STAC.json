@@ -467,7 +467,7 @@
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "bboxCRS"
+        "type": "crsBBox"
       }
     },
     {
@@ -1082,7 +1082,7 @@
     "pipeline@140": {
       "label": "Bounding box and CRS",
       "description": "Bounding box and coordinate reference system defining the analysis extent. This extent is used to retrieve GBIF occurrences, environmental predictor rasters, the GBIF sampling-effort heatmap, and the study extent for modelling.\n\nThe extent you choose affects how results should be interpreted and may change which predictors emerge as important.\n* Larger than the species' range: results lean toward occurrence/accessibility. Predictors tied to broad-scale distributional limits (climate, biogeography) may dominate.\n* Similar to or smaller than the species' range: results lean toward habitat suitability. Predictors tied to local habitat structure (vegetation, soil) may matter more.",
-      "type": "bboxCRS",
+      "type": "crsBBox",
       "example": null,
       "weight": 2
     },
