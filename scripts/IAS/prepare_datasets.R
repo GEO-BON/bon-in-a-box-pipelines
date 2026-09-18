@@ -17,6 +17,12 @@ library(openxlsx)
 input <- biab_inputs()
 country_name <- input$country_name$country$englishName
 iso3 <- input$country_name$country$ISO3
+# BON country selectors can supply a suffixed code such as AUS_1.
+# SInAS uses the standard three-letter code for country/location matching.
+iso3 <- sub("_[0-9]+$", "", toupper(trimws(as.character(iso3))))
+if (length(iso3) != 1L || is.na(iso3) || !grepl("^[A-Z]{3}$", iso3)) {
+  stop("Select a country with a valid three-letter ISO3 code.")
+}
 
 selected_filter_values <- function(values, label) {
   values <- unique(trimws(as.character(unlist(values, use.names = FALSE))))
@@ -67,6 +73,9 @@ message("Running the SInAS cleaning workflow for ", country_name, " (", iso3, ")
 # Loading in datasets
 griis <- read_input_table(input$griis_checklist, "GRIIS")
 firstrecords <- read_input_table(input$first_records, "First Records")
+global_invasive_checklist <- read_input_table(
+  input$global_invasive_checklist, "Global invasive checklist"
+)
 #griis <- read.csv("C:/Users/Samara/Desktop/bon-in-a-box-pipelines/output/IAS/P1_ChecklistDownload/download_checklist/24WCclDWWTOfF_TezBFTZE32-OPe/GRIIS_checklist.csv")
 #firstrecords <- read.csv("C:/Users/Samara/Desktop/bon-in-a-box-pipelines/output/IAS/P2_FirstRecordsData/standardise_data/MvoeUdjrbO9xW2gLxy9qcQhDgtHB/FirstRecords_cleaned.csv")
 
@@ -102,6 +111,54 @@ validate_columns(
 known_column <- function(dat, column) {
   if (column %in% names(dat)) column else NA_character_
 }
+
+# Recheck the same packaged list after GBIF matching and reviewed corrections
+# have resolved source synonyms. Use exact normalised names, not fuzzy matches,
+# and retain positive evidence from the country checklist or raw-name lookup.
+RefreshGlobalInvasiveStatus <- function(dat, global_checklist) {
+  required <- c("scientificName", "taxon", "isInvasiveAnywhere")
+  missing <- setdiff(required, names(global_checklist))
+  if (length(missing) > 0) {
+    stop("Global invasive checklist is missing columns: ", paste(missing, collapse = ", "))
+  }
+  normalise_name <- function(x) {
+    x <- iconv(as.character(x), from = "", to = "UTF-8", sub = "")
+    x[is.na(x)] <- ""
+    tolower(stringr::str_squish(x))
+  }
+  is_positive <- function(x) {
+    toupper(trimws(as.character(x))) %in% c("TRUE", "YES", "1")
+  }
+  positive <- is_positive(global_checklist$isInvasiveAnywhere)
+  invasive_names <- unique(normalise_name(unlist(
+    global_checklist[positive, c("scientificName", "taxon")], use.names = FALSE
+  )))
+  invasive_names <- invasive_names[nzchar(invasive_names)]
+  get_column <- function(name) {
+    if (name %in% names(dat)) as.character(dat[[name]]) else rep(NA_character_, nrow(dat))
+  }
+  matched_fields <- lapply(c("taxon_orig", "taxon", "scientificName"), function(name) {
+    normalise_name(get_column(name)) %in% invasive_names
+  })
+  names(matched_fields) <- c("taxon_orig", "taxon", "scientificName")
+  previously_positive <- is_positive(get_column("isInvasiveAnywhere"))
+  dat$isInvasiveAnywhere <- previously_positive |
+    is_positive(get_column("isInvasiveInCountry")) | Reduce(`|`, matched_fields)
+  added <- !previously_positive & dat$isInvasiveAnywhere
+  matches <- data.frame(
+    linkID = get_column("linkID"),
+    taxon_orig = get_column("taxon_orig"),
+    taxon = get_column("taxon"),
+    scientificName = get_column("scientificName"),
+    matched_fields = vapply(seq_len(nrow(dat)), function(i) {
+      paste(names(matched_fields)[vapply(matched_fields, `[`, logical(1), i)], collapse = "; ")
+    }, character(1)),
+    isInvasiveInCountry = is_positive(get_column("isInvasiveInCountry")),
+    isInvasiveAnywhere = dat$isInvasiveAnywhere,
+    stringsAsFactors = FALSE
+  )
+  list(data = dat, added_matches = matches[added, , drop = FALSE])
+}
 known_additional <- function(dat, columns) {
   present <- intersect(columns, names(dat))
   if (length(present) == 0) NA_character_ else paste(present, collapse = "; ")
@@ -118,12 +175,11 @@ Column_kingdom <- c("kingdom", "kingdom")
 Column_country_ISO <- c(
   known_column(griis, "ISO3"), known_column(firstrecords, "ISO3")
 )
-Column_eventDate1 <- c(
-  known_column(griis, "eventDate"), "eventDate"
-)
-Column_eventDate2 <- c(
-  known_column(griis, "eventDate2"), known_column(firstrecords, "eventDate2")
-)
+# Match the original workflow: introduction years come only from the
+# First Records eventDate. GRIIS dates remain in the downloaded source but
+# do not contribute to the merged year; no second date is mapped.
+Column_eventDate1 <- c(NA_character_, "eventDate")
+Column_eventDate2 <- c(NA_character_, NA_character_)
 Column_establishmentMeans <- c(
   known_column(griis, "establishmentMeans"),
   known_column(firstrecords, "establishmentMeans")
@@ -153,7 +209,7 @@ Column_additional <- c(
     firstrecords,
     c(
       "taxaGroup", "sourceLocation", "sourceLocationID",
-      "sourceVersion", "sourceDOI", "sourceFile"
+      "sourceVersion", "sourceDOI", "sourceFile", "sourceTaxonomyFile"
     )
   )
 )
@@ -300,7 +356,7 @@ Column_additional[[2]] <- known_additional(
   FirstRecords_COUNTRY,
   c(
     "taxaGroup", "sourceLocation", "sourceLocationID",
-    "sourceVersion", "sourceDOI", "sourceFile"
+    "sourceVersion", "sourceDOI", "sourceFile", "sourceTaxonomyFile"
   )
 )
 
@@ -576,20 +632,25 @@ StandardiseTerms <- function(FileInfo=NULL){
   translation_pathway <- read.xlsx(config_file("Translation_pathway.xlsx"),sheet=1)
   translation_habitat <- read.xlsx(config_file("Translation_habitat.xlsx"),sheet=1)
 
-  ## A value containing both native and alien means that origin is uncertain.
-  ## This occurs in multiple GRIIS country checklists and otherwise becomes a
-  ## blank that the merge incorrectly defaults to introduced.
-  if (!any(tolower(translation_estabmeans$origTerm) == "native|alien", na.rm = TRUE)) {
+  ## Preserve mixed source statuses instead of turning them into blanks that
+  ## the merge defaults to introduced. Newer GRIIS uses "introduced" for alien.
+  mixed_establishment_terms <- c(
+    "native|alien" = "uncertain",
+    "native|introduced" = "uncertain",
+    "introduced; uncertain" = "introduced; uncertain"
+  )
+  for (term in names(mixed_establishment_terms)) {
+    if (any(tolower(translation_estabmeans$origTerm) == term, na.rm = TRUE)) next
     translation_estabmeans <- rbind(
       translation_estabmeans,
-      data.frame(origTerm = "native|alien", newTerm = "uncertain")
+      data.frame(origTerm = term, newTerm = unname(mixed_establishment_terms[term]))
     )
   }
 
   term_key <- function(x, column) {
     x <- trimws(tolower(as.character(x)))
     x[is.na(x)] <- ""
-    if (column != "habitat") return(x)
+    if (!column %in% c("habitat", "establishmentMeans")) return(x)
     vapply(strsplit(x, "\\s*[|;]\\s*"), function(parts) {
       parts <- sort(unique(parts[nzchar(parts)]))
       paste(parts, collapse = "|")
@@ -646,14 +707,16 @@ StandardiseTerms <- function(FileInfo=NULL){
       dat$establishmentMeans <- gsub("^\\s+|\\s+$", "",dat$establishmentMeans) # trim leading and trailing whitespace
       raw_estabmeans <- dat$establishmentMeans
       # identify matches of alternative terms...
-      ind <- match(tolower(dat$establishmentMeans),tolower(translation_estabmeans$origTerm)) # identify matches
+      ind <- match(term_key(dat$establishmentMeans, "establishmentMeans"),
+                   term_key(translation_estabmeans$origTerm, "establishmentMeans"))
       unresolved_estabmeans <- unique(dat$establishmentMeans[is.na(ind)]) # store mis-matches
       resolved_estabmeans <- unique(dat$establishmentMeans[!is.na(ind)]) # store matches
       translated <- translation_estabmeans$newTerm[ind]
       indNA <- is.na(translated)
       dat$establishmentMeans[!indNA] <- translated[!indNA]  # replace strings
       # identify matches of Darwin Core
-      ind <- match(tolower(dat$establishmentMeans),tolower(translation_estabmeans$newTerm)) # identify matches with Darwin Core
+      ind <- match(term_key(dat$establishmentMeans, "establishmentMeans"),
+                   term_key(translation_estabmeans$newTerm, "establishmentMeans"))
       dat$establishmentMeans <- translation_estabmeans$newTerm[ind] # replace strings
       dat$establishmentMeans[is.na(ind)] <- "" # indicate mis-matches
       term_issues$establishmentMeans <- unresolved_term_rows(
@@ -2020,6 +2083,15 @@ step5 <- GeteventDate(FileInfo = FileInfo, step3_output = step4)
 
 griis_clean <- step5$clean_datasets[["GRIIS"]]
 first_records_clean <- step5$clean_datasets[["FirstRecords"]]
+global_invasive_result <- RefreshGlobalInvasiveStatus(
+  griis_clean, global_invasive_checklist
+)
+griis_clean <- global_invasive_result$data
+message("Global invasive list: ", nrow(global_invasive_result$added_matches),
+        " additional positive GRIIS records after taxonomic harmonisation.")
+global_invasive_matches_path <- file.path(outputFolder, "Global_invasive_added_matches.csv")
+write.csv(global_invasive_result$added_matches, global_invasive_matches_path,
+          row.names = FALSE, na = "")
 
 griis_path <- file.path(outputFolder, "GRIIS_clean.csv")
 first_records_path <- file.path(outputFolder, "FirstRecords_clean.csv")
@@ -2312,6 +2384,7 @@ write.csv(unmatched_values, unmatched_values_path, row.names = FALSE, na = "")
 write.csv(excluded_records, excluded_records_path, row.names = FALSE, na = "")
 
 biab_output("griis_clean", griis_path)
+biab_output("global_invasive_matches", global_invasive_matches_path)
 biab_output("first_records_clean", first_records_path)
 biab_output("file_info", file_info_path)
 biab_output("translated_locations", translated_locations_path)

@@ -237,6 +237,12 @@ function_file <- function(filename) {
 
 country <- input$country_name$country
 Countries <- country$ISO3
+# BON country selectors can supply a suffixed code such as AUS_1.
+# SInAS uses the standard three-letter code for country/location matching.
+Countries <- sub("_[0-9]+$", "", toupper(trimws(as.character(Countries))))
+if (length(Countries) != 1L || is.na(Countries) || !grepl("^[A-Z]{3}$", Countries)) {
+  stop("Select a country with a valid three-letter ISO3 code.")
+}
 CountryNames <- country$englishName
 
 if (length(Countries) != 1 || is.null(Countries) || is.na(Countries)) {

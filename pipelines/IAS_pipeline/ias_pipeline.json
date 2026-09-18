@@ -289,6 +289,12 @@
       "id": "xy-edge__92-38global_invasive_checklist"
     },
     {
+      "source": "92",
+      "target": "80",
+      "targetHandle": "global_invasive_checklist",
+      "id": "xy-edge__92-80global_invasive_checklist"
+    },
+    {
       "source": "52",
       "sourceHandle": "merged_dataset",
       "target": "53",

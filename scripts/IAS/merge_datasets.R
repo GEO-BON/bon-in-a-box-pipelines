@@ -8,6 +8,12 @@ input <- biab_inputs()
 country <- input$country_name$country
 country_name <- country$englishName
 country_iso3 <- country$ISO3
+# BON country selectors can supply a suffixed code such as AUS_1.
+# SInAS uses the standard three-letter code for country/location matching.
+country_iso3 <- sub("_[0-9]+$", "", toupper(trimws(as.character(country_iso3))))
+if (length(country_iso3) != 1L || is.na(country_iso3) || !grepl("^[A-Z]{3}$", country_iso3)) {
+  stop("Select a country with a valid three-letter ISO3 code.")
+}
 
 if (is.null(country_name) || is.null(country_iso3)) {
   stop("country_name must provide both englishName and ISO3.")
@@ -83,7 +89,10 @@ earliest_event_date <- function(x) {
 
 prepare_dataset <- function(dat) {
   if ("Kingdom_user" %in% names(dat) && !"kingdom" %in% names(dat)) {
-    names(dat)[names(dat) == "Kingdom_user"] <- "kingdom"
+    dat$kingdom <- dat$Kingdom_user
+  }
+  if (!"Kingdom_user" %in% names(dat) && "kingdom" %in% names(dat)) {
+    dat$Kingdom_user <- dat$kingdom
   }
   excluded <- c(
     "taxon_orig", "location_orig", "Country_ISO",
@@ -112,6 +121,24 @@ prepare_dataset <- function(dat) {
     }
   }
   dat
+}
+
+kingdom_with_source_fallback <- function(reviewed, source) {
+  reviewed <- normalise_missing(reviewed)
+  source <- vapply(as.character(source), function(value) {
+    if (is.na(value)) return(NA_character_)
+    kingdoms <- unique(tolower(trimws(unlist(strsplit(value, ";")))))
+    kingdoms <- kingdoms[!kingdoms %in% c(
+      "", "na", "n/a", "nodata", "unknown", "unassigned", "unresolved"
+    )]
+    if (length(kingdoms) != 1L || !grepl("^[a-z]+$", kingdoms)) {
+      return(NA_character_)
+    }
+    paste0(toupper(substr(kingdoms, 1, 1)), substring(kingdoms, 2))
+  }, character(1), USE.NAMES = FALSE)
+  missing <- is.na(reviewed)
+  reviewed[missing] <- source[missing]
+  reviewed
 }
 
 griis <- prepare_dataset(
@@ -177,7 +204,11 @@ if ("establishmentMeans" %in% names(combined)) {
     values <- normalise_missing(combined$establishmentMeans[index])
     values <- trimws(unlist(strsplit(values[!is.na(values)], ";\\s*")))
     if (all(c("introduced", "uncertain") %in% values)) {
-      combined$establishmentMeans[index] <- "introduced; uncertain"
+      # Combine only introduced/uncertain records. A native record sharing
+      # this identity must retain its source status and remain a separate row.
+      eligible <- combined$establishmentMeans[index] %in%
+        c("introduced", "uncertain", "introduced; uncertain")
+      combined$establishmentMeans[index[eligible]] <- "introduced; uncertain"
     }
   }
 }
@@ -338,6 +369,13 @@ if (any(missing_taxonomy)) {
 }
 for (column in setdiff(taxonomy_columns, "taxonID")) {
   merged[[column]] <- taxonomy[[column]][taxonomy_index]
+}
+if ("Kingdom_user" %in% names(merged)) {
+  # A source kingdom remains useful even when the name has no reviewed match.
+  # This does not resolve the taxon or supply any missing lower ranks.
+  merged$kingdom <- kingdom_with_source_fallback(
+    merged$kingdom, merged$Kingdom_user
+  )
 }
 
 # Match the original taxonomic ordering.

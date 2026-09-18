@@ -5,13 +5,18 @@ library(jsonlite)
 library(stringr)
 library(duckdb)
 library(dplyr)
-library(rgbif)
 library(openxlsx)
 
 # load inputs
 input <- biab_inputs()
 country_name <- input$country_name$country$englishName
 iso3 <- input$country_name$country$ISO3
+# BON country selectors can supply a suffixed code such as AUS_1.
+# SInAS uses the standard three-letter code for country/location matching.
+iso3 <- sub("_[0-9]+$", "", toupper(trimws(as.character(iso3))))
+if (length(iso3) != 1L || is.na(iso3) || !grepl("^[A-Z]{3}$", iso3)) {
+  stop("Select a country with a valid three-letter ISO3 code.")
+}
 
 config_file <- function(filename) {
   candidates <- c(
@@ -31,9 +36,10 @@ if (is.null(iso3) || is.na(iso3) || iso3 == "") {
 }
 
 # First record data doi
-doi <- "https://doi.org/10.5281/zenodo.18220953"
-source_version <- "3.1.1"
+doi <- "https://doi.org/10.5281/zenodo.15793812"
+source_version <- "3.0"
 source_filename <- paste0("SInAS_", source_version, ".csv")
+taxonomy_filename <- paste0("SInAS_", source_version, "_FullTaxaList.csv")
 # Extract the ID (the digits after the last dot)
 record_id <- sub(".*\\.", "", doi)
 
@@ -53,15 +59,19 @@ print(files_df)
 
 # Select the expected release file explicitly. Failing on zero or multiple
 # matches prevents a future Zenodo file addition from silently changing input.
-target_matches <- which(files_df$filename == source_filename)
-if (length(target_matches) != 1) {
-  stop(
-    "Expected exactly one Zenodo file named ", source_filename,
-    "; found ", length(target_matches), ". Available files: ",
-    paste(files_df$filename, collapse = ", ")
-  )
+release_file_url <- function(filename, files) {
+  matches <- which(files$filename == filename)
+  if (length(matches) != 1) {
+    stop(
+      "Expected exactly one Zenodo file named ", filename,
+      "; found ", length(matches), ". Available files: ",
+      paste(files$filename, collapse = ", ")
+    )
+  }
+  files$direct_link[[matches]]
 }
-target_url <- files_df$direct_link[[target_matches]]
+target_url <- release_file_url(source_filename, files_df)
+taxonomy_url <- release_file_url(taxonomy_filename, files_df)
 
 # Original P3 assigns every SInAS location associated with the selected ISO3
 # to that country (for example Australia, Tasmania and Lord Howe Islands).
@@ -133,6 +143,14 @@ query <- paste0(
 )
 first_records <- DBI::dbGetQuery(con, query)
 
+# The companion table must come from the same pinned release: its taxonIDs
+# belong to that release, not to GBIF or to a subsequent preparation run.
+taxonomy_url_lit <- DBI::dbQuoteLiteral(con, taxonomy_url)
+source_taxonomy <- DBI::dbGetQuery(con, paste0(
+  "SELECT taxonID, kingdom, taxaGroup FROM read_csv_auto(",
+  taxonomy_url_lit, ", header=TRUE, delim=' ', nullstr=['', 'NA'])")
+)
+
 # Cleanup
 DBI::dbDisconnect(con, shutdown = TRUE)
 
@@ -173,41 +191,60 @@ FirstRecords <- dplyr::left_join(first_records, UniqueHabitats, by = "habitat") 
 ##----------------------------
 ## Add taxonomic information
 ##----------------------------
-unique_names <- unique(FirstRecords$taxon)
+# Reproduce original P2: keep the first taxonomy entry for each taxonID and
+# left-join kingdom and taxaGroup before the preparation step filters kingdoms.
+# Do not replace missing source taxonomy with live name-matching results.
+JoinSourceTaxonomy <- function(records, taxonomy) {
+  required <- c("taxonID", "kingdom", "taxaGroup")
+  missing <- setdiff(required, names(taxonomy))
+  if (!"taxonID" %in% names(records) || length(missing) > 0) {
+    stop("Source records require taxonID and companion taxonomy requires: ",
+         paste(required, collapse = ", "))
+  }
+  taxa_info <- taxonomy %>%
+    dplyr::select(dplyr::all_of(required)) %>%
+    dplyr::distinct(taxonID, .keep_all = TRUE)
+  joined <- records %>%
+    dplyr::select(-dplyr::any_of(c("kingdom", "taxaGroup"))) %>%
+    dplyr::left_join(taxa_info, by = "taxonID", na_matches = "never") %>%
+    dplyr::mutate(
+      kingdom = toupper(kingdom),
+      kingdom = dplyr::if_else(is.na(kingdom) | kingdom == "", "NODATA", kingdom)
+    )
+  missing_kingdom <- joined$kingdom == "NODATA"
+  missing_group <- is.na(joined$taxaGroup) | joined$taxaGroup == ""
+  unmatched_id <- is.na(joined$taxonID) | !joined$taxonID %in% taxa_info$taxonID
+  issues <- joined %>%
+    dplyr::select(dplyr::any_of(c("taxonID", "taxon", "kingdom", "taxaGroup"))) %>%
+    dplyr::mutate(
+      missing_taxonID_match = unmatched_id,
+      missing_kingdom = missing_kingdom,
+      missing_taxaGroup = missing_group
+    ) %>%
+    dplyr::filter(missing_taxonID_match | missing_kingdom | missing_taxaGroup) %>%
+    dplyr::distinct()
+  list(data = joined, issues = issues)
+}
 
-matches <- name_backbone_checklist(unique_names) %>%
-  select(verbatim_name, kingdom) %>%
-  rename(kingdom_gbif = kingdom)
-
-FirstRecords <- FirstRecords %>%
-  dplyr::select(-dplyr::any_of("kingdom")) %>%
-  left_join(matches, by = c("taxon" = "verbatim_name"))  %>% 
-  mutate(kingdom = toupper(kingdom_gbif)) %>%
-  dplyr::select(-kingdom_gbif) %>%
+taxonomy_result <- JoinSourceTaxonomy(FirstRecords, source_taxonomy)
+FirstRecords <- taxonomy_result$data %>%
   dplyr::mutate(
-    kingdom = dplyr::if_else(is.na(kingdom) | kingdom == "", "NODATA", kingdom),
     ISO3 = iso3,
     sourceVersion = source_version,
     sourceDOI = doi,
-    sourceFile = source_filename
+    sourceFile = source_filename,
+    sourceTaxonomyFile = taxonomy_filename
   )
-
-# Preserve the release's taxaGroup values when supplied. The current main CSV
-# may not contain this companion-taxonomy field, so retain a stable output
-# schema and report the absence rather than inventing a classification.
-if (!"taxaGroup" %in% names(FirstRecords)) {
-  warning("SInAS ", source_version, " does not provide taxaGroup in ", source_filename, "; using NODATA.")
-  FirstRecords$taxaGroup <- "NODATA"
-} else {
-  FirstRecords$taxaGroup <- dplyr::if_else(
-    is.na(FirstRecords$taxaGroup) | FirstRecords$taxaGroup == "",
-    "NODATA",
-    as.character(FirstRecords$taxaGroup)
-  )
+if (nrow(taxonomy_result$issues) > 0) {
+  warning(nrow(taxonomy_result$issues),
+          " distinct source taxonomy entries have missing matches or fields; see taxonomy issues.")
 }
 ##----------------------------
 ## Write and save
 ##----------------------------
 firstrecords_path <- file.path(outputFolder, "FirstRecords_cleaned.csv")
 write.csv(FirstRecords, firstrecords_path, row.names = FALSE)
+taxonomy_issues_path <- file.path(outputFolder, "FirstRecords_taxonomy_issues.csv")
+write.csv(taxonomy_result$issues, taxonomy_issues_path, row.names = FALSE, na = "")
 biab_output("firstrecords_cleaned", firstrecords_path)
+biab_output("taxonomy_issues", taxonomy_issues_path)

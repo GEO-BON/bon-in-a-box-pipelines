@@ -1,6 +1,6 @@
 script: download_firstrecords.R
 name: Download First Records Data
-description: "Stream the pinned SInAS 3.1.1 release for all mapped locations associated with a selected country, preserve source locations, add GBIF kingdom matches, and standardise habitat terminology for GRIIS integration."
+description: "Stream the pinned SInAS 3.0 release for testing across all mapped locations associated with a selected country, preserve source locations, join kingdom and taxaGroup by taxonID from the same release's companion taxonomy table, and standardise habitat terminology for GRIIS integration."
 author:
   - name: Saxbee Affleck
   - name: Samara Manzin
@@ -12,6 +12,10 @@ inputs:
     description: Name of the country for which to download the first records data.
     example: NULL
 outputs:
+  taxonomy_issues:
+    label: Source taxonomy issues
+    description: Distinct source taxa with no companion taxonID match or missing kingdom or taxaGroup. Missing kingdom remains NODATA for downstream filtering.
+    type: text/csv
   firstrecords_cleaned:
     label: First Records Cleaned
     description: Cleaned first records data for the specified country.
@@ -26,5 +30,4 @@ conda:
     - r-duckdb
     - r-rjson
     - r-stringr
-    - r-rgbif
     - r-openxlsx

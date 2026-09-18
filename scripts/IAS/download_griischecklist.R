@@ -21,6 +21,12 @@ global_invasive_checklist <- read.csv(
   check.names = FALSE
 )
 iso3 <- input$country_name$country$ISO3
+# BON country selectors can supply a suffixed code such as AUS_1.
+# SInAS uses the standard three-letter code for country/location matching.
+iso3 <- sub("_[0-9]+$", "", toupper(trimws(as.character(iso3))))
+if (length(iso3) != 1L || is.na(iso3) || !grepl("^[A-Z]{3}$", iso3)) {
+  stop("Select a country with a valid three-letter ISO3 code.")
+}
 
 # input checks
 
