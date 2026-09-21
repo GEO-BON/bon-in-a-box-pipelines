@@ -58,6 +58,28 @@ required_columns <- function(data, columns, label) {
   }
 }
 
+# Wrap annotations for the six-inch export in both quantitative branches.
+format_quantitative_plot <- function(plot, country_name, country_iso3) {
+  wrap <- function(text, width) paste(strwrap(text, width = width), collapse = "\n")
+  plot + ggplot2::labs(
+    title = wrap(paste0("First-record model comparison: ", country_name,
+                        " (", country_iso3, ")"), 60),
+    subtitle = wrap(
+      "Fitted annual discovery records under alternative detection assumptions.", 45
+    ),
+    caption = wrap(
+      "Compare AIC only among fitted models for this same country and time series.", 50
+    )
+  ) + ggplot2::theme(
+    plot.title = ggplot2::element_text(size = 11, margin = ggplot2::margin(b = 5)),
+    plot.subtitle = ggplot2::element_text(size = 9, lineheight = 1.1,
+                                        margin = ggplot2::margin(b = 8)),
+    plot.caption = ggplot2::element_text(size = 8, lineheight = 1.1,
+                                       margin = ggplot2::margin(t = 8)),
+    plot.margin = ggplot2::margin(10, 12, 10, 10)
+  )
+}
+
 interpretation_scope <- paste(
   "Results cover 1970-2020 and use GRIIS checklist taxa flagged invasive",
   "anywhere that have a standardised first-record year. A first record is",
@@ -65,11 +87,43 @@ interpretation_scope <- paste(
   "establishment year."
 )
 
-interpretation_references <- paste(
-  "McGeoch et al. (2023), doi:10.1111/conl.12981;",
-  "Buba et al. (2024), doi:10.1111/geb.13859;",
-  "SInAS 3.1.1, doi:10.5281/zenodo.18220953"
-)
+sinas_source_reference <- function(data) {
+  # Provenance belongs to the supplied First Records data, not this script's
+  # current downloader settings or a GRIIS checklist version.
+  if ("origDB" %in% names(data)) {
+    data <- data[grepl("FirstRecords", data$origDB, ignore.case = TRUE), , drop = FALSE]
+  }
+  values <- function(column) {
+    if (!column %in% names(data)) return(character())
+    entries <- as.character(data[[column]])
+    entries <- trimws(unlist(strsplit(entries[!is.na(entries)], ";")))
+    entries <- entries[!toupper(entries) %in% c("", "NA", "N/A", "NODATA", "UNKNOWN")]
+    sort(unique(entries))
+  }
+  versions <- values("sourceVersion")
+  # CSV readers can coerce a release such as 3.0 to the number 3.
+  versions <- ifelse(grepl("^[0-9]+$", versions), paste0(versions, ".0"), versions)
+  versions <- sort(unique(versions))
+  dois <- values("sourceDOI")
+  dois <- sub("^https?://(dx[.])?doi[.]org/", "", dois, ignore.case = TRUE)
+  dois <- sort(unique(trimws(sub("^doi:\\s*", "", dois, ignore.case = TRUE))))
+  version_text <- if (length(versions) == 0) {
+    "SInAS version not recorded in input"
+  } else if (length(versions) == 1) {
+    paste("SInAS", versions)
+  } else {
+    paste0("SInAS versions ", paste(versions, collapse = ", "), " (multiple releases recorded in input)")
+  }
+  doi_text <- if (length(dois) == 0) {
+    "DOI not recorded in input"
+  } else if (length(dois) == 1) {
+    paste0("doi:", dois)
+  } else {
+    # List multiple DOIs without guessing pairings after merged aggregation.
+    paste0("source DOIs: ", paste(dois, collapse = ", "))
+  }
+  paste(version_text, doi_text, sep = ", ")
+}
 
 model_guidance <- tibble::tribble(
   ~model, ~modelDescription, ~modelAssumption, ~interpretationCaveat,
@@ -250,6 +304,11 @@ if (length(Countries) != 1 || is.null(Countries) || is.na(Countries)) {
 }
 
 IntegratedDataInput <- read_input_table(input$integrated_data, "Integrated IAS data")
+interpretation_references <- paste(
+  "McGeoch et al. (2023), doi:10.1111/conl.12981;",
+  "Buba et al. (2024), doi:10.1111/geb.13859;",
+  sinas_source_reference(IntegratedDataInput)
+)
 CovariateDataInput <- read_input_table(input$covariate_data, "GBIF covariate data")
 
 required_columns(
@@ -688,11 +747,7 @@ for (i in seq_along(Countries)) {
     
     p2 <- plot_comp_all()
     
-    p2.title <- p2 + ggplot2::labs(
-      title = paste0("First-record model comparison: ", CountryName, " (", x, ")"),
-      subtitle = "Fitted annual discovery records under alternative detection assumptions.",
-      caption = "Compare AIC only among fitted models for this same country and time series."
-    )
+    p2.title <- format_quantitative_plot(p2, CountryName, x)
     quantitative_plot_path <- file.path(
       outputFolder,
       paste0(x, "_quantitative.png")
@@ -817,11 +872,7 @@ for (i in seq_along(Countries)) {
     
     p2 <- plot_comp_all()
     
-    p2.title <- p2 + ggplot2::labs(
-      title = paste0("First-record model comparison: ", CountryName, " (", x, ")"),
-      subtitle = "Fitted annual discovery records under alternative detection assumptions.",
-      caption = "Compare AIC only among fitted models for this same country and time series."
-    )
+    p2.title <- format_quantitative_plot(p2, CountryName, x)
     quantitative_plot_path <- file.path(
       outputFolder,
       paste0(x, "_quantitative.png")

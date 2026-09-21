@@ -9,7 +9,7 @@ merged_data <- read.csv(input$merged_dataset, stringsAsFactors = FALSE)
 gbif_observations <- read.csv(input$gbif_country_observations, stringsAsFactors = FALSE)
 
 required_merged_columns <- c(
-  "taxon", "kingdom", "origDB", "isInvasiveInCountry", "eventDate"
+  "taxon", "kingdom", "origDB", "isInvasiveAnywhere", "eventDate"
 )
 missing_merged_columns <- setdiff(required_merged_columns, colnames(merged_data))
 if (length(missing_merged_columns) > 0) {
@@ -24,12 +24,13 @@ if (!"year" %in% colnames(gbif_observations)) {
 }
 
 gbif_count_column <- dplyr::case_when(
+  "recordscount" %in% colnames(gbif_observations) ~ "recordscount",
   "RecordsCount" %in% colnames(gbif_observations) ~ "RecordsCount",
   "count" %in% colnames(gbif_observations) ~ "count",
   TRUE ~ NA_character_
 )
 if (is.na(gbif_count_column)) {
-  biab_error_stop("GBIF observations file must contain either RecordsCount or count")
+  biab_error_stop("GBIF observations file must contain recordscount, RecordsCount or count")
 }
 
 safe_percent <- function(numerator, denominator) {
@@ -80,75 +81,77 @@ country_label <- if ("location" %in% colnames(merged_data)) {
 merged_data <- merged_data %>%
   mutate(
     kingdom = stringr::str_to_title(kingdom),
-    isInvasiveInCountry = as.character(isInvasiveInCountry),
+    isInvasiveAnywhere = as.character(isInvasiveAnywhere),
     eventDate = suppressWarnings(as.integer(eventDate))
   )
 
 griis_only <- merged_data %>%
   filter(grepl("GRIIS", origDB, ignore.case = TRUE))
 
-invasive_country <- griis_only %>%
-  filter(grepl("TRUE", isInvasiveInCountry, ignore.case = TRUE))
+# Match the original P5 summary: GRIIS-linked taxa invasive anywhere.
+# Retain the original contains-TRUE rule, including mixed source flags.
+invasive_anywhere <- griis_only %>%
+  filter(grepl("TRUE", isInvasiveAnywhere, ignore.case = TRUE))
 
 number_of_species <- nrow(griis_only)
 
-count_ias_country <- nrow(invasive_country)
-count_ias_country_pcnt <- safe_percent(count_ias_country, number_of_species)
+count_ias_anywhere <- nrow(invasive_anywhere)
+count_ias_anywhere_pcnt <- safe_percent(count_ias_anywhere, number_of_species)
 
-count_ias_country_animals <- invasive_country %>%
+count_ias_anywhere_animals <- invasive_anywhere %>%
   filter(kingdom == "Animalia") %>%
   nrow()
-count_ias_country_plants <- invasive_country %>%
+count_ias_anywhere_plants <- invasive_anywhere %>%
   filter(kingdom == "Plantae") %>%
   nrow()
 
-count_ias_country_pcnt_animals <- safe_percent(
-  count_ias_country_animals,
-  count_ias_country
+count_ias_anywhere_pcnt_animals <- safe_percent(
+  count_ias_anywhere_animals,
+  count_ias_anywhere
 )
-count_ias_country_pcnt_plants <- safe_percent(
-  count_ias_country_plants,
-  count_ias_country
+count_ias_anywhere_pcnt_plants <- safe_percent(
+  count_ias_anywhere_plants,
+  count_ias_anywhere
 )
 
-with_first_records <- invasive_country %>%
+with_first_records <- invasive_anywhere %>%
   filter(!is.na(eventDate))
 
-count_ias_country_with_fr <- nrow(with_first_records)
-count_ias_country_with_fr_animals <- with_first_records %>%
+count_ias_anywhere_with_fr <- nrow(with_first_records)
+count_ias_anywhere_with_fr_animals <- with_first_records %>%
   filter(kingdom == "Animalia") %>%
   nrow()
-count_ias_country_with_fr_plants <- with_first_records %>%
+count_ias_anywhere_with_fr_plants <- with_first_records %>%
   filter(kingdom == "Plantae") %>%
   nrow()
 
-count_ias_country_with_fr_pcnt <- safe_percent(
-  count_ias_country_with_fr,
-  count_ias_country
+count_ias_anywhere_with_fr_pcnt <- safe_percent(
+  count_ias_anywhere_with_fr,
+  count_ias_anywhere
 )
-count_ias_country_with_fr_pcnt_animals <- safe_percent(
-  count_ias_country_with_fr_animals,
-  count_ias_country
+count_ias_anywhere_with_fr_pcnt_animals <- safe_percent(
+  count_ias_anywhere_with_fr_animals,
+  count_ias_anywhere
 )
-count_ias_country_with_fr_pcnt_plants <- safe_percent(
-  count_ias_country_with_fr_plants,
-  count_ias_country
+count_ias_anywhere_with_fr_pcnt_plants <- safe_percent(
+  count_ias_anywhere_with_fr_plants,
+  count_ias_anywhere
 )
 
-count_ias_country_with_fr_post1970 <- with_first_records %>%
+count_ias_anywhere_with_fr_post1970 <- with_first_records %>%
   filter(eventDate >= 1970) %>%
   nrow()
-count_ias_country_with_fr_pre1970 <- with_first_records %>%
+count_ias_anywhere_with_fr_pre1970 <- with_first_records %>%
   filter(eventDate < 1970) %>%
   nrow()
 
-count_ias_country_with_fr_pcnt_post1970 <- safe_percent(
-  count_ias_country_with_fr_post1970,
-  count_ias_country_with_fr
+count_ias_anywhere_with_fr_pcnt_post1970 <- safe_percent(
+  count_ias_anywhere_with_fr_post1970,
+  count_ias_anywhere_with_fr
 )
-count_ias_country_with_fr_pcnt_pre1970 <- safe_percent(
-  count_ias_country_with_fr_pre1970,
-  count_ias_country_with_fr
+count_ias_anywhere_with_fr_pcnt_pre1970 <- safe_percent(
+  count_ias_anywhere_with_fr_pre1970,
+  count_ias_anywhere_with_fr
 )
 
 earliest_record_pre1970 <- with_first_records %>%
@@ -179,7 +182,7 @@ summary <- tibble::tibble(
   ),
   Variable = c(
     "Number of IAS",
-    "IAS InCountry Proportion",
+    "IAS Anywhere Proportion",
     "Plantae",
     "Animalia",
     "All Species",
@@ -191,16 +194,16 @@ summary <- tibble::tibble(
     "Earliest Record - Post 1970",
     "Most Recent Record"
   ),
-  isInvasiveInCountry = c(
-    format_count_percent(count_ias_country, count_ias_country_pcnt),
+  isInvasiveAnywhere = c(
+    format_count_percent(count_ias_anywhere, count_ias_anywhere_pcnt),
     NA_character_,
-    format_count_percent(count_ias_country_plants, count_ias_country_pcnt_plants),
-    format_count_percent(count_ias_country_animals, count_ias_country_pcnt_animals),
-    format_count_percent(count_ias_country_with_fr, count_ias_country_with_fr_pcnt),
-    format_count_percent(count_ias_country_with_fr_plants, count_ias_country_with_fr_pcnt_plants),
-    format_count_percent(count_ias_country_with_fr_animals, count_ias_country_with_fr_pcnt_animals),
-    format_count_percent(count_ias_country_with_fr_pre1970, count_ias_country_with_fr_pcnt_pre1970),
-    format_count_percent(count_ias_country_with_fr_post1970, count_ias_country_with_fr_pcnt_post1970),
+    format_count_percent(count_ias_anywhere_plants, count_ias_anywhere_pcnt_plants),
+    format_count_percent(count_ias_anywhere_animals, count_ias_anywhere_pcnt_animals),
+    format_count_percent(count_ias_anywhere_with_fr, count_ias_anywhere_with_fr_pcnt),
+    format_count_percent(count_ias_anywhere_with_fr_plants, count_ias_anywhere_with_fr_pcnt_plants),
+    format_count_percent(count_ias_anywhere_with_fr_animals, count_ias_anywhere_with_fr_pcnt_animals),
+    format_count_percent(count_ias_anywhere_with_fr_pre1970, count_ias_anywhere_with_fr_pcnt_pre1970),
+    format_count_percent(count_ias_anywhere_with_fr_post1970, count_ias_anywhere_with_fr_pcnt_post1970),
     format_year_taxa(earliest_record_pre1970),
     format_year_taxa(earliest_record_post1970),
     format_year_taxa(latest_record)
@@ -230,7 +233,7 @@ summary_table <- gt(summary,
                     rowname_col = "Variable") %>%
   tab_header(
     title = md(paste0("**Integrated Data Summary: ", country_label, "**")),
-    subtitle = paste0("Total species in checklists: ", number_of_species)
+    subtitle = paste0("GRIIS-linked taxa invasive anywhere; total checklist records: ", number_of_species)
   )
 
 summary_csv_path <- file.path(outputFolder, "ias_summary.csv")
@@ -244,4 +247,3 @@ gt::gtsave(summary_table, summary_table_path)
 biab_output("ias_summary", summary_csv_path)
 biab_output("ias_annual_summary", annual_summary_path)
 biab_output("ias_summary_table", summary_table_path)
-
