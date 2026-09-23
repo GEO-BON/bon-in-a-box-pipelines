@@ -566,12 +566,17 @@
   },
   "metadata": {
     "name": "Protected Area Representativeness and Connectedness (PARC)",
-    "description": "\n## Introduction\nThe Protected Area Representativeness and Connectedness (PARC) indices measure the extent to which terrestrial protected areas, and other effective area-based conservation measures (OECMs), are ecologically representative, and well-connected (both to one another, and to other areas of intact natural ecosystems in the surrounding landscape).\n\nThis pipeline calculates a weighted geometric mean of the PARC indicator over a region of interest.  The code to calculate the weighted mean was adapted from the \"Calculating weighted geometric means of  CSIRO BILBI indicator\" script on the  [CSIRO data access portal](https://doi.org/10.25919/edwj-4b67)\n## Uses\nThe PARC indices, whether generated separately or as a composite, are used to monitor and report past-to-present trends in representativeness and connectedness by repeated calculation using best-available mapping of protected areas and OECMs at multiple points in time, e.g. for different years. They can also provide a foundation for assessing the contribution that potential additions to the system of protected areas and OECMs might make to improving present PARC scores, thereby providing a foundation for prioritising such actions.\n### Pipeline limitations\n- PARC is a modeled layer, therefore there are greater uncertainties in areas with less data. Interpret the results with caution.",
+    "description": "\n## Introduction The Protected Area Representativeness and Connectedness (PARC) indices measure  the extent to which terrestrial protected areas, and other effective area-based conservation measures (OECMs), are ecologically representative, and well-connected - both to one another, and to other areas of intact natural ecosystems in the surrounding landscape (Hoskins et al., 2022).  \nThe PARC-representativeness index provides a rigorous measure of the extent to which a system of terrestrial protected areas and OECMs is ecologically representative of the full range of environmental and biological diversity within any given spatial reporting unit (e.g. country, broad ecosystem time).  The PARC- connectedness index provides a rigorous measure of the extent to which protected areas and OECMs are functionally connected to one another and to other areas of intact natural ecosystems.\nTogether, the composite PARC indicator offers a measure of progress in the expansion of any system of protected areas and OECMs. The indicator is expressed in proportional (or percent) coverage with the position of any given reporting unit on this scale rigorously adjusted for the effects of both representativeness and connectedness.\nThis pipeline calculates a weighted geometric mean of the PARC indicator over a region of interest.  The code to calculate the weighted mean was adapted from the \"Calculating weighted geometric means of CSIRO BILBI indicator\" script on the CSIRO data access portal](https://doi.org/10.25919/edwj-4b67) ## Uses\nThe PARC indices assess Goal A and Target 3 of the GBF, whether generated separately or as a composite, are used to monitor and report past-to-present trends in representativeness and connectedness by repeated calculation using best-available mapping of protected areas and OECMs at multiple points in time, e.g. for different years. They can also provide a foundation for assessing the contribution that potential additions to the system of protected areas and OECMs might make to improving present PARC scores, thereby providing a foundation for prioritising such actions.\n### Pipeline limitations\n- PARC is a modeled layer, therefore there are greater uncertainties in areas with less data. Interpret the results with caution.",
     "author": [
       {
         "name": "Jory Griffith",
         "email": "jory.griffith@mcgill.ca",
         "identifier": "https://orcid.org/0000-0001-6020-6690"
+      },
+      {
+        "name": "Nina Obiar",
+        "email": "nina.obiar@mcgill.ca",
+        "identifier": "https://orcid.org/0009-0002-6555-9908"
       }
     ],
     "license": "CC-BY-NC",
@@ -579,6 +584,10 @@
       {
         "text": "Harwood et al. 2022",
         "doi": "https://doi.org/10.25919/edwj-4b67"
+      },
+      {
+        "text": "Hoskins et al.,2020",
+        "doi": "https://doi.org/10.1016/j.envsoft.2020.104806"
       }
     ]
   }
