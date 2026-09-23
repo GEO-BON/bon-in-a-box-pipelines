@@ -8,7 +8,7 @@
 #  library(devtools)
 #  devtools::install_github("gearslaboratory/gdalUtils")
 #}
-library(gdalUtils)
+# library(gdalUtils)
 library(rjson)
 library(terra)
 library(sf)
