@@ -2,12 +2,15 @@ runner.env
 .vscode
 **/.cache
 **/.config
-.server
+.server*
 
 rosm.cache
 .RData
 *.Rproj
 lib/
+
+# Python cache
+**/__pycache__/
 
 # R temporary files
 .Rproj.user
@@ -20,3 +23,7 @@ lib/
 # mac system files
 **/._*
 **/.DS_Store
+
+# scripts and pipelines previous versions
+scripts/_*
+pipelines/_*
