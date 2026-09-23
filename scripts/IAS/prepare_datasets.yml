@@ -28,6 +28,11 @@ inputs:
     type: text/csv
     description: Same packaged global checklist used by the download step, rechecked against original and harmonised taxon names while preserving existing positive flags.
     example: /scripts/IAS/Data 1. Global Invasive Alien Species Checklist.csv
+  national_checklist:
+    label: Imported national checklist
+    type: text/csv
+    description: Optional mapped national checklist from the import step.
+    example: NULL
   kingdoms:
     label: Kingdoms
     type: options[]
@@ -79,6 +84,10 @@ outputs:
     label: cleaned First Records dataset
     description: Cleaned First Records dataset with standardised column names and values.
     type: text/csv
+  national_clean:
+    label: Cleaned national checklist
+    type: text/csv
+    description: National checklist after SInAS standardisation. Produced only when a checklist is supplied.
   file_info:
     label: File information
     description: Table containing information about the input datasets columns

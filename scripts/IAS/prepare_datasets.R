@@ -73,12 +73,22 @@ message("Running the SInAS cleaning workflow for ", country_name, " (", iso3, ")
 # Loading in datasets
 griis <- read_input_table(input$griis_checklist, "GRIIS")
 firstrecords <- read_input_table(input$first_records, "First Records")
+national <- NULL
+national_path <- input$national_checklist
+
+if (!is.null(national_path) &&
+    length(national_path) == 1L &&
+    !is.na(national_path) &&
+    nzchar(trimws(national_path))) {
+  # Keep the importer's original text fields intact for the audit trail.
+  national <- read.csv(
+    national_path, stringsAsFactors = FALSE, check.names = FALSE,
+    colClasses = "character", na.strings = character()
+  )
+}
 global_invasive_checklist <- read_input_table(
   input$global_invasive_checklist, "Global invasive checklist"
 )
-#griis <- read.csv("C:/Users/Samara/Desktop/bon-in-a-box-pipelines/output/IAS/P1_ChecklistDownload/download_checklist/24WCclDWWTOfF_TezBFTZE32-OPe/GRIIS_checklist.csv")
-#firstrecords <- read.csv("C:/Users/Samara/Desktop/bon-in-a-box-pipelines/output/IAS/P2_FirstRecordsData/standardise_data/MvoeUdjrbO9xW2gLxy9qcQhDgtHB/FirstRecords_cleaned.csv")
-
 # Loading in config files
 
 # GRIIS and First Records are produced by fixed upstream BON in a Box steps, so
@@ -107,6 +117,30 @@ validate_columns(
   c("kingdom", "habitat", "taxon", "location", "eventDate"),
   "First Records"
 )
+
+if (!is.null(national)) {
+  required_national <- c(
+    "sourceRow", "taxon", "eventDate", "location", "ISO3",
+    "bibliographicCitation", "taxon_orig", "eventDate_orig"
+  )
+  missing_national <- setdiff(required_national, names(national))
+  if (length(missing_national) > 0L) {
+    stop("National checklist is missing imported columns: ",
+         paste(missing_national, collapse = ", "),
+         ". Use the national checklist import step first.")
+  }
+  if (nrow(national) == 0L) {
+    stop("The national checklist contains no records.")
+  }
+  national_iso3 <- toupper(trimws(national$ISO3))
+  if (any(is.na(national_iso3) | national_iso3 != iso3)) {
+    stop("The national checklist ISO3 must match the selected country (", iso3, ").")
+  }
+  national$ISO3 <- national_iso3
+  # SInAS creates its own *_orig fields; keep the uploaded text separately.
+  national$uploadedTaxon <- national$taxon_orig
+  national$uploadedEventDate <- national$eventDate_orig
+}
 
 known_column <- function(dat, column) {
   if (column %in% names(dat)) column else NA_character_
@@ -360,13 +394,45 @@ Column_additional[[2]] <- known_additional(
   )
 )
 
-
-
-## creating a list of input datasets
+## Create the standard sources first; append the optional upload only if present.
 datasets_in <- list(
   GRIIS = GRIIS,
   FirstRecords = FirstRecords_COUNTRY
 )
+
+if (!is.null(national)) {
+  datasets_in$NationalChecklist <- national
+
+  Dataset_brief_name <- c(Dataset_brief_name, "NationalChecklist")
+  Column_recordID <- c(Column_recordID, "sourceRow")
+  Column_taxon <- c(Column_taxon, "taxon")
+  Column_location <- c(Column_location, "location")
+  Column_country_ISO <- c(Column_country_ISO, "ISO3")
+  Column_eventDate1 <- c(Column_eventDate1, "eventDate")
+  Column_bibliographicCitation <- c(
+    Column_bibliographicCitation, "bibliographicCitation"
+  )
+
+  Column_author <- c(Column_author, NA_character_)
+  Column_scientificName <- c(Column_scientificName, NA_character_)
+  Column_kingdom <- c(Column_kingdom, NA_character_)
+  Column_eventDate2 <- c(Column_eventDate2, NA_character_)
+  Column_establishmentMeans <- c(
+    Column_establishmentMeans, NA_character_
+  )
+  Column_occurrenceStatus <- c(
+    Column_occurrenceStatus, NA_character_
+  )
+  Column_degreeOfEstablishment <- c(
+    Column_degreeOfEstablishment, NA_character_
+  )
+  Column_pathway <- c(Column_pathway, NA_character_)
+  Column_habitat <- c(Column_habitat, NA_character_)
+  Column_additional <- c(Column_additional, "sourceRow; uploadedTaxon; uploadedEventDate")
+}
+
+
+
 
 ## creating FileInfo data frame to store information about datasets and their columns
 dataset_names <- names(datasets_in)
@@ -2346,6 +2412,27 @@ if (overall_status == "WARNING") {
   )
 }
 
+if (!is.null(national)) {
+  national_clean <- step5$clean_datasets[["NationalChecklist"]]
+
+  if (is.null(national_clean)) {
+    stop("The national checklist was not returned by SInAS preparation.")
+  }
+
+  national_clean_path <- file.path(
+    outputFolder, "NationalChecklist_clean.csv"
+  )
+
+  write.csv(
+    national_clean,
+    national_clean_path,
+    row.names = FALSE,
+    na = ""
+  )
+
+  biab_output("national_clean", national_clean_path)
+}
+
 cleaning_summary <- data.frame(
   country = country_name,
   ISO3 = iso3,
@@ -2371,6 +2458,22 @@ cleaning_summary <- data.frame(
   QC_status = overall_status,
   stringsAsFactors = FALSE
 )
+
+if (!is.null(national)) {
+  cleaning_summary <- rbind(cleaning_summary, data.frame(
+    country = country_name,
+    ISO3 = iso3,
+    dataset = "NationalChecklist",
+    input_records = nrow(national),
+    clean_records = nrow(national_clean),
+    unresolved_terms = issue_rows(step2$unresolved_terms$NationalChecklist),
+    unresolved_locations = length(step3$missing_locations$NationalChecklist),
+    unresolved_taxa = issue_rows(step4$missing_taxa$NationalChecklist),
+    excluded_from_merge = sum(excluded_records$dataset == "NationalChecklist"),
+    QC_status = overall_status,
+    stringsAsFactors = FALSE
+  ))
+}
 
 write.csv(griis_clean, griis_path, row.names = FALSE, na = "")
 write.csv(first_records_clean, first_records_path, row.names = FALSE, na = "")

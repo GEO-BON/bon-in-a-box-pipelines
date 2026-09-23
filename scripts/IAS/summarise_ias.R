@@ -8,9 +8,12 @@ input <- biab_inputs()
 merged_data <- read.csv(input$merged_dataset, stringsAsFactors = FALSE)
 gbif_observations <- read.csv(input$gbif_country_observations, stringsAsFactors = FALSE)
 
-required_merged_columns <- c(
-  "taxon", "kingdom", "origDB", "isInvasiveAnywhere", "eventDate"
-)
+# The membership column is emitted only for national-checklist merge runs.
+national_mode <- "inNationalChecklist" %in% names(merged_data)
+required_merged_columns <- c("taxon", "kingdom", "eventDate")
+if (!national_mode) {
+  required_merged_columns <- c(required_merged_columns, "origDB", "isInvasiveAnywhere")
+}
 missing_merged_columns <- setdiff(required_merged_columns, colnames(merged_data))
 if (length(missing_merged_columns) > 0) {
   biab_error_stop(paste(
@@ -81,27 +84,41 @@ country_label <- if ("location" %in% colnames(merged_data)) {
 merged_data <- merged_data %>%
   mutate(
     kingdom = stringr::str_to_title(kingdom),
-    isInvasiveAnywhere = as.character(isInvasiveAnywhere),
     eventDate = suppressWarnings(as.integer(eventDate))
   )
 
-griis_only <- merged_data %>%
-  filter(grepl("GRIIS", origDB, ignore.case = TRUE))
+if (national_mode) {
+  membership <- toupper(trimws(as.character(merged_data$inNationalChecklist)))
+  if (any(!is.na(membership) & !membership %in% c("TRUE", "FALSE", ""))) {
+    biab_error_stop("inNationalChecklist must contain TRUE, FALSE or missing values.")
+  }
+  checklist_data <- merged_data[membership %in% "TRUE", , drop = FALSE]
+  # National membership defines this summary; it does not establish invasiveness.
+  summary_species <- checklist_data
+  summary_subtitle <- paste0(
+    "National checklist species; total checklist records: ", nrow(checklist_data),
+    ". Membership does not imply confirmed invasive status."
+  )
+} else {
+  merged_data$isInvasiveAnywhere <- as.character(merged_data$isInvasiveAnywhere)
+  checklist_data <- merged_data %>%
+    filter(grepl("GRIIS", origDB, ignore.case = TRUE))
+  # Preserve the original contains-TRUE rule, including mixed source flags.
+  summary_species <- checklist_data %>%
+    filter(grepl("TRUE", isInvasiveAnywhere, ignore.case = TRUE))
+  summary_subtitle <- paste0(
+    "GRIIS-linked taxa invasive anywhere; total checklist records: ", nrow(checklist_data)
+  )
+}
+number_of_species <- nrow(checklist_data)
 
-# Match the original P5 summary: GRIIS-linked taxa invasive anywhere.
-# Retain the original contains-TRUE rule, including mixed source flags.
-invasive_anywhere <- griis_only %>%
-  filter(grepl("TRUE", isInvasiveAnywhere, ignore.case = TRUE))
-
-number_of_species <- nrow(griis_only)
-
-count_ias_anywhere <- nrow(invasive_anywhere)
+count_ias_anywhere <- nrow(summary_species)
 count_ias_anywhere_pcnt <- safe_percent(count_ias_anywhere, number_of_species)
 
-count_ias_anywhere_animals <- invasive_anywhere %>%
+count_ias_anywhere_animals <- summary_species %>%
   filter(kingdom == "Animalia") %>%
   nrow()
-count_ias_anywhere_plants <- invasive_anywhere %>%
+count_ias_anywhere_plants <- summary_species %>%
   filter(kingdom == "Plantae") %>%
   nrow()
 
@@ -114,7 +131,7 @@ count_ias_anywhere_pcnt_plants <- safe_percent(
   count_ias_anywhere
 )
 
-with_first_records <- invasive_anywhere %>%
+with_first_records <- summary_species %>%
   filter(!is.na(eventDate))
 
 count_ias_anywhere_with_fr <- nrow(with_first_records)
@@ -210,6 +227,13 @@ summary <- tibble::tibble(
   )
 )
 
+if (national_mode) {
+  # Avoid labelling an uploaded species list as independently confirmed IAS.
+  summary <- summary[summary$Variable != "IAS Anywhere Proportion", ]
+  summary$Variable[summary$Variable == "Number of IAS"] <- "National checklist species"
+  names(summary)[names(summary) == "isInvasiveAnywhere"] <- "nationalChecklist"
+}
+
 first_records_by_year <- with_first_records %>%
   count(year = eventDate, name = "firstRecordCount")
 
@@ -233,7 +257,7 @@ summary_table <- gt(summary,
                     rowname_col = "Variable") %>%
   tab_header(
     title = md(paste0("**Integrated Data Summary: ", country_label, "**")),
-    subtitle = paste0("GRIIS-linked taxa invasive anywhere; total checklist records: ", number_of_species)
+    subtitle = summary_subtitle
   )
 
 summary_csv_path <- file.path(outputFolder, "ias_summary.csv")

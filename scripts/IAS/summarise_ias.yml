@@ -1,6 +1,6 @@
 script: summarise_ias.R
 name: Summarise IAS data
-description: "Summarise GRIIS-linked taxa flagged invasive anywhere and annual GBIF observation counts."
+description: "Summarise national checklist species when supplied, otherwise GRIIS-linked taxa flagged invasive anywhere, alongside annual GBIF observation counts."
 author:
   - name: Saxbee Affleck
   - name: Samara Manzin
@@ -19,17 +19,17 @@ inputs:
 outputs:
   ias_summary:
     label: IAS summary
-    description: Summary statistics for GRIIS-linked taxa flagged isInvasiveAnywhere.
+    description: Summary statistics for national checklist members (nationalChecklist column), or GRIIS-linked taxa flagged invasive anywhere (isInvasiveAnywhere column). National membership does not imply confirmed invasive status.
     type: text/csv
     example: NULL
   ias_annual_summary:
     label: IAS annual summary
-    description: Annual table combining GBIF occurrence counts and first-record counts for GRIIS-linked taxa flagged invasive anywhere.
+    description: Annual GBIF occurrence counts and first-record counts for national checklist members when supplied, otherwise GRIIS-linked taxa flagged invasive anywhere. Uses the final years selected by the merge step.
     type: text/csv
     example: NULL
   ias_summary_table:
     label: IAS summary table
-    description: HTML summary table for GRIIS-linked taxa flagged invasive anywhere.
+    description: HTML summary table labelled with the active national-checklist or GRIIS invasive-anywhere scope.
     type: text/html
     example: NULL
 conda:

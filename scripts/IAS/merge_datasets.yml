@@ -1,6 +1,6 @@
 script: merge_datasets.R
 name: SInAS Merge Standardised Datasets
-description: "Merge one country's fully standardised GRIIS and First Records tables following the SInAS database-merging rules."
+description: "Merge one country's standardised sources. An optional national checklist defines membership and supplies preferred first-record years; without it, use the existing GRIIS and First Records merging rules."
 author:
   - name: Manuela Gomez-Suarez
   - name: Hanno Seebens
@@ -22,6 +22,11 @@ inputs:
     type: text/csv
     description: First Records dataset after SInAS terminology, location, taxonomy, and event-date standardisation.
     example: NULL
+  national_clean:
+    label: Cleaned national checklist
+    type: text/csv
+    description: Optional SInAS-cleaned national checklist. When supplied, only its taxa and locations are retained; valid national first-record years take precedence over external years. Checklist membership does not imply invasive status.
+    example: NULL
   full_taxa_list:
     label: Reviewed full taxonomic list
     type: text/csv
@@ -30,12 +35,12 @@ inputs:
   cleaning_summary:
     label: Preparation summary
     type: text/csv
-    description: Record counts and unresolved-value counts produced while preparing the two source datasets.
+    description: Record counts and unresolved-value counts produced while preparing the supplied source datasets.
     example: NULL
   qc_status:
     label: Quality-control status
     type: text/csv
-    description: Quality-control status produced while preparing the two source datasets.
+    description: Quality-control status produced while preparing the supplied source datasets.
     example: NULL
   unmatched_values:
     label: Unmatched values
@@ -46,7 +51,7 @@ outputs:
   merged_dataset:
     label: Merged SInAS dataset
     type: text/csv
-    description: One record per standardised taxon-location-establishment combination.
+    description: One record per standardised taxon-location-establishment combination in the default workflow, or per national taxon-location identity when a national checklist is supplied. National outputs retain membership, date sources, competing date evidence and uploaded values.
   data_quality_report:
     label: SInAS data-quality report
     type: text/csv

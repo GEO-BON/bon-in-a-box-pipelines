@@ -147,6 +147,20 @@ griis <- prepare_dataset(
 first_records <- prepare_dataset(
   read_standardised(input$first_records_clean, "FirstRecords")
 )
+national <- NULL
+national_path <- input$national_clean
+if (length(national_path) > 1L) stop("Supply only one cleaned national checklist.")
+if (length(national_path) == 1L && !is.na(national_path) &&
+    nzchar(trimws(national_path))) {
+  national <- prepare_dataset(
+    read_standardised(national_path, "NationalChecklist")
+  )
+  if (nrow(national) == 0L) {
+    stop("No national checklist records have a resolved location. Review preparation exclusions.")
+  }
+}
+datasets <- list(GRIIS = griis, FirstRecords = first_records)
+if (!is.null(national)) datasets$NationalChecklist <- national
 cleaning_report <- read_report(input$cleaning_summary, "Preparation summary")
 qc_report <- read_report(input$qc_status, "Quality-control status")
 unmatched_report <- read_report(input$unmatched_values, "Unmatched values")
@@ -155,7 +169,7 @@ full_taxa_list <- read_report(input$full_taxa_list, "Full taxonomic list")
 required_identity_columns <- c(
   "location", "locationID", "taxon", "scientificName", "taxonID"
 )
-for (dataset in list(GRIIS = griis, FirstRecords = first_records)) {
+for (dataset in datasets) {
   missing_identity <- setdiff(required_identity_columns, names(dataset))
   if (length(missing_identity) > 0) {
     stop(
@@ -165,7 +179,7 @@ for (dataset in list(GRIIS = griis, FirstRecords = first_records)) {
   }
 }
 
-all_columns <- union(names(griis), names(first_records))
+all_columns <- unique(unlist(lapply(datasets, names), use.names = FALSE))
 add_missing_columns <- function(dat, columns) {
   for (column in setdiff(columns, names(dat))) {
     dat[[column]] <- rep(NA_character_, nrow(dat))
@@ -173,10 +187,41 @@ add_missing_columns <- function(dat, columns) {
   dat[, columns, drop = FALSE]
 }
 
-combined <- rbind(
-  add_missing_columns(griis, all_columns),
-  add_missing_columns(first_records, all_columns)
-)
+combined <- do.call(rbind, lapply(datasets, add_missing_columns, columns = all_columns))
+external_records_not_selected <- 0L
+if (!is.null(national)) {
+  # National rows come first so their reviewed identity is retained.
+  combined <- combined[order(combined$origDB != "NationalChecklist"), , drop = FALSE]
+  is_national <- combined$origDB == "NationalChecklist"
+  ids <- normalise_missing(combined$taxonID)
+  names_standardised <- normalise_missing(combined$taxon)
+  if (any(is_national & is.na(ids) & is.na(names_standardised))) {
+    stop("National records require a standardised taxon ID or taxon name.")
+  }
+  # Missing IDs never match each other without an exact standardised name.
+  identity <- ifelse(!is.na(ids), paste0("id:", ids),
+                     paste0("name:", names_standardised))
+  combined$nationalMatchKey <- as.character(interaction(
+    identity, combined$locationID, drop = TRUE, lex.order = TRUE
+  ))
+  selected <- combined$nationalMatchKey %in% combined$nationalMatchKey[is_national]
+  external_records_not_selected <- sum(!selected)
+  combined <- combined[selected, , drop = FALSE]
+  is_national <- combined$origDB == "NationalChecklist"
+  combined$inNationalChecklist <- is_national
+  if (!"eventDate" %in% names(combined)) combined$eventDate <- NA_character_
+  years <- suppressWarnings(as.numeric(as.character(combined$eventDate)))
+  valid <- is.finite(years) & years == floor(years) & years >= 1 & years <= 9999
+  combined$eventDate <- ifelse(valid, as.character(years), NA_character_)
+  combined$nationalFirstRecordYear <- ifelse(is_national, combined$eventDate, NA_character_)
+  combined$externalFirstRecordYear <- ifelse(!is_national, combined$eventDate, NA_character_)
+  combined$firstRecordSource <- ifelse(valid, combined$origDB, NA_character_)
+  # Source evidence survives both consolidation passes and identifies conflicts.
+  combined$firstRecordEvidence <- ifelse(
+    is.na(combined$eventDate), NA_character_,
+    paste0(combined$origDB, ": ", combined$eventDate)
+  )
+}
 
 ## Reproduce the source workflow's introduced/uncertain rule before including
 ## establishmentMeans in the grouping identity.
@@ -198,6 +243,8 @@ make_groups <- function(dat, keys) {
   split(seq_len(nrow(dat)), id)
 }
 
+if (!is.null(national)) core_keys <- "nationalMatchKey"
+
 if ("establishmentMeans" %in% names(combined)) {
   core_groups <- make_groups(combined, core_keys)
   for (index in core_groups) {
@@ -205,7 +252,7 @@ if ("establishmentMeans" %in% names(combined)) {
     values <- trimws(unlist(strsplit(values[!is.na(values)], ";\\s*")))
     if (all(c("introduced", "uncertain") %in% values)) {
       # Combine only introduced/uncertain records. A native record sharing
-      # this identity must retain its source status and remain a separate row.
+      # this identity retains its source status (and a separate row in default mode).
       eligible <- combined$establishmentMeans[index] %in%
         c("introduced", "uncertain", "introduced; uncertain")
       combined$establishmentMeans[index[eligible]] <- "introduced; uncertain"
@@ -221,16 +268,34 @@ first_value <- function(x) {
 }
 
 aggregate_data <- function(dat, keys, first_columns = character()) {
+  if (nrow(dat) == 0L) return(dat)
   groups <- make_groups(dat, keys)
   rows <- lapply(groups, function(index) {
     out <- dat[index[1], , drop = FALSE]
     for (column in names(dat)) {
-      if (column == "eventDate") {
+      if (column %in% c("eventDate", "nationalFirstRecordYear", "externalFirstRecordYear")) {
         out[[column]] <- earliest_event_date(dat[[column]][index])
+      } else if (column %in% c("uploadedTaxon", "uploadedEventDate")) {
+        values <- unique(as.character(dat[[column]][index]))
+        values <- values[!is.na(values)]
+        out[[column]] <- if (length(values)) paste(values, collapse = "; ") else NA_character_
+      } else if (column == "inNationalChecklist") {
+        out[[column]] <- any(as.character(dat[[column]][index]) == "TRUE", na.rm = TRUE)
       } else if (column %in% first_columns) {
         out[[column]] <- first_value(dat[[column]][index])
       } else {
         out[[column]] <- combine_values(dat[[column]][index])
+      }
+    }
+    if ("nationalFirstRecordYear" %in% names(out)) {
+      national_year <- out$nationalFirstRecordYear
+      out$eventDate <- if (!is.na(national_year)) national_year else out$externalFirstRecordYear
+      if (!is.na(national_year)) {
+        out$firstRecordSource <- "NationalChecklist"
+      } else {
+        chosen <- !is.na(dat$eventDate[index]) & dat$eventDate[index] == out$eventDate
+        chosen[is.na(chosen)] <- FALSE
+        out$firstRecordSource <- combine_values(dat$firstRecordSource[index][chosen])
       }
     }
     out
@@ -243,12 +308,17 @@ aggregate_data <- function(dat, keys, first_columns = character()) {
 ## First merge records with the complete SInAS taxonomic identity.
 primary_keys <- c(core_keys, "establishmentMeans")
 primary_keys <- primary_keys[primary_keys %in% names(combined)]
-merged_primary <- aggregate_data(combined, primary_keys)
+if (!is.null(national)) primary_keys <- "nationalMatchKey"
+national_identity_columns <- if (!is.null(national)) {
+  c("taxon", "scientificName", "taxonID", "location", "locationID")
+} else character()
+merged_primary <- aggregate_data(combined, primary_keys, national_identity_columns)
 
 ## Report fields that disagree before the source workflow's final
 ## taxon-location-establishment consolidation.
 final_keys <- c("taxon", "location", "establishmentMeans")
 final_keys <- final_keys[final_keys %in% names(merged_primary)]
+if (!is.null(national)) final_keys <- "nationalMatchKey"
 final_groups <- make_groups(merged_primary, final_keys)
 conflict_rows <- lapply(final_groups, function(index) {
   if (length(index) < 2) return(NULL)
@@ -288,7 +358,43 @@ identity_columns <- intersect(
   c("locationID", "taxonID", "scientificName", "kingdom"),
   names(merged_primary)
 )
-merged <- aggregate_data(merged_primary, final_keys, identity_columns)
+merged <- aggregate_data(
+  merged_primary, final_keys, union(identity_columns, national_identity_columns)
+)
+
+if (!is.null(national)) {
+  # Report date disagreements before earliest-year aggregation hides them.
+  for (index in make_groups(combined, "nationalMatchKey")) {
+    years <- unique(normalise_missing(combined$eventDate[index]))
+    years <- years[!is.na(years)]
+    # Report non-date disagreements too, before national-mode aggregation.
+    for (column in intersect(c("establishmentMeans", "occurrenceStatus",
+                              "isInvasive", "isInvasiveInCountry", "isInvasiveAnywhere"),
+                            names(combined))) {
+      values <- unique(normalise_missing(combined[[column]][index]))
+      values <- values[!is.na(values)]
+      if (length(values) > 1L) {
+        merge_conflicts <- rbind(merge_conflicts, data.frame(
+          taxon = first_value(combined$taxon[index]),
+          location = first_value(combined$location[index]),
+          establishmentMeans = combine_values(combined$establishmentMeans[index]),
+          column = column, values = paste(values, collapse = " | "),
+          stringsAsFactors = FALSE
+        ))
+      }
+    }
+    if (length(years) > 1L) {
+      merge_conflicts <- rbind(merge_conflicts, data.frame(
+        taxon = first_value(combined$taxon[index]),
+        location = first_value(combined$location[index]),
+        establishmentMeans = combine_values(combined$establishmentMeans[index]),
+        column = "eventDate",
+        values = combine_values(combined$firstRecordEvidence[index]),
+        stringsAsFactors = FALSE
+      ))
+    }
+  }
+}
 
 ## Use the most informative habitat available for each resolved taxon.
 if (all(c("taxonID", "habitat") %in% names(merged))) {
@@ -325,7 +431,7 @@ taxonomy$taxonID <- as.character(taxonomy$taxonID)
 taxonomy <- taxonomy[
   !is.na(normalise_missing(taxonomy$taxonID)), , drop = FALSE
 ]
-if (nrow(taxonomy) == 0) {
+if (nrow(taxonomy) == 0 && is.null(national)) {
   stop("Full taxonomic list contains no usable taxonID values.")
 }
 taxonomy_groups <- split(seq_len(nrow(taxonomy)), taxonomy$taxonID)
@@ -350,7 +456,7 @@ if (length(conflicting_taxon_ids) > 0) {
     paste(conflicting_taxon_ids, collapse = ", ")
   )
 }
-taxonomy <- do.call(rbind, lapply(taxonomy_groups, function(index) {
+if (length(taxonomy_groups) > 0L) taxonomy <- do.call(rbind, lapply(taxonomy_groups, function(index) {
   out <- taxonomy[index[[1]], , drop = FALSE]
   for (column in hierarchy_columns) {
     out[[column]] <- first_value(taxonomy[[column]][index])
@@ -403,16 +509,26 @@ output_columns <- c(
   "taxaGroup", "sourceLocation", "sourceLocationID", "sourceVersion",
   "sourceDOI", "sourceFile"
 )
+if (!is.null(national)) {
+  output_columns <- c(output_columns, "inNationalChecklist", "nationalFirstRecordYear",
+    "externalFirstRecordYear", "firstRecordSource", "firstRecordEvidence",
+    "sourceRow", "uploadedTaxon", "uploadedEventDate")
+}
 merged <- merged[, intersect(output_columns, names(merged)), drop = FALSE]
 
 summary <- data.frame(
   country = country_name,
   ISO3 = country_iso3,
-  source = c("GRIIS", "FirstRecords", "Merged"),
-  records = c(nrow(griis), nrow(first_records), nrow(merged)),
-  merge_conflicts = c(NA_integer_, NA_integer_, nrow(merge_conflicts)),
+  source = c(names(datasets), "Merged"),
+  records = c(vapply(datasets, nrow, integer(1)), nrow(merged)),
+  merge_conflicts = c(rep(NA_integer_, length(datasets)), nrow(merge_conflicts)),
   stringsAsFactors = FALSE
 )
+
+if (!is.null(national)) {
+  summary$external_records_not_selected <- c(rep(NA_integer_, length(datasets)),
+                                              external_records_not_selected)
+}
 
 report_column <- function(dat, column, default = "") {
   if (column %in% names(dat)) return(dat[[column]])
@@ -493,6 +609,13 @@ conflict_rows_report <- data.frame(
   stringsAsFactors = FALSE
 )
 
+date_conflict <- conflict_rows_report$field == "eventDate"
+conflict_rows_report$details[date_conflict] <- "First-record years disagree across or within sources"
+conflict_rows_report$action[date_conflict] <- paste(
+  "Earliest valid national year takes precedence; otherwise earliest external year.",
+  "All dated source evidence is retained in firstRecordEvidence."
+)
+
 data_quality_report <- rbind(
   quality_control_rows, unmatched_rows, conflict_rows_report
 )
@@ -512,6 +635,7 @@ overall_qc <- as.character(report_column(qc_report, "status", "UNKNOWN")[
   match("overall", report_column(qc_report, "check"))
 ])
 if (length(overall_qc) == 0 || is.na(overall_qc)) overall_qc <- "UNKNOWN"
+if (!is.null(national) && nrow(merge_conflicts) > 0L) overall_qc <- "WARNING"
 
 preparation_rows <- data.frame(
   country = rep(country_name, nrow(cleaning_report)),
@@ -542,7 +666,7 @@ merge_row <- data.frame(
   ISO3 = country_iso3,
   stage = "merge",
   dataset = "Merged",
-  input_records = nrow(griis) + nrow(first_records),
+  input_records = sum(vapply(datasets, nrow, integer(1))),
   output_records = nrow(merged),
   unresolved_terms = sum(preparation_rows$unresolved_terms, na.rm = TRUE),
   unresolved_locations = sum(

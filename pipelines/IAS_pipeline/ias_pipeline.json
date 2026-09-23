@@ -4,8 +4,8 @@
       "id": "37",
       "type": "io",
       "position": {
-        "x": 635,
-        "y": 235.5
+        "x": 641,
+        "y": 344
       },
       "data": {
         "descriptionFile": "IAS>download_firstrecords.yml"
@@ -15,8 +15,8 @@
       "id": "38",
       "type": "io",
       "position": {
-        "x": 465,
-        "y": 327.5
+        "x": 483,
+        "y": 242
       },
       "data": {
         "descriptionFile": "IAS>download_griischecklist.yml"
@@ -26,8 +26,8 @@
       "id": "41",
       "type": "userInput",
       "position": {
-        "x": 116,
-        "y": 210.21428571428572
+        "x": 94,
+        "y": 208
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -39,7 +39,7 @@
       "type": "constant",
       "position": {
         "x": 12,
-        "y": 308
+        "y": 245.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -52,7 +52,7 @@
       "type": "constant",
       "position": {
         "x": 12,
-        "y": 351
+        "y": 416
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -64,8 +64,8 @@
       "id": "52",
       "type": "io",
       "position": {
-        "x": 1918,
-        "y": 419.5
+        "x": 2092,
+        "y": 518
       },
       "data": {
         "descriptionFile": "IAS>merge_datasets.yml"
@@ -75,8 +75,8 @@
       "id": "53",
       "type": "output",
       "position": {
-        "x": 2737,
-        "y": 362
+        "x": 2871,
+        "y": 495
       },
       "data": {
         "label": "SInAS merged dataset"
@@ -86,8 +86,8 @@
       "id": "73",
       "type": "userInput",
       "position": {
-        "x": 1608,
-        "y": 143.5
+        "x": 1792,
+        "y": 138
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -99,8 +99,8 @@
       "id": "74",
       "type": "userInput",
       "position": {
-        "x": 1614,
-        "y": 178.5
+        "x": 1798,
+        "y": 174
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -112,8 +112,8 @@
       "id": "76",
       "type": "io",
       "position": {
-        "x": 2933,
-        "y": 559.5
+        "x": 3066,
+        "y": 685
       },
       "data": {
         "descriptionFile": "IAS>summarise_ias.yml"
@@ -123,8 +123,8 @@
       "id": "80",
       "type": "io",
       "position": {
-        "x": 1272,
-        "y": 297.5
+        "x": 1300,
+        "y": 378
       },
       "data": {
         "descriptionFile": "IAS>prepare_datasets.yml"
@@ -134,8 +134,8 @@
       "id": "81",
       "type": "io",
       "position": {
-        "x": 2737,
-        "y": 12
+        "x": 2871,
+        "y": 107
       },
       "data": {
         "descriptionFile": "IAS>model_data.yml"
@@ -145,8 +145,8 @@
       "id": "82",
       "type": "output",
       "position": {
-        "x": 3427,
-        "y": 199.5
+        "x": 3641,
+        "y": 84
       },
       "data": {
         "label": "Output"
@@ -156,8 +156,8 @@
       "id": "83",
       "type": "output",
       "position": {
-        "x": 3427,
-        "y": 269.5
+        "x": 3641,
+        "y": 48
       },
       "data": {
         "label": "Output"
@@ -167,8 +167,8 @@
       "id": "85",
       "type": "output",
       "position": {
-        "x": 3427,
-        "y": 129.5
+        "x": 3641,
+        "y": 436
       },
       "data": {
         "label": "Output"
@@ -178,8 +178,8 @@
       "id": "86",
       "type": "output",
       "position": {
-        "x": 3427,
-        "y": 164.5
+        "x": 3641,
+        "y": 364
       },
       "data": {
         "label": "Output"
@@ -189,8 +189,8 @@
       "id": "87",
       "type": "output",
       "position": {
-        "x": 3427,
-        "y": 234.5
+        "x": 3641,
+        "y": 12
       },
       "data": {
         "label": "Output"
@@ -200,8 +200,8 @@
       "id": "93",
       "type": "output",
       "position": {
-        "x": 3427,
-        "y": 339.5
+        "x": 3641,
+        "y": 472
       },
       "data": {
         "label": "Qualitative model interpretation"
@@ -211,8 +211,8 @@
       "id": "88",
       "type": "output",
       "position": {
-        "x": 2737,
-        "y": 397
+        "x": 2871,
+        "y": 759
       },
       "data": {
         "label": "SInAS data-quality report"
@@ -222,8 +222,8 @@
       "id": "89",
       "type": "output",
       "position": {
-        "x": 1918,
-        "y": 569.5
+        "x": 2092,
+        "y": 91
       },
       "data": {
         "label": "SInAS excluded records"
@@ -233,8 +233,8 @@
       "id": "90",
       "type": "output",
       "position": {
-        "x": 2737,
-        "y": 633.5
+        "x": 2871,
+        "y": 649
       },
       "data": {
         "label": "SInAS run summary"
@@ -244,8 +244,8 @@
       "id": "91",
       "type": "io",
       "position": {
-        "x": 1961,
-        "y": 161
+        "x": 2135,
+        "y": 157
       },
       "data": {
         "descriptionFile": "data>getGBIFObservations>get_GBIF_country_SQL.yml"
@@ -255,15 +255,83 @@
       "id": "94",
       "type": "output",
       "position": {
-        "x": 3427,
-        "y": 304.5
+        "x": 3641,
+        "y": 400
       },
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "96",
+      "type": "io",
+      "position": {
+        "x": 675,
+        "y": 530
+      },
+      "data": {
+        "descriptionFile": "IAS>import_national_checklist.yml"
+      }
+    },
+    {
+      "id": "97",
+      "type": "userInput",
+      "position": {
+        "x": 68,
+        "y": 459
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv"
+      }
+    },
+    {
+      "id": "98",
+      "type": "userInput",
+      "position": {
+        "x": 114,
+        "y": 495
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "species"
+      }
+    },
+    {
+      "id": "99",
+      "type": "userInput",
+      "position": {
+        "x": 83,
+        "y": 531
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "100",
+      "type": "userInput",
+      "position": {
+        "x": 114,
+        "y": 567
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "user_input_data"
+      }
     }
   ],
   "edges": [
+    {
+      "source": "80",
+      "sourceHandle": "national_clean",
+      "target": "52",
+      "targetHandle": "national_clean",
+      "id": "xy-edge__80national_clean-52national_clean"
+    },
     {
       "source": "41",
       "target": "37",
@@ -479,6 +547,43 @@
       "sourceHandle": "quantitative_plot",
       "target": "94",
       "id": "xy-edge__81quantitative_plot-94"
+    },
+    {
+      "source": "96",
+      "sourceHandle": "national_checklist",
+      "target": "80",
+      "targetHandle": "national_checklist",
+      "id": "xy-edge__96national_checklist-80national_checklist"
+    },
+    {
+      "source": "97",
+      "target": "96",
+      "targetHandle": "national_checklist",
+      "id": "xy-edge__97-96national_checklist"
+    },
+    {
+      "source": "41",
+      "target": "96",
+      "targetHandle": "country_name",
+      "id": "xy-edge__41-96country_name"
+    },
+    {
+      "source": "98",
+      "target": "96",
+      "targetHandle": "species_column",
+      "id": "xy-edge__98-96species_column"
+    },
+    {
+      "source": "99",
+      "target": "96",
+      "targetHandle": "first_record_column",
+      "id": "xy-edge__99-96first_record_column"
+    },
+    {
+      "source": "100",
+      "target": "96",
+      "targetHandle": "dataset_citation",
+      "id": "xy-edge__100-96dataset_citation"
     }
   ],
   "inputs": {
@@ -548,6 +653,34 @@
         "TERRESTRIAL|MARINE"
       ],
       "weight": 4
+    },
+    "pipeline@97": {
+      "label": "National checklist",
+      "description": "Optional national checklist CSV file. Leave empty to skip this step without producing an output.",
+      "type": "text/csv",
+      "example": null,
+      "weight": 5
+    },
+    "pipeline@98": {
+      "label": "Species column",
+      "description": "Exact column name containing scientific species names. Required only when a checklist is uploaded.",
+      "type": "text",
+      "example": "species",
+      "weight": 6
+    },
+    "pipeline@99": {
+      "label": "First record column",
+      "description": "Exact column name containing the first documented occurrence year or date in the selected country. Leave blank if not provided. Date standardisation occurs in SInAS preparation.",
+      "type": "text",
+      "example": null,
+      "weight": 7
+    },
+    "pipeline@100": {
+      "label": "Dataset citation",
+      "description": "Optional dataset citation. Defaults to user_input_data when blank.",
+      "type": "text",
+      "example": "user_input_data",
+      "weight": 8
     }
   },
   "outputs": {
