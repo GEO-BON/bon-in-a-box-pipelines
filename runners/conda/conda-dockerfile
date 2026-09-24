@@ -9,11 +9,14 @@ RUN chmod a+w /data
 # Setting Time zone (necessary to install cmake, + will persist at runtime)
 ENV TZ=Etc/UTC
 
-# CMake needs to be installed in order to install R packages from github (at least it's the case for some dependency of Makurhini)
+# Install
+# - CURL, needed to download conda-pack environments from the specified URL
+# - pigz, for faster unzipping using multiple cores
+# - CMake, needs to be installed in order to install R packages from github (at least it's the case for some dependency of Makurhini)
 ARG DEBIAN_FRONTEND=noninteractive
 RUN set -ex; \
     apt-get update; \
-    apt-get install -y --no-install-recommends cmake psmisc; \
+    apt-get install -y --no-install-recommends cmake psmisc curl pigz; \
     apt-get clean all;
 
 ## Mamba installation
@@ -37,6 +40,9 @@ RUN set -ex; \
 # We need to create it and set the permissions.
 RUN mkdir /conda-env-yml && chmod a+w /conda-env-yml;
 
+# Add conda-pack to the base environment
+RUN mamba install -n base conda-pack
+
 # Load R base environment
 ADD ./r-environment.yml /data/r-environment.yml
 RUN mamba env create -f /data/r-environment.yml \
@@ -48,20 +54,20 @@ RUN mkdir /.R && echo "MAKEFLAGS = -j4" > /.R/Makevars && chmod a+r /.R/Makevars
 RUN mkdir /root/.R && echo "MAKEFLAGS = -j" > /root/.R/Makevars
 
 
-RUN bash --login -c "mamba activate rbase \
-    && R -e ' \
-## ADD CRAN PACKAGES HERE (uncomment for packages not found in anaconda.org) \
-        # install.packages(c(\"CoordinateCleaner\", \
-        # ), repos=\"https://cloud.r-project.org/\"); \
-        # \
-## ADD GITHUB PACKAGES HERE (for packages not found in anaconda.org nor CRAN) \
-        devtools::install_github(\"connectscape/Makurhini\"); \
-    ' \
-    # Remove documentation files from /opt/conda/envs/rbase/lib/R/library \
-    # || true at the end just makes sure that this step doesn't fail the build if none were found \
-    && (find /opt/conda/envs/rbase/lib/R/library -name 'help' -prune -type d | xargs -r -i -P 16 rm -r \"{}\" || true) \
-    && (find /opt/conda/envs/rbase/lib/R/library -name 'html' -prune -type d | xargs -r -i -P 16 rm -r \"{}\" || true) \
-    && (find /opt/conda/envs/rbase/lib/R/library -name 'doc' -prune -type d | xargs -r -i -P 16 rm -r \"{}\" || true)"
+# RUN bash --login -c "mamba activate rbase \
+#     && R -e ' \
+# ## ADD CRAN PACKAGES HERE (for packages not found in anaconda.org) \
+#         install.packages(c(\"...\", \"...\", \
+#         ), dependencies=FALSE, repos=\"https://cloud.r-project.org/\"); \
+#         \
+# ## ADD GITHUB PACKAGES HERE (for packages not found in anaconda.org nor CRAN) \
+#         remotes::install_github(\"...\", dependencies = FALSE); \
+#     ' \
+#     # Remove documentation files from /opt/conda/envs/rbase/lib/R/library \
+#     # || true at the end just makes sure that this step doesn't fail the build if none were found \
+#     && (find /opt/conda/envs/rbase/lib/R/library -name 'help' -prune -type d | xargs -r -i -P 16 rm -r \"{}\" || true) \
+#     && (find /opt/conda/envs/rbase/lib/R/library -name 'html' -prune -type d | xargs -r -i -P 16 rm -r \"{}\" || true) \
+#     && (find /opt/conda/envs/rbase/lib/R/library -name 'doc' -prune -type d | xargs -r -i -P 16 rm -r \"{}\" || true)"
 
 # Load python base environment
 ADD ./python-environment.yml /data/python-environment.yml
