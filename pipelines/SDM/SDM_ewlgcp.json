@@ -1054,7 +1054,7 @@
   },
   "metadata": {
     "name": "Species distribution modeling with ewlgcpSDM",
-    "description": "This pipeline generates predictions from a species distribution model  using a point process approach and the effort-weighted Log-Gaussian  Cox Process (ewlgcp) implemented in the R package [ewlgcpSDM](https://github.com/BiodiversiteQuebec/ewlgcpSDM).",
+    "description": "**This pipline is not actively maintained. Please refrain from using.**   \n  \n  This\npipeline generates predictions from a species distribution model  using a point process approach and the effort-weighted Log-Gaussian  Cox Process (ewlgcp) implemented in the R package [ewlgcpSDM](https://github.com/BiodiversiteQuebec/ewlgcpSDM).",
     "author": [
       {
         "name": "François Rousseu",
@@ -1073,6 +1073,9 @@
       }
     ],
     "license": "MIT",
-    "external_link": "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/runewlgcp.R"
+    "external_link": "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/runewlgcp.R",
+    "lifecycle": {
+      "status": "stale"
+    }
   }
 }

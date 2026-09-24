@@ -87,6 +87,9 @@
   "metadata": {
     "name": "Get population polygons from species observation",
     "description": "Component of the Genes from Space tool. Given a table of species occurrences, the tool calculates population polygons based on geographical proximity. ",
+    "lifecycle": {
+      "status": "subpipeline"
+    },
     "author": [
       {
         "name": "Oliver Selmoni",
