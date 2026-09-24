@@ -1,6 +1,6 @@
 script: prepare_datasets.R
 name: SInAS Prepare Datasets
-description: "Run original P3 Steps 1-5 for one country: prepare and roll up mapped First Records regions to the parent country, standardise columns, terminology, locations, GBIF taxonomy and event dates, apply packaged corrections, and report unmatched or excluded records."
+description: "Run original P3 Steps 1-5 for one country: prepare and roll up mapped First Records regions to the parent country, standardise columns, terminology, locations, GBIF taxonomy and event dates, and report unmatched or excluded records."
 author:
   - name: Manuela Gomez-Suarez
   - name: Hanno Seebens
@@ -98,7 +98,7 @@ outputs:
     type: text/csv
   full_taxa_list:
     label: SInAS taxon matching
-    description: Complete GBIF taxonomic matching and correction results.
+    description: Complete automatic GBIF taxonomic matching results.
     type: text/csv
   translated_event_dates:
     label: Translated event dates

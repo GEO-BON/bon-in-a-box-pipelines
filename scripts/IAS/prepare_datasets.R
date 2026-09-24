@@ -146,7 +146,7 @@ known_column <- function(dat, column) {
   if (column %in% names(dat)) column else NA_character_
 }
 
-# Recheck the same packaged list after GBIF matching and reviewed corrections
+# Recheck the same packaged list after GBIF matching
 # have resolved source synonyms. Use exact normalised names, not fuzzy matches,
 # and retain positive evidence from the country checklist or raw-name lookup.
 RefreshGlobalInvasiveStatus <- function(dat, global_checklist) {
@@ -1910,135 +1910,6 @@ GeteventDate <- function(FileInfo = NULL, step3_output = NULL){
   ))
 }
 
-read_taxon_corrections <- function(path) {
-  if (is.null(path) || length(path) == 0) {
-    return(NULL)
-  }
-  path <- as.character(path[[1]])
-  if (is.na(path) || !file.exists(path)) return(NULL)
-  if (grepl("[.]csv$", path, ignore.case = TRUE)) {
-    out <- read.csv(path, stringsAsFactors = FALSE, check.names = FALSE)
-  } else {
-    out <- read.xlsx(path, na.strings = "")
-  }
-  out[] <- lapply(out, as.character)
-  out$correction_source <- rep(basename(path), nrow(out))
-  out
-}
-
-LoadTaxonCorrections <- function() {
-  resolution_directories <- c(
-    "/scripts/IAS/P3_SInASworkflow/QualityControl/Outputs/ResolvedHarmonisations",
-    "scripts/IAS/P3_SInASworkflow/QualityControl/Outputs/ResolvedHarmonisations"
-  )
-  resolution_directories <- resolution_directories[
-    dir.exists(resolution_directories)
-  ]
-
-  reviewed <- NULL
-  country_reviewed <- NULL
-  if (length(resolution_directories) > 0) {
-    resolution_directory <- resolution_directories[[1]]
-    files <- list.files(
-      resolution_directory, pattern = "[.]xlsx$", full.names = TRUE
-    )
-    reviewed <- dplyr::bind_rows(lapply(files, read_taxon_corrections))
-    country_path <- file.path(resolution_directory, paste0(iso3, ".xlsx"))
-    country_reviewed <- read_taxon_corrections(country_path)
-  }
-
-  ## Reuse a correction from another country only when all prior reviews agree
-  ## on both the canonical and scientific names.
-  reusable <- NULL
-  if (!is.null(reviewed) && nrow(reviewed) > 0 &&
-      "taxon_orig" %in% names(reviewed)) {
-    reviewed <- reviewed[
-      !is.na(reviewed$taxon_orig) & reviewed$taxon_orig != "", , drop = FALSE
-    ]
-    reviewed$correction_signature <- paste(
-      ifelse(is.na(reviewed$New_taxon), "", reviewed$New_taxon),
-      ifelse(is.na(reviewed$New_scientificName), "", reviewed$New_scientificName),
-      sep = "||"
-    )
-    reusable <- reviewed |>
-      dplyr::group_by(taxon_orig) |>
-      dplyr::filter(dplyr::n_distinct(correction_signature) == 1) |>
-      dplyr::slice(1) |>
-      dplyr::ungroup() |>
-      dplyr::select(-correction_signature)
-  }
-
-  packaged <- read_taxon_corrections(
-    config_file("UserDefinedTaxonNames.xlsx")
-  )
-  ## Later tables have higher priority: the selected country's reviewed file,
-  ## then packaged and unambiguous cross-country corrections.
-  corrections <- dplyr::bind_rows(
-    reusable, packaged, country_reviewed
-  )
-  if (nrow(corrections) == 0 || !"taxon_orig" %in% names(corrections)) {
-    return(NULL)
-  }
-  corrections <- corrections[
-    !is.na(corrections$taxon_orig) & corrections$taxon_orig != "",
-    ,
-    drop = FALSE
-  ]
-  corrections <- corrections[
-    !duplicated(corrections$taxon_orig, fromLast = TRUE), , drop = FALSE
-  ]
-  corrections
-}
-
-ApplyTaxonCorrections <- function(taxon_output) {
-  corrections <- LoadTaxonCorrections()
-  if (is.null(corrections) || nrow(corrections) == 0) return(taxon_output)
-
-  correction_map <- c(
-    taxon = "New_taxon",
-    scientificName = "New_scientificName",
-    species = "species",
-    genus = "genus",
-    family = "family",
-    order = "order",
-    class = "class",
-    phylum = "phylum",
-    kingdom = "kingdom",
-    GBIFstatus = "GBIFstatus",
-    GBIFstatus_Synonym = "GBIFstatus_Synonym",
-    GBIFmatchtype = "GBIFmatchtype",
-    GBIFtaxonRank = "GBIFtaxonRank",
-    GBIFusageKey = "GBIFusageKey",
-    GBIFnote = "GBIFnote"
-  )
-
-  apply_to_table <- function(dat) {
-    if (is.null(dat) || nrow(dat) == 0 || !"taxon_orig" %in% names(dat)) {
-      return(dat)
-    }
-    for (i in seq_len(nrow(corrections))) {
-      rows <- dat$taxon_orig == corrections$taxon_orig[i]
-      if (!any(rows, na.rm = TRUE)) next
-      for (target in names(correction_map)) {
-        source <- correction_map[[target]]
-        if (!source %in% names(corrections)) next
-        value <- corrections[[source]][i]
-        if (is.na(value) || trimws(as.character(value)) == "") next
-        if (!target %in% names(dat)) dat[[target]] <- NA_character_
-        dat[[target]][rows] <- as.character(value)
-      }
-    }
-    dat
-  }
-
-  taxon_output$clean_datasets <- lapply(
-    taxon_output$clean_datasets, apply_to_table
-  )
-  taxon_output$full_taxa_list <- apply_to_table(taxon_output$full_taxa_list)
-  taxon_output$applied_corrections <- corrections
-  taxon_output
-}
-
 BuildTaxonQualityControl <- function(taxon_output) {
   full <- taxon_output$full_taxa_list
   if (is.null(full) || nrow(full) == 0 || !"scientificName" %in% names(full)) {
@@ -2077,9 +1948,9 @@ BuildTaxonQualityControl <- function(taxon_output) {
 }
 
 ApplyTaxonFallbacks <- function(taxon_output) {
-  ## Keep the source name when GBIF and reviewed corrections cannot resolve it.
+  ## Keep the source name when GBIF cannot resolve it.
   ## BuildTaxonQualityControl() runs first so these records remain in the
-  ## warning report and correction template.
+  ## warning report and taxon-matching report.
   apply_to_table <- function(dat) {
     if (is.null(dat) || nrow(dat) == 0 ||
         !all(c("taxon_orig", "scientificName") %in% names(dat))) {
@@ -2096,7 +1967,7 @@ ApplyTaxonFallbacks <- function(taxon_output) {
     dat$taxon[empty_taxon] <- as.character(dat$taxon_orig[empty_taxon])
     dat$scientificName[unresolved] <- as.character(dat$taxon_orig[unresolved])
     dat$taxonQCnote[unresolved] <-
-      "No GBIF or reviewed match; original taxon name retained"
+      "No GBIF match; original taxon name retained"
     dat
   }
 
@@ -2142,7 +2013,6 @@ step3$clean_datasets <- lapply(step3$clean_datasets, function(dat) {
 })
 message("SInAS 4/5: matching taxa against GBIF")
 step4 <- StandardiseTaxonNames(FileInfo = FileInfo, step3_output = step3)
-step4 <- ApplyTaxonCorrections(step4)
 step4 <- BuildTaxonQualityControl(step4)
 message("SInAS 5/5: standardising event dates")
 step5 <- GeteventDate(FileInfo = FileInfo, step3_output = step4)
@@ -2272,7 +2142,7 @@ if (nrow(missing_taxa) > 0) {
     names(taxon_report_input)
   )
   if (length(detail_columns) == 0) {
-    taxon_report_input$details <- "No reliable GBIF or packaged correction match"
+    taxon_report_input$details <- "No reliable GBIF match"
   } else {
     taxon_report_input$details <- apply(
       taxon_report_input[, detail_columns, drop = FALSE],
@@ -2280,7 +2150,7 @@ if (nrow(missing_taxa) > 0) {
       function(row) {
         row <- as.character(row)
         keep <- !is.na(row) & nzchar(trimws(row))
-        if (!any(keep)) return("No reliable GBIF or packaged correction match")
+        if (!any(keep)) return("No reliable GBIF match")
         paste(paste0(detail_columns[keep], "=", row[keep]), collapse = "; ")
       }
     )
@@ -2431,6 +2301,8 @@ if (!is.null(national)) {
   )
 
   biab_output("national_clean", national_clean_path)
+} else {
+  biab_output("national_clean", NULL)
 }
 
 cleaning_summary <- data.frame(

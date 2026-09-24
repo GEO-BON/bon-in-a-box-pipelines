@@ -11,8 +11,8 @@ first_record_column <- input$first_record_column
 dataset_citation <- input$dataset_citation
 
 if (is.null(national_checklist)) {
-  # An omitted upload is intentional: do not write or register any output.
   biab_info("No national checklist provided. Skipping import.")
+  biab_output("national_checklist", NULL)
 } else {
   if (length(national_checklist) != 1L || !is.character(national_checklist)) {
     biab_error_stop("Provide a single national checklist file path.")
