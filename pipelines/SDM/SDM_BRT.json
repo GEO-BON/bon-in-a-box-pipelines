@@ -920,7 +920,7 @@
   },
   "metadata": {
     "name": "Species distribution modeling with Boosted Regression Trees (BRTs)",
-    "description": "This pipeline generates predictions for a species distribution model using the BRTs.",
+    "description": "**This pipline is not actively maintained. Please refrain from using.**  \n\n  \n  This pipeline generates predictions for a species distribution model using the\nBRTs.",
     "author": [
       {
         "name": "Michael D. Catchen",
@@ -931,7 +931,7 @@
     "license": "MIT",
     "external_link": "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/BRT",
     "lifecycle": {
-      "status": "in_review"
+      "status": "stale"
     }
   }
 }

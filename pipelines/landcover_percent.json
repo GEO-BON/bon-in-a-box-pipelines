@@ -271,6 +271,9 @@
   "metadata": {
     "name": "Percentage of raster classes",
     "description": "Calculate percentage of classes over a bounding box or polygon of interest in categorical rasters.",
+    "lifecycle": {
+      "status": "subpipeline"
+    },
     "author": [
       {
         "name": "Jory Griffith",

@@ -308,6 +308,9 @@
   "metadata": {
     "name": "Calculate genetic diversity indicators",
     "description": "Component of the Genes from Space tool. Given poylgons of population distribution (geojson format) and a raster stack describing habitat availability over time (geotiff format), the pipeline returns genetic diversity loss indicators (Ne500 and Populations Maintained indicator), displayed through an interactive interface. ",
+    "lifecycle": {
+      "status": "subpipeline"
+    },
     "author": [
       {
         "name": "Oliver Selmoni",

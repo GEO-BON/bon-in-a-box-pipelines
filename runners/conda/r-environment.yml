@@ -18,6 +18,7 @@ dependencies:
   - r-gdalutilities
   - r-gdalutils
   - r-geojsonsf
+  - r-ggrepel
   - r-ggsci
   - r-jpeg
   - r-landscapemetrics
