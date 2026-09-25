@@ -99,7 +99,7 @@ inputs:
   stac:
     label: STAC Item
     description: Using the STAC item chooser to select a STAC item.
-    type: stac_assets[]
+    type: stac_assets
     example:
 
 outputs:
