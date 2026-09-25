@@ -96,6 +96,11 @@ inputs:
     description: Using the bounding box chooser to select a bbox and the CRS associated with this bounding box.
     type: bboxCRS
     example:
+  stac:
+    label: STAC Item
+    description: Using the STAC item chooser to select a STAC item.
+    type: stac_assets[]
+    example:
 
 outputs:
   text:
@@ -153,6 +158,10 @@ outputs:
     description: CRS ID derived from a bounding box selector
     type: text
     example: ESPG:4326
+  stac_assets:
+    label: STAC assets
+    description: The list of assets from the selected STAC item
+    type: json[]
 references:
   - text: John Doe, The ins and outs of copy-pasting, CopyScience, Volume 71, Issue 5, May 2021, Pages 448–451
     link: https://doi.org/10.1093/copysci/biab041
