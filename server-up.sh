@@ -52,6 +52,22 @@ while (( $# > 0 )) ; do
   shift
 done
 
+# .gitattributes enforces LF, but a checkout done while core.autocrlf=true can still have CRLF on disk.
+if [[ "$(git config --get core.autocrlf)" == "true" ]]; then
+    if [[ -z "$(git status --porcelain)" ]]; then
+        echo "Fixing Windows line endings left over from core.autocrlf=true..."
+        git config core.autocrlf false
+        git rm --cached -r . > /dev/null
+        git reset --hard
+        assertSuccess
+    else
+        echo -e "${RED}Warning: core.autocrlf is enabled and this repo has uncommitted changes.${ENDCOLOR}"
+        echo "Scripts may contain Windows line endings (\r) that fail inside the Linux Docker containers."
+        echo "Commit or stash your changes, then run this script again, or fix it manually with:"
+        echo "  git config core.autocrlf false && git rm --cached -r . && git reset --hard"
+    fi
+fi
+
 if [ "$offline" = true ]; then
     echo "Running server in offline mode."
     ./.server/prod-server.sh command up -d --no-recreate
@@ -82,14 +98,16 @@ else
 
         git fetch --no-tag --depth 1 origin $branch
         assertSuccess
-    else
-        git clone -n git@github.com:GEO-BON/bon-in-a-box-pipeline-engine.git --branch $branch --single-branch .server --depth 1
-        assertSuccess
-        cd .server
+
+    else # Fresh install
+        
+        git clone --no-checkout git@github.com:GEO-BON/bon-in-a-box-pipeline-engine.git \
+            --branch $branch --single-branch .server --depth 1 \
+            --config core.autocrlf=false # ensures scripts checked out keep LF for the Linux docker containers to read
         assertSuccess
 
-        # Make sure Windows installations do not add \r to scripts that will be interpreted in a Linux docker
-        git config core.autocrlf false
+        cd .server
+        assertSuccess
     fi
 
     echo "Using git branch $branch."
