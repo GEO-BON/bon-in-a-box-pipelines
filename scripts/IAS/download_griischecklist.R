@@ -182,6 +182,11 @@ for (i in seq_len(nrow(feed_match))) {
 # Get details of checklist
 name <- feed_match[i, ] %>% dplyr::pull(country)
 name <- stringr::str_squish(name)
+checklist_level <- ifelse(
+  !stringr::str_detect(name, ",") || name %in% primary_checklist_names,
+  "Primary",
+  "Secondary"
+)
 checklist_iso3 <- countrycode::countrycode(
   name,
   origin = "country.name",
@@ -189,14 +194,12 @@ checklist_iso3 <- countrycode::countrycode(
   custom_match = custom_iso3,
   warn = FALSE
 )
-if (is.na(checklist_iso3)) {
+if (is.na(checklist_iso3) && checklist_level == "Primary") {
   biab_error_stop(paste0("Could not assign an ISO3 code to GRIIS checklist: ", name))
 }
-checklist_level <- ifelse(
-  !stringr::str_detect(name, ",") || name %in% primary_checklist_names,
-  "Primary",
-  "Secondary"
-)
+if (is.na(checklist_iso3)) {
+  message("No ISO3 mapping for secondary GRIIS checklist: ", name)
+}
 name <- gsub("[^[:alnum:]]", "_", name)
 
 type <- feed_match[i, ] %>% dplyr::pull(item_type)
@@ -255,6 +258,10 @@ griis_checklist <- join_1 %>%
     fileName =  paste0(name, "_v", version, ".csv"),
     .before = 1
   )
+
+if ("eventDate" %in% names(griis_checklist)) {
+  griis_checklist$eventDate <- as.character(griis_checklist$eventDate)
+}
 
 checklist_list[[i]] <- griis_checklist
 # Gather summary statistics for list

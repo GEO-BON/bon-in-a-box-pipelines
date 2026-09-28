@@ -727,14 +727,13 @@ for (i in seq_along(Countries)) {
     p1 <- plot_qual_raw()
     
     qualitative_result <- get_qualitative_interpretation()
-    p1.title <- add_qualitative_title(p1, CountryName, x)
     qualitative_plot_path <- file.path(
       outputFolder,
       paste0(x, "_qualitative.png")
     )
     ggplot2::ggsave(
       filename = qualitative_plot_path,
-      plot = p1.title,
+      plot = p1,
       bg = "white",
       width = 6,
       height = 4,
@@ -747,14 +746,13 @@ for (i in seq_along(Countries)) {
     
     p2 <- plot_comp_all()
     
-    p2.title <- format_quantitative_plot(p2, CountryName, x)
     quantitative_plot_path <- file.path(
       outputFolder,
       paste0(x, "_quantitative.png")
     )
     ggplot2::ggsave(
       filename = quantitative_plot_path,
-      plot = p2.title,
+      plot = p2,
       bg = "white",
       width = 6,
       height = 4,
@@ -852,14 +850,13 @@ for (i in seq_along(Countries)) {
     p1 <- plot_qual_raw()
     
     qualitative_result <- get_qualitative_interpretation()
-    p1.title <- add_qualitative_title(p1, CountryName, x)
     qualitative_plot_path <- file.path(
       outputFolder,
       paste0(x, "_qualitative.png")
     )
     ggplot2::ggsave(
       filename = qualitative_plot_path,
-      plot = p1.title,
+      plot = p1,
       bg = "white",
       width = 6,
       height = 4,
@@ -872,14 +869,13 @@ for (i in seq_along(Countries)) {
     
     p2 <- plot_comp_all()
     
-    p2.title <- format_quantitative_plot(p2, CountryName, x)
     quantitative_plot_path <- file.path(
       outputFolder,
       paste0(x, "_quantitative.png")
     )
     ggplot2::ggsave(
       filename = quantitative_plot_path,
-      plot = p2.title,
+      plot = p2,
       bg = "white",
       width = 6,
       height = 4,
@@ -945,14 +941,13 @@ for (i in seq_along(Countries)) {
     p1 <- plot_qual_raw()
     
     qualitative_result <- get_qualitative_interpretation()
-    p1.title <- add_qualitative_title(p1, CountryName, x)
     qualitative_plot_path <- file.path(
       outputFolder,
       paste0(x, "_qualitative.png")
     )
     ggplot2::ggsave(
       filename = qualitative_plot_path,
-      plot = p1.title,
+      plot = p1,
       bg = "white",
       width = 6,
       height = 4,

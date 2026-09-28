@@ -27,7 +27,7 @@ inputs:
     label: Global invasive alien species checklist
     type: text/csv
     description: Same packaged global checklist used by the download step, rechecked against original and harmonised taxon names while preserving existing positive flags.
-    example: /scripts/IAS/Data 1. Global Invasive Alien Species Checklist.csv
+    example: /scripts/IAS/species_isInvasiveAnywhere.csv
   national_checklist:
     label: Imported national checklist
     type: text/csv

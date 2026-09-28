@@ -110,8 +110,8 @@ plot_qual_raw <- function() {
       breaks = c("IAS First Records", "GBIF Records", "Naive Model", "Survey Effort Proxy"), 
       labels = c("IAS First Records", "GBIF Records", "Naive Model", "Survey Effort Proxy")
     ) +
-    scale_y_continuous(name="Annual IAS first records",
-                       sec.axis = sec_axis(~./scaleFactor, name="Annual GBIF records", labels = scales::label_number(scale = 1/1e6, suffix = "M")),
+    scale_y_continuous(name="Number of new IAS",
+               sec.axis = sec_axis(~./scaleFactor, name=bquote("New GBIF Records"~(x~10^{6})), labels = scales::label_number(scale = 1/1e6, suffix = "M")),
                        breaks = scales::breaks_pretty(n = 5), 
                        expand = c(0.005, 0), limits = c(0, NA)) +
     scale_x_continuous(expand = c(0.005, 0), limits = c(0, 51), breaks = c(0, 10, 20, 30, 40, 50), labels = c("1970", "1980", "1990", "2000", "2010", "2020")) + 

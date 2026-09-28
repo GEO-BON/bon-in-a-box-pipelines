@@ -57,7 +57,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text/csv",
-        "value": "/scripts/IAS/Data 1. Global Invasive Alien Species Checklist.csv"
+        "value": "/scripts/IAS/species_isInvasiveAnywhere.csv"
       }
     },
     {

@@ -20,7 +20,7 @@ inputs:
     label: Global invasive alien species checklist
     type: text/csv
     description: Global checklist used to identify species that are invasive anywhere.
-    example: /scripts/IAS/Data 1. Global Invasive Alien Species Checklist.csv
+    example: /scripts/IAS/species_isInvasiveAnywhere.csv
 outputs:
   griis_checklist:
     label: GRIIS checklist

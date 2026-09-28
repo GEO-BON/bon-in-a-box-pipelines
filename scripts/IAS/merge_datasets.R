@@ -161,7 +161,11 @@ full_taxa_list <- read_report(input$full_taxa_list, "Full taxonomic list")
 required_identity_columns <- c(
   "location", "locationID", "taxon", "scientificName", "taxonID"
 )
-for (dataset in list(GRIIS = griis, FirstRecords = first_records, National = national)) {
+datasets_to_validate <- list(GRIIS = griis, FirstRecords = first_records)
+if (!is.null(national)) {
+  datasets_to_validate$National <- national
+}
+for (dataset in datasets_to_validate) {
   missing_identity <- setdiff(required_identity_columns, names(dataset))
   if (length(missing_identity) > 0) {
     stop(
@@ -171,7 +175,10 @@ for (dataset in list(GRIIS = griis, FirstRecords = first_records, National = nat
   }
 }
 
-all_columns <- union(names(griis), union(names(first_records), names(national)))
+all_columns <- union(names(griis), names(first_records))
+if (!is.null(national)) {
+  all_columns <- union(all_columns, names(national))
+}
 add_missing_columns <- function(dat, columns) {
   for (column in setdiff(columns, names(dat))) {
     dat[[column]] <- rep(NA_character_, nrow(dat))
@@ -181,9 +188,11 @@ add_missing_columns <- function(dat, columns) {
 
 combined <- rbind(
   add_missing_columns(griis, all_columns),
-  add_missing_columns(first_records, all_columns),
-  add_missing_columns(national, all_columns)
+  add_missing_columns(first_records, all_columns)
 )
+if (!is.null(national)) {
+  combined <- rbind(combined, add_missing_columns(national, all_columns))
+}
 
 ## Reproduce the source workflow's introduced/uncertain rule before including
 ## establishmentMeans in the grouping identity.

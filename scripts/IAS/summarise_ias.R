@@ -180,6 +180,7 @@ earliest_record_post1970 <- with_first_records %>%
   filter_min_year()
 
 latest_record <- with_first_records %>%
+  filter(eventDate <= 2020) %>%
   filter_max_year()
 
 summary <- tibble::tibble(
