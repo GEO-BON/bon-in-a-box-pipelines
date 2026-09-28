@@ -105,7 +105,7 @@ else
             # We are not really changing branch but just allowing to checkout individual files from that other branch.
             git config remote.origin.fetch "$remoteFetch"
             # Delete all except .git, . and ..
-            ls -a | grep -Ev "^(\.git|\.|\.\.)$" | xargs rm -r
+            find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
         fi
 
         git fetch --no-tag --depth 1 origin "$branch"
