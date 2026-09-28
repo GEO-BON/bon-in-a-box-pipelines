@@ -77,6 +77,7 @@ if [[ "$(git config --get core.autocrlf)" == "true" ]]; then
         echo "Scripts may contain Windows line endings (\r) that fail inside the Linux Docker containers."
         echo "Commit or stash your changes, then run this script again, or fix it manually with:"
         echo "  git config core.autocrlf false && git rm --cached -r . && git reset --hard"
+        exit 1
     fi
 fi
 
