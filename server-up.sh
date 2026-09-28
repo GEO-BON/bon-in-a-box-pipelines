@@ -108,13 +108,13 @@ else
             ls -a | grep -Ev "^(\.git|\.|\.\.)$" | xargs rm -r
         fi
 
-        git fetch --no-tag --depth 1 origin $branch
+        git fetch --no-tag --depth 1 origin "$branch"
         assertSuccess
 
     else # Fresh install
         
         git clone --no-checkout git@github.com:GEO-BON/bon-in-a-box-pipeline-engine.git \
-            --branch $branch --single-branch .server --depth 1 \
+            --branch "$branch" --single-branch .server --depth 1 \
             --config core.autocrlf=false # ensures scripts checked out keep LF for the Linux docker containers to read
         assertSuccess
 
@@ -123,10 +123,10 @@ else
     fi
 
     echo "Using git branch $branch."
-    git checkout origin/$branch -- prod-server.sh
+    git checkout "origin/$branch" -- prod-server.sh
     assertSuccess
 
-    ./prod-server.sh checkout $branch
+    ./prod-server.sh checkout "$branch"
 
 fi
 
