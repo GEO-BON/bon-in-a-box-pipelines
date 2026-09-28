@@ -19,7 +19,7 @@ while (( $# > 0 )) ; do
     -y|--yes) skipPrompts="-y" ;;
     --offline) offline=true ;;
     -v|--version)
-        if cd .server; then
+        if cd .server 2>/dev/null; then
             ./prod-server.sh version
             exit $? 
         else
@@ -28,7 +28,7 @@ while (( $# > 0 )) ; do
         fi
         ;;
     --licence|--license)
-        if cd .server; then
+        if cd .server 2>/dev/null; then
             ./prod-server.sh licence
             exit $? 
         else
@@ -95,7 +95,7 @@ if [ -L .server ]; then
     cd .server;
 else
     echo "Updating server init script..."
-    if cd .server; then
+    if cd .server 2>/dev/null; then
         # Check for a branch change
         remoteFetch="+refs/heads/$branch:refs/remotes/origin/$branch"
         if [[ "$(git config remote.origin.fetch)" != $remoteFetch ]]; then
