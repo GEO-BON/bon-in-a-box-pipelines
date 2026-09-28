@@ -87,6 +87,9 @@ else
         assertSuccess
         cd .server
         assertSuccess
+
+        # Make sure Windows installations do not add \r to scripts that will be interpreted in a Linux docker
+        git config core.autocrlf false
     fi
 
     echo "Using git branch $branch."
