@@ -19,12 +19,24 @@ while (( $# > 0 )) ; do
     -y|--yes) skipPrompts="-y" ;;
     --offline) offline=true ;;
     -v|--version)
-        cd .server
-        ./prod-server.sh version
-        exit 0 ;;
+        if cd .server; then
+            ./prod-server.sh version
+            exit $? 
+        else
+            echo "Run BON in a Box at least once to get the server version."
+            exit 1
+        fi
+        ;;
     --licence|--license)
-        ./.server/prod-server.sh licence
-        exit 0 ;;
+        if cd .server; then
+            ./prod-server.sh licence
+            exit $? 
+        else
+            echo "Run BON in a Box at least once to read its licence."
+            exit 1
+        fi
+        ;;
+        
     -h|--help)
         echo "Usage: ./server-up.sh [OPTIONS] [GIT BRANCH]"
         echo
@@ -71,7 +83,7 @@ fi
 if [ "$offline" = true ]; then
     echo "Running server in offline mode."
     ./.server/prod-server.sh command up -d --no-recreate
-    exit 0
+    exit $?
 fi
 
 # Optional arg: branch name of server repo, default "main"
