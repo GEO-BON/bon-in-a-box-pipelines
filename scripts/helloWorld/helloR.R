@@ -72,7 +72,7 @@ biab_info("Some information message")
 biab_warning("Some warning")
 
 biab_output("crs_id",paste0(input$bbox$CRS$authority,':',input$bbox$CRS$code))
-biab_output("stac_assets", input$stac)
+biab_output("stac_assets", input$stac[[1]])
 
 biab_output("text", "This is just an example. In case you have a very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very long text it will need to be unfolded to see it all.")
 biab_output("number", input$intensity * 3)

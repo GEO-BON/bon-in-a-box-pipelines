@@ -99,7 +99,7 @@ inputs:
   stac:
     label: STAC Item
     description: Using the STAC item chooser to select a STAC item.
-    type: stac_assets
+    type: stac_assets[]
     example:
 
 outputs:
@@ -160,8 +160,8 @@ outputs:
     example: ESPG:4326
   stac_assets:
     label: STAC assets
-    description: The list of assets from the selected STAC item
-    type: json[]
+    description: The first asset from the selected STAC asset list. 
+    type: json
 references:
   - text: John Doe, The ins and outs of copy-pasting, CopyScience, Volume 71, Issue 5, May 2021, Pages 448–451
     link: https://doi.org/10.1093/copysci/biab041
