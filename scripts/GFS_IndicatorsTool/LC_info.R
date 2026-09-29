@@ -1,6 +1,7 @@
 library(rjson)
 library(terra)
 library(sf)
+library(rstac)
 
 
 ## get bbox from polygons of population
@@ -9,6 +10,12 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 pop_poly <-st_read(input$population_polygons)
 
 bbox = st_bbox(pop_poly)
+## Buffer bbox slightly so edge pixels are never clipped
+bbox_buffered = bbox
+bbox_buffered[1] = bbox[1] - 0.01
+bbox_buffered[3] = bbox[3] + 0.01
+bbox_buffered[2] = bbox[2] - 0.01
+bbox_buffered[4] = bbox[4] + 0.01
 
 
 ## get years of interest
@@ -55,14 +62,27 @@ load_stac<-function(staccollection='esacci-lc'){
   raster_server = rast(lcpri_url)
   
   # process rasters from server (crop to study area , reasample)
-  raster = crop(raster_server, bbox[c(1,3,2,4)]) # crop
+  raster = crop(raster_server, bbox_buffered[c(1,3,2,4)]) # crop
   
   return(raster)
 }
 
 
-print("Loading Land Cover from STAC:", )
-LC<-load_stac("esacci-lc")
+### ---- DATA SOURCE SWITCH: local ESACCI-LC layer if available, else STAC fallback ----
+
+LOCAL_LC_PATTERN <- '/userdata/gfs_layers/esacci_lc/esacci-lc-%d.tif'
+use_local_lc <- file.exists(sprintf(LOCAL_LC_PATTERN, startY))
+
+if (use_local_lc) {
+
+  print("Local ESACCI-LC layer found for first year. Loading from disk...")
+  LC <- crop(rast(sprintf(LOCAL_LC_PATTERN, startY)), bbox_buffered[c(1,3,2,4)])
+
+} else {
+
+  print("Local ESACCI-LC layer NOT found. Falling back to STAC...")
+  LC <- load_stac("esacci-lc")
+}
 
 
 ## If classes are set to 0 --> guess top classes from data

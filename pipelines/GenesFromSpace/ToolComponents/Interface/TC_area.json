@@ -155,7 +155,14 @@
       "target": "207",
       "targetHandle": null,
       "id": "reactflow__edge-200pop_area-207"
-    }
+    },
+    {
+      "source": "203",
+      "sourceHandle": "lc_classes",
+      "target": "200",
+      "targetHandle": "lc_classes",
+      "id": "xy-edge__203lc_classes-200lc_classes"
+   }
   ],
   "inputs": {
     "pipeline@197": {

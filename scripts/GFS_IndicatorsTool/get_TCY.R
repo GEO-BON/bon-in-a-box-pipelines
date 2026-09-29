@@ -9,13 +9,10 @@
 #  devtools::install_github("gearslaboratory/gdalUtils")
 #}
 
-library(gdalUtils)
 library(rjson)
 library(terra)
 library(sf)
-library(raster)
-library(geosphere)
-
+library(rstac)
 
 ## get bbox from polygons of population
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
@@ -23,15 +20,33 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 pop_poly <-st_read(input$population_polygons)
 
 bbox = st_bbox(pop_poly)
+lonRANGE = c(bbox[1], bbox[3])
+latRANGE = c(bbox[2], bbox[4])
 
 ###Check if Inputs correct
 
-if (min(input$yoi)<2000 | max(input$yoi>2023)){
+if (min(input$yoi)<2000 | max(input$yoi)>2023){
   stop("\n****************************************\n",
        "*** ERROR: YEARS OF INTEREST OUT OF BOUND ***\n",
        "****************************************\n",
        "Error Message: Years of interest out of bound. Must be between 2000 and 2023.\n\n")
 }
+
+### Load rasters from LOCAL files (native resolution, like original load_stac)
+# Force decimal notation for GDAL arguments
+gdal_bbox <- formatC(c(lonRANGE[1], latRANGE[1], lonRANGE[2], latRANGE[2]), format = "f", digits = 6)
+
+# GDAL helper (for calling via system2)
+run_gdalwarp <- function(src, dst, te) {
+  args <- c("-te", te, "-co", "COMPRESS=DEFLATE", "-co", "TILED=YES",
+            shQuote(src), shQuote(dst))
+  status <- system2("gdalwarp", args = args)
+  if (!identical(status, 0L)) stop("gdalwarp failed for: ", paste(src, collapse = ", "))
+}
+
+LOCAL_TC_PATH <- file.path('/userdata/gfs_layers/gfw_treecover_2000.tif')
+LOCAL_LOSS_PATH <- file.path('/userdata/gfs_layers/gfw_lossyear.tif')
+
 
 ### function to download raster tiles from stac
 load_stac<-function(staccollection){
@@ -62,27 +77,43 @@ load_stac<-function(staccollection){
   ### Get rasters from stac
   out_file<-tempfile(pattern = paste0("tempfile"),fileext = ".tif")
   
-  gdalwarp(srcfile = lcpri_url, 
-           dstfile = out_file, 
-           options = c("COMPRESS=DEFLATE", "TILED=YES"),
-           te = bbox
-           )
-  
-  ### return path to temporary files
+  run_gdalwarp(lcpri_url, out_file, gdal_bbox)
+
   return(out_file)
 }
 
+### ---- DATA SOURCE SWITCH: local layers if available, else STAC fallback ----
 
+use_local <- file.exists(LOCAL_TC_PATH) && file.exists(LOCAL_LOSS_PATH)
 
-### Load and resample rasters
+if (use_local) {
 
-print("Loading GFW Tree Cover layer...", )
-treecover2000 = load_stac("gfw-treecover2000") # get tiles
-TC = rast(treecover2000) # create raster
+  print("Local GFW layers found. Cropping at native resolution via GDAL warp...")
 
-print("Loading GFW Tree Cover year loss layer...", )
-lossyear = load_stac("gfw-lossyear") # get tiles
-tree_cover_loss = rast(lossyear) # create raster
+  tc_crop_path   <- file.path(outputFolder, "TC_cropped_temp.tif")
+  loss_crop_path <- file.path(outputFolder, "loss_cropped_temp.tif")
+
+  run_gdalwarp(LOCAL_TC_PATH, tc_crop_path, gdal_bbox)
+  TC <- rast(tc_crop_path)
+  
+  run_gdalwarp(LOCAL_LOSS_PATH, loss_crop_path, gdal_bbox)
+  tree_cover_loss <- rast(loss_crop_path)
+
+} else {
+
+  print("Local GFW layers NOT found. Falling back to STAC...")
+  
+  print("Loading GFW Tree Cover layer...", )
+  treecover2000 = load_stac("gfw-treecover2000")
+  TC = rast(treecover2000)
+
+  print("Loading GFW Tree Cover year loss layer...", )
+  lossyear = load_stac("gfw-lossyear")
+  tree_cover_loss = rast(lossyear)
+
+  # Normalize STAC continuous data to boolean (matches local layer semantics)
+  TC <- (TC > 30) + 0
+}
 
 
 
@@ -94,14 +125,14 @@ yoi = input$yoi
   
 
 #calculate tree cover absence
-tree_cover_loss[TC<30]=NA
 tcy=c()
 
 # Get year-by-year tree cover for whole area
 for (y in as.numeric(substr(c(yoi[1],yoi[length(yoi)]), 3,4))) {
+  print(paste0('Tree cover being processed for year: ', y))
   gc()
   # check if there was cover in 2000 (>30%), tree cover that was never lost (==0) or cover has not been lost yet
-  tci = TC>30 & (tree_cover_loss==0 | tree_cover_loss > y) 
+  tci = (TC == 1) & (tree_cover_loss==0 | tree_cover_loss > y) 
   
   
   tcy = c(tcy, tci+0)
@@ -132,7 +163,7 @@ for (pop in ids) {
   for (y in as.numeric(substr(yoi, 3,4))) {
       gc()
       # check if there was cover in 2000 (>30%), tree cover that was never lost (==0) or cover has not been lost yet
-      tci = TC_pop>30 & (tree_cover_loss_pop==0 | tree_cover_loss_pop > y) 
+      tci = (TC_pop == 1) & (tree_cover_loss_pop==0 | tree_cover_loss_pop > y) 
 
     
     tcy = c(tcy, tci+0)
@@ -191,9 +222,14 @@ output_maps<-file.path(outputFolder, "cover maps/")
 
 # Flush all remaining temporary files
 unlink(paste0(normalizePath(tempdir()), "/", dir(tempdir())), recursive = TRUE)
+if (use_local) {
+  unlink(tc_crop_path)
+  unlink(loss_crop_path)
+}
+
 
 ## Outputing result to JSON
-output <- list("tcyy"=tcyy_p, "output_maps"=output_maps, 'lc_classes'='0')
+output <- list("tcyy"=tcyy_p, "output_maps"=output_maps, 'lc_classes'=list(1))
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

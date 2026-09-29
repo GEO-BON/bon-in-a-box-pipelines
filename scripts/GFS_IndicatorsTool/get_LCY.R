@@ -6,6 +6,7 @@
 library(rjson)
 library(terra)
 library(sf)
+library(rstac)
 
 
 ## get bbox from polygons of population
@@ -74,8 +75,21 @@ load_stac<-function(staccollection='esacci-lc'){
   return(raster)
 }
 
-print("Loading Land Cover from STAC:", )
-LC<-load_stac("esacci-lc")
+### ---- DATA SOURCE SWITCH: local ESACCI-LC layers if available, else STAC fallback ----
+
+LOCAL_LC_PATTERN <- '/userdata/gfs_layers/esacci_lc/esacci-lc-%d.tif'
+use_local_lc <- all(file.exists(sprintf(LOCAL_LC_PATTERN, as.numeric(yoi))))
+
+if (use_local_lc) {
+  print("Local ESACCI-LC layers found. Loading from disk...")
+  ys <- sort(unique(as.numeric(yoi))) # Sort here to match the STAC sorting
+  LC <- rast(sprintf(LOCAL_LC_PATTERN, ys))
+  names(LC) <- paste0('y', ys)
+  LC <- crop(LC, bbox_buffered[c(1,3,2,4)])
+} else {
+  print("Local ESACCI-LC layers NOT found. Falling back to STAC...")
+  LC <- load_stac("esacci-lc")
+}
 
 ## get landcover classes of interest
 user_classes = as.numeric(input$lc_classes)

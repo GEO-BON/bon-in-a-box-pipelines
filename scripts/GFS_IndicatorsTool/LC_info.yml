@@ -25,3 +25,14 @@ outputs:
     label: Land cover prevalence
     description: Which land cover classes are prevalent in the area of interest and how much area they cover.
     type: text
+
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rjson
+    - r-terra
+    - r-sf
+    - r-rstac
+    - gdal
