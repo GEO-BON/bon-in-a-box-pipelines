@@ -76,8 +76,8 @@
       "id": "59",
       "type": "constant",
       "position": {
-        "x": 898,
-        "y": 241
+        "x": 838.0801336527227,
+        "y": 236.00667780439358
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -105,8 +105,8 @@
       "id": "60",
       "type": "constant",
       "position": {
-        "x": 898,
-        "y": 289
+        "x": 836.831803103821,
+        "y": 277.7650250598855
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -160,8 +160,8 @@
       "id": "66",
       "type": "constant",
       "position": {
-        "x": 967,
-        "y": 189
+        "x": 840.9186145609373,
+        "y": 180.2616861576887
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -368,7 +368,7 @@
   ],
   "inputs": {
     "data>load_polygons.yml@68|polygon_type": {
-      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.",
+      "description": "Type of polygon to load. \n\n- `Country or region` loads a polygon of the selected country or region.\n- `Polygon of bounding box` loads a polygon of the bounding box associated with the selected country or region, or the drawn bounding box.",
       "label": "Polygon type",
       "type": "options",
       "options": [
@@ -386,7 +386,7 @@
       "weight": 1
     },
     "zonal_statistics>zonal_stats.yml@25|summary_statistic": {
-      "description": "Summary statistic for layers",
+      "description": "Summary statistic taken across the polygon. Choose one or more.",
       "label": "Summary statistic",
       "type": "options[]",
       "options": [
@@ -412,15 +412,15 @@
       "weight": 3
     },
     "pipeline@63": {
-      "label": "Start date (optional)",
-      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
+      "label": "Start year (optional)",
+      "description": "Start year for time series layers. Leave blank if using all available dates.\n\nMust be one of: 2000, 2005, 2015, 2020",
       "type": "text",
       "example": null,
       "weight": 4
     },
     "pipeline@64": {
-      "label": "End date (optional)",
-      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
+      "label": "End year (optional)",
+      "description": "End year for time series layers. Leave blank if using all available dates.\n\nMust be one of: 2000, 2005, 2015, 2020",
       "type": "text",
       "example": null,
       "weight": 5
@@ -428,7 +428,7 @@
   },
   "outputs": {
     "zonal_statistics>zonal_stats.yml@25|zonal_stats": {
-      "description": "Summary statistic over the polygon",
+      "description": "Summary statistic over the polygon.",
       "label": "Summary statistic",
       "type": "text/csv",
       "weight": 0
@@ -454,7 +454,7 @@
   },
   "metadata": {
     "name": "Biodiversity Intactness Index",
-    "description": "## Introduction \nThe Biodiversity Intactness Index (BII) is a metric designed to assess the degree to which terrestrial ecosystems are intact and functioning relative to their natural state. It measures the abundance of originally present species in a given area compared to what would be expected in an undisturbed ecosystem. The BII accounts for the effects of land use and human pressure on species abundance, providing a broad view of biodiversity health. A higher BII value indicates a community closer to its natural composition, while a lower value suggests significant ecological disruption. The BII is a complementary indicator to help assess Goal A in the Kunming-Montreal Global Biodiversity Framework (GBF). \n\nThis pipeline does not calculate the BII; it summarises the BII layers produced by the Natural History Museum over space and time. The BII was created by the Natural History Museum, London, and uses their PREDICTS database, which aggregates data from studies comparing terrestrial biodiversity at sites experiencing varying levels of human pressure (Newbold et al., 2016). \n\nThe following describes how the layers are produced. The database is used to establish a reference state using the biodiversity patterns in habitats with minimal disturbance levels. Then, it assigns sensitivity scores to each species based on their vulnerability to human pressure. Intactness is calculated by comparing the observed species abundance in a given area to what is expected under reference conditions with low human impact. PREDICTS contained over 3 million records from more than 26,000 sites across 94 countries, representing over 45,000 plant, invertebrate, and vertebrate species.\n## Uses  \n\nThis pipeline summarises the Natural History Museum's global 10 x 10 km BII layers for a country or region of interest. \n\nIt can be used to: \n  \n\n  - calculate a summary statistic of BII (mean, median or\nmode) for each available year \n- see how BII in an area has changed over time \n- map where BII has increased or decreased between two chosen years\n\nBII is expressed as a percentage, with higher percentages indicating a more intact ecosystem.\n## Pipeline limitations \nThe pipeline does not model the Biodiversity Intactness Index from the data, it calculates summary statistics over the 10 x 10 km BII layer pre-calcuated by the Natural History Museum calculated global layer. Therefore, you cannot customize the model or input custom data and you cannot increase the resolution of the layer. Additionally, because BII is a modelled data layer, the values may be less accurate in areas where there is a lack of data. To learn more about the PREDICTS database, visit the [page on the Natural History Museum website](https://www.nhm.ac.uk/our-science/research/projects/predicts/science.html).\n## Before you start \nThere are no data or API keys required for this analysis. To view the global layer, go to our [STAC catalog](https://stac.geobon.org/viewer/bii_nhm/bii_nhm_10km_2020).",
+    "description": "## Introduction \nThe Biodiversity Intactness Index (BII) is a metric designed to assess the degree to which terrestrial ecosystems are intact and functioning relative to their natural state. It measures the abundance of originally present species in a given area compared to what would be expected in an undisturbed ecosystem. The BII accounts for the effects of land use and human pressure on species abundance, providing a broad view of biodiversity health. A higher BII value indicates a community closer to its natural composition, while a lower value suggests significant ecological disruption. The BII is a complementary indicator to help assess Goal A in the Kunming-Montreal Global Biodiversity Framework (GBF). \n\nThis pipeline does not calculate the BII; it summarises the BII layers produced by the Natural History Museum over space and time. The BII was created by the Natural History Museum, London, and uses their PREDICTS database, which aggregates data from studies comparing terrestrial biodiversity at sites experiencing varying levels of human pressure (Newbold et al., 2016). \n\nThe following describes how the layers are produced. The database is used to establish a reference state using the biodiversity patterns in habitats with minimal disturbance levels. Then, it assigns sensitivity scores to each species based on their vulnerability to human pressure. Intactness is calculated by comparing the observed species abundance in a given area to what is expected under reference conditions with low human impact. PREDICTS contained over 3 million records from more than 26,000 sites across 94 countries, representing over 45,000 plant, invertebrate, and vertebrate species.\n## Uses  \n\nThis pipeline summarises the Natural History Museum's global 10 x 10 km BII layers for a country or region of interest. \n\nIt can be used to: \n  \n\n  - calculate a summary statistic of BII (mean, median or\nmode) for each available year \n- see how BII in an area has changed over time \n- map where BII has increased or decreased between two chosen years\n\nBII is expressed as a percentage, with higher percentages indicating a more intact ecosystem.\n## Pipeline limitations \nThe pipeline does not model the Biodiversity Intactness Index from the data, it calculates summary statistics over the 10 x 10 km BII layer pre-calcuated by the Natural History Museum calculated global layer. Therefore, you cannot customize the model or input custom data. Additionally, because BII is a modelled data layer, the values may be less accurate in areas where there is a lack of data. To learn more about the PREDICTS database, visit the [page on the Natural History Museum website](https://www.nhm.ac.uk/our-science/research/projects/predicts/science.html).\n## Before you start \nThere are no data or API keys required for this analysis. To view the global layer, go to our [STAC catalog](https://stac.geobon.org/viewer/bii_nhm/bii_nhm_10km_2020).",
     "author": [
       {
         "name": "Jory Griffith",
