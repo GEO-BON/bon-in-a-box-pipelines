@@ -425,7 +425,7 @@
   "inputs": {
     "pipeline@76": {
       "label": "Species",
-      "description": "Scientific name of the species. Multiple species names can be specified, separated with a comma.",
+      "description": "Scientific name of the species. Multiple species names can be specified, separated with a comma.\n\nCurrently, the analysis is dependent on forest cover, therefore only terrestrial species (excluding birds) can be used.  ",
       "type": "text[]",
       "example": [
         "Myrmecophaga tridactyla"
@@ -434,7 +434,7 @@
     },
     "pipeline@93": {
       "label": "Bounding box and CRS",
-      "description": "Select a country/region and a CRS to obtain the associated bounding box.",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box. Please ensure that the CRS is in units of meters. ",
       "type": "bboxCRS",
       "example": null,
       "weight": 1
