@@ -367,6 +367,13 @@
     }
   ],
   "inputs": {
+    "pipeline@67": {
+      "label": "Bounding box and CRS",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box. You may also draw/input a custom bounding box along with a CRS.",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
     "data>load_polygons.yml@68|polygon_type": {
       "description": "Type of polygon to load. \n\n- `Country or region` loads a polygon of the selected country or region.\n- `Polygon of bounding box` loads a polygon of the bounding box associated with the selected country or region, or the drawn bounding box.",
       "label": "Polygon type",
@@ -376,13 +383,6 @@
         "Polygon of bounding box"
       ],
       "example": "Country or region",
-      "weight": 0
-    },
-    "pipeline@67": {
-      "label": "Bounding box and CRS",
-      "description": "Select a country/region and a CRS to obtain the associated bounding box.",
-      "type": "bboxCRS",
-      "example": null,
       "weight": 1
     },
     "zonal_statistics>zonal_stats.yml@25|summary_statistic": {
@@ -413,14 +413,14 @@
     },
     "pipeline@63": {
       "label": "Start year (optional)",
-      "description": "Start year for time series layers. Leave blank if using all available dates.\n\nMust be one of: 2000, 2005, 2015, 2020",
+      "description": "Start year for time series layers. Leave blank if using all available dates.\n\nMust be one of: 2000, 2005, 2010, 2015, 2020",
       "type": "text",
       "example": null,
       "weight": 4
     },
     "pipeline@64": {
       "label": "End year (optional)",
-      "description": "End year for time series layers. Leave blank if using all available dates.\n\nMust be one of: 2000, 2005, 2015, 2020",
+      "description": "End year for time series layers. Leave blank if using all available dates.\n\nMust be one of: 2000, 2005, 2010, 2015, 2020",
       "type": "text",
       "example": null,
       "weight": 5
