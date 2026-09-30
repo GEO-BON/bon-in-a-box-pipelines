@@ -434,7 +434,7 @@
     },
     "pipeline@93": {
       "label": "Bounding box and CRS",
-      "description": "Select a country/region and a CRS to obtain the associated bounding box. Please ensure that the CRS is in units of meters. ",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box. Please ensure that the CRS matches the resolution.",
       "type": "bboxCRS",
       "example": null,
       "weight": 1
