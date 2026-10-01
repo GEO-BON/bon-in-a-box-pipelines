@@ -204,8 +204,8 @@
       "id": "92",
       "type": "io",
       "position": {
-        "x": 572,
-        "y": 139
+        "x": 494,
+        "y": 120
       },
       "data": {
         "descriptionFile": "data>getCountryPolygon.yml"
@@ -425,7 +425,7 @@
   "inputs": {
     "pipeline@76": {
       "label": "Species",
-      "description": "Scientific name of the species. Multiple species names can be specified, separated with a comma.\n\nCurrently, the analysis is dependent on forest cover, therefore only terrestrial species (excluding birds) can be used.  ",
+      "description": "Scientific name of the species. Multiple species names can be specified, separated with a comma.\n\nThe name must exactly match the name used by the chosen expert source range map seen later in the user inputs; synonyms and common names will not be found.\n",
       "type": "text[]",
       "example": [
         "Myrmecophaga tridactyla"
@@ -448,7 +448,7 @@
     },
     "pipeline@90": {
       "label": "Study area",
-      "description": "Custom polygon of study area used to mask output layers, in geopackage format. This input is for user's to input their own polygon rather than inputing a country/region.",
+      "description": "Custom polygon of study area used to mask output layers, in geopackage format (e.g. /userdata/studyarea.gpkg).   \n\nThis input is for user's to input their own polygon rather than inputing a country/region.",
       "type": "application/geopackage+sqlite3",
       "example": null,
       "weight": 3
@@ -488,7 +488,7 @@
     },
     "pipeline@77": {
       "label": "Source of expert range map",
-      "description": "Source of the expert range map for the species. The options are:\nMap of Life (MOL), International union for conservation of nature (IUCN) and range maps from the Ministère de l’Environnement du Québec (QC).\n",
+      "description": "Source of the expert range map for the species. The options are:\nMap of Life (MOL), International union for conservation of nature (IUCN) and range maps from the Ministère de l’Environnement du Québec (QC).\n\nCheck that your species is listed in the source's lookup table before running:\n\n  - IUCN (International Union for Conservation of Nature): mammals, amphibians, reptiles and some plants (only plants with digitised IUCN range maps).\n  [Species list (column \"binomial\")](https://object-arbutus.cloud.computecanada.ca/bq-io/io/IUCN_rangemaps/iucn_fid_binomials.csv)\n\n  - MOL (Map of Life): mammals only.\n  [Species list (column \"sciname\")](https://object-arbutus.cloud.computecanada.ca/bq-io/io/mol_range_maps/mol_mammals.csv)\n\n  - QC (Ministère de l'Environnement du Québec): mammals, reptiles and amphibians, Québec extent only. Type names without accents.\n  [Species list (column \"NOM_SCIENT\")](https://object-arbutus.cloud.computecanada.ca/bq-io/io/qc_range_maps/qc_range_maps.csv)\n\n  Birds are not currently available from any source.",
       "type": "options",
       "example": "IUCN",
       "options": [
@@ -622,7 +622,7 @@
   },
   "metadata": {
     "name": "Species Habitat Score",
-    "description": "This pipeline measures the Species Habitat Score (SHS), for the species used as inputs. It uses the range maps, the elevation ranges and the habitat categories available from The International Union for Conservation of Nature (IUCN). Changes in the habitat are measured using the Global Forest Watch layers and soon other land cover layers will be added. For the specific case of Quebec it has range maps available from the Ministère de l’Environnement. The outputs are a table with the changes in the area of the habitat by year requested and a graph with a timeseries of these values. Rasters of the habitat available for each year can also be requested.",
+    "description": "This pipeline measures the Species Habitat Score (SHS), for the species used as inputs. It uses the range maps, the elevation ranges and the habitat categories available from The International Union for Conservation of Nature (IUCN). Changes in the habitat are measured using the Global Forest Watch layers and soon other land cover layers will be added. For the specific case of Quebec it has range maps available from the Ministère de l’Environnement.  The outputs are a table with the changes in the area of the habitat by year requested and a graph with a timeseries of these values. Rasters of the habitat available for each year can also be requested.",
     "author": [
       {
         "name": "Maria Isabel Arce-Plata",
