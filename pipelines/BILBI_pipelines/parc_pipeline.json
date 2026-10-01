@@ -473,14 +473,14 @@
       "weight": 1
     },
     "data>loadFromStac.yml@1|t0": {
-      "description": "Start year for time series layers. Leave blank if using all available dates.\n\nMust be one of: 2000, 2005, 2015, 2010, 2020",
+      "description": "Start year for time series layers. Leave blank if using all available dates.\n\nMust be one of: 1970, 1980, 1990, 2000, 2005, 2015, 2010, 2020, 2024",
       "label": "Start year (optional)",
       "type": "text",
       "example": null,
       "weight": 2
     },
     "data>loadFromStac.yml@1|t1": {
-      "description": "End year for time series layers. Leave blank if using all available dates.\n\nMust be one of: 2000, 2005, 2015, 2010, 2020",
+      "description": "End year for time series layers. Leave blank if using all available dates.\n\nMust be one of: 1970, 1980, 1990, 2000, 2005, 2015, 2010, 2020, 2024",
       "label": "End year (optional)",
       "type": "text",
       "example": null,
