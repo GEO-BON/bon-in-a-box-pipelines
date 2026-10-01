@@ -55,7 +55,7 @@ BON in a Box contains a pipeline to analyze temporal patterns for invasive and a
 
 ### Pipeline inputs
 
-- **Country:** the user must select a country for the Invasive Alien Species analysis. This can be done by selecting a country drom the drop-down menu.   
+- **Country:** the user must select a country for the Invasive Alien Species analysis. This can be done by selecting a country from the drop-down menu.   
 
 - **Start year:** the user must select the start year for which to get GBIf observations. The GBIF records will be used as a proxy for sampling effort in a given country. 
 
