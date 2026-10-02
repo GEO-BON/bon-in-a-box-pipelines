@@ -1,29 +1,16 @@
-using Pkg
-Pkg.activate("/julia_depot")
-
-# Shared environment/depot: only add packages this script needs that aren't
-# already there (other scripts may have added theirs already), then precompile
-# just once. Already-installed packages are skipped so repeat runs stay fast.
-required_pkgs = ["SpeciesDistributionToolkit", "CairoMakie", "ArchGDAL", "JSON", "CSV", "DataFrames", "EvoTrees"]
-installed_pkgs = keys(Pkg.project().dependencies)
-missing_pkgs = filter(p -> !(p in installed_pkgs), required_pkgs)
-if !isempty(missing_pkgs)
-    @info "Installing missing Julia packages: $missing_pkgs"
-    Pkg.add(missing_pkgs)
-    Pkg.precompile()
-end
+biab_ensure_package(["SpeciesDistributionToolkit", "CairoMakie", "ArchGDAL", "CSV", "DataFrames", "EvoTrees"])
 
 using EvoTrees
 using CSV
 using DataFrames
 using JSON
+using ArchGDAL
 using SpeciesDistributionToolkit
 using SpeciesDistributionToolkit.SimpleSDMLayers
 using Statistics
 using CairoMakie
 
 const _PROJ = SpeciesDistributionToolkit.SimpleSDMLayers.Proj
-const _ARCHGDAL = SpeciesDistributionToolkit.SimpleSDMLayers.ArchGDAL
 
 include("io.jl")
 include("pseudoabsences.jl")
@@ -81,6 +68,7 @@ function main()
 
     @info "Loading inputs..."
     inputs, predictors, presence_layer = process_inputs(RUNTIME_DIR)
+    @info "Occurrences remaining after masking: $(sum(presence_layer)) (on $(sum(presence_layer.indices)) valid cells)"
 
     max_candidate_pseudoabsences = inputs["max_candidate_pseudoabsences"]
     pa_buffer_distance = inputs["pseudoabsence_buffer"]
@@ -90,11 +78,17 @@ function main()
 
     features, labels = get_features_and_labels(predictors, presence_layer, pseudoabsences)
     train_idx, test_idx = crossvalidation_split(labels)
+    n_test_presences = sum(labels[test_idx])
+    @info "Test split: $n_test_presences presences, $(length(test_idx) - n_test_presences) absences (training: $(length(train_idx)) points)"
 
     @info "Fitting BRT..."
     brt_config = EvoTreeMLE(max_depth=6, nbins=16, eta=0.05, nrounds=120, loss=:gaussian_mle)
     model = EvoTrees.fit(brt_config; x_train=features[train_idx, :], y_train=labels[train_idx])
     fit_stats, confusion_matrices = compute_fit_stats(model, features, labels, test_idx)
+
+    # biab_warning keeps a single message, so the warnings are joined.
+    warnings = fit_stats_warnings(fit_stats, confusion_matrices)
+    isempty(warnings) || biab_warning(join(warnings, "\n\n"))
 
     @info "Predicting SDM..."
     predicted_sdm, sdm_uncertainty = predict_sdm(model, predictors)

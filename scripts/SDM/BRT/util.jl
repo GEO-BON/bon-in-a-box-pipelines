@@ -19,8 +19,9 @@ end
 
 # hacky, bad even
 # this should be a subpipeline that chains loadFromSTAC w/ a simple script to do this
-function _get_water_mask(layer_path)
-    lc = SDMLayer(layer_path)
+function _get_water_mask(layer_paths)
+    length(layer_paths) == 1 || biab_error_stop("The water mask must be a single layer, but $(length(layer_paths)) were provided.")
+    lc = SDMLayer(only(layer_paths))
     nodata!(lc, isequal(210))
     lc.grid[lc.indices] .= 1
     return lc

@@ -4,8 +4,8 @@
       "id": "34",
       "type": "io",
       "position": {
-        "x": 1182.9361440176413,
-        "y": 321.9620685253946
+        "x": 1401,
+        "y": 177
       },
       "data": {
         "descriptionFile": "filtering>cleanCoordinates.yml"
@@ -15,8 +15,8 @@
       "id": "35",
       "type": "constant",
       "position": {
-        "x": 694,
-        "y": 279.83333333333326
+        "x": 977,
+        "y": 166
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -37,8 +37,8 @@
       "id": "64",
       "type": "constant",
       "position": {
-        "x": 666,
-        "y": 400.83333333333326
+        "x": 982,
+        "y": 278
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -50,8 +50,8 @@
       "id": "121",
       "type": "userInput",
       "position": {
-        "x": 93,
-        "y": 64.33333333333337
+        "x": 249,
+        "y": 30.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -65,8 +65,8 @@
       "id": "123",
       "type": "output",
       "position": {
-        "x": 1535,
-        "y": 381.33333333333326
+        "x": 1926,
+        "y": 274
       },
       "data": {
         "label": "Output"
@@ -76,8 +76,8 @@
       "id": "126",
       "type": "output",
       "position": {
-        "x": 1323.3001942482933,
-        "y": 83.45159639955898
+        "x": 1401,
+        "y": 123
       },
       "data": {
         "label": "Output"
@@ -87,8 +87,8 @@
       "id": "128",
       "type": "userInput",
       "position": {
-        "x": 28.09705606290231,
-        "y": 557.7588988734078
+        "x": 171,
+        "y": 578.6666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -100,8 +100,8 @@
       "id": "132",
       "type": "io",
       "position": {
-        "x": 1565,
-        "y": 631.3333333333333
+        "x": 1926,
+        "y": 494.6153846153847
       },
       "data": {
         "descriptionFile": "SDM>BRT>fitBRT.yml"
@@ -111,8 +111,8 @@
       "id": "133",
       "type": "output",
       "position": {
-        "x": 2028,
-        "y": 662.8333333333333
+        "x": 2302,
+        "y": 611.6153846153848
       },
       "data": {
         "label": "Output"
@@ -122,8 +122,8 @@
       "id": "134",
       "type": "output",
       "position": {
-        "x": 2028,
-        "y": 600.8333333333333
+        "x": 2302,
+        "y": 471.6153846153847
       },
       "data": {
         "label": "Output"
@@ -133,8 +133,8 @@
       "id": "135",
       "type": "output",
       "position": {
-        "x": 2030,
-        "y": 527.8333333333333
+        "x": 2302,
+        "y": 399.6153846153847
       },
       "data": {
         "label": "Output"
@@ -144,8 +144,8 @@
       "id": "137",
       "type": "userInput",
       "position": {
-        "x": 21.61485380971783,
-        "y": 447.3965396974388
+        "x": 106,
+        "y": 295.40000000000003
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -160,8 +160,8 @@
       "id": "141",
       "type": "output",
       "position": {
-        "x": 2028,
-        "y": 472.83333333333326
+        "x": 2302,
+        "y": 435.6153846153847
       },
       "data": {
         "label": "Output"
@@ -171,8 +171,8 @@
       "id": "142",
       "type": "output",
       "position": {
-        "x": 2030,
-        "y": 831.8333333333333
+        "x": 2302,
+        "y": 647.6153846153848
       },
       "data": {
         "label": "Output"
@@ -182,8 +182,8 @@
       "id": "143",
       "type": "output",
       "position": {
-        "x": 2028,
-        "y": 779.8333333333333
+        "x": 2302,
+        "y": 683.6153846153848
       },
       "data": {
         "label": "Output"
@@ -193,8 +193,8 @@
       "id": "146",
       "type": "constant",
       "position": {
-        "x": -59.99999999999994,
-        "y": 481.26025544916456
+        "x": 139,
+        "y": 526.6666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -206,8 +206,8 @@
       "id": "148",
       "type": "output",
       "position": {
-        "x": 2028,
-        "y": 723.8333333333333
+        "x": 2302,
+        "y": 363.6153846153847
       },
       "data": {
         "label": "Output"
@@ -217,7 +217,7 @@
       "id": "149",
       "type": "output",
       "position": {
-        "x": 513,
+        "x": 613,
         "y": 12
       },
       "data": {
@@ -228,8 +228,8 @@
       "id": "152",
       "type": "userInput",
       "position": {
-        "x": 1206,
-        "y": 775.8333333333333
+        "x": 1497,
+        "y": 597
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -241,8 +241,8 @@
       "id": "153",
       "type": "userInput",
       "position": {
-        "x": 1220,
-        "y": 740.8333333333333
+        "x": 1433,
+        "y": 561
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -254,8 +254,8 @@
       "id": "154",
       "type": "userInput",
       "position": {
-        "x": 1206,
-        "y": 810.8333333333333
+        "x": 1460,
+        "y": 633
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -267,8 +267,8 @@
       "id": "159",
       "type": "io",
       "position": {
-        "x": 542.6786444321133,
-        "y": 110.27536266231323
+        "x": 613,
+        "y": 48
       },
       "data": {
         "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
@@ -278,8 +278,8 @@
       "id": "160",
       "type": "io",
       "position": {
-        "x": 445.3590725330655,
-        "y": 533.8631584084096
+        "x": 946,
+        "y": 331
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -289,8 +289,8 @@
       "id": "161",
       "type": "io",
       "position": {
-        "x": 475.4997120637047,
-        "y": 745.2202912882263
+        "x": 946,
+        "y": 560
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -300,8 +300,8 @@
       "id": "162",
       "type": "output",
       "position": {
-        "x": 996.3956315772633,
-        "y": 528.5460837746845
+        "x": 1401,
+        "y": 308
       },
       "data": {
         "label": "Output"
@@ -311,8 +311,8 @@
       "id": "163",
       "type": "constant",
       "position": {
-        "x": -62.877394447579945,
-        "y": 636.5226616924128
+        "x": 70,
+        "y": 614.6666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -340,8 +340,8 @@
       "id": "164",
       "type": "constant",
       "position": {
-        "x": -104.66382148579396,
-        "y": 697.4612011231416
+        "x": 70,
+        "y": 662.6666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -360,8 +360,8 @@
       "id": "166",
       "type": "constant",
       "position": {
-        "x": -15.867664029589264,
-        "y": 770.587448440016
+        "x": 89,
+        "y": 746.6666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -375,8 +375,8 @@
       "id": "167",
       "type": "userInput",
       "position": {
-        "x": -261.0375061035156,
-        "y": 588
+        "x": 12,
+        "y": 710.6666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -384,35 +384,11 @@
       }
     },
     {
-      "id": "169",
-      "type": "constant",
-      "position": {
-        "x": 32.417229226464315,
-        "y": 514.3360238228396
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text"
-      }
-    },
-    {
-      "id": "170",
-      "type": "constant",
-      "position": {
-        "x": 40.33427669110165,
-        "y": 572.3943718968469
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text"
-      }
-    },
-    {
       "id": "171",
       "type": "constant",
       "position": {
-        "x": 98.39262476510896,
-        "y": 598.7845301123049
+        "x": 139,
+        "y": 435.40000000000003
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -423,8 +399,8 @@
       "id": "173",
       "type": "output",
       "position": {
-        "x": 925.1980098346921,
-        "y": 742.4831969284229
+        "x": 1401,
+        "y": 514
       },
       "data": {
         "label": "Output"
@@ -434,12 +410,36 @@
       "id": "174",
       "type": "userInput",
       "position": {
-        "x": -45.64938453793343,
-        "y": 229.16716503895168
+        "x": 126,
+        "y": 487.40000000000003
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "175",
+      "type": "constant",
+      "position": {
+        "x": 139,
+        "y": 331.40000000000003
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "176",
+      "type": "constant",
+      "position": {
+        "x": 139,
+        "y": 383.40000000000003
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
       }
     }
   ],
@@ -683,20 +683,6 @@
       "id": "reactflow__edge-167-161study_area"
     },
     {
-      "source": "169",
-      "sourceHandle": null,
-      "target": "160",
-      "targetHandle": "t0",
-      "id": "reactflow__edge-169-160t0"
-    },
-    {
-      "source": "170",
-      "sourceHandle": null,
-      "target": "160",
-      "targetHandle": "t1",
-      "id": "reactflow__edge-170-160t1"
-    },
-    {
       "source": "171",
       "sourceHandle": null,
       "target": "160",
@@ -737,6 +723,18 @@
       "target": "132",
       "targetHandle": "bbox_crs",
       "id": "reactflow__edge-174-132bbox_crs"
+    },
+    {
+      "source": "175",
+      "target": "160",
+      "targetHandle": "t0",
+      "id": "xy-edge__175-160t0"
+    },
+    {
+      "source": "176",
+      "target": "160",
+      "targetHandle": "t1",
+      "id": "xy-edge__176-160t1"
     }
   ],
   "inputs": {
@@ -772,15 +770,15 @@
     "data>getGBIFObservations>getGBIFObservations.yml@159|min_year": {
       "description": "Min year observations wanted",
       "label": "minimum year",
-      "type": "int",
-      "example": 2010,
+      "type": "text",
+      "example": "2010",
       "weight": 3
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|max_year": {
       "description": "Max year observations wanted",
       "label": "maximum year",
-      "type": "int",
-      "example": 2024,
+      "type": "text",
+      "example": "2024",
       "weight": 4
     },
     "pipeline@128": {
