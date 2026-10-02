@@ -12,8 +12,8 @@ function generate_pseudoabsences(
     if num_possible_pas > max_candidate_pas
         candidate_pa = backgroundpoints(pseudoabsencemask(RandomSelection, presence_layer), max_candidate_pas)
     else
-        candidate_pa.indices[findall(presence_layer)] .= 0
-        candidate_pa.indices[.!presence_layer.indices] .= 1
+        # Every valid cell that is not a presence is a candidate.
+        candidate_pa.grid .= .!presence_layer.grid
     end
 
     candidate_pres = copy(presence_layer)
@@ -24,6 +24,11 @@ function generate_pseudoabsences(
     dte = pseudoabsencemask(DistanceToEvent, candidate_pres)
     pa_mask = copy(dte)
     pa_mask.indices[findall(x -> x < min_distance, dte)] .= false
+
+    if !any(pa_mask.indices)
+        max_dist = any(dte.indices) ? maximum(dte.grid[dte.indices]) : "n/a (no valid cells)"
+        biab_error_stop("No valid cell left for pseudoabsences: none is farther than $min_distance from a presence (max distance found: $max_dist). Reduce the pseudoabsence buffer, enlarge the bounding box, or check that the predictors and water mask overlap the occurrences.")
+    end
 
 
     bgpoints = backgroundpoints(pa_mask, num_pas)
