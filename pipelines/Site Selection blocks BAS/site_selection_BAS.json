@@ -436,21 +436,21 @@
       "weight": 2
     },
     "site_selection_BAS>BAS_algorithm.yml@26|ndesign": {
-      "description": "A number of target sampling sites to obtain with the algorithm",
+      "description": "A number of target sampling sites to obtain with the algorithm. The user must decide on a number of sites based on their sampling goals and scale of the study. As expected, larger study areas should have greater number of sampling locations, but constraints exist (e.g budget, staff, etc.) that may limit sampling locations and coverage. Researchers should take into account their specifics sampling goals and timelines, and proceed with caution. Alternatively, greater number of sampling locations can be visited in different moments, but this decision lies on the research group. ",
       "label": "Target total sites",
       "type": "int",
       "example": 100,
       "weight": 3
     },
     "site_selection_BAS>Block_creation.yml@0|n_cols": {
-      "description": "Number of columns for the environmental space grid (together with rows will define the final number of environmental blocks)",
+      "description": "Number of columns for the environmental space grid (together with rows will define the final number of environmental blocks). Blocks are based on a PCA of the environmental variables selected and represent  a proxy of ecozones in areas with lacking information. A general recommendation is to start with fewer blocks because it would simplify computation and understanding of the study region, 5-10 blocks, and later increase if needed.",
       "label": "Number of columns",
       "type": "int",
       "example": 10,
       "weight": 4
     },
     "site_selection_BAS>Block_creation.yml@0|n_rows": {
-      "description": "Number of rows for the environmental space grid (together with columns will define the final number environmental blocks)",
+      "description": "Number of rows for the environmental space grid (together with columns will define the final number environmental blocks). Blocks are based on a PCA of the environmental variables selected and represent  a proxy of ecozones in areas with lacking information. A general recommendation is to start with fewer blocks because it would simplify computation and understanding of the study region, 5-10 blocks, and later increase if needed.",
       "label": "Number of rows",
       "type": "int",
       "example": 10,
@@ -460,8 +460,8 @@
       "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). This input may be blank when using ESPG:4326.",
       "label": "Spatial resolution",
       "type": "float",
-      "weight": 6,
-      "example": null
+      "example": null,
+      "weight": 6
     }
   },
   "outputs": {
