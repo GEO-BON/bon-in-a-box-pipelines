@@ -19,6 +19,13 @@ include("diagnostics.jl")
 include("util.jl")
 
 function mask_water!(water, occurrence, predictor_layers)
+    if water.x != occurrence.x || water.y != occurrence.y
+        biab_error_stop(
+            "The water mask does not cover the same area and resolution as the predictors, so it cannot be applied. " *
+            "The grids differ: water mask has $(size(water.grid)) cells with x = $(water.x), y = $(water.y); " *
+            "predictors have $(size(occurrence.grid)) cells with x = $(occurrence.x), y = $(occurrence.y)."
+        )
+    end
     mask!(occurrence, water)
     map(l -> mask!(l, water), predictor_layers)
 end
@@ -34,7 +41,7 @@ function process_inputs(RUNTIME_DIR)
     bbox = _get_wgs84_bbox(transformer, bounding_box...)
 
     predictor_layers = SDMLayer.(inputs["predictors"]; bbox...)
-    water = _get_water_mask(inputs["water_mask"])
+    water = _get_water_mask(inputs["water_mask"]; bbox...)
 
     occurrence_df = CSV.read(joinpath(inputs["occurrence"]), DataFrame)
     occurrence_layer = _get_occurrence_layer(transformer, first(predictor_layers), occurrence_df)
