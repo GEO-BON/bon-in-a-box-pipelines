@@ -740,7 +740,7 @@
   "inputs": {
     "pipeline@121": {
       "label": "Species",
-      "description": "Name of species",
+      "description": "Name of species. Species with fewer than about 50 usable presences in the study area give a very small test set and unreliable fit statistics.",
       "type": "text[]",
       "example": [
         "Acer saccharum"
@@ -749,14 +749,14 @@
     },
     "pipeline@174": {
       "label": "Bounding and CRS",
-      "description": "Select a bounding box and CRS",
+      "description": "Select a bounding box and CRS. Choose an area that contains enough presences (see Species).",
       "type": "bboxCRS",
       "example": null,
       "weight": 1
     },
     "pipeline@137": {
       "label": "Environmental Predictors",
-      "description": "Vector of strings, collection name followed by '|' followed by item id. View GEO BON STAC catalog items [here](https://stac.geobon.org/viewer/). The collection name and item name can be found in the URL (e.g. for \"https://stac.geobon.org/viewer/chelsa-clim/bio1\" the collection name is chelsa-clim and the item id is bio1). ",
+      "description": "Vector of strings, collection name followed by '|' followed by item id. View GEO BON STAC catalog items [here](https://stac.geobon.org/viewer/). The collection name and item name can be found in the URL (e.g. for \"https://stac.geobon.org/viewer/chelsa-clim/bio1\" the collection name is chelsa-clim and the item id is bio1). Choose few variables that plausibly limit the species and avoid highly correlated ones. Only the first 5 are shown in the Environment space output.",
       "type": "text[]",
       "example": [
         "chelsa-clim|bio1",
@@ -790,21 +790,21 @@
     },
     "pipeline@152": {
       "label": "Pseudoabsence Buffer",
-      "description": "The minimum distance a PA is allowed to be from a presence in kilometers",
+      "description": "The minimum distance a PA is allowed to be from a presence in kilometers. Keep it well below the size of the study area, otherwise no candidate cell remains. Larger values make absences more distinct from presences but exclude nearby suitable habitat.",
       "type": "float",
       "example": 10,
       "weight": 6
     },
     "pipeline@153": {
       "label": "Max Candidate Pseudoabsences",
-      "description": "The maximum number of candidate pseudoabsences to consider. This speeds up PA generation on large rasters.",
+      "description": "The maximum number of candidate pseudoabsences to consider. This speeds up PA generation on large rasters. If the region has more valid cells (cells with data, outside the water mask) than this limit, a random subset of that size is used. Otherwise, every valid cell that is not a presence is a candidate and the limit has no effect.",
       "type": "int",
       "example": 100000,
       "weight": 7
     },
     "pipeline@154": {
       "label": "Pseudoabsence proportion",
-      "description": "The number of PAs, given by the proportion of the total occurrences to use.",
+      "description": "Number of pseudoabsences per presence (for example 2.4 gives 2.4 pseudoabsences for each presence). Higher values sample the environment more thoroughly but lower the share of presences in the test set, which lowers precision and PR AUC without the model being worse. Compare these statistics only between runs with the same value.",
       "type": "float",
       "example": 2.4,
       "weight": 8
@@ -855,43 +855,43 @@
       "weight": 1
     },
     "SDM>BRT>fitBRT.yml@132|pseudoabsences": {
-      "description": "pseudoabsence coordinates",
+      "description": "Coordinates of the pseudoabsence points used to train and test the model. Check that they cover the environments of the study area and are not concentrated around the presences.",
       "label": "Pseudoabsences",
       "type": "text/tab-separated-values",
       "weight": 2
     },
     "SDM>BRT>fitBRT.yml@132|env_corners": {
-      "description": "Diagnostic plot of the location of presences (blue) and pseudoabsences (red) in environment space for up to the first 5 predictors.",
+      "description": "Plot of presences (blue) and pseudoabsences (green) in environment space, for the first 5 predictors. Presences in a distinct part of the cloud mean informative predictors; strong overlap means the model can hardly separate them.",
       "label": "Environment Space",
       "type": "image/jpg",
       "weight": 3
     },
     "SDM>BRT>fitBRT.yml@132|tuning": {
-      "description": "Describes how the Matthew's Correlation Coefficient (MCC) changes as the threshold value changes from 0 to 1.",
+      "description": "Describes how the Matthew's Correlation Coefficient (MCC) changes as the threshold value changes from 0 to 1. The peak is the threshold used for the Range map. A good curve has one clear peak at an intermediate threshold, with an MCC well above 0.3. A flat curve, or a peak near 0 or 1, means weak separation or scores squeezed into a narrow range.",
       "label": "Tuning Curve",
       "type": "image/jpg",
       "weight": 4
     },
     "SDM>BRT>fitBRT.yml@132|fit_stats": {
-      "description": "JSON of BRT fit statistics and optimal threshold value.",
+      "description": "JSON of BRT fit statistics and optimal threshold value.\n\n- ROC AUC (0.5 is random, above 0.7 is acceptable)\n- PR AUC (compare with the share of presences in the test set)\n- MCC at the best threshold (0 is random, 1 is perfect)\n\nComputed on one small random split, so treat as indicative. Check the warning output for suspicious values.",
       "label": "Fit Statistics",
       "type": "text/json",
       "weight": 5
     },
     "SDM>BRT>fitBRT.yml@132|predicted_sdm": {
-      "description": "Map of occurrence score between 0 and 1.",
+      "description": "Map of occurrence score, generally between 0 and 1. Higher means more suitable relative to the pseudoabsences. It is not a calibrated probability and may fall outside 0 to 1: use it to compare locations, not as an absolute likelihood.",
       "label": "Predicted SDM",
       "type": "image/tiff;application=geotiff",
       "weight": 6
     },
     "SDM>BRT>fitBRT.yml@132|range": {
-      "description": "Range map thresholded at the optimal value.",
+      "description": "Range map thresholded at the optimal value. Binary map (1 is predicted suitable) obtained by applying the MCC-maximizing threshold to the Predicted SDM. It shows where the model predicts suitability, not confirmed presence, and depends on the pseudoabsence settings.",
       "label": "Range",
       "type": "image/tiff;application=geotiff",
       "weight": 7
     },
     "SDM>BRT>fitBRT.yml@132|sdm_uncertainty": {
-      "description": "Map of the BRT's relative uncertainty for each location.",
+      "description": "Map of the BRT's relative uncertainty for each location. It is the variance predicted by the model for each cell (not a bootstrap uncertainty). Higher values mean less certain scores: use it to down-weight or mask areas of the predicted map.",
       "label": "SDM Uncertainty",
       "type": "image/tiff;application=geotiff",
       "weight": 8
