@@ -1,6 +1,18 @@
 using Pkg
 Pkg.activate("/julia_depot")
 
+# Shared environment/depot: only add packages this script needs that aren't
+# already there (other scripts may have added theirs already), then precompile
+# just once. Already-installed packages are skipped so repeat runs stay fast.
+required_pkgs = ["SpeciesDistributionToolkit", "CairoMakie", "ArchGDAL", "JSON", "CSV", "DataFrames", "EvoTrees"]
+installed_pkgs = keys(Pkg.project().dependencies)
+missing_pkgs = filter(p -> !(p in installed_pkgs), required_pkgs)
+if !isempty(missing_pkgs)
+    @info "Installing missing Julia packages: $missing_pkgs"
+    Pkg.add(missing_pkgs)
+    Pkg.precompile()
+end
+
 using EvoTrees
 using CSV
 using DataFrames
