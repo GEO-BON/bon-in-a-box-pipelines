@@ -51,7 +51,7 @@ locs <- terra::vect(locs_df, geom = c("lon", "lat"),crs = "EPSG:4326")
 predictors <- terra:: rast(c(input$rasters))
 print(predictors)
 
-res_fact<- as.numeric(input$res_fact)
+####res_fact<- as.numeric(input$res_fact)
 iters<- as.numeric(input$iters)
 
 
@@ -65,9 +65,9 @@ temperature <- predictors[[1]]
 er <- terra::rast(terra::ext(temperature), resolution= terra::res(temperature)) 
 terra::crs(er) <- terra::crs(temperature)
 
-res_fact <- input$res_fact
+###res_fact <- input$res_fact
 #aggregate to 10 km fo ease of processing
-rr <- terra::aggregate(er, res_fact)
+###rr <- terra::aggregate(er, res_fact)
 
 set.seed(1234)
 

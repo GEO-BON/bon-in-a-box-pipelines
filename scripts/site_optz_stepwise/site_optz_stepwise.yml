@@ -11,11 +11,6 @@ inputs:
     description: polygon of the country of interest
     type: application/geopackage+sqlite3
     example: Peru
-  res_fact:
-    label: Aggregation factor (resolution)
-    description: Factor reduction for raster pixel resolution (usually from 1km raw)
-    type: int
-    example: 10
   iters:
     label: Algorithm Iterations
     description: number of iterations to run (equivalent to sites to be selected)
