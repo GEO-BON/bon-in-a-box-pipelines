@@ -100,7 +100,7 @@ Blocks are based on a PCA of the environmental variables selected and represent 
 
 A general recommendation is to start with fewer blocks because it would simplify computation and understanding of the study region, 5-10 blocks, and later increase if needed.
 
-### Pipeline Steps
+### Pipeline steps
 
 #### 1. Retrieve environmental data 
 Load the selected environmental rasters and the study-area polygon.

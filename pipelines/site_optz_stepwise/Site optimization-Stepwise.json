@@ -216,6 +216,25 @@
         "type": "float",
         "value": 0
       }
+    },
+    {
+      "id": "73",
+      "type": "constant",
+      "position": {
+        "x": 808.5545451511291,
+        "y": -82.92030732670429
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Country or region",
+        "options": [
+          "Country or region",
+          "WDPA",
+          "EEZ",
+          "Polygon of bounding box"
+        ]
+      }
     }
   ],
   "edges": [
@@ -393,58 +412,52 @@
       "target": "63",
       "targetHandle": "buffer",
       "id": "reactflow__edge-72-63buffer"
+    },
+    {
+      "source": "73",
+      "target": "63",
+      "targetHandle": "polygon_type",
+      "id": "xy-edge__73-63polygon_type"
     }
   ],
   "inputs": {
     "pipeline@67": {
       "label": "Country, region, or bounding box",
-      "description": "Use the chooser to select a country/ region or create a custom bounding box (region selections will be ignored for EEZs since they are national).",
+      "description": "Define the study extent and choose the coordinate reference system used to retrieve environmental data.",
       "type": "bboxCRS",
       "example": null,
       "weight": 0
-    },
-    "data>load_polygons.yml@63|polygon_type": {
-      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), or Exclusive Economic Zones (EEZs).",
-      "label": "Polygon type",
-      "type": "options",
-      "options": [
-        "Country or region",
-        "WDPA",
-        "EEZ"
-      ],
-      "example": "Country or region",
-      "weight": 1
-    },
-    "data>loadFromStac.yml@45|collections_items": {
-      "description": "Vector of strings, collection name followed by '|' followed by item id",
-      "label": "STAC collection items",
-      "type": "text[]",
-      "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
-      ],
-      "weight": 2
-    },
-    "pipeline@52": {
-      "label": "Sampling locations",
-      "description": "Sampling locations/site in lat lon format, including a \"vini\" column (defining well-known sites as \"1\" and demand/historic sites as \"0\", which will be selected for the sampling optimization)",
-      "type": "text/csv",
-      "example": "/scripts/site_optz_stepwise\\site_optz_stepwise_EXAMPLE_samp_loc_peru.csv",
-      "weight": 3
-    },
-    "pipeline@54": {
-      "label": "Algorithm Iterations",
-      "description": "Number of iterations to run. This is equivalent to sites to be selected from the demand sites pool. The algorithm with run one iteration at a time to select the optimal site that reduces the most of the variability (Spatial and environmental) among all the demand sites. For an initial inspection a small number can be selected to see how the curve flattens, and more sites can be increased in a second run. NOTE: number of iterations  has to be equal or less that the \"demand sites\" number. For example if the sampling locations have 300 sites, we should run 50, or 150 sites, but never more than 300. The more iterations, the longer the algorithm computing time.  ",
-      "type": "int",
-      "example": 30,
-      "weight": 4
     },
     "data>loadFromStac.yml@45|spatial_res": {
       "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). This input may be blank when using ESPG:4326.",
       "label": "Spatial resolution",
       "type": "float",
-      "example": null,
-      "weight": 5
+      "example": 0.00883,
+      "weight": 1
+    },
+    "data>loadFromStac.yml@45|collections_items": {
+      "description": "Provide the environmental variables using the format `collection|item`, such as `chelsa-clim|bio1` and `chelsa-clim|bio12`. These variables define the environmental differences between sites.",
+      "label": "STAC collection items",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio12"
+      ],
+      "weight": 2
+    },
+    "pipeline@52": {
+      "label": "Sampling locations",
+      "description": "Provide the path to a CSV containing the `lon`, `lat`, and `vini` columns. Mark current sites with `1` and candidate sites with `0`.",
+      "type": "text/csv",
+      "example": "/scripts/site_optz_stepwise/site_optz_stepwise_EXAMPLE_samp_loc_peru.csv",
+      "weight": 3
+    },
+    "pipeline@54": {
+      "label": "Algorithm Iterations",
+      "description": "Enter the number of additional candidate sites to select. This must not exceed the number of candidate sites (`vini = 0`).\n\nFor an initial inspection a small number can be selected to see how the curve flattens, and more sites can be increased in a second run.\n\nFor example if the sampling locations have 300 sites, we should run 50, or 150 sites, but never more than 300. The more iterations, the longer the algorithm computing time.  ",
+      "type": "int",
+      "example": 30,
+      "weight": 4
     }
   },
   "outputs": {
@@ -475,12 +488,17 @@
   },
   "metadata": {
     "name": "Site optimization sampling",
-    "description": "## Introduction\nSite optimization is challenge in biodiversity monitoring. Often times ecological monitoring selects sampling locations based on multiple reason. Reasons vary from sampling design, budget and accesibility constraints, and rotational site selection, among others. Such variation may  produce a set of current or well-known of locations, and historical or demand site (site which have not been samples in a many years). Given that monitoring projects could increase or  rotate new sampling location, decision of how to define this sites can be informed by environmental variability, that may help understand better biodiversity patterns.\n## Uses\nThe pipeline selects a set of locations from a pool of demand sites (historical sites or  not recently sampled sites) using a stepwise procedure through a pmedians  algorithm. The algorith aims to select sites that cover greatest environmental and spatial distance. Selected sites will contribute to cover the remaining environmental variability based on the universal variability (universe defined by well-know and historical sites together). but the historical sites alone, and select among the Demand sites. The user must provide a dataframe with well- know survey sites (current) and demand sites (or historical sites), a will select  sites only from the demand site pool.\n## Limitations \n* Optimization algorithm is based on only a subset of points (demand) from a universe  (well-know and demand) that defines the environmental and spatial variability.\n* The p-median algortihm is slow with large matrices (more than ~200 sites) depending on computing power.\n* Selection of environmental variables is key to defining universal environmental variability, therefore results may vary significantly based on the ßected envionrmental variables. \n* Boundary is limited to spatial polygons defined by the avalilabe country bounding box polygons within Bon-in-a-Box.\n\n## Before you start\n* Be sure to produce a dataframe of points with the correct colum labels: lat, lon, and vini.\n* Be sure that the vini column should only include 1 and 0 values, which are demand and historical sites respectively. Only demand sites will be chosen. ",
+    "description": "## Introduction\nBiodiversity monitoring programmes may need to expand their sampling network or revisit sites that are no longer regularly monitored. Choosing additional sites can help improve coverage of environmental conditions and geographic areas that are poorly represented by the current network.\n\nThis pipeline uses a stepwise p-median optimization procedure implemented in the SURDES package to select additional sites from a user-provided candidate list. Selection considers environmental differences and a distance measure derived from the site data, with the aim of complementing sites already included in the monitoring network.\n## Uses\nUse this pipeline to prioritize candidate sites when expanding or rotating a monitoring network. Candidates may include historical sampling locations or proposed new sites.\n\nThe input list must identify two groups:\n- **Current sites (vini = 1):** Sites already included in the monitoring network.\n- **Candidate sites (vini = 0):** Sites available for additional sampling.\n\nTogether, these groups define the set of sites considered in the analysis. The pipeline extracts environmental values at their locations, calculates distance matrices, and selects additional sites through successive optimization steps.\n\nThe results include site-selection values, a map, and a curve showing how the remaining uncovered variability changes as sites are added. These outputs support decisions about which candidate sites to include and how many additional sites to sample.\n\n## Limitations \n* Optimization algorithm is based on only a subset of points (demand) from a universe  (well-know and demand) that defines the environmental and spatial variability.\n* The p-median algortihm is slow with large matrices (more than ~200 sites) depending on computing power.\n* Selection of environmental variables is key to defining universal environmental variability, therefore results may vary significantly based on the ßected envionrmental variables. \n* Boundary is limited to spatial polygons defined by the avalilabe country bounding box polygons within Bon-in-a-Box.\n\n## Before you start\nPrepare a CSV containing one row per site and the following columns:\n- **lon:** Longitude in decimal degrees, WGS84 (EPSG:4326).\n- **lat:** Latitude in decimal degrees, WGS84 (EPSG:4326).\n- **vini:** Site classification. Use 1 for current monitoring sites and 0 for candidate sites available for additional sampling.\n\nUse numeric values without missing coordinates or classifications. For the current implementation, keep the input file limited to these three columns.\n\nPlace the file in your BON in a Box `userdata` directory and enter its container path in **Sampling locations**, for example `/userdata/sampling_sites.csv`.\n\nChoose environmental variables relevant to the monitoring objectives and ensure their coverage includes all supplied sites. Set the number of additional sites to a value no greater than the number of rows with `vini = 0`.",
     "author": [
       {
         "name": "Francis van Oordt",
         "email": "francis.vanoordtlahoz@mail.mcgill.ca",
         "identifier": "https://orcid.org/0000-0002-8471-235X"
+      },
+      {
+        "name": "Samara Manzin",
+        "email": "samara.manzin@mcgill.ca",
+        "identifier": "https://orcid.org/0009-0005-9134-9981"
       }
     ],
     "license": "CC-BY",
