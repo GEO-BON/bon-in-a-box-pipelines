@@ -72,17 +72,6 @@
       }
     },
     {
-      "id": "53",
-      "type": "output",
-      "position": {
-        "x": 2871,
-        "y": 495
-      },
-      "data": {
-        "label": "SInAS merged dataset"
-      }
-    },
-    {
       "id": "73",
       "type": "userInput",
       "position": {
@@ -142,102 +131,25 @@
       }
     },
     {
-      "id": "82",
-      "type": "output",
-      "position": {
-        "x": 3641,
-        "y": 84
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "83",
-      "type": "output",
-      "position": {
-        "x": 3641,
-        "y": 48
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "85",
-      "type": "output",
-      "position": {
-        "x": 3641,
-        "y": 436
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "86",
-      "type": "output",
-      "position": {
-        "x": 3641,
-        "y": 364
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "87",
       "type": "output",
       "position": {
-        "x": 3641,
-        "y": 12
+        "x": 3670.1406772254813,
+        "y": 141.9188526302701
       },
       "data": {
         "label": "Output"
-      }
-    },
-    {
-      "id": "93",
-      "type": "output",
-      "position": {
-        "x": 3641,
-        "y": 472
-      },
-      "data": {
-        "label": "Qualitative model interpretation"
-      }
-    },
-    {
-      "id": "88",
-      "type": "output",
-      "position": {
-        "x": 2871,
-        "y": 759
-      },
-      "data": {
-        "label": "SInAS data-quality report"
       }
     },
     {
       "id": "89",
       "type": "output",
       "position": {
-        "x": 2092,
-        "y": 91
+        "x": 2090,
+        "y": 655
       },
       "data": {
         "label": "SInAS excluded records"
-      }
-    },
-    {
-      "id": "90",
-      "type": "output",
-      "position": {
-        "x": 2871,
-        "y": 649
-      },
-      "data": {
-        "label": "SInAS run summary"
       }
     },
     {
@@ -249,17 +161,6 @@
       },
       "data": {
         "descriptionFile": "data>getGBIFObservations>get_GBIF_country_SQL.yml"
-      }
-    },
-    {
-      "id": "94",
-      "type": "output",
-      "position": {
-        "x": 3641,
-        "y": 400
-      },
-      "data": {
-        "label": "Output"
       }
     },
     {
@@ -322,6 +223,17 @@
         "type": "text",
         "value": "user_input_data"
       }
+    },
+    {
+      "id": "101",
+      "type": "output",
+      "position": {
+        "x": 2853.0482474847227,
+        "y": 712.0319843975556
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -361,12 +273,6 @@
       "target": "80",
       "targetHandle": "global_invasive_checklist",
       "id": "xy-edge__92-80global_invasive_checklist"
-    },
-    {
-      "source": "52",
-      "sourceHandle": "merged_dataset",
-      "target": "53",
-      "id": "xy-edge__52merged_dataset-53"
     },
     {
       "source": "52",
@@ -458,57 +364,15 @@
     },
     {
       "source": "81",
-      "sourceHandle": "model_outputs",
-      "target": "82",
-      "id": "xy-edge__81model_outputs-82"
-    },
-    {
-      "source": "81",
-      "sourceHandle": "model_decision",
-      "target": "83",
-      "id": "xy-edge__81model_decision-83"
-    },
-    {
-      "source": "81",
-      "sourceHandle": "data_summary",
-      "target": "85",
-      "id": "xy-edge__81data_summary-85"
-    },
-    {
-      "source": "81",
-      "sourceHandle": "quantitative_plot",
-      "target": "86",
-      "id": "xy-edge__81quantitative_plot-86"
-    },
-    {
-      "source": "81",
       "sourceHandle": "qualitative_plot",
       "target": "87",
       "id": "xy-edge__81qualitative_plot-87"
-    },
-    {
-      "source": "81",
-      "sourceHandle": "qualitative_interpretation",
-      "target": "93",
-      "id": "xy-edge__81qualitative_interpretation-93"
-    },
-    {
-      "source": "52",
-      "sourceHandle": "data_quality_report",
-      "target": "88",
-      "id": "xy-edge__52data_quality_report-88"
     },
     {
       "source": "80",
       "sourceHandle": "excluded_records",
       "target": "89",
       "id": "xy-edge__80excluded_records-89"
-    },
-    {
-      "source": "52",
-      "sourceHandle": "run_summary",
-      "target": "90",
-      "id": "xy-edge__52run_summary-90"
     },
     {
       "source": "74",
@@ -541,12 +405,6 @@
       "target": "76",
       "targetHandle": "gbif_country_observations",
       "id": "xy-edge__91gbif_country_observations-76gbif_country_observations"
-    },
-    {
-      "source": "81",
-      "sourceHandle": "quantitative_plot",
-      "target": "94",
-      "id": "xy-edge__81quantitative_plot-94"
     },
     {
       "source": "96",
@@ -584,6 +442,54 @@
       "target": "96",
       "targetHandle": "dataset_citation",
       "id": "xy-edge__100-96dataset_citation"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "merged_dataset",
+      "target": "101",
+      "id": "xy-edge__52merged_dataset-101"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "run_summary",
+      "target": "101",
+      "id": "xy-edge__52run_summary-101"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "data_quality_report",
+      "target": "101",
+      "id": "xy-edge__52data_quality_report-101"
+    },
+    {
+      "source": "81",
+      "sourceHandle": "model_outputs",
+      "target": "87",
+      "id": "xy-edge__81model_outputs-87"
+    },
+    {
+      "source": "81",
+      "sourceHandle": "model_decision",
+      "target": "87",
+      "id": "xy-edge__81model_decision-87"
+    },
+    {
+      "source": "81",
+      "sourceHandle": "data_summary",
+      "target": "87",
+      "id": "xy-edge__81data_summary-87"
+    },
+    {
+      "source": "81",
+      "sourceHandle": "qualitative_interpretation",
+      "target": "87",
+      "id": "xy-edge__81qualitative_interpretation-87"
+    },
+    {
+      "source": "81",
+      "sourceHandle": "quantitative_plot",
+      "target": "87",
+      "id": "xy-edge__81quantitative_plot-87"
     }
   ],
   "inputs": {
@@ -730,19 +636,19 @@
       "description": "Fitted annual discovery records from models with alternative detection assumptions. Compare fit statistics only among converged models fitted to the same country and time series.",
       "label": "Quantitative model comparison",
       "type": "image/png",
-      "weight": 8
+      "weight": 7
     },
     "IAS>model_data.yml@81|qualitative_plot": {
       "description": "Descriptive comparison of annual IAS first records with the GBIF observation proxy. Similar patterns may indicate an observation-effort effect; this plot is not a corrected introduction-rate estimate.",
       "label": "Qualitative model plot",
       "type": "image/png",
-      "weight": 9
+      "weight": 8
     },
     "IAS>model_data.yml@81|qualitative_interpretation": {
       "description": "Interpretation selected from the fitted IAS-observation and survey-effort trend combination. A trend is classified as stable when its fitted time slope is not significant at alpha = 0.05.",
       "label": "Qualitative model interpretation",
       "type": "text",
-      "weight": 10
+      "weight": 9
     }
   },
   "metadata": {
