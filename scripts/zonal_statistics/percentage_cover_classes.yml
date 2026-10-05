@@ -35,4 +35,4 @@ conda:
     - r-exactextractr
 references:
   - text: Bastion 2023
-    doi: https://doi.org/10.32614/CRAN.package.exactextractr
+    link: https://doi.org/10.32614/CRAN.package.exactextractr

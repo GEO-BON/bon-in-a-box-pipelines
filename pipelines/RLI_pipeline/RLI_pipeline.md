@@ -142,7 +142,7 @@ This step calculates the Red List Index for the species using their history of a
 
 ## Example
 
-**Sample run:** See an example RLI run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/RLI_pipeline%3EIUCN_RLI_pipeline/40d810fb1dd12ea71f08381383a0686a) and [viewer](https://pipelines-results.geobon.org/viewer/RLI_pipeline%3EIUCN_RLI_pipeline%3E40d810fb1dd12ea71f08381383a0686a).
+**Sample run:** See an example RLI run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/_2025-10-16%3ERLI_pipeline%3EIUCN_RLI_pipeline/40d810fb1dd12ea71f08381383a0686a) and [viewer](https://pipelines-results.geobon.org/viewer/_2025-10-16%3ERLI_pipeline%3EIUCN_RLI_pipeline%3E40d810fb1dd12ea71f08381383a0686a).
 
 ## Troubleshooting
 

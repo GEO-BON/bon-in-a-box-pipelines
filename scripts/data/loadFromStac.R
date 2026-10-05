@@ -7,8 +7,6 @@ library("sf")
 library("lubridate")
 library("stars")
 library("terra")
-# sf_use_s2(FALSE)
-print(outputFolder)
 
 input <- biab_inputs()
 
@@ -59,7 +57,8 @@ if (grepl("chelsa", input$collections_items[1], ignore.case = TRUE) && (!is.null
 }
 coord <- st_crs(CRS)
 # Load the CRS object
-if (!is.null(CRS) & !is.null(input$spatial_res)) {
+
+if (!is.null(CRS) && !is.null(input$spatial_res)) {
   # Check for inconsistencies between CRS type and resolution
   if (st_is_longlat(coord) && input$spatial_res > 1) {
     biab_error_stop("CRS is in degrees and resolution is in meters.")
@@ -177,6 +176,16 @@ for (coll_it in collections_items) { # Loop through input array
     if (is.null(input$spatial_res)) {
       resolution <- res(r)
       resolution <- resolution[[1]]
+      if (!is.null(CRS)) {
+        # Check for inconsistencies between CRS type and resolution
+        if (st_is_longlat(coord) && resolution > 1) {
+          biab_error_stop("CRS is in degrees and resolution is in meters.")
+        }
+
+        if (st_is_longlat(coord) == FALSE && resolution < 1) {
+          biab_error_stop("CRS is in meters and resolution is in degrees.")
+        }
+      }
     } else {
       resolution <- as.numeric(input$spatial_res)
     }
@@ -239,11 +248,17 @@ for (coll_it in collections_items) { # Loop through input array
     )
     # Use GDALCubes in case the layers are tiled
     feats <- it_obj$features
-    # get asset names
-    asset_names <- lapply(it_obj$features, function(item) {
-      names(item$assets)
-    })
-    asset_names <- unlist(asset_names)
+    # Use the first asset from each item. This preserves the one-to-one
+    # relationship between items, assets, and dates instead of flattening all
+    # asset names into a single vector.
+    asset_names <- vapply(it_obj$features, function(item) {
+      item_asset_names <- names(item$assets)
+      if (length(item_asset_names) == 0) {
+        biab_error_stop(paste0("STAC item ", item$id, " has no assets."))
+      }
+      item_asset_names[1]
+    }, character(1))
+
     print("Asset names:")
     print(asset_names)
 
@@ -255,13 +270,12 @@ for (coll_it in collections_items) { # Loop through input array
       print(spatial.res)
 
       if (st_is_longlat(coord) == FALSE && spatial.res < 1) {
-      biab_error_stop("CRS is in meters and resolution is in degrees.")
+        biab_error_stop("CRS is in meters and resolution is in degrees.")
       }
 
       if (st_is_longlat(coord) && spatial.res > 1) {
-      biab_error_stop("CRS is in degrees and resolution is in meters.")
+        biab_error_stop("CRS is in degrees and resolution is in meters.")
       }
-
     } else {
       spatial.res <- input$spatial_res
     }
@@ -273,6 +287,11 @@ for (coll_it in collections_items) { # Loop through input array
         srs.cube <- paste0("EPSG:", it_obj$features[[1]]$properties$`proj:epsg`)
         print("srs_cube")
         print(srs.cube)
+      }
+      if ("proj:code" %in% names(it_obj$features[[1]]$properties)) {
+        srs.cube <- toupper(it_obj$features[[1]]$properties$`proj:code`)
+        print("srs_cube")
+        print(srs.cube)
       } else if (`proj:wkt2` %in% names(it_obj$features[[1]]$properties)) {
         srs.cube <- it_obj$features[[1]]$properties$`proj:wkt2`
       }
@@ -280,8 +299,17 @@ for (coll_it in collections_items) { # Loop through input array
       srs.cube <- CRS
     }
 
-    # Extract date
-    dates <- vapply(it_obj$features, function(x) x$properties$`datetime`, character(1))
+    # Extract a representative date. Some STAC items describe a time interval
+    # with start_datetime/end_datetime and leave datetime empty.
+    dates <- vapply(it_obj$features, function(item) {
+      if (!is.null(item$properties$datetime)) {
+        item$properties$datetime
+      } else if (!is.null(item$properties$start_datetime)) {
+        item$properties$start_datetime
+      } else {
+        biab_error_stop(paste0("STAC item ", item$id, " has no usable datetime."))
+      }
+    }, character(1))
     if (!all(asset_names == asset_names[1])) { # pull whole collection if names of assets are different
       print(asset_names)
       paths <- c()
@@ -323,7 +351,8 @@ for (coll_it in collections_items) { # Loop through input array
         paths <- out
       }
     } else { # If asset names are the same, filter by date (or tile if they are all the same date)
-      st <- gdalcubes::stac_image_collection(feats, asset_names = "data") # make stac image collection
+      common_asset_name <- asset_names[1]
+      st <- gdalcubes::stac_image_collection(feats, asset_names = common_asset_name) # make stac image collection
       print("filtering cube by date")
 
       if ((is.null(input$t0) && is.null(input$t1)) || min(dates) == max(dates)) { # If there is no time input or the dates are all the same
@@ -395,4 +424,4 @@ for (coll_it in collections_items) { # Loop through input array
   raster_paths <- c(raster_paths, paths)
 }
 
-biab_output("rasters", raster_paths)
+biab_output("rasters", as.list(raster_paths))

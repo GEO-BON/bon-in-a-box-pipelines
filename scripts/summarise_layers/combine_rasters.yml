@@ -1,0 +1,25 @@
+script: combine_rasters.R
+name: Combine Layers
+author:
+  - name: Samara Manzin
+    email: samara.manzin@mcgill.ca
+    identifier: https://orcid.org/0009-0005-9134-9981
+license: CC BY
+description: |
+    This script combines two sets of raster layers into a single set of raster layers.
+inputs:
+  rasters1:
+    label: rasters1
+    description: Path to the first set of raster layers to be combined. The layers should be in GeoTIFF format. The layers should have the same spatial resolution and extent.
+    type: image/tiff;application=geotiff[]
+    example:
+  rasters2:
+    label: rasters2
+    description: Path to the second set of raster layers to be combined. The layers should be in GeoTIFF format. The layers should have the same spatial resolution and extent.
+    type: image/tiff;application=geotiff[]
+    example:
+outputs:
+  combined_rasters:
+    label: combined_rasters
+    description: Path to the combined raster layers. The layers will be in GeoTIFF format.
+    type: image/tiff;application=geotiff[]

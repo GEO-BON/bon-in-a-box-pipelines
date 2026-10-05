@@ -62,4 +62,4 @@ conda:
     - r-remotes
 references:
    - text: "spbal: Spatially Balanced Sampling Algorithms"
-     doi: "https://doi.org/10.32614/CRAN.package.spbal"
+     link: "https://doi.org/10.32614/CRAN.package.spbal"

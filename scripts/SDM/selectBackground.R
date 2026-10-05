@@ -30,7 +30,6 @@ if (grepl("raster", input$method_background) & !is.null(input$raster)) {
   # Read in path to file
   heatmap <- terra::rast(input$raster)
   # This step is *slow*; an alternative would be better
-  # The same is applied to 'loadPredictorsFunc.R' as well
   heatmap <- terra::project(heatmap, predictors)
 } else {
   heatmap <- NULL

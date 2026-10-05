@@ -32,7 +32,7 @@ sample_spatial_obj <- function(obj_to_sample, nb_points = 5000) {
   } else if (inherits(obj_to_sample, "SpatRaster")) {
     if (terra::ncell(obj_to_sample) > nb_points) {
       env_df <- terra::spatSample(obj_to_sample, size = nb_points, na.rm = TRUE,
-                                  method="random", replace=FALSE) |> as.matrix()
+                                  method="random", replace=FALSE, values = TRUE) |> as.matrix()
       
     } else {
       env_df <- terra::values(obj_to_sample, matrix = T)
@@ -40,17 +40,20 @@ sample_spatial_obj <- function(obj_to_sample, nb_points = 5000) {
     }
     
   } else if (inherits(obj_to_sample, "data.frame")) {
-    if (nrow(env_df) > nb_points) {
-      obj_to_sample <- obj_to_sample[sample(1:nrow(obj_to_sample), nb_points), ]
-    
-  } else {
+    if (nrow(obj_to_sample) > nb_points) {
+      obj_to_sample <- obj_to_sample[sample(seq_len(nrow(obj_to_sample)), nb_points), ]
+    }
     env_df <- obj_to_sample
-  }
   } else if (inherits(obj_to_sample, "cube")) {
     env_df <- extract_gdal_cube(obj_to_sample, n_sample = nb_points, simplify = T)
+  } else {
+    stop(
+      "Unsupported spatial object class: ",
+      paste(class(obj_to_sample), collapse = ", ")
+    )
   }
-    env_df <- setNames(data.frame(env_df), names_layers)
-   message(paste0(nrow(env_df), " points randomly selected (excluding NA's)."))
+  env_df <- setNames(data.frame(env_df), names_layers)
+  message(paste0(nrow(env_df), " points randomly selected (excluding NA's)."))
   return(env_df)
 }
 

@@ -4,8 +4,8 @@
       "id": "199",
       "type": "io",
       "position": {
-        "x": 1074,
-        "y": 20.333333333333336
+        "x": 1363,
+        "y": 22
       },
       "data": {
         "descriptionFile": "NDVI>calculateNDVI.yml"
@@ -15,8 +15,8 @@
       "id": "202",
       "type": "output",
       "position": {
-        "x": 1613,
-        "y": 121.83333333333331
+        "x": 1903,
+        "y": 118.5
       },
       "data": {
         "label": "Output"
@@ -26,8 +26,8 @@
       "id": "208",
       "type": "output",
       "position": {
-        "x": 1074,
-        "y": 160.33333333333331
+        "x": 1363,
+        "y": 158
       },
       "data": {
         "label": "Output"
@@ -37,8 +37,8 @@
       "id": "210",
       "type": "userInput",
       "position": {
-        "x": 12,
-        "y": 12
+        "x": 34,
+        "y": 13.333333333333334
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -49,8 +49,8 @@
       "id": "211",
       "type": "io",
       "position": {
-        "x": 549.7875944896564,
-        "y": 43.29500615486555
+        "x": 455,
+        "y": 187.5
       },
       "data": {
         "descriptionFile": "data>load_polygons.yml"
@@ -60,31 +60,13 @@
       "id": "212",
       "type": "constant",
       "position": {
-        "x": 241.5740215278704,
-        "y": 84.0102422058175
+        "x": 68,
+        "y": 216.5
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float",
         "value": 0
-      }
-    },
-    {
-      "id": "213",
-      "type": "constant",
-      "position": {
-        "x": 220.6808080087634,
-        "y": -81.3943648204461
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "Country or region",
-        "options": [
-          "Country or region",
-          "WDPA",
-          "EEZ"
-        ]
       }
     }
   ],
@@ -132,13 +114,6 @@
       "id": "reactflow__edge-212-211buffer"
     },
     {
-      "source": "213",
-      "sourceHandle": null,
-      "target": "211",
-      "targetHandle": "polygon_type",
-      "id": "reactflow__edge-213-211polygon_type"
-    },
-    {
       "source": "211",
       "sourceHandle": "polygon",
       "target": "199",
@@ -154,33 +129,44 @@
     }
   ],
   "inputs": {
+    "data>load_polygons.yml@211|polygon_type": {
+      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.",
+      "label": "Polygon type",
+      "type": "options",
+      "options": [
+        "Country or region",
+        "Polygon of bounding box"
+      ],
+      "example": "Country or region",
+      "weight": 0
+    },
     "pipeline@210": {
       "label": "Bounding box and CRS",
       "description": "Select a country/region and a CRS to obtain the associated bounding box.",
       "type": "bboxCRS",
       "example": null,
-      "weight": 0
+      "weight": 1
     },
     "NDVI>calculateNDVI.yml@199|start_date": {
       "description": "Start date for summarizing vegetation index",
       "label": "Start date",
       "type": "text",
       "example": "2024-01-01",
-      "weight": 1
+      "weight": 2
     },
     "NDVI>calculateNDVI.yml@199|end_date": {
       "description": "End date for summarizing vegetation index",
       "label": "End date",
       "type": "text",
       "example": "2024-01-31",
-      "weight": 2
+      "weight": 3
     },
     "NDVI>calculateNDVI.yml@199|spatial_resolution": {
       "description": "Spatial resolution of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m). If using a projected CRS, the resolution should be in meters. If using an unprojected CRS (e.g. EPSG:4326), this must be in degrees (0.008 degrees is ~1km at the equator).\n\nLeave blank to have the original spatial resolution of the layer (10m x 10m).",
       "label": "Spatial resolution",
       "type": "float",
       "example": 0.008,
-      "weight": 3
+      "weight": 4
     },
     "NDVI>calculateNDVI.yml@199|summary_statistic": {
       "description": "Statistic to summarize layers over time for summarised raster layer and space for plot of ndvi means over time",
@@ -193,7 +179,7 @@
         "min"
       ],
       "example": "mean",
-      "weight": 4
+      "weight": 5
     }
   },
   "outputs": {

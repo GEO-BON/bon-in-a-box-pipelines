@@ -267,24 +267,6 @@
         "type": "float",
         "value": 0
       }
-    },
-    {
-      "id": "26",
-      "type": "constant",
-      "position": {
-        "x": 257.52178406116127,
-        "y": 534.0411984543193
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "Country or region",
-        "options": [
-          "Country or region",
-          "WDPA",
-          "EEZ"
-        ]
-      }
     }
   ],
   "edges": [
@@ -443,13 +425,6 @@
       "id": "reactflow__edge-25-24buffer"
     },
     {
-      "source": "26",
-      "sourceHandle": null,
-      "target": "24",
-      "targetHandle": "polygon_type",
-      "id": "reactflow__edge-26-24polygon_type"
-    },
-    {
       "source": "24",
       "sourceHandle": "polygon",
       "target": "2",
@@ -479,40 +454,51 @@
     }
   ],
   "inputs": {
+    "data>load_polygons.yml@24|polygon_type": {
+      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.",
+      "label": "Polygon type",
+      "type": "options",
+      "options": [
+        "Country or region",
+        "Polygon of bounding box"
+      ],
+      "example": "Country or region",
+      "weight": 0
+    },
     "pipeline@23": {
       "label": "Bounding box and CRS",
       "description": "Select a country/region and a CRS to obtain the associated bounding box. You may also draw/input a custom bounding box along with a CRS.",
       "type": "bboxCRS",
       "example": null,
-      "weight": 0
+      "weight": 1
     },
     "data>loadFromStac.yml@1|t0": {
       "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "label": "Start date (optional)",
       "type": "text",
       "example": null,
-      "weight": 1
+      "weight": 2
     },
     "data>loadFromStac.yml@1|t1": {
       "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "label": "End date (optional)",
       "type": "text",
       "example": null,
-      "weight": 2
+      "weight": 3
     },
     "data>loadFromStac.yml@1|temporal_res": {
       "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is monthly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
       "label": "Temporal resolution (optional)",
       "type": "text",
       "example": null,
-      "weight": 3
+      "weight": 4
     },
     "pipeline@19": {
       "label": "Spatial resolution (optional)",
-      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).\n\nLeave blank to use the original spatial resolution of the layers. If left blank, CRS must be EPSG:4326.",
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). \n\nIf this is left blank it will use the native resolution of the rasters. \n\nIf the spatial resolution is coarser than the native resolution of the rasters, the layers will be resampled with the resampling method chosen below.",
       "type": "float",
-      "example": null,
-      "weight": 4
+      "example": 0.008833,
+      "weight": 5
     },
     "pipeline@18": {
       "label": "Resampling method (optional)",
@@ -535,7 +521,7 @@
         "q1",
         "q3"
       ],
-      "weight": 5
+      "weight": 6
     },
     "pipeline@20": {
       "label": "Aggregation method (optional)",
@@ -549,7 +535,7 @@
         "mean",
         "median"
       ],
-      "weight": 6
+      "weight": 7
     }
   },
   "outputs": {
@@ -580,7 +566,7 @@
   },
   "metadata": {
     "name": "Biodiversity Habitat Index (BHI)",
-    "description": "\n## Introduction\nCSIRO Biodiversity Habitat Index (BHI v2) is a global 30 arc-second product for 2000,2005,2010,2015 and 2020. BHI estimates the level of species diversity expected to be retained within any given spatial reporting unit (e.g., a country, a broad ecosystem type, or the entire planet) as a function of the unit’s area, connectivity and integrity of natural ecosystems across it. Results for the indicator can either be expressed as 1) the ‘effective proportion of habitat’ remaining within the unit – adjusting for the effects of the condition and functional connectivity of habitat, and of spatial variation in the species composition of ecological communities (beta diversity); or 2) the effective proportion of habitat that can be translated, through standard species-area analysis, into a prediction of the proportion of species expected to persist (i.e. avoid extinction) over the long term.\n\nThis pipeline calculates a weighted geometric mean of the BHI indicator over a region of interest.  The code to calculate the weighted mean was adapted from the \"Calculating weighted geometric means of  CSIRO BILBI indicator\" script on the  [CSIRO data access portal](https://doi.org/10.25919/tt2t-h452)\n## Uses \nThe BHI is used to monitor and report past-to-present trends in the expected persistence of species diversity by repeatedly recalculating the indicator using best-available mapping of ecosystem condition or integrity observed at multiple points in time, e.g., for different years. A wide variety of data sources can be used for this purpose, spanning spatial scales from global to subnational, and including data assembled by countries for deriving ecosystem condition accounts under the UN SEEA Ecosystem Accounting framework. The BHI can also serve as a leading indicator for assessing the contribution that proposed or implemented area-based actions are expected to make towards enhancing the present capacity of ecosystems to retain species diversity, thereby providing a foundation for strategic prioritisation of such actions by countries.\n## Pipeline limitations\n- BHI is a modeled layer, therefore there are greater uncertainties in areas with less data.  Interpret the results with caution.",
+    "description": "\n## Introduction\nThe CSIRO Biodiversity Habitat Index (BHI) directly assess the progress of Goal A within the Kunming-Montreal Global Biodiversity Framework (GBF) to increase the area of national ecosystems by 2050 through maintaining, enhancing, and restoring the integrity, connectivity, resilience of all ecosystems. \nBHI estimates the proportion of species expected to persist (i.e. avoid extinction) within and given spatial reporting unit (Hoskins et al., 2020). More specifically, BHI estimates the level of species diversity expected to be retained within any given spatial reporting unit (e.g., a country, a broad ecosystem type, or the entire planet) as a function of the unit’s area, connectivity and integrity of natural ecosystems across that unit (Harwood, et al., 2022).\nResults for the indicator can either be expressed as 1. the ‘effective proportion of habitat’ remaining within the unit – adjusting for the effects of the condition and functional connectivity of habitat, and of spatial variation in the species composition of ecological communities (beta diversity); or 2. the effective proportion of habitat that can be translated, through standard species-area analysis, into a prediction of the proportion of species expected to persist (i.e. avoid extinction) over the long term.\nThis pipeline calculates a weighted geometric mean of the BERI indicator over a region of interest. The code to calculate the weighted mean was adapted from the \"Calculating weighted geometric means of CSIRO BILBI indicator\" script on the [CSIRO data access portal](https://doi.org/10.25919/tt2t-h452)\n## Uses  \nBHI directly addresses three of the key ecosystem attributes in Goal A of the GBF, which include area, integrity, and connetivity, along with the combined effect of these attributes on species diversity.  \n\nThe BHI is used to monitor and report past-to-present trends in the expected persistence of species diversity by repeatedly recalculating the indicator using best-available mapping of ecosystem condition or integrity observed at multiple points in time, e.g., for different years. A wide variety of data sources can be used for this purpose, spanning spatial scales from global to subnational, and including data assembled by countries for deriving ecosystem condition accounts under the UN SEEA Ecosystem Accounting framework. The BHI can also serve as a leading indicator for assessing the contribution that proposed or implemented area-based actions are expected to make towards enhancing the present capacity of ecosystems to retain species diversity, thereby providing a foundation for strategic prioritisation of such actions by countries.\n## Pipeline limitations\n- BHI is a modeled layer, therefore there are greater uncertainties in areas with less data.  Interpret the results with caution.",
     "author": [
       {
         "name": "Jory Griffith",
@@ -593,6 +579,10 @@
       {
         "text": "Harwood et al. 2022",
         "doi": "https://doi.org/10.25919/tt2t-h452"
+      },
+      {
+        "text": "Hoskins et al.,2020",
+        "doi": "https://doi.org/10.1016/j.envsoft.2020.104806"
       }
     ]
   }

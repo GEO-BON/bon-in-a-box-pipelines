@@ -33,9 +33,9 @@ study_extent <- create_study_extent(presence,
   bbox = bbox
 )
 
-study_extent_shp <- file.path(outputFolder, "study_extent.shp")
-sf::st_write(study_extent, study_extent_shp, append = FALSE)
+study_extent_file <- file.path(outputFolder, "study_extent.gpkg")
+sf::st_write(study_extent, study_extent_file, append = FALSE)
 
 biab_output("area_study_extent", sf::st_area(study_extent) / 1000000)
-biab_output("study_extent", study_extent_shp)
+biab_output("study_extent", study_extent_file)
 

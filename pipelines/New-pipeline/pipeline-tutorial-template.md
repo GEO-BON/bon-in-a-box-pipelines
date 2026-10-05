@@ -1,7 +1,5 @@
 _Author(s): Author name(s)_
 
-Reviewed by: Reviewer names
-
 *This is a template for creating a tutorial for a pipeline, which will be included in the online documentation. These are the suggested sections, but the contributor can include additional sections or change titles if desired. Should you need to add any images, please add them in the images folder of the bon-in-a-box-pipelines repository and link them to this file.*
 
 ## Introduction
@@ -19,7 +17,6 @@ Reviewed by: Reviewer names
 ## Running the pipeline
 *Explain the pipeline inputs, steps (i.e. scripts), and outputs here so the user understands what each step is doing. This can include diagrams or screenshots if it will help the user. This should include information about how to understand the results.*
 
-### *For example:*
 ### Pipeline inputs
 
 - **Input 1:** *description of input 1 and what it means.*
@@ -27,6 +24,8 @@ Reviewed by: Reviewer names
 - **Input 2:** *description of input 2 and what it means.*
 
 - **Input 3:** *description of input 3 and what it means.*
+
+### Pipeline steps
 
 #### **1. Retrieving the data**
 This step retrieves data from this place using this API.
@@ -56,7 +55,6 @@ Etc.
 
 - `Error 1`: *description*
 - `Error 2`: *description*
-
 
 ## References
 *Add your references here.*

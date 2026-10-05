@@ -1,9 +1,20 @@
 #' @name run_maxent
-#' @param obs data frame, containing the coordinates to reproject
-#' @param predictors, raster
-#' @param lon string, name of the longitude column (same projection as predictor raster)
-#' @param lat string, name of the latitude column (same projection as predictor raster)
-#' @param proj character, initial projection of the xy coordinates
+#' @param presence.bg obs data frame, containing the coordinates to reproject
+#' @param with_raster Logical. If `TRUE`, use raster predictors via `env`; otherwise use environmental predictor columns from `presence.bg`.
+#' @param algorithm Character. ENMeval algorithm
+#' @param layers Character vector of predictor column names used when
+#'   `with_raster = FALSE`.
+#' @param factors Optional character vector of categorical predictor names.
+#' @param predictors Raster/SpatRaster environmental predictors used when
+#'   `with_raster = TRUE`.
+#' @param partition_type Character. ENMeval partitioning method.
+#' @param n_folds Integer. Number of folds for random k-fold partitioning.
+#' @param orientation_block Character. Block orientation setting for block partitions.
+#' @param fc Character vector. Feature class combinations to tune.
+#' @param rm Numeric vector. Regularization multipliers to tune.
+#' @param parallel Logical. Passed to `ENMeval::ENMevaluate()`.
+#' @param updateProgress Logical. Passed to `ENMeval::ENMevaluate()`.
+#' @param parallelType Character. Parallel backend type passed to ENMeval.
 #' @return spatial points
 #' @import ENMeval 
 #' @export
@@ -59,12 +70,14 @@ run_maxent <- function(presence.bg, with_raster = F,
 
 
 #' @name select_param
-#' @param obs data frame, containing the coordinates to reproject
-#' @param predictors, raster
-#' @param lon string, name of the longitude column (same projection as predictor raster)
-#' @param lat string, name of the latitude column (same projection as predictor raster)
-#' @param proj character, initial projection of the xy coordinates
-#' @return spatial points
+#' @param res Data frame of model evaluation results, usually `mod@results`
+#'   from an `ENMevaluation` object.
+#' @param method Character. Selection method: `"AIC"`, `"p10"`, or `"AUC"`.
+#' @param auc_min Numeric. Minimum validation AUC required before selecting a model.
+#' @param list Logical. If `TRUE`, return parameters as a list; otherwise return
+#'   the ENMeval model name string.
+#' @return If `list = TRUE`, a list containing feature class and regularization
+#'   multiplier. If `list = FALSE`, a character string like `"fc.L_rm.1"`.
 #' @import dplyr 
 #' @export
 select_param <- function(res, method = "AIC", auc_min = 0, list = T) {
@@ -100,13 +113,14 @@ select_param <- function(res, method = "AIC", auc_min = 0, list = T) {
   return(param)
 }
 
-#' @name select_param
-#' @param obs data frame, containing the coordinates to reproject
-#' @param predictors, raster
-#' @param lon string, name of the longitude column (same projection as predictor raster)
-#' @param lat string, name of the latitude column (same projection as predictor raster)
-#' @param proj character, initial projection of the xy coordinates
-#' @return spatial points
+#' @name response_plot
+#' @param mod ENMeval model object.
+#' @param algorithm Character. Model algorithm, either `"maxnet"` or `"maxent.jar"`.
+#' @param param Character. Name of the selected model parameter combination
+#' @param type Character. Prediction scale used for response curves.
+#' @param path Optional character path. If supplied, save the plot as a JPEG.
+#' @return A response plot object, or the result of `dismo::response()` for
+#'   `maxent.jar` models.
 #' @import dismo 
 #' @export
 response_plot <- function(mod, algorithm, param, type = "cloglog", path = NULL) {
@@ -132,13 +146,15 @@ dismo::response(ENMeval::eval.models(mod)[[param]]) }
       
 }
 
-#' @name select_param
-#' @param obs data frame, containing the coordinates to reproject
-#' @param predictors, raster
-#' @param lon string, name of the longitude column (same projection as predictor raster)
-#' @param lat string, name of the latitude column (same projection as predictor raster)
-#' @param proj character, initial projection of the xy coordinates
-#' @return spatial points
+#' @name spredict_maxent_old
+#' @param mod ENMeval model object.
+#' @param algorithm Character. Model algorithm, either `"maxnet"` or `"maxent.jar"`.
+#' @param param Character. Name of the selected model parameter combination.
+#' @param predictors Raster, SpatRaster, RasterStack, or cube containing
+#'   environmental predictor layers.
+#' @param type Character. Prediction output type, such as `"cloglog"`.
+#' @param mask Optional spatial mask used to crop predictors before prediction.
+#' @return A raster prediction layer.
 #' @import dplyr dismo
 #' @export
 predict_maxent_old <- function(mod, algorithm, param, predictors, type = "cloglog", mask = NULL) {
@@ -171,12 +187,13 @@ predict_maxent_old <- function(mod, algorithm, param, predictors, type = "cloglo
 }
 
 #' @name find_threshold
-#' @param obs data frame, containing the coordinates to reproject
-#' @param predictors, raster
-#' @param lon string, name of the longitude column (same projection as predictor raster)
-#' @param lat string, name of the latitude column (same projection as predictor raster)
-#' @param proj character, initial projection of the xy coordinates
-#' @return spatial points
+#' @param sdm Raster layer of predicted suitability.
+#' @param occs Occurrence points used to extract suitability values.
+#' @param bg Background points used to extract suitability values.
+#' @param type Character. Threshold method. Supported values include `"mtp"`,
+#'   `"p10"`, `"spse"`, `"kappa"`, `"spec_sens"`, `"no_omission"`,
+#'   `"prevalence"`, `"equal_sens_spec"`, and `"sensitivity"`.
+#' @return Numeric threshold value.
 #' @import dplyr dismo raster
 #' @export
 
@@ -217,12 +234,9 @@ find_threshold <- function(sdm, occs, bg, type = "mtp"){
 }
 
 #' @name binarize_pred
-#' @param obs data frame, containing the coordinates to reproject
-#' @param predictors, raster
-#' @param lon string, name of the longitude column (same projection as predictor raster)
-#' @param lat string, name of the latitude column (same projection as predictor raster)
-#' @param proj character, initial projection of the xy coordinates
-#' @return spatial points
+#' @param sdm Raster layer of predicted suitability.
+#' @param threshold Numeric threshold value.
+#' @return Binary raster layer.
 #' @import dplyr dismo raster
 #' @export
 binarize_pred <- function(sdm, threshold) {
@@ -231,6 +245,22 @@ binarize_pred <- function(sdm, threshold) {
   return(sdm)
 }
 
+#' @name predict_maxent
+#' @param presence_background Data frame containing presence/background records.
+#' @param algorithm Character. Model algorithm. 
+#' @param predictors Raster or SpatRaster containing predictor layers.
+#' @param rm Numeric. Selected regularization multiplier.
+#' @param fc Character. Selected feature class combination.
+#' @param type Character. Prediction output type, such as `"cloglog"`.
+#' @param mask Optional spatial mask. Currently not used in this function.
+#' @param parallel Logical. Passed to `ENMeval::ENMevaluate()`.
+#' @param updateProgress Logical. Passed to `ENMeval::ENMevaluate()`.
+#' @param parallelType Character. Parallel backend type passed to ENMeval.
+#' @param factors Character vector of categorical predictor names.
+#' @param output_folder Character path to the output folder. Currently not used
+#'   directly by this function.
+#' @return A list with two elements: `pred_all`, the prediction from the model
+#'   fitted on all data, and `pred_runs`, predictions from run-specific models.
 
 predict_maxent <- function(presence_background, 
   algorithm, 
