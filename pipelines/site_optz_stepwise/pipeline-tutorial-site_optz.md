@@ -13,7 +13,7 @@ Use this pipeline to prioritize candidate sites when expanding or rotating a mon
 The input list must identify two groups:
 
 - **Current sites (`vini = 1`):** Sites already included in the monitoring network.
-- **Candidate sites (`vini = 0`):** Sites available for additional sampling.
+- **Demand points (`vini = 0`):** Sites available for additional sampling.
 
 Together, these groups define the set of sites considered in the analysis. The pipeline extracts environmental values at their locations, calculates distance matrices, and selects additional sites through successive optimization steps.
 
