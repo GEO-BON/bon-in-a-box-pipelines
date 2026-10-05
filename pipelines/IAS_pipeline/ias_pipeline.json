@@ -495,7 +495,7 @@
   "inputs": {
     "pipeline@41": {
       "label": "Country name",
-      "description": "Name of the country for the Invasive Alien Species analysis.",
+      "description": "Name of the country for the Invasive Alien Species analysis.\n\nThis pipeline cannot currently be run for the following countries because of unresolved source-data, checklist-name, or location-mapping issues: United States of America (USA), Belgium (BEL), Thailand (THA), Eswatini (SWZ), Hungary (HUN), and Norway (NOR).",
       "type": "country",
       "example": null,
       "weight": 0

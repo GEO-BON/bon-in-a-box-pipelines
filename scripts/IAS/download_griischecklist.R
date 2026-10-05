@@ -143,7 +143,7 @@ summary_list <- vector("list", nrow(feed_match))
 directory_list <- vector("list", nrow(feed_match))
 
 if (nrow(feed_match) == 0) {
-  stop(sprintf("No national GRIIS checklists found for %s.", country_name))
+  stop(sprintf("No national GRIIS checklists found for %s.\nThis pipeline cannot currently be run for the following countries because of unresolved source-data, checklist-name, or location-mapping issues:\n- United States of America (USA)\n- Belgium (BEL)\n- Thailand (THA)\n- Eswatini (SWZ)\n- Hungary (HUN)\n- Norway (NOR)", country_name))
 }
 
 # These primary national checklist titles contain commas and were manually
