@@ -530,7 +530,7 @@
     },
     "pipeline@99": {
       "label": "First record column (optional)",
-      "description": "Exact column name containing the first documented occurrence year in the selected country. \n\nLeave blank if not provided. Date standardisation occurs in data preparation step.",
+      "description": "Exact column name containing the first documented occurrence year in the selected country. \n\nRequired only when a checklist is uploaded; leave blank if not provided. Date standardisation occurs in data preparation step.",
       "type": "text",
       "example": null,
       "weight": 5
