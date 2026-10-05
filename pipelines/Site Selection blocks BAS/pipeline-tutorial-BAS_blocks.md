@@ -19,30 +19,13 @@ _Author(s): Francis van Oordt, Samara Manzin_
 
 ## Uses
 
-  Use this pipeline to generate new sampling locations within a study area and
-  examine their distribution across environmental conditions.
+  Use this pipeline when planning a new monitoring network and exploring how proposed sampling locations cover different environmental conditions.
 
-  The pipeline first performs a principal component analysis (PCA) on the
-  selected environmental variables. It divides the space defined by the first
-  two principal components into a grid and assigns each raster cell to an
-  environmental block. Locations in the same block have similar values along
-  these two environmental gradients, but may occur in separate geographic
-  areas. 
-  
-  The pipeline offers two sampling options:
+- **Equal sampling:** Use this option when you want equal-probability sampling across the study area. The environmental-block map helps you inspect which environmental conditions are represented by the proposed sites.
 
-  - **Equal:** Selects sites using equal-probability BAS across the study
-  polygon. Environmental blocks are used to visualize coverage and do not affect
-  site selection.
+- **Unequal sampling:** Use this option when you want site selection to give greater weight to environmental blocks containing more raster cells. This option does not specifically prioritize rare environmental conditions or give every block equal representation.
 
-  - **Unequal:** Generates BAS candidate sites and filters them using weights
-  derived from the environmental blocks. The current implementation uses the
-  logarithm of the number of raster cells in each block, giving candidates in
-  larger blocks higher acceptance weights.
-
-  Both options produce maps of the selected sites, including a map overlaid on
-  the environmental blocks. These maps can help identify environmental
-  conditions that received few or no sampling sites.
+Review the proposed locations alongside information about access, land ownership, and field conditions before planning visits. Moving or replacing sites can affect the statistical properties of the sampling design.
 
 
 ## Pipeline limitations
@@ -62,19 +45,15 @@ _Author(s): Francis van Oordt, Samara Manzin_
 
 
 ## Before you start
-  * Define a projected CRS for your study area 
+- Select at least two continuous environmental variables relevant to your monitoring objectives.
 
-  * Select environmental variables that may be of ecological importance for your
-  study 
-
-  * Define how many environmental blocks you expect to produce (too many may be
-  noisy, to little may be underrepresenting the environmental diversity). 
+- Choose an initial target number of sampling sites based on your objectives and field resources.
 
 ## Running the pipeline
 
 ### Pipeline inputs
 
-- **Bounding box and CRS:** Select a country/region and a CRS to obtain the associated bounding box.
+- **Bounding box and CRS:** elect your country or region of interest, then choose a projected coordinate reference system (CRS) appropriate for the study area using the dropdown.
 
 - **Spatial resolution:** Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). This input may be blank when using ESPG:4326.
 
@@ -88,17 +67,8 @@ Larger study areas should have greater number of sampling locations, but constra
 
 Researchers should take into account their specifics sampling goals and timelines, and proceed with caution. 
 
-- **Number of columns:** Number of columns for the environmental space grid (together with rows will define the final number of environmental blocks). 
+- **Number of rows and columns:** These inputs divide the environmental space into a grid. Rows multiplied by columns gives the maximum number of blocks; some grid cells may contain no environmental data. For an initial exploratory run, 3 rows and 3 columns gives up to 9 blocks. Inspect the results before increasing the grid detail. The pipeline does not determine the block count from the geographic size of the study area.
 
-Blocks are based on a PCA of the environmental variables selected and represent  a proxy of ecozones in areas with lacking information. 
-
-A general recommendation is to start with fewer blocks because it would simplify computation and understanding of the study region, 5-10 blocks, and later increase if needed.
-
-- **Number of rows:** Number of rows for the environmental space grid (together with columns will define the final number environmental blocks). 
-
-Blocks are based on a PCA of the environmental variables selected and represent  a proxy of ecozones in areas with lacking information. 
-
-A general recommendation is to start with fewer blocks because it would simplify computation and understanding of the study region, 5-10 blocks, and later increase if needed.
 
 ### Pipeline steps
 
@@ -113,23 +83,22 @@ Inspect the maps and download the environmental blocks, PCA summary, and selecte
 
 ### Pipeline outputs
 
-- **Environmental blocks raster:** Raster file of the study area with the environmental blocks as categorical classes  
+- **Environmental blocks raster:** A categorical GeoTIFF identifying the environmental block assigned to each classified raster cell.
 
-- **Summary of PCA:** Principal component analysis summary for the environmental variables included in the analysis
+- **Summary of PCA:** A CSV showing the standard deviation, percentage of variance explained, and cumulative percentage of variance explained for the principal components. Use it to assess how much environmental variation the first two components represent.
 
-- **Blocks and map plots:** Blocks showing the PCA 1 and 2 result and the predefined blocks dividing the environmental space and the map of the environmental blocks in geographic space
+- **Blocks and map plots:** A figure showing environmental blocks in principal-component space alongside their geographic distribution.
 
-- **Maps output:** Maps of study area with selected sampling points only (no environmental blocks) and also including the environmental blocks.
+- **Maps output:** Two maps showing the proposed sampling sites: one over the study-area polygon and one over the environmental blocks. Use these to inspect geographic and environmental coverage.
 
-- **Environmental Rasters:** Array of environmental rasters (for exploration only)
+- **Environmental rasters:** The environmental rasters retrieved for the analysis, provided for inspection and further exploration.
 
-- **Selected points:** Dataframe of selected points
+- **Selected points:** A CSV containing the proposed sites’ longitude and latitude in WGS84 (EPSG:4326), with columns named lon and lat.
 
-- **selected points shapefile:** Vector shapefile of selected points
+- **Selected points GeoJSON:** A GeoJSON file containing the proposed sampling locations in WGS84 (EPSG:4326).
 
 ## References
-spbal: Spatially Balanced Sampling Algorithms
-10.32614/CRAN.package.spbal
+[spbal: Spatially Balanced Sampling Algorithms](https://cran.r-project.org/web/packages/spbal/index.html)
 Survey-gap analysis in expeditionary research: where do we go from here?
 https://doi.org/10.1111/j.1095-8312.2005.00520.x
 Selection of sampling sites for biodiversity inventory: Effects of environmental and geographical considerations
