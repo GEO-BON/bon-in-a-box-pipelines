@@ -129,8 +129,15 @@
     }
   ],
   "inputs": {
+    "pipeline@210": {
+      "label": "Bounding box and CRS",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box. You may also draw/input a custom bounding box along with a CRS.",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
     "data>load_polygons.yml@211|polygon_type": {
-      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.",
+      "description": "Type of polygon to load. \n\n- `Country or region` loads a polygon of the selected country or region.\n- `Polygon of bounding box` loads a polygon of the bounding box associated with the selected country or region, or the drawn bounding box.",
       "label": "Polygon type",
       "type": "options",
       "options": [
@@ -138,13 +145,6 @@
         "Polygon of bounding box"
       ],
       "example": "Country or region",
-      "weight": 0
-    },
-    "pipeline@210": {
-      "label": "Bounding box and CRS",
-      "description": "Select a country/region and a CRS to obtain the associated bounding box.",
-      "type": "bboxCRS",
-      "example": null,
       "weight": 1
     },
     "NDVI>calculateNDVI.yml@199|start_date": {
@@ -211,6 +211,9 @@
   "metadata": {
     "name": "Normalized Difference Vegetation Index",
     "description": "## Introduction\nThis pipeline calculates the Normalized Difference Vegetation Index (NDVI) using OpenEO  Copernicus Data Space Ecosystem. NDVI measures the \"greenness\" of vegetation, with higher  values indicating dense vegatation and low values indicating barren areas with rock, snow, sand, or exposed soils.\n\nThe red and infrared bands from Sentinel 2 L2A are used to calcuate NDVI. The pipeline  summarises these values over the time period of interest with the specified summary statistic. The NDVi layers are masked with the SCL dilation mask avoid erroneous values by taking out pixels covered by clouds.\n- Learn more about Sentinel 2 [here](https://dataspace.copernicus.eu/data-collections/copernicus-sentinel-data/sentinel-2)\n- Learn more about calculating NDVI with openEO [here](https://openeo.org/documentation/1.0/cookbook/#example-1-ndvi)\n## Before you start\nThe pipeline requires an API key for the Copernicus Data Space Ecosystem. To acquire an API key, visit the CDSE [website](https://dataspace.copernicus.eu/analyse/openeo).\n\nThe pipeline may take significant time to pull and summarise data,  especially at fine spatial resolutions for large areas.",
+    "lifecycle": {
+      "status": "subpipeline"
+    },
     "author": [
       {
         "name": "Guillaume Larocque",

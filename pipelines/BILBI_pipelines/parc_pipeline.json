@@ -454,8 +454,15 @@
     }
   ],
   "inputs": {
+    "pipeline@23": {
+      "label": "Bounding box and CRS",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box. You may also draw/input a custom bounding box along with a CRS.",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
     "data>load_polygons.yml@25|polygon_type": {
-      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.",
+      "description": "Type of polygon to load. \n- `Country or region` loads a polygon of the selected country or region.\n- `Polygon of bounding box` loads a polygon of the bounding box associated with the selected country or region, or the drawn bounding box.",
       "label": "Polygon type",
       "type": "options",
       "options": [
@@ -463,31 +470,24 @@
         "Polygon of bounding box"
       ],
       "example": "Country or region",
-      "weight": 0
-    },
-    "pipeline@23": {
-      "label": "Bounding box and CRS",
-      "description": "Select a country/region and a CRS to obtain the associated bounding box. You may also draw/input a custom bounding box along with a CRS.",
-      "type": "bboxCRS",
-      "example": null,
       "weight": 1
     },
     "data>loadFromStac.yml@1|t0": {
-      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
-      "label": "Start date (optional)",
+      "description": "Start year for time series layers. Leave blank if using all available dates.\n\nMust be one of: 1970, 1980, 1990, 2000, 2005, 2015, 2010, 2020, 2024",
+      "label": "Start year (optional)",
       "type": "text",
       "example": null,
       "weight": 2
     },
     "data>loadFromStac.yml@1|t1": {
-      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
-      "label": "End date (optional)",
+      "description": "End year for time series layers. Leave blank if using all available dates.\n\nMust be one of: 1970, 1980, 1990, 2000, 2005, 2015, 2010, 2020, 2024",
+      "label": "End year (optional)",
       "type": "text",
       "example": null,
       "weight": 3
     },
     "data>loadFromStac.yml@1|temporal_res": {
-      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is monthly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
+      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is monthly, and \"P1D\" is daily). Leave blank if not querying by date. \n\nMust be one of: P5Y, P10Y, P15Y, P20Y\n\nIf the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
       "label": "Temporal resolution (optional)",
       "type": "text",
       "example": null,
@@ -566,7 +566,10 @@
   },
   "metadata": {
     "name": "Protected Area Representativeness and Connectedness (PARC)",
-    "description": "\n## Introduction  \nThe Protected Area Representativeness and Connectedness (PARC) indices measure  the extent to which terrestrial protected areas, and other effective area-based conservation measures (OECMs), are ecologically representative, and well-connected - both to one another, and to other areas of intact natural ecosystems in the surrounding landscape (Hoskins et al., 2022).  \nThe PARC-representativeness index provides a rigorous measure of the extent to which a system of terrestrial protected areas and OECMs is ecologically representative of the full range of environmental and biological diversity within any given spatial reporting unit (e.g. country, broad ecosystem time).  The PARC- connectedness index provides a rigorous measure of the extent to which protected areas and OECMs are functionally connected to one another and to other areas of intact natural ecosystems.\nTogether, the composite PARC indicator offers a measure of progress in the expansion of any system of protected areas and OECMs. The indicator is expressed in proportional (or percent) coverage with the position of any given reporting unit on this scale rigorously adjusted for the effects of both representativeness and connectedness.\nThis pipeline calculates a weighted geometric mean of the PARC indicator over a region of interest.  The code to calculate the weighted mean was adapted from the \"Calculating weighted geometric means of CSIRO BILBI indicator\" script on the CSIRO data access portal](https://doi.org/10.25919/edwj-4b67) ## Uses\nThe PARC indices assess Goal A and Target 3 of the GBF, whether generated separately or as a composite, are used to monitor and report past-to-present trends in representativeness and connectedness by repeated calculation using best-available mapping of protected areas and OECMs at multiple points in time, e.g. for different years. They can also provide a foundation for assessing the contribution that potential additions to the system of protected areas and OECMs might make to improving present PARC scores, thereby providing a foundation for prioritising such actions.\n### Pipeline limitations\n- PARC is a modeled layer, therefore there are greater uncertainties in areas with less data. Interpret the results with caution.",
+    "description": "\n## Introduction \nThe Protected Area Representativeness and Connectedness (PARC) indices measure  the extent to which terrestrial protected areas, and other effective area-based conservation measures (OECMs), are ecologically representative, and well-connected - both to one another, and to other areas of intact natural ecosystems in the surrounding landscape (Hoskins et al., 2022).  \n\nThe PARC-representativeness index provides a rigorous measure of the extent to which a system of terrestrial protected areas and OECMs is ecologically representative of the full range of environmental and biological diversity within any given spatial reporting unit (e.g. country, broad ecosystem time).  The PARC- connectedness index provides a rigorous measure of the extent to which protected areas and OECMs are functionally connected to one another and to other areas of intact natural ecosystems.\n\nTogether, the composite PARC indicator offers a measure of progress in the expansion of any system of protected areas and OECMs. The indicator is expressed in proportional (or percent) coverage with the position of any given reporting unit on this scale rigorously adjusted for the effects of both representativeness and connectedness.\n\nThis pipeline calculates a weighted geometric mean of the PARC indicator over a region of interest.  The code to calculate the weighted mean was adapted from the \"Calculating weighted geometric means of CSIRO BILBI indicator\" script on the [CSIRO data access portal](https://doi.org/10.25919/edwj-4b67) \n\n## Uses\nThe PARC indices assess Goal A and Target 3 of the GBF, whether generated separately or as a composite, are used to monitor and report past-to-present trends in representativeness and connectedness by repeated calculation using best-available mapping of protected areas and OECMs at multiple points in time, e.g. for different years. \n\nThey can also provide a foundation for assessing the contribution that potential additions to the system of protected areas and OECMs might make to improving present PARC scores, thereby providing a foundation for prioritising such actions.\n### Pipeline limitations\n- PARC is a modeled layer, therefore there are greater uncertainties in areas with less data. Interpret the results with caution.\n- The pipeline summarises existing PARC layers; it cannot use custom data.\n- PARC is only available for 2000, 2005, 2010, 2015 and 2020, at 30 arc-second (roughly 1 km) resolution.",
+    "lifecycle": {
+      "status": "in_review"
+    },
     "author": [
       {
         "name": "Jory Griffith",
