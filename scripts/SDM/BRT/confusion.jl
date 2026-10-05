@@ -1,3 +1,6 @@
+# According to M. Catchen:
+# TODO almost all of the behavior in confusion.jl is now in SpeciesDistributionToolkit, so potentially we should use those versions instead
+
 struct ConfusionMatrix{T <: Number}
     tp::T
     tn::T
