@@ -1,6 +1,6 @@
 using SpeciesDistributionToolkit
 using SpeciesDistributionToolkit.SimpleSDMLayers
-const _ARCHGDAL = SpeciesDistributionToolkit.SimpleSDMLayers.ArchGDAL
+using ArchGDAL
 
 function read_inputs_dict(runtime_dir)
     filepath = joinpath(runtime_dir, "input.json")
@@ -32,20 +32,20 @@ function _write_tif(layer::SDMLayer{T}, filename) where {T}
     width, height = size(array_t)
     gt = _get_geotransform(layer)
 
-    _ARCHGDAL.create(
+    ArchGDAL.create(
         filename,
         width=width,
         height=height,
         nbands=1,
         dtype=Float64,
         options=["COMPRESS=COG"],
-        driver=_ARCHGDAL.getdriver("GTiff")
+        driver=ArchGDAL.getdriver("GTiff")
     ) do dataset
-        band = _ARCHGDAL.getband(dataset, 1)
-        _ARCHGDAL.setnodatavalue!(band, typemin(T))
-        _ARCHGDAL.setgeotransform!(dataset, gt)
-        _ARCHGDAL.setproj!(dataset, layer.crs)
-        _ARCHGDAL.write!(band, array_t)
+        band = ArchGDAL.getband(dataset, 1)
+        ArchGDAL.setnodatavalue!(band, typemin(T))
+        ArchGDAL.setgeotransform!(dataset, gt)
+        ArchGDAL.setproj!(dataset, layer.crs)
+        ArchGDAL.write!(band, array_t)
     end
 end
 
@@ -64,7 +64,6 @@ function write_outputs(
     range_path = joinpath(runtime_dir, "range.tif")
     uncert_path = joinpath(runtime_dir, "uncertainty.tif")
     pa_path = joinpath(runtime_dir, "pseudoabsences.tsv")
-    output_json_path = joinpath(runtime_dir, "output.json")
 
     corners_path = joinpath(runtime_dir, "corners.png")
     tuning_path = joinpath(runtime_dir, "tuning.png")
@@ -74,24 +73,21 @@ function write_outputs(
     save(corners_path, corners)
     save(tuning_path, tuning)
 
-    open(output_json_path, "w") do f
-        write(f, JSON.json(Dict(
-            :fit_stats => fit_stats_path,
-            :sdm_uncertainty => uncert_path,
-            :range => range_path,
-            :predicted_sdm => sdm_path,
-            :pseudoabsences => pa_path,
-            :env_corners => corners_path,
-            :tuning => tuning_path
-        )))
-    end
-
     open(fit_stats_path, "w") do f
-        write(f, JSON.json(fit_stats))
+        # NaN is not valid JSON.
+        write(f, JSON.json(Dict(k => isfinite(v) ? v : nothing for (k, v) in fit_stats)))
     end
 
     CSV.write(pa_path, pseudoabsences, delim="\t")
     _write_tif(predicted_sdm, sdm_path)
     _write_tif(uncertainty, uncert_path)
     _write_tif(rangemap, range_path)
+
+    biab_output("fit_stats", fit_stats_path)
+    biab_output("sdm_uncertainty", uncert_path)
+    biab_output("range", range_path)
+    biab_output("predicted_sdm", sdm_path)
+    biab_output("pseudoabsences", pa_path)
+    biab_output("env_corners", corners_path)
+    biab_output("tuning", tuning_path)
 end
