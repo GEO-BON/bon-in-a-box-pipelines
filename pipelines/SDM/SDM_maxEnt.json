@@ -4,8 +4,8 @@
       "id": "34",
       "type": "io",
       "position": {
-        "x": 2015,
-        "y": 55.5
+        "x": 1947,
+        "y": 199.66666666666663
       },
       "data": {
         "descriptionFile": "filtering>cleanCoordinates.yml"
@@ -15,8 +15,8 @@
       "id": "35",
       "type": "constant",
       "position": {
-        "x": 1610,
-        "y": 33
+        "x": 1540,
+        "y": 177.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -37,8 +37,8 @@
       "id": "40",
       "type": "io",
       "position": {
-        "x": 2987,
-        "y": 441
+        "x": 2899,
+        "y": 456.66666666666663
       },
       "data": {
         "descriptionFile": "SDM>selectBackground.yml"
@@ -48,8 +48,8 @@
       "id": "44",
       "type": "io",
       "position": {
-        "x": 3574,
-        "y": 557
+        "x": 3482,
+        "y": 566.1666666666666
       },
       "data": {
         "descriptionFile": "SDM>setupDataSdm.yml"
@@ -59,8 +59,8 @@
       "id": "45",
       "type": "constant",
       "position": {
-        "x": 3111,
-        "y": 578
+        "x": 3019,
+        "y": 587.6666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -77,8 +77,8 @@
       "id": "46",
       "type": "userInput",
       "position": {
-        "x": 3243,
-        "y": 626
+        "x": 3152,
+        "y": 634.6666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -90,8 +90,8 @@
       "id": "47",
       "type": "constant",
       "position": {
-        "x": 3167,
-        "y": 662
+        "x": 3061,
+        "y": 669.6666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -103,8 +103,8 @@
       "id": "48",
       "type": "constant",
       "position": {
-        "x": 3181,
-        "y": 705
+        "x": 3075,
+        "y": 711.6666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -116,8 +116,8 @@
       "id": "64",
       "type": "constant",
       "position": {
-        "x": 1618,
-        "y": 204
+        "x": 1546,
+        "y": 311.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -129,8 +129,8 @@
       "id": "68",
       "type": "io",
       "position": {
-        "x": 4635,
-        "y": 886
+        "x": 4534,
+        "y": 723.6666666666666
       },
       "data": {
         "descriptionFile": "SDM>rangePredictions.yml"
@@ -140,8 +140,8 @@
       "id": "69",
       "type": "output",
       "position": {
-        "x": 5011,
-        "y": 947
+        "x": 4941,
+        "y": 783.1666666666666
       },
       "data": {
         "label": "Output"
@@ -151,8 +151,8 @@
       "id": "97",
       "type": "io",
       "position": {
-        "x": 1373,
-        "y": 510.5546901051755
+        "x": 1319,
+        "y": 581.6666666666666
       },
       "data": {
         "descriptionFile": "SDM>removeCollinearity.yml"
@@ -162,8 +162,8 @@
       "id": "98",
       "type": "constant",
       "position": {
-        "x": 900,
-        "y": 440
+        "x": 846,
+        "y": 511.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -182,8 +182,8 @@
       "id": "99",
       "type": "constant",
       "position": {
-        "x": 900,
-        "y": 488
+        "x": 846,
+        "y": 558.6666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -200,8 +200,8 @@
       "id": "100",
       "type": "constant",
       "position": {
-        "x": 970,
-        "y": 536
+        "x": 902,
+        "y": 605.6666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -213,8 +213,8 @@
       "id": "101",
       "type": "constant",
       "position": {
-        "x": 956,
-        "y": 615
+        "x": 888,
+        "y": 647.6666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -226,8 +226,8 @@
       "id": "102",
       "type": "constant",
       "position": {
-        "x": 970,
-        "y": 658
+        "x": 902,
+        "y": 689.6666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -239,8 +239,8 @@
       "id": "104",
       "type": "io",
       "position": {
-        "x": 2501,
-        "y": 353
+        "x": 2418,
+        "y": 371.16666666666663
       },
       "data": {
         "descriptionFile": "SDM>studyExtent.yml"
@@ -250,8 +250,8 @@
       "id": "105",
       "type": "constant",
       "position": {
-        "x": 2048,
-        "y": 374
+        "x": 1975,
+        "y": 392.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -269,8 +269,8 @@
       "id": "107",
       "type": "constant",
       "position": {
-        "x": 2118,
-        "y": 458
+        "x": 2031,
+        "y": 439.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -282,8 +282,8 @@
       "id": "108",
       "type": "io",
       "position": {
-        "x": 4196,
-        "y": 728
+        "x": 4100,
+        "y": 733.6666666666666
       },
       "data": {
         "descriptionFile": "SDM>runMaxent.yml"
@@ -293,8 +293,8 @@
       "id": "109",
       "type": "output",
       "position": {
-        "x": 4635,
-        "y": 705
+        "x": 4534,
+        "y": 688.6666666666666
       },
       "data": {
         "label": "Output"
@@ -304,8 +304,8 @@
       "id": "115",
       "type": "constant",
       "position": {
-        "x": 3743,
-        "y": 855
+        "x": 3647,
+        "y": 859.6666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -322,8 +322,8 @@
       "id": "116",
       "type": "constant",
       "position": {
-        "x": 3743,
-        "y": 760
+        "x": 3647,
+        "y": 766.6666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -341,8 +341,8 @@
       "id": "121",
       "type": "userInput",
       "position": {
-        "x": 189,
-        "y": 574.6666666666667
+        "x": 190,
+        "y": 12
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -356,8 +356,8 @@
       "id": "122",
       "type": "output",
       "position": {
-        "x": 555,
-        "y": 579
+        "x": 505,
+        "y": 16.16666666666663
       },
       "data": {
         "label": "Output"
@@ -367,8 +367,8 @@
       "id": "123",
       "type": "output",
       "position": {
-        "x": 2501,
-        "y": 712
+        "x": 2418,
+        "y": 331.16666666666663
       },
       "data": {
         "label": "Output"
@@ -378,8 +378,8 @@
       "id": "124",
       "type": "output",
       "position": {
-        "x": 2015,
-        "y": 422
+        "x": 1947,
+        "y": 481.66666666666663
       },
       "data": {
         "label": "Output"
@@ -389,8 +389,8 @@
       "id": "128",
       "type": "userInput",
       "position": {
-        "x": 118,
-        "y": 918.3333333333334
+        "x": 119,
+        "y": 874.8333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -399,31 +399,11 @@
       }
     },
     {
-      "id": "137",
-      "type": "constant",
-      "position": {
-        "x": 12,
-        "y": 870.3333333333334
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "first",
-        "options": [
-          "first",
-          "min",
-          "max",
-          "mean",
-          "median"
-        ]
-      }
-    },
-    {
       "id": "138",
       "type": "constant",
       "position": {
         "x": 12,
-        "y": 822.3333333333334
+        "y": 827.8333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -451,8 +431,8 @@
       "id": "139",
       "type": "io",
       "position": {
-        "x": 864,
-        "y": 734
+        "x": 814,
+        "y": 741.6666666666666
       },
       "data": {
         "descriptionFile": "data>GBIFHeatmapFromSTAC.yml"
@@ -462,8 +442,8 @@
       "id": "140",
       "type": "userInput",
       "position": {
-        "x": -69.45718370615631,
-        "y": 443.2910926234467
+        "x": 42,
+        "y": 792.8333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -474,8 +454,8 @@
       "id": "142",
       "type": "io",
       "position": {
-        "x": 555,
-        "y": 93
+        "x": 505,
+        "y": 61.16666666666663
       },
       "data": {
         "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
@@ -485,22 +465,11 @@
       "id": "143",
       "type": "output",
       "position": {
-        "x": 1373,
-        "y": 168
+        "x": 1319,
+        "y": 132.66666666666663
       },
       "data": {
         "label": "Output"
-      }
-    },
-    {
-      "id": "144",
-      "type": "io",
-      "position": {
-        "x": 888,
-        "y": 258
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
       }
     },
     {
@@ -508,7 +477,7 @@
       "type": "userInput",
       "position": {
         "x": 44,
-        "y": 104
+        "y": 73.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -520,8 +489,8 @@
       "id": "146",
       "type": "userInput",
       "position": {
-        "x": 46,
-        "y": 140
+        "x": 47,
+        "y": 108.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -533,8 +502,8 @@
       "id": "147",
       "type": "userInput",
       "position": {
-        "x": 3873,
-        "y": 819
+        "x": 3778,
+        "y": 824.6666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -543,27 +512,83 @@
       }
     },
     {
-      "id": "148",
-      "type": "constant",
+      "id": "150",
+      "type": "io",
       "position": {
-        "x": 108,
-        "y": 610.6666666666667
+        "x": 701,
+        "y": 374.66666666666663
       },
-      "dragHandle": ".dragHandle",
       "data": {
-        "type": "text"
+        "descriptionFile": "data>loadSelectedStac.yml"
       }
     },
     {
-      "id": "149",
-      "type": "constant",
+      "id": "151",
+      "type": "userInput",
       "position": {
         "x": 108,
-        "y": 661.6666666666667
+        "y": 362.16666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "text"
+        "type": "stac_asset[]"
+      }
+    },
+    {
+      "id": "152",
+      "type": "constant",
+      "position": {
+        "x": 55.3569168140118,
+        "y": 431.46135000364205
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "mode"
+        ]
+      }
+    },
+    {
+      "id": "153",
+      "type": "constant",
+      "position": {
+        "x": 18.48644125762857,
+        "y": 485.09113263110856
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "mean",
+        "options": [
+          "first",
+          "last",
+          "mean",
+          "median",
+          "min",
+          "max",
+          "sum"
+        ]
+      }
+    },
+    {
+      "id": "154",
+      "type": "constant",
+      "position": {
+        "x": 15.134579843411899,
+        "y": 545.4246380870084
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "last",
+          "modal"
+        ]
       }
     }
   ],
@@ -842,41 +867,6 @@
       "id": "reactflow__edge-142observations_file-34presence"
     },
     {
-      "source": "137",
-      "sourceHandle": null,
-      "target": "144",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-137-144aggregation"
-    },
-    {
-      "source": "138",
-      "sourceHandle": null,
-      "target": "144",
-      "targetHandle": "resampling",
-      "id": "reactflow__edge-138-144resampling"
-    },
-    {
-      "source": "128",
-      "sourceHandle": null,
-      "target": "144",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-128-144spatial_res"
-    },
-    {
-      "source": "140",
-      "sourceHandle": null,
-      "target": "144",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-140-144bbox_crs"
-    },
-    {
-      "source": "144",
-      "sourceHandle": "rasters",
-      "target": "97",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-144rasters-97rasters"
-    },
-    {
       "source": "145",
       "target": "142",
       "targetHandle": "min_year",
@@ -895,22 +885,59 @@
       "id": "xy-edge__147-108n_folds"
     },
     {
-      "source": "148",
-      "target": "144",
-      "targetHandle": "t0",
-      "id": "xy-edge__148-144t0"
-    },
-    {
-      "source": "149",
-      "target": "144",
-      "targetHandle": "t1",
-      "id": "xy-edge__149-144t1"
-    },
-    {
       "source": "140",
       "target": "108",
       "targetHandle": "crs",
       "id": "xy-edge__140-108crs"
+    },
+    {
+      "source": "150",
+      "sourceHandle": "rasters",
+      "target": "97",
+      "targetHandle": "rasters",
+      "id": "xy-edge__150rasters-97rasters"
+    },
+    {
+      "source": "151",
+      "target": "150",
+      "targetHandle": "stac",
+      "id": "xy-edge__151-150stac"
+    },
+    {
+      "source": "140",
+      "target": "150",
+      "targetHandle": "bbox_crs",
+      "id": "xy-edge__140-150bbox_crs"
+    },
+    {
+      "source": "128",
+      "target": "150",
+      "targetHandle": "spatial_res",
+      "id": "xy-edge__128-150spatial_res"
+    },
+    {
+      "source": "138",
+      "target": "150",
+      "targetHandle": "resampling",
+      "id": "xy-edge__138-150resampling"
+    },
+    {
+      "source": "152",
+      "target": "150",
+      "targetHandle": "categorical_resampling",
+      "id": "xy-edge__152-150categorical_resampling"
+    },
+    {
+      "source": "153",
+      "target": "150",
+      "targetHandle": "continuous_aggregation",
+      "id": "xy-edge__153-150continuous_aggregation"
+    },
+    {
+      "source": "154",
+      "target": "150",
+      "targetHandle": "categorical_aggregation",
+      "id": "xy-edge__154-150categorical_aggregation"
     }
   ],
   "inputs": {
@@ -946,64 +973,40 @@
       "example": null,
       "weight": 2
     },
-    "data>loadFromStac.yml@144|study_area": {
-      "description": "Polygon of the study area, in geopackage format. To use a custom study area, input the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg) and it will crop the area to the shape of the polygon. Leave blank to use bounding box and CRS chosen above.",
-      "label": "Study area",
-      "type": "application/geopackage+sqlite3",
-      "example": null,
-      "weight": 3
-    },
     "pipeline@128": {
       "label": "Spatial resolution",
       "description": "Target spatial resolution for the predictor rasters and GBIF heatmap. Units must match the selected CRS, for example meters for projected CRS or degrees for latitude-longitude CRS.\n\nChoosing a coarser resolution reduces computation time, but at the cost of fine-scale predictor detail. Variables like land cover and elevation may lose relevance at coarse scales, while broader-scale variables such as climate become comparatively more informative.",
       "type": "float",
       "example": 1000,
+      "weight": 3
+    },
+    "pipeline@151": {
+      "label": "Environmental predictor layers",
+      "description": "Choose the environmental map layers to use as predictors in the species distribution model, such as climate measurements, elevation, or land-cover classes.\n\nOpen the chooser and browse a catalog (an online data directory). Select a collection (a group of related data), an item (a particular observation or geographic piece), and an asset (the map file to load). Click Add to selection for each layer you want. STAC is the standard these catalogs use to organize geographic data.\n\nIf a layer is split into geographic pieces called tiles, select the mosaic option to join them into one map. Choose a date when available. Mark layers containing classes (e.g. landcover contains classes such as forest, water, etc.) as Categorical layer; leave this unchecked for continuous layers (e.g. temperature, elevation). This lets the loader use separate resampling and tile aggregation settings for each kind of data.\n\nHere, continuous layers are aggregated with `mean` and categorical layers are aggregated with `first`. Categorical and continuous variables are resampled with `near`.\n\nThe selected layers will be cropped and prepared using the study area, coordinate system, and spatial resolution specified in this pipeline.",
+      "type": "stac_asset[]",
+      "example": null,
       "weight": 4
-    },
-    "data>loadFromStac.yml@144|stac_url": {
-      "description": "URL of the STAC catalog used to retrieve environmental predictor layers.",
-      "label": "STAC URL",
-      "type": "text",
-      "example": "https://stac.geobon.org/",
-      "weight": 5
-    },
-    "data>loadFromStac.yml@144|collections_items": {
-      "description": "To pull a specific collection item, input the collection name followed by | followed by the item ID (e.g. \"chelsa-clim|bio1\").\n\nTo extract a whole collection, type the collection name only (e.g. \"chelsa-clim\").\n\nIf pulling a layer that is tiled (e.g. https://stac.geobon.org/viewer/gfw-lossyear/_80N_180W), enter the collection name (e.g. gfw-lossyear) and a bounding box, and the script will assemble the tiles into a continuous layer automatically.",
-      "label": "STAC collection items",
-      "type": "text[]",
-      "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
-      ],
-      "weight": 6
     },
     "pipeline@145": {
       "label": "Minimum year or start date",
       "description": "Earliest year for GBIF records. Accepts YYYY or YYYY-MM-DD; if a full date is supplied, only the year is used.\n\nIt is recommended to use an early start date (e.g. 1980) to maximize the number of occurrence records for a given species.",
       "type": "text",
       "example": "1980",
-      "weight": 7
+      "weight": 5
     },
     "pipeline@146": {
       "label": "Maximum year or end date",
       "description": "Latest year for GBIF records. Accepts YYYY or YYYY-MM-DD; if a full date is supplied, only the year is used.",
       "type": "text",
       "example": "2024",
-      "weight": 8
-    },
-    "data>loadFromStac.yml@144|temporal_res": {
-      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is monthly, and \"P1D\" is daily). \n\nIf there is no temporal option all items will be extracted. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated using the 'first' method.",
-      "label": "Temporal resolution",
-      "type": "text",
-      "example": "P1Y",
-      "weight": 9
+      "weight": 6
     },
     "SDM>selectBackground.yml@40|n_background": {
       "description": "Target number of background points to generate within the study extent. These points are used to represent the available environment.\n\nTypically it is recommended to start with 10000 points. If you have a very large study area you can increase this amount to fully capture the available environmental space. If you have a very small study area (i.e. fewer than 10000 pixels) you can reduce the number of background points.",
       "label": "Number of background points",
       "type": "int",
       "example": 10000,
-      "weight": 10
+      "weight": 7
     },
     "SDM>selectBackground.yml@40|method_background": {
       "description": "Background points are generated using one of the five available methods. Choosing the right method can help correct for sampling bias in the GBIF data.\n- `random`: background points are randomly sampled throughout the whole study extent. Good choice if your occurrence data has little spatial bias toward human activity/accessibility (e.g., roads, cities, well-surveyed areas).\n- `weighted_raster`: background points are sampled in proportion to the number of observations in the observation-density heatmap of the selected taxonomic group. Recommended for heavily biased data, or when occurrences are missing due to gaps in survey/study coverage. This is the more extreme correction of the two raster-based methods (weighted and unweighted).\n- `unweighted_raster`: background points are sampled only in cells where there are observations from a target group. Also addresses sampling bias and survey gaps, but more conservatively than weighted_raster. Recommended as the default of the two (weighted and unweighted).\n- `inclusion_buffer`: background points are sampled within a buffer around observations. Useful if you don't think your species is well represented by the target taxonomic group. \n- `thickening`: background points are sampled in proportion to the local density of observations, within a buffer around each observation. Also useful when the target taxon group doesn't represent your species well, as an alternative to inclusion_buffer.",
@@ -1017,14 +1020,14 @@
         "thickening"
       ],
       "example": "random",
-      "weight": 11
+      "weight": 8
     },
     "pipeline@46": {
       "label": "Number of runs",
       "description": "Number of bootstrap or cross-validation runs used when preparing SDM training and testing data.",
       "type": "int",
       "example": 2,
-      "weight": 12
+      "weight": 9
     },
     "SDM>runMaxent.yml@108|fc": {
       "description": "MaxEnt feature classes control the shapes of relationships the model can learn between species occurrence and environmental predictors. Simpler classes, such as L or LQ, fit smoother, more constrained responses and are often safer for small datasets. More complex combinations, such as LQH or LQHP, can capture more flexible ecological responses but may overfit when occurrence records are limited. This pipeline tests all values provided here and selects the best-performing combination using the parameter selection method configured in the MaxEnt step. Accepted values are combinations of L (linear), Q (quadratic), P (product), H (hinge) or T (threshold).",
@@ -1035,7 +1038,7 @@
         "LQ",
         "LQHP"
       ],
-      "weight": 13
+      "weight": 10
     },
     "SDM>runMaxent.yml@108|rm": {
       "description": "Regularization multiplier values to evaluate for MaxEnt model tuning. The regularization multiplier controls how strongly MaxEnt penalizes model complexity. Lower values allow a more flexible model that may fit local patterns closely. Higher values produce smoother, more generalized predictions and reduce overfitting risk. ",
@@ -1046,7 +1049,7 @@
         1,
         2
       ],
-      "weight": 14
+      "weight": 11
     },
     "SDM>runMaxent.yml@108|partition_type": {
       "description": "This option controls how ENMeval partitions presence and background data while tuning MaxEnt parameters.\n\nIt is recommended to start with random k-fold. If you suspect overfitting or spatial autocorrelation, switch to block or checkerboard because these partition data geographically rather than randomly, which makes evaluation more robust to spatial autocorrelation between nearby points. If you don't have enough occurrence points for spatial partitioning, use jackknife.\n\n   - Random k-fold \\- partitions groups randomly into a user-specified (K) number of bins, and runs the model k times, with each bin used once as testing. Recommended to start with 10 folds.\n  - Block \\- partitions the bounding box into four equally sized quadrants and assigns groups by quadrant. Because each fold is a large, contiguous geographic region, this tests how well the model transfers to broad, spatially distinct areas. This is a stricter test of spatial autocorrelation than checkerboard.\n  - Checkerboard 1 \\- generates a checkerboard grid from the study area and assigns groups based on which square the points fall in. Folds are smaller and spatially interspersed (alternating across the study area) rather than large contiguous blocks, so it tests spatial independence at a finer scale than block.\n  - Checkerboard 2 \\- Similar to checkerboard 1 but performs this separately for occurrence and background points\n  - Jackknife \\- Does not partition the background points into testing and training (uses them all), performs leave one out cross validation. Recommended for small datasets only.",
@@ -1060,14 +1063,21 @@
         "checkerboard2"
       ],
       "example": "randomkfold",
-      "weight": 15
+      "weight": 12
     },
     "pipeline@147": {
       "label": "Number of folds",
       "description": "Number of folds for random k-fold MaxEnt partitioning when partition type = random k-fold. Can be left blank when another method is chosen.",
       "type": "int",
       "example": 10,
-      "weight": 16
+      "weight": 13
+    },
+    "data>loadSelectedStac.yml@150|study_area": {
+      "description": "Optional study-area polygon in GeoPackage format used to mask the output rasters.",
+      "label": "Study area",
+      "type": "application/geopackage+sqlite3",
+      "example": null,
+      "weight": 14
     }
   },
   "outputs": {
