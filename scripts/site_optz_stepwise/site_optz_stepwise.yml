@@ -1,55 +1,57 @@
 script: script_site_optz_stepwise.R
 name: Stepwise SURDES optimization with pmedians
-description: Runs a stepwise optimization with pmedians using the SURDES package/project on a given set of points. Selection is based on the environmental variability of a universe of given points, selecting only point within a subset of demand point of the universe. The algortihm allows for criteria and conditions to be met when selection each point (to be defined by user)
-author: 
+description: Uses SURDES stepwise p-median optimization to add demand points to current monitoring sites using a supplied joint environmental and geographic distance matrix. All sites have the same condition value; custom selection conditions are not exposed.
+author:
   - name: Francis van Oordt
     identifier: https://orcid.org/0000-0002-8471-235X
 license: CC-BY
 inputs:
   country_polygon:
-    label: Country polygon
-    description: polygon of the country of interest
+    label: Study-area polygon
+    description: Study-area boundary used for the output map.
     type: application/geopackage+sqlite3
-    example: Peru
+    example: study_area.gpkg
   iters:
     label: Algorithm Iterations
-    description: number of iterations to run (equivalent to sites to be selected)
+    description: "Positive integer number of demand points to add. Must not exceed the number of rows with vini = 0. For example, 40 current sites and 60 demand points allow at most 60 additions. More iterations take longer."
     type: int
-    example: 50
+    example: 30
   rasters:
-    label: Rasters
-    description: Rasters layers of environmental variables of interest
+    label: Environmental rasters
+    description: Environmental GeoTIFFs used upstream to produce the joint matrix. Retained for pipeline compatibility; this step reads the matrix directly.
     type: image/tiff;application=geotiff[]
-    example: |
-      GBSTAC|chelsa-clim|bio1,GBSTAC|chelsa-clim|bio2, GBSTAC|chelsa-clim|bio12, 
+    example: [predictor1.tiff, predictor2.tiff]
   locations_csv:
-    label: Sampling sites
-    description: sampling sites with classification of well-known (1) and demand (0) sites
-    type: text/csv[]
-    example: "Sample Peru"
+    label: Sampling locations
+    description: "Path to one CSV with lon and lat in WGS84 decimal degrees (EPSG:4326), and vini: 1 for current sites, 0 for demand points. Input coordinates always use WGS84, independently of the selected processing CRS."
+    type: text/csv
+    example: "/scripts/site_optz_stepwise/site_optz_stepwise_EXAMPLE_samp_loc_peru.csv"
   mdist:
-    label: joint distance matrix
-    description: joint distance matrix
+    label: Joint distance matrix
+    description: CSV matrix produced by the Distance matrix step by multiplying environmental and geodesic distance entries. It must be symmetric with a zero diagonal and use the same site order as the sampling CSV. This step divides entries by their maximum before SURDES, which internally caps distances at 1.
     type: text/csv
-    example: NULL
+    example: mdist.csv
 outputs:
-  uncov:
-    label: Uncovered variances
-    description: uncovered variances values
-    type: text/csv
   point_sel:
-    label: selection of demand points
-    description: selection of demand points
+    label: "Selection of demand points"
+    description: "CSV of newly selected demand points in selection order, including lon, lat, vini, site_row (original CSV row, starting at 1), selected, selection_order, and status. Current sites are excluded."
+    type: text/csv
+  uncov:
+    label: "Uncovered variability"
+    description: "CSV with iteration and uncovered_variability, calculated as the sum of SURDES p-median scores at each iteration. This diagnostic is not a percentage of biodiversity represented and is not guaranteed to decrease monotonically."
     type: text/csv
   surdes_uncov:
-    label: Plot for uncovered variance
-    description: plot for uncovered variance
+    label: "Uncovered variability plot"
+    description: "PNG showing the sum of SURDES p-median scores at each iteration. Inspect alongside the selected sites; this diagnostic is not a percentage of biodiversity represented."
     type: image/png
   surdes_map:
-    label: Map for selected points
-    description: map for selected points
+    label: "Map for selected points"
+    description: "PNG showing current sites, unselected demand points, and selected demand points in different colours."
     type: image/png
-
+  sites_gpkg:
+    label: "Sampling sites GeoPackage"
+    description: "GeoPackage containing all input sites in WGS84 with vini, site_row, selected, selection_order, and status (Current, Demand, or Selected). Use status for viewer styling; automatic colours depend on the viewer."
+    type: application/geopackage+sqlite3
 conda:
   channels:
     - conda-forge
@@ -62,5 +64,5 @@ conda:
     - r-dplyr
 
 references:
-   - text: "Designing bryophyte surveys for an optimal coverage of diversity gradients. 2013. Nagore G. Medina, Francisco Lara, Vicente Mazimpaka & Joaquín Hortal . Biodiversity and Conservation. 22, 3121–3139"
-     doi: "10.1007/s10531-013-0574-5"
+  - text: "Medina et al. (2013). Designing bryophyte surveys for an optimal coverage of diversity gradients."
+    link: https://doi.org/10.1007/s10531-013-0574-5

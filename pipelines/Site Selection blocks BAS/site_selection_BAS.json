@@ -226,7 +226,7 @@
     },
     {
       "id": "64",
-      "type": "constant",
+      "type": "userInput",
       "position": {
         "x": 495.32133620092657,
         "y": -91.6759297806111
@@ -237,8 +237,6 @@
         "value": "Country or region",
         "options": [
           "Country or region",
-          "WDPA",
-          "EEZ",
           "Polygon of bounding box"
         ]
       }
@@ -421,6 +419,17 @@
       "example": 0.00883,
       "weight": 1
     },
+    "pipeline@64": {
+      "label": "Polygon type",
+      "description": "Type of polygon loaded. If a country or region is selected in the above `Choose Bounding Box`, select `Country or region`. If a bounding box is drawn in the above `Choose Bounding Box`, select `Polygon of bounding box`",
+      "type": "options",
+      "example": "Country or region",
+      "options": [
+        "Country or region",
+        "Polygon of bounding box"
+      ],
+      "weight": 2
+    },
     "data>loadFromStac.yml@2|collections_items": {
       "description": "Provide at least two continuous environmental raster variables, using the format `collection|item`, such as `chelsa-clim|bio1` and `chelsa-clim|bio12`. The pipeline performs PCA on these variables to create the environmental blocks.",
       "label": "Environmental variables (STAC collection items)",
@@ -429,7 +438,7 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio12"
       ],
-      "weight": 2
+      "weight": 3
     },
     "site_selection_BAS>BAS_algorithm.yml@26|options_bas": {
       "description": "Select and option between equal BAS or unequal probability BAS. \"Equal\" will not consider the blocks and place all sampling randomly in the whole study area.  \"Unequal\" will take into account the size of the each environmental block and redistribute the sampling sites based on the size of block.  ",
@@ -440,28 +449,28 @@
         "unequal"
       ],
       "example": "equal",
-      "weight": 3
+      "weight": 4
     },
     "site_selection_BAS>BAS_algorithm.yml@26|ndesign": {
       "description": "A number of target sampling sites to obtain with the algorithm. The user must decide on a number of sites based on their sampling goals and scale of the study. \n\nLarger study areas should have greater number of sampling locations, but constraints exist (e.g budget, staff, etc.) that may limit sampling locations and coverage. \n\nResearchers should take into account their specifics sampling goals and timelines, and proceed with caution. ",
       "label": "Target total sites",
       "type": "int",
       "example": 100,
-      "weight": 4
+      "weight": 5
     },
     "site_selection_BAS>Block_creation.yml@0|n_cols": {
       "description": "Number of columns for the environmental space grid (together with rows will define the final number of environmental blocks). \n\nBlocks are based on a PCA of the environmental variables selected and represent  a proxy of ecozones in areas with lacking information. \n\nA general recommendation is to start with fewer blocks because it would simplify computation and understanding of the study region, 5-10 blocks, and later increase if needed.",
       "label": "Number of columns",
       "type": "int",
       "example": 10,
-      "weight": 5
+      "weight": 6
     },
     "site_selection_BAS>Block_creation.yml@0|n_rows": {
       "description": "Number of rows for the environmental space grid (together with columns will define the final number environmental blocks). \n\nBlocks are based on a PCA of the environmental variables selected and represent  a proxy of ecozones in areas with lacking information. \n\nA general recommendation is to start with fewer blocks because it would simplify computation and understanding of the study region, 5-10 blocks, and later increase if needed.",
       "label": "Number of rows",
       "type": "int",
       "example": 10,
-      "weight": 6
+      "weight": 7
     }
   },
   "outputs": {

@@ -1,35 +1,34 @@
 script: script_distance_matrix.R
 name: Distance matrix
-description: Produces distance matrices taking into account environmental and spatial distances, using site locations and environmental rasters for a given polygon (country or region) 
-author: 
+description: Calculates Euclidean distances between standardized environmental values, ellipsoidal geodesic distances in metres between site coordinates, and their element-wise product for SURDES optimization.
+author:
   - name: Francis van Oordt
-    identifier: "https://orcid.org/0000-0002-8471-235X"
+    identifier: https://orcid.org/0000-0002-8471-235X
 license: CC-BY
 inputs:
   rasters:
-    label: Rasters
-    description: Rasters layers of environmental variables of interest
+    label: Environmental rasters
+    description: Continuous environmental GeoTIFF predictors covering every supplied site.
     type: image/tiff;application=geotiff[]
     example: |
       GBSTAC|chelsa-clim|bio1,GBSTAC|chelsa-clim|bio2, GBSTAC|chelsa-clim|bio12, 
   locations_csv:
-    label: Occurence points of species
-    description: Occurence points from GBIF or uploaded by the user
+    label: Sampling locations
+    description: "Path to one CSV with lon and lat in WGS84 decimal degrees (EPSG:4326), and vini: 1 for current sites, 0 for demand points. Input coordinates always use WGS84, independently of the selected processing CRS."
     type: text/csv
-    example: "Sample Peru"
-
+    example: "/scripts/site_optz_stepwise/site_optz_stepwise_EXAMPLE_samp_loc_peru.csv"
 outputs:
   dist_matrix:
-    label: spatial distance matrix
-    description: spatial distance matrix
+    label: Geographic distance matrix
+    description: CSV of pairwise ellipsoidal geodesic distances in metres, calculated from WGS84 coordinates only. Rows and columns follow the sampling CSV order; vini and extra attributes do not affect distance.
     type: text/csv
   env_matrix:
-    label: environmental distance matrix
-    description: environmental distance matrix
+    label: Environmental distance matrix
+    description: CSV of pairwise Euclidean distances between standardized environmental values extracted at sites. Rows and columns follow the sampling CSV order.
     type: text/csv
   mdist:
-    label: joint distance matrix
-    description: joint distance matrix
+    label: Joint distance matrix
+    description: CSV containing the element-wise product of environmental and geographic distances, consumed by Stepwise SURDES optimization with pmedians. Rows and columns follow the sampling CSV order.
     type: text/csv
 conda:
   channels:
@@ -43,7 +42,7 @@ conda:
     - r-dplyr
 
 references:
-   - text: "Teitz, M. B., and P. Bart (1968), Heuristic methods for estimating generalized vertex median of a weighted graph, Operations Research, 16, 955-961."
-     doi: "https://doi.org/10.1287/opre.16.5.955"
-   - text: "tbart: Teitz and Bart's p-Median Algorithm"
-     doi: "https://github.com/cran/tbart"
+  - text: "Teitz, M. B., and P. Bart (1968), Heuristic methods for estimating generalized vertex median of a weighted graph."
+    link: https://doi.org/10.1287/opre.16.5.955
+  - text: "tbart: Teitz and Bart's p-Median Algorithm"
+    link: https://github.com/cran/tbart
