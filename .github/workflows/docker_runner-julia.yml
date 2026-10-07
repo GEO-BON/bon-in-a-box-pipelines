@@ -73,8 +73,10 @@ jobs:
         with:
           images: ${{ env.REPO_SLUG }}/${{ env.IMAGE_NAME }}
           tags: |
+            # Tag used to bundle into a multi-arch inmage in the manifest step
+            type=raw,value=${{ (github.ref_name == 'main' && 'latest') || github.ref_name }}-${{ matrix.arch_tag }}
             # In case we want to replicate a specific legacy setup
-            type=sha,value=${{ github.sha }}-${{ matrix.arch_tag }}
+            type=sha,format=long,suffix=-${{ matrix.arch_tag }}
           labels: |
             org.opencontainers.image.licenses=GPL-v3
             org.opencontainers.image.title=BON in a Box Julia Runner
