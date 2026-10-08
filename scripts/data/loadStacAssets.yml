@@ -1,4 +1,4 @@
-script: loadSelectedStac.R
+script: loadStacAssets.R
 name: Load selected STAC assets
 description: Load raster assets selected with the STAC chooser, crop and reproject them, and mosaic tiles from a collection on the selected date. Produces one GeoTIFF per selection, with separate resampling and tile aggregation controls for categorical and continuous layers.
 author:
@@ -84,3 +84,4 @@ conda:
     - r-terra
     - r-rjson
     - r-rcurl
+    - r-rstac

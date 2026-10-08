@@ -670,7 +670,7 @@
         "y": 329
       },
       "data": {
-        "descriptionFile": "data>loadSelectedStac.yml"
+        "descriptionFile": "data>loadStacAssets.yml"
       }
     },
     {
@@ -1367,7 +1367,7 @@
       "example": 10,
       "weight": 16
     },
-    "data>loadSelectedStac.yml@172|study_area": {
+    "data>loadStacAssets.yml@172|study_area": {
       "description": "Optional study-area polygon in GeoPackage format used to mask the output rasters.",
       "label": "Study area",
       "type": "application/geopackage+sqlite3",

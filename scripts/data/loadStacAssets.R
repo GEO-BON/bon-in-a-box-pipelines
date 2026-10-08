@@ -60,14 +60,30 @@ read_asset <- function(href) {
   terra::rast(path)
 }
 
+# Planetary Computer assets need a SAS token appended to their hrefs.
+is_planetary_computer <- function(catalog) {
+  grepl("planetarycomputer.microsoft.com", catalog, fixed = TRUE)
+}
+
+sign_items <- function(items, catalog) {
+  if (!is_planetary_computer(catalog)) return(items)
+  rstac::items_sign(items, sign_fn = rstac::sign_planetary_computer())
+}
+
 selection_hrefs <- function(selection) {
   if (!isTRUE(selection$items_are_tiles)) {
-    if (has_text(selection$href)) return(selection$href)
+    if (has_text(selection$href)) {
+      if (!is_planetary_computer(selection$catalog)) return(selection$href)
+      # Sign a bare href by wrapping it as a one-asset item.
+      signed <- rstac::sign_planetary_computer()(list(assets = list(list(href = selection$href))))
+      return(signed$assets[[1]]$href)
+    }
     if (!has_text(selection$item)) biab_error_stop("The selection is missing its STAC item.")
     item <- rstac::stac(selection$catalog) |>
       rstac::collections(selection$collection) |>
       rstac::items(selection$item) |>
-      rstac::get_request()
+      rstac::get_request() |>
+      sign_items(selection$catalog)
     return(item$assets[[selection$asset]]$href)
   }
 
@@ -76,7 +92,8 @@ selection_hrefs <- function(selection) {
     rstac::collections(selection$collection) |>
     rstac::items() |>
     rstac::get_request() |>
-    rstac::items_fetch()
+    rstac::items_fetch() |>
+    sign_items(selection$catalog)
   features <- items$features
   item_day <- function(item) {
     date <- item$properties$datetime
