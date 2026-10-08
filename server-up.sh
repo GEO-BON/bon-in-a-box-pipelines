@@ -19,12 +19,24 @@ while (( $# > 0 )) ; do
     -y|--yes) skipPrompts="-y" ;;
     --offline) offline=true ;;
     -v|--version)
-        cd .server
-        ./prod-server.sh version
-        exit 0 ;;
+        if cd .server 2>/dev/null; then
+            ./prod-server.sh version
+            exit $? 
+        else
+            echo "Run BON in a Box at least once to get the server version."
+            exit 1
+        fi
+        ;;
     --licence|--license)
-        ./.server/prod-server.sh licence
-        exit 0 ;;
+        if cd .server 2>/dev/null; then
+            ./prod-server.sh licence
+            exit $? 
+        else
+            echo "Run BON in a Box at least once to read its licence."
+            exit 1
+        fi
+        ;;
+        
     -h|--help)
         echo "Usage: ./server-up.sh [OPTIONS] [GIT BRANCH]"
         echo
@@ -52,10 +64,27 @@ while (( $# > 0 )) ; do
   shift
 done
 
+# .gitattributes enforces LF, but a checkout done while core.autocrlf=true can still have CRLF on disk.
+if [[ "$(git config --get core.autocrlf)" == "true" ]]; then
+    if [[ -z "$(git status --porcelain)" ]]; then
+        echo "Fixing Windows line endings left over from core.autocrlf=true..."
+        git config core.autocrlf false
+        git rm --cached -r . > /dev/null
+        git reset --hard
+        assertSuccess
+    else
+        echo -e "${RED}Warning: core.autocrlf is enabled and this repo has uncommitted changes.${ENDCOLOR}"
+        echo "Scripts may contain Windows line endings (\r) that fail inside the Linux Docker containers."
+        echo "Commit or stash your changes, then run this script again, or fix it manually with:"
+        echo "  git config core.autocrlf false && git rm --cached -r . && git reset --hard"
+        exit 1
+    fi
+fi
+
 if [ "$offline" = true ]; then
     echo "Running server in offline mode."
     ./.server/prod-server.sh command up -d --no-recreate
-    exit 0
+    exit $?
 fi
 
 # Optional arg: branch name of server repo, default "main"
@@ -67,7 +96,7 @@ if [ -L .server ]; then
     cd .server;
 else
     echo "Updating server init script..."
-    if cd .server; then
+    if cd .server 2>/dev/null; then
         # Check for a branch change
         remoteFetch="+refs/heads/$branch:refs/remotes/origin/$branch"
         if [[ "$(git config remote.origin.fetch)" != $remoteFetch ]]; then
@@ -77,23 +106,28 @@ else
             # We are not really changing branch but just allowing to checkout individual files from that other branch.
             git config remote.origin.fetch "$remoteFetch"
             # Delete all except .git, . and ..
-            ls -a | grep -Ev "^(\.git|\.|\.\.)$" | xargs rm -r
+            find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
         fi
 
-        git fetch --no-tag --depth 1 origin $branch
+        git fetch --no-tag --depth 1 origin "$branch"
         assertSuccess
-    else
-        git clone -n https://github.com/GEO-BON/bon-in-a-box-pipeline-engine.git --branch $branch --single-branch .server --depth 1
+
+    else # Fresh install
+        
+        git clone --no-checkout git@github.com:GEO-BON/bon-in-a-box-pipeline-engine.git \
+            --branch "$branch" --single-branch .server --depth 1 \
+            --config core.autocrlf=false # ensures scripts checked out keep LF for the Linux docker containers to read
         assertSuccess
+
         cd .server
         assertSuccess
     fi
 
     echo "Using git branch $branch."
-    git checkout origin/$branch -- prod-server.sh
+    git checkout "origin/$branch" -- prod-server.sh
     assertSuccess
 
-    ./prod-server.sh checkout $branch
+    ./prod-server.sh checkout "$branch"
 
 fi
 

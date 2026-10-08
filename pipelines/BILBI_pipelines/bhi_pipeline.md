@@ -1,14 +1,13 @@
-_Authors: Jory Griffith_
+_Authors: Jory Griffith and Nina Obiar_
 
 Review status: In review
 
 ## Introduction
 
-The CSIRO Biodiversity Habitat Index (BHI v2) is a global 30 arc-second product
-for 2000,2005,2010,2015 and 2020. BHI estimates the level of species diversity
-expected to be retained within any given spatial reporting unit (e.g., a
-country, a broad ecosystem type, or the entire planet) as a function of the
-unit’s area, connectivity and integrity of natural ecosystems across it.
+The CSIRO Biodiversity Habitat Index (BHI) directly assess the progress of Goal A within the Kunming-Montreal Global Biodiversity Framework (GBF) to increase the area of national ecosystems by 2050 through maintaining, enhancing, and restoring the integrity, connectivity, resilience of all ecosystems. 
+
+BHI estimates the proportion of species expected to persist (i.e. avoid extinction) within and given spatial reporting unit (Hoskins et al., 2020). More specifically, BHI estimates the level of species diversity expected to be retained within any given spatial reporting unit (e.g., a country, a broad ecosystem type, or the entire planet) as a function of the unit’s area, connectivity and integrity of natural ecosystems across that unit (Harwood, et al., 2022).
+
 Results for the indicator can either be expressed as 1. the ‘effective
 proportion of habitat’ remaining within the unit – adjusting for the effects
 of the condition and functional connectivity of habitat, and of spatial
@@ -24,18 +23,14 @@ CSIRO BILBI indicator" script on the
 
 ## Uses
 
-The BHI is used to monitor and report past-to-present trends in the expected
-persistence of species diversity by repeatedly recalculating the indicator
-using best-available mapping of ecosystem condition or integrity observed at
-multiple points in time, e.g., for different years. A wide variety of data
-sources can be used for this purpose, spanning spatial scales from global to
-subnational, and including data assembled by countries for deriving ecosystem
-condition accounts under the UN SEEA Ecosystem Accounting framework. The BHI
-can also serve as a leading indicator for assessing the contribution that
+BHI directly addresses three of the key ecosystem attributes in Goal A of the GBF, which include area, integrity, and connetivity, along with the combined effect of these attributes on species diversity.  
+
+The BHI is used to monitor and report past-to-present trends in the expected persistence of species diversity by repeatedly recalculating the indicator using best-available mapping of ecosystem condition or integrity observed at multiple points in time, e.g., for different years. A wide variety of data sources can be used for this purpose, spanning spatial scales from global to subnational, and including data assembled by countries for deriving ecosystem
+condition accounts under the UN SEEA Ecosystem Accounting framework. 
+
+The BHI can also serve as a leading indicator for assessing the contribution that
 proposed or implemented area-based actions are expected to make towards
-enhancing the present capacity of ecosystems to retain species diversity,
-thereby providing a foundation for strategic prioritisation of such actions by
-countries.
+enhancing the present capacity of ecosystems to retain species diversity, thereby providing a stronger foundation for strategic prioritisation of such actions by member countries.
 
 ### Pipeline limitations
 
@@ -100,5 +95,6 @@ Example output available soon.
 ## Troubleshooting
 
 ## References
-
 Harwood, Tom; Ware, Chris; Hoskins, Andrew; Ferrier, Simon; Bush, Alex; Golebiewski, Maciej; Hill, Samantha; Ota, Noboru; Perry, Justin; Purvis, Andy; & Williams, Kristen (2022): BHI v2: Biodiversity Habitat Index: 30s global time series. v1. CSIRO. Data Collection. doi: https://doi.org/10.25919/tt2t-h452
+
+Hoskins, Andrew J.; Harwood, Thomas D.; Ware, Chris; Williams, Kristen J.; Perry, Justin J.; Ota, Noburu; Croft, Jim R.; Yeates, David K.; Jetz, Walter; Golebiewski, Maciej; Purvis, Andy; Ferrier, Simon. (2020). BILBI: Supporting global biodiversity assessment through high-resolution macroecological modelling. Environmental Modelling & Software 132:104806. doi: https://doi.org/10.1016/j.envsoft.2020.104806 

@@ -5,7 +5,7 @@ on:
     # TODO : Change defaults when edge merged to main
     inputs:
       conda_runner_tag:
-        description: 'BON in a Box Conda-CWL Runner tag to use'
+        description: 'BON in a Box Conda Runner tag to use as a base image'
         required: true
         default: &conda_runner_tag_default 'latest'
       server_branch:
