@@ -138,19 +138,6 @@
       }
     },
     {
-      "id": "54",
-      "type": "constant",
-      "position": {
-        "x": 231,
-        "y": 248
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 1000
-      }
-    },
-    {
       "id": "55",
       "type": "constant",
       "position": {
@@ -236,6 +223,23 @@
         "type": "float",
         "value": 0
       }
+    },
+    {
+      "id": "64",
+      "type": "userInput",
+      "position": {
+        "x": 495.32133620092657,
+        "y": -91.6759297806111
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Country or region",
+        "options": [
+          "Country or region",
+          "Polygon of bounding box"
+        ]
+      }
     }
   ],
   "edges": [
@@ -308,13 +312,6 @@
       "target": "2",
       "targetHandle": "aggregation",
       "id": "reactflow__edge-53-2aggregation"
-    },
-    {
-      "source": "54",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-54-2spatial_res"
     },
     {
       "source": "55",
@@ -399,38 +396,49 @@
       "target": "26",
       "targetHandle": "country_polygon",
       "id": "reactflow__edge-61polygon-26country_polygon"
+    },
+    {
+      "source": "64",
+      "target": "61",
+      "targetHandle": "polygon_type",
+      "id": "xy-edge__64-61polygon_type"
     }
   ],
   "inputs": {
-    "data>load_polygons.yml@61|polygon_type": {
-      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.",
-      "label": "Polygon type",
-      "type": "options",
-      "options": [
-        "Country or region",
-        "WDPA",
-        "EEZ",
-        "Polygon of bounding box"
-      ],
-      "example": "Country or region",
-      "weight": 0
-    },
     "pipeline@60": {
       "label": "Bounding box and CRS",
-      "description": "Select a country/region and a CRS to obtain the associated bounding box.",
+      "description": "elect your country or region of interest, then choose a projected coordinate reference system (CRS) appropriate for the study area using the dropdown.",
       "type": "bboxCRS",
       "example": null,
+      "weight": 0
+    },
+    "data>loadFromStac.yml@2|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). This input may be blank when using ESPG:4326.",
+      "label": "Spatial resolution",
+      "type": "float",
+      "example": 0.00883,
       "weight": 1
     },
+    "pipeline@64": {
+      "label": "Polygon type",
+      "description": "Type of polygon loaded. If a country or region is selected in the above `Choose Bounding Box`, select `Country or region`. If a bounding box is drawn in the above `Choose Bounding Box`, select `Polygon of bounding box`",
+      "type": "options",
+      "example": "Country or region",
+      "options": [
+        "Country or region",
+        "Polygon of bounding box"
+      ],
+      "weight": 2
+    },
     "data>loadFromStac.yml@2|collections_items": {
-      "description": "Set of environmental variables to use  (e.g. for temperature \"chelsa-clim|bio1\", precipitation \"chelsa-clim|bio12\"), on which to run the PCA (a minimum of 2 variables are needed). Environmental variables must be continuous values.",
+      "description": "Provide at least two continuous environmental raster variables, using the format `collection|item`, such as `chelsa-clim|bio1` and `chelsa-clim|bio12`. The pipeline performs PCA on these variables to create the environmental blocks.",
       "label": "Environmental variables (STAC collection items)",
       "type": "text[]",
       "example": [
         "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
+        "chelsa-clim|bio12"
       ],
-      "weight": 2
+      "weight": 3
     },
     "site_selection_BAS>BAS_algorithm.yml@26|options_bas": {
       "description": "Select and option between equal BAS or unequal probability BAS. \"Equal\" will not consider the blocks and place all sampling randomly in the whole study area.  \"Unequal\" will take into account the size of the each environmental block and redistribute the sampling sites based on the size of block.  ",
@@ -441,77 +449,77 @@
         "unequal"
       ],
       "example": "equal",
-      "weight": 3
+      "weight": 4
     },
     "site_selection_BAS>BAS_algorithm.yml@26|ndesign": {
-      "description": "A number of target sampling sites to obtain with the algorithm",
+      "description": "A number of target sampling sites to obtain with the algorithm. The user must decide on a number of sites based on their sampling goals and scale of the study. \n\nLarger study areas should have greater number of sampling locations, but constraints exist (e.g budget, staff, etc.) that may limit sampling locations and coverage. \n\nResearchers should take into account their specifics sampling goals and timelines, and proceed with caution. ",
       "label": "Target total sites",
       "type": "int",
       "example": 100,
-      "weight": 4
+      "weight": 5
     },
     "site_selection_BAS>Block_creation.yml@0|n_cols": {
-      "description": "Number of columns for the environmental space grid (together with rows will define the final number of environmental blocks)",
+      "description": "Number of columns for the environmental space grid (together with rows will define the final number of environmental blocks). \n\nBlocks are based on a PCA of the environmental variables selected and represent  a proxy of ecozones in areas with lacking information. \n\nA general recommendation is to start with fewer blocks because it would simplify computation and understanding of the study region, 5-10 blocks, and later increase if needed.",
       "label": "Number of columns",
       "type": "int",
       "example": 10,
-      "weight": 5
+      "weight": 6
     },
     "site_selection_BAS>Block_creation.yml@0|n_rows": {
-      "description": "Number of rows for the environmental space grid (together with columns will define the final number environmental blocks)",
+      "description": "Number of rows for the environmental space grid (together with columns will define the final number environmental blocks). \n\nBlocks are based on a PCA of the environmental variables selected and represent  a proxy of ecozones in areas with lacking information. \n\nA general recommendation is to start with fewer blocks because it would simplify computation and understanding of the study region, 5-10 blocks, and later increase if needed.",
       "label": "Number of rows",
       "type": "int",
       "example": 10,
-      "weight": 6
+      "weight": 7
     }
   },
   "outputs": {
     "site_selection_BAS>Block_creation.yml@0|rast_blocks": {
-      "description": "Raster file of the study area with the environmental blocks as categorical classes  ",
+      "description": "A categorical GeoTIFF identifying the environmental block assigned to each classified raster cell.",
       "label": "Environmental blocks raster",
       "type": "image/tiff;application=geotiff[]",
       "weight": 0
     },
     "site_selection_BAS>Block_creation.yml@0|pca_summary_df": {
-      "description": "Principal component analysis summary for the environmental variables included in the analysis",
+      "description": "A CSV showing the standard deviation, percentage of variance explained, and cumulative percentage of variance explained for the principal components. Use it to assess how much environmental variation the first two components represent.",
       "label": "Summary of PCA",
       "type": "csv",
       "weight": 1
     },
     "site_selection_BAS>Block_creation.yml@0|blocks_plot": {
-      "description": "Blocks showing the PCA 1 and 2 result and the predefined blocks dividing the environmental space and the map of the environmental blocks in geographic space",
+      "description": "A figure showing environmental blocks in principal-component space alongside their geographic distribution.",
       "label": "Blocks and map plots",
       "type": "image/png",
       "weight": 2
     },
     "site_selection_BAS>BAS_algorithm.yml@26|maps_output": {
-      "description": "Maps of study area with selected sampling points only (no environmental blocks) and also including the environmental blocks.",
+      "description": "Two maps showing the proposed sampling sites: one over the study-area polygon and one over the environmental blocks. Use these to inspect geographic and environmental coverage.",
       "label": "Maps output",
       "type": "image/png",
       "weight": 3
     },
     "data>loadFromStac.yml@2|rasters": {
-      "description": "Array of environmental rasters (for exploration only)",
+      "description": "The environmental rasters retrieved for the analysis, provided for inspection and further exploration.",
       "label": "Environmental Rasters",
       "type": "image/tiff;application=geotiff[]",
       "weight": 4
     },
     "site_selection_BAS>BAS_algorithm.yml@26|pts_df": {
-      "description": "dataframe of selected points",
+      "description": "A CSV containing the proposed sites’ longitude and latitude in WGS84 (EPSG:4326), with columns named lon and lat.",
       "label": "Selected points",
       "type": "csv",
       "weight": 5
     },
     "site_selection_BAS>BAS_algorithm.yml@26|points_shape": {
-      "description": "Vector shapefile of selected points",
-      "label": "selected points shapefile",
+      "description": "A GeoJSON file containing the proposed sampling locations",
+      "label": "Selected points GeoJSON",
       "type": "application/geo+json",
       "weight": 6
     }
   },
   "metadata": {
     "name": "Environmental Sampling Site Selection",
-    "description": "## Introduction\nBiodiversity monitoring often requires researchers to draw samples of different population due to limitation of budget, time, and accesibility. Many methods exist to produce samples from a continous surface, but balanced sampling has proven to be one of the most efficient in capturing patterns in different populations. Often, researchers aim to prioritize sampling based on  different parameters, one being environmental characteristics of their study region (as a proxy of biomes or ecological regions). Tools that allow for quick and robust sampling frameworks provide researchers with strong sampling designs to address multiple ecological questions. \n\nHere we present a method that uses balanced acceptance sampling to randomly select  sampling sites in a defined area, and allows for the prioritization of environmentally different regions within the study area.    \n## Uses\nSelection of sampling sites using a BAS algorithm with two different approches (equal and unequal sampling distribution). \n\nIn a first step, the pipeline produces environmental blocks based on user defined environmental variables (after performing a PCA analysis on said variables and defining a block grid) and can use those blocks to generate an unequal sampling distribution.  \n\nBlocks are created from PCAs performed on the selected environmental variables or can use only two raw environmental variables, in which case no PCA is performed. \n\nThe user must define the grid size for block generation and specify a target  sample size to be allocated using a randomly balanced design. When the “unequal” option  is selected, the inclusion probability of each block is proportional to its area,  ensuring that larger blocks have a higher chance of being sampled.\n\nAlternatively, an equal sampling distribution can be selected, where all blocks have the  same probability of selection. The procedure will also plot the randomly selected sampling  points over the environmental blocks, allowing users to visually assess whether certain  areas are underrepresented or missing from the random sampling pattern.\n## Limitations \n* Currently the pipeline only works for a defined geopolitical outline (e.g. country, or province). \n* Unequal sampling may produce unexpected results in the balanced appproach. \n## Before you start\n* Define a projected CRS for your study area \n* Select environmental variables that may be of ecological importance for your study \n* Define how many environmental blocks you expect to produce (too many may be noisy, to little may be underrepresenting the environmental diversity). ",
+    "description": "## Introduction\nBiodiversity monitoring often requires researchers to draw samples of different population due to limitation of budget, time, and accesibility. Many methods exist to produce samples from a continous surface, but balanced sampling has proven to be one of the most efficient in capturing patterns in different populations. Often, researchers aim to prioritize sampling based on  different parameters, one being environmental characteristics of their study region (as a proxy of biomes or ecological regions). Tools that allow for quick and robust sampling frameworks provide researchers with strong sampling designs to address multiple ecological questions. \n\nHere we present a method that uses balanced acceptance sampling to randomly select  sampling sites in a defined area, and allows for the prioritization of environmentally different regions within the study area.    \n## Uses\nSelection of sampling sites using a BAS algorithm with two different approches (equal and unequal sampling distribution).\n## Methodology\nIn a first step, the pipeline performs a  [Principal Component Analysis (PCA)](https://en.wikipedia.org/wiki/Principal_component_analysis) on the user defined environmental variables. It grids them to produce environmental  blocks based on the two axis of the simplified environemental space.  The grid size is user-defined. When only two environmental variables are provided, no PCA is performed and the raw variables are used.\nIn a second step, it uses the blocks to generate an unequal sampling distribution. The user specifies a target sample size to be allocated using a randomly balanced design. When the “unequal” option is selected, the inclusion probability of each block is proportional to its area, ensuring that larger blocks have a higher chance of being sampled.\nAlternatively, an equal sampling distribution can be selected, where all blocks have the same probability of selection. The procedure will also plot the randomly selected sampling  points over the environmental blocks, allowing users to visually assess whether certain areas are underrepresented or missing from the random sampling pattern.\n## Limitations \n* Currently the pipeline only works for a defined geopolitical outline (e.g. country, or province). \n* Unequal sampling may produce unexpected results in the balanced appproach. \n## Before you start\n* Select environmental variables that may be of ecological importance for your study.\n* Define how many environmental blocks you expect to produce (too many may be noisy, to little may be underrepresenting the environmental diversity). ",
     "lifecycle": {
       "status": "in_review"
     },
@@ -520,13 +528,18 @@
         "name": "Francis van Oordt",
         "email": "francis.vanoordtlahoz@mail.mcgill.ca",
         "identifier": "https://orcid.org/0000-0002-8471-235X"
+      },
+      {
+        "name": "Samara Manzin",
+        "email": "samara.manzin@mcgill.ca",
+        "identifier": "https://orcid.org/0009-0005-9134-9981"
       }
     ],
     "license": "CC BY",
     "references": [
       {
         "text": "spbal: Spatially Balanced Sampling Algorithms",
-        "doi": "10.32614/CRAN.package.spbal"
+        "doi": "https://cran.r-project.org/web/packages/spbal/index.html"
       },
       {
         "text": "Survey-gap analysis in expeditionary research: where do we go from here?",

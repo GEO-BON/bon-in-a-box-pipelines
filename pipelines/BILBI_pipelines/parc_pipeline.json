@@ -454,8 +454,15 @@
     }
   ],
   "inputs": {
+    "pipeline@23": {
+      "label": "Bounding box and CRS",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box. You may also draw/input a custom bounding box along with a CRS.",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
     "data>load_polygons.yml@25|polygon_type": {
-      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.",
+      "description": "Type of polygon to load. \n- `Country or region` loads a polygon of the selected country or region.\n- `Polygon of bounding box` loads a polygon of the bounding box associated with the selected country or region, or the drawn bounding box.",
       "label": "Polygon type",
       "type": "options",
       "options": [
@@ -463,31 +470,24 @@
         "Polygon of bounding box"
       ],
       "example": "Country or region",
-      "weight": 0
-    },
-    "pipeline@23": {
-      "label": "Bounding box and CRS",
-      "description": "Select a country/region and a CRS to obtain the associated bounding box. You may also draw/input a custom bounding box along with a CRS.",
-      "type": "bboxCRS",
-      "example": null,
       "weight": 1
     },
     "data>loadFromStac.yml@1|t0": {
-      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
-      "label": "Start date (optional)",
+      "description": "Start year for time series layers. Leave blank if using all available dates.\n\nMust be one of: 1970, 1980, 1990, 2000, 2005, 2015, 2010, 2020, 2024",
+      "label": "Start year (optional)",
       "type": "text",
       "example": null,
       "weight": 2
     },
     "data>loadFromStac.yml@1|t1": {
-      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
-      "label": "End date (optional)",
+      "description": "End year for time series layers. Leave blank if using all available dates.\n\nMust be one of: 1970, 1980, 1990, 2000, 2005, 2015, 2010, 2020, 2024",
+      "label": "End year (optional)",
       "type": "text",
       "example": null,
       "weight": 3
     },
     "data>loadFromStac.yml@1|temporal_res": {
-      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is monthly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
+      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is monthly, and \"P1D\" is daily). Leave blank if not querying by date. \n\nMust be one of: P5Y, P10Y, P15Y, P20Y\n\nIf the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
       "label": "Temporal resolution (optional)",
       "type": "text",
       "example": null,

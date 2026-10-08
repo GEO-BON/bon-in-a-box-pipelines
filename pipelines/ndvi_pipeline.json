@@ -129,8 +129,15 @@
     }
   ],
   "inputs": {
+    "pipeline@210": {
+      "label": "Bounding box and CRS",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box. You may also draw/input a custom bounding box along with a CRS.",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
     "data>load_polygons.yml@211|polygon_type": {
-      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.",
+      "description": "Type of polygon to load. \n\n- `Country or region` loads a polygon of the selected country or region.\n- `Polygon of bounding box` loads a polygon of the bounding box associated with the selected country or region, or the drawn bounding box.",
       "label": "Polygon type",
       "type": "options",
       "options": [
@@ -138,13 +145,6 @@
         "Polygon of bounding box"
       ],
       "example": "Country or region",
-      "weight": 0
-    },
-    "pipeline@210": {
-      "label": "Bounding box and CRS",
-      "description": "Select a country/region and a CRS to obtain the associated bounding box.",
-      "type": "bboxCRS",
-      "example": null,
       "weight": 1
     },
     "NDVI>calculateNDVI.yml@199|start_date": {
