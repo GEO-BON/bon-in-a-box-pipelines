@@ -16,7 +16,6 @@
 *.md	text eol=lf
 *.Rmd	text eol=lf
 *.rmd	text eol=lf
-*.qmd	text eol=lf
 *.csv	text eol=lf
 *.tsv	text eol=lf
 
@@ -34,24 +33,6 @@
 *.txt	text eol=lf
 *.properties	text eol=lf
 
-*dockerfile	text eol=lf
-*Dockerfile	text eol=lf
-*.lintr	text eol=lf
-*.condarc	text eol=lf
-*.bashrc	text eol=lf
-*.prj	text eol=lf
-*.cpg	text eol=lf
-LICENSE	text eol=lf
-
-
 # Any Windows-specific file should be kept as crlf
 *.bat	text eol=crlf
 *.cmd	text eol=crlf
-
-# Binary files, must not be touched by autocrlf or eol normalization
-*.gpkg	binary
-*.tif	binary
-*.shp	binary
-*.shx	binary
-*.dbf	binary
-.DS_Store	binary

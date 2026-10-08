@@ -467,7 +467,7 @@
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "crsBBox"
+        "type": "bboxCRS"
       }
     },
     {
@@ -1082,7 +1082,7 @@
     "pipeline@140": {
       "label": "Bounding box and CRS",
       "description": "Bounding box and coordinate reference system defining the analysis extent. This extent is used to retrieve GBIF occurrences, environmental predictor rasters, the GBIF sampling-effort heatmap, and the study extent for modelling.\n\nThe extent you choose affects how results should be interpreted and may change which predictors emerge as important.\n* Larger than the species' range: results lean toward occurrence/accessibility. Predictors tied to broad-scale distributional limits (climate, biogeography) may dominate.\n* Similar to or smaller than the species' range: results lean toward habitat suitability. Predictors tied to local habitat structure (vegetation, soil) may matter more.",
-      "type": "crsBBox",
+      "type": "bboxCRS",
       "example": null,
       "weight": 2
     },
@@ -1183,13 +1183,13 @@
       "weight": 14
     },
     "SDM>runMaxent.yml@108|fc": {
-      "description": "MaxEnt feature classes control the shapes of relationships the model can learn between species occurrence and environmental predictors. Simpler classes, such as L or LQ, fit smoother, more constrained responses and are often safer for small datasets. More complex combinations, such as LQH or LQH, can capture more flexible ecological responses but may overfit when occurrence records are limited. This pipeline tests all values provided here and selects the best-performing combination using the parameter selection method configured in the MaxEnt step. Accepted values are combinations of L (linear), Q (quadratic), P (product), H (hinge) or T (threshold, deprecated).",
+      "description": "MaxEnt feature classes control the shapes of relationships the model can learn between species occurrence and environmental predictors. Simpler classes, such as L or LQ, fit smoother, more constrained responses and are often safer for small datasets. More complex combinations, such as LQH or LQHP, can capture more flexible ecological responses but may overfit when occurrence records are limited. This pipeline tests all values provided here and selects the best-performing combination using the parameter selection method configured in the MaxEnt step. Accepted values are combinations of L (linear), Q (quadratic), P (product), H (hinge) or T (threshold).",
       "label": "Feature classes",
       "type": "text[]",
       "example": [
         "L",
         "LQ",
-        "LQH"
+        "LQHP"
       ],
       "weight": 15
     },
