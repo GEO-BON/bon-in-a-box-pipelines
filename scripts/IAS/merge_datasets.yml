@@ -1,0 +1,77 @@
+script: merge_datasets.R
+name: SInAS Merge Standardised Datasets
+description: "Merge one country's standardised sources. An optional national checklist defines membership and supplies preferred first-record years; without it, use the existing GRIIS and First Records merging rules."
+author:
+  - name: Manuela Gomez-Suarez
+  - name: Hanno Seebens
+  - name: Samara Manzin
+    email: samara.manzin@mcgill.ca
+inputs:
+  country_name:
+    label: Country
+    type: country
+    description: Country represented by this run.
+    example: NULL
+  griis_clean:
+    label: Cleaned GRIIS dataset
+    type: text/csv
+    description: GRIIS dataset after SInAS terminology, location, taxonomy, and event-date standardisation.
+    example: NULL
+  first_records_clean:
+    label: Cleaned First Records dataset
+    type: text/csv
+    description: First Records dataset after SInAS terminology, location, taxonomy, and event-date standardisation.
+    example: NULL
+  national_clean:
+    label: Cleaned national checklist
+    type: text/csv
+    description: Optional SInAS-cleaned national checklist. When supplied, only its taxa and locations are retained; valid national first-record years take precedence over external years. Checklist membership does not imply invasive status.
+    example: NULL
+  full_taxa_list:
+    label: Reviewed full taxonomic list
+    type: text/csv
+    description: GBIF taxonomic hierarchy and taxon IDs produced by the SInAS preparation step.
+    example: NULL
+  cleaning_summary:
+    label: Preparation summary
+    type: text/csv
+    description: Record counts and unresolved-value counts produced while preparing the supplied source datasets.
+    example: NULL
+  qc_status:
+    label: Quality-control status
+    type: text/csv
+    description: Quality-control status produced while preparing the supplied source datasets.
+    example: NULL
+  unmatched_values:
+    label: Unmatched values
+    type: text/csv
+    description: Values that could not be standardised during preparation and the action taken for each value.
+    example: NULL
+outputs:
+  merged_dataset:
+    label: Merged SInAS dataset
+    type: text/csv
+    description: One record per standardised taxon-location-establishment combination in the default workflow, or per national taxon-location identity when a national checklist is supplied. National outputs retain membership, date sources, competing date evidence and uploaded values.
+  data_quality_report:
+    label: SInAS data-quality report
+    type: text/csv
+    description: Combined quality-control status, unmatched-value report, and merge-conflict report.
+  run_summary:
+    label: SInAS run summary
+    type: text/csv
+    description: Preparation and merge record counts, warning counts, exclusions, and overall quality-control status.
+  merge_summary:
+    label: Merge summary
+    type: text/csv
+    description: Input and output record counts for the selected country.
+  merge_conflicts:
+    label: Merge conflicts
+    type: text/csv
+    description: Fields with multiple values during final SInAS record consolidation.
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-base
+    - r-rjson

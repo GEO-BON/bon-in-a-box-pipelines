@@ -1,0 +1,46 @@
+script: import_national_checklist.R
+name: Import National Checklist
+description: "Import a country's national checklist and map it to the standardised SInAS columns."
+author:
+  - name: Samara Manzin
+    email: samara.manzin@mcgill.ca
+inputs:
+  country_name:
+    label: Country name
+    type: country
+    description: Country represented by the uploaded national checklist. Required only when a checklist is uploaded.
+    example: NULL
+  national_checklist:
+    label: National checklist
+    type: text/csv
+    description: Optional national checklist CSV file. Leave empty to skip this step without producing an output.
+    example: NULL
+  species_column:
+    label: Species column
+    type: text
+    description: Exact column name containing scientific species names. Required only when a checklist is uploaded.
+    example: "species"
+  first_record_column:
+    label: First record column
+    type: text
+    description: Exact column name containing the first documented occurrence year or date in the selected country. Leave blank if not provided. Date standardisation occurs in SInAS preparation.
+    example: NULL
+  dataset_citation:
+    label: Dataset citation
+    type: text
+    description: Optional dataset citation. Defaults to user_input_data when blank.
+    example: "user_input_data"
+outputs:
+  national_checklist:
+    label: National checklist
+    type: text/csv
+    description: Mapped checklist with original species names, original dates and source row numbers. No output is produced when no checklist is uploaded.
+    example: NULL
+
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-base
+    - r-rjson

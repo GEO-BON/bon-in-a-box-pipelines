@@ -1,0 +1,136 @@
+script: prepare_datasets.R
+name: SInAS Prepare Datasets
+description: "Run original P3 Steps 1-5 for one country: prepare and roll up mapped First Records regions to the parent country, standardise columns, terminology, locations, GBIF taxonomy and event dates, and report unmatched or excluded records."
+author:
+  - name: Manuela Gomez-Suarez
+  - name: Hanno Seebens
+  - name: Saxbee Affleck
+  - name: Samara Manzin
+    email: samara.manzin@mcgill.ca
+inputs:
+  country_name:
+    label: Country
+    type: country
+    description: Country represented by this cleaning run.
+    example: NULL
+  griis_checklist:
+    label: GRIIS checklist
+    type: text/csv
+    description: GRIIS checklist table to include in Step 1 preparation.
+    example: NULL
+  first_records:
+    label: First records
+    type: text/csv
+    description: First records table to include in Step 1 preparation.
+    example: NULL
+  global_invasive_checklist:
+    label: Global invasive alien species checklist
+    type: text/csv
+    description: Same packaged global checklist used by the download step, rechecked against original and harmonised taxon names while preserving existing positive flags.
+    example: /scripts/IAS/species_isInvasiveAnywhere.csv
+  national_checklist:
+    label: Imported national checklist
+    type: text/csv
+    description: Optional mapped national checklist from the import step.
+    example: NULL
+  kingdoms:
+    label: Kingdoms
+    type: options[]
+    description: Kingdoms to retain in both the GRIIS and First Records datasets.
+    options:
+      - "PLANTAE"
+      - "ANIMALIA"
+    example:
+      - "PLANTAE"
+      - "ANIMALIA"
+  habitats:
+    label: Habitat types
+    type: options[]
+    description: Habitat values to retain in both the GRIIS and First Records datasets.
+    options:
+      - "TERRESTRIAL"
+      - "FRESHWATER"
+      - "FRESHWATER|BRACKISH"
+      - "TERRESTRIAL|FRESHWATER"
+      - "MARINE|FRESHWATER|BRACKISH"
+      - "TERRESTRIAL|BRACKISH"
+      - "TERRESTRIAL|FRESHWATER|BRACKISH"
+      - "TERRESTRIAL|MARINE|FRESHWATER"
+      - "TERRESTRIAL|MARINE|BRACKISH"
+      - "MARINE|FRESHWATER"
+      - "TERRESTRIAL|MARINE"
+    example:
+      - "TERRESTRIAL"
+      - "FRESHWATER"
+      - "FRESHWATER|BRACKISH"
+      - "TERRESTRIAL|FRESHWATER"
+      - "MARINE|FRESHWATER|BRACKISH"
+      - "TERRESTRIAL|BRACKISH"
+      - "TERRESTRIAL|FRESHWATER|BRACKISH"
+      - "TERRESTRIAL|MARINE|FRESHWATER"
+      - "TERRESTRIAL|MARINE|BRACKISH"
+      - "MARINE|FRESHWATER"
+      - "TERRESTRIAL|MARINE"
+outputs:
+  global_invasive_matches:
+    label: Additional global invasive matches
+    description: GRIIS records newly flagged as invasive anywhere after taxonomic harmonisation, with matching name fields and country evidence.
+    type: text/csv
+  griis_clean:
+    label: cleaned GRIIS dataset
+    description: Cleaned GRIIS dataset with standardised column names and values.
+    type: text/csv
+  first_records_clean:
+    label: cleaned First Records dataset
+    description: Cleaned First Records dataset with standardised column names and values.
+    type: text/csv
+  national_clean:
+    label: Cleaned national checklist
+    type: text/csv
+    description: National checklist after SInAS standardisation. Produced only when a checklist is supplied.
+  file_info:
+    label: File information
+    description: Table containing information about the input datasets columns
+    type: text/csv
+  translated_locations:
+    label: Translated locations
+    description: Original and standardised location-name pairs.
+    type: text/csv
+  full_taxa_list:
+    label: SInAS taxon matching
+    description: Complete automatic GBIF taxonomic matching results.
+    type: text/csv
+  translated_event_dates:
+    label: Translated event dates
+    description: Original and standardised event-date values.
+    type: text/csv
+  cleaning_summary:
+    label: Cleaning summary
+    description: Input, output, and unresolved-record counts for both datasets.
+    type: text/csv
+  qc_status:
+    label: Quality-control status
+    description: PASS or WARNING summary for terminology, locations, taxonomy, and event dates. Warnings do not block merging.
+    type: text/csv
+  unmatched_values:
+    label: Unmatched values
+    description: Consolidated report of terminology, location, taxon, and event-date values that could not be standardised, including the action taken and whether they can enter the merge.
+    type: text/csv
+  excluded_records:
+    label: SInAS excluded records
+    description: Complete records excluded from the merged dataset because their locations could not be standardised to a locationID.
+    type: text/csv
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-dplyr
+    - r-jsonlite
+    - r-duckdb
+    - r-rjson
+    - r-stringr
+    - r-rgbif
+    - r-tidyr
+    - r-stringi
+    - r-openxlsx

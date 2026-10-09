@@ -1,0 +1,59 @@
+script: download_griischecklist.R
+name: Download GRIIS Checklist
+description: "Download the latest national GRIIS checklist for a specified country and its affiliated regions, retain each checklist's ISO3 metadata, and combine the records. Protected-area checklists are excluded."
+author:
+  - name: Saxbee Affleck
+  - name: Samara Manzin
+    email: samara.manzin@mcgill.ca
+inputs:
+  country_name:
+    label: Country name
+    type: country
+    description: Name of the country for which to download the GRIIS checklist.
+    example: NULL
+  compendium_countries:
+    label: Compendium countries
+    type: text/csv
+    description: List of countries included in the compendium.
+    example: /scripts/IAS/compendiumCountries.xlsx
+  global_invasive_checklist:
+    label: Global invasive alien species checklist
+    type: text/csv
+    description: Global checklist used to identify species that are invasive anywhere.
+    example: /scripts/IAS/species_isInvasiveAnywhere.csv
+outputs:
+  griis_checklist:
+    label: GRIIS checklist
+    description: GRIIS checklist for the specified country.
+    type: text/csv
+  griis_summary:
+    label: GRIIS summary
+    description: Summary of the GRIIS checklist for the specified country.
+    type: text/csv
+  griis_directory:
+    label: GRIIS directory
+    description: Directory where the GRIIS checklist is saved.
+    type: text/csv
+  all_data_summary:
+    label: GRIIS checklist summary (all data)
+    description: GRIIS checklist summary for all data.
+    type: text/csv
+  per_list_summary:
+    label: GRIIS checklist summary (per list)
+    description: GRIIS checklist summary for each list.
+    type: text/csv
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-xml
+    - r-dplyr
+    - r-stringr
+    - r-readr
+    - r-tidyrss
+    - r-tidyr
+    - r-rvest
+    - r-rjson
+    - r-readxl
+    - r-countrycode
