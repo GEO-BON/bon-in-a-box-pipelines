@@ -67,7 +67,7 @@ inputs:
   freeflow_text:
     label: Freeflow text
     description: This is regular text, and can have multiple lines.
-    type: text/plain
+    type: text
     example: |
       This is a multiline example.
       Once there is a line break in the example, it becomes a textarea in the UI.
@@ -100,8 +100,8 @@ inputs:
 outputs:
   text:
     label: Text
-    description: We can add plain text. _Output descirptions can use MarkDown too._
-    type: text/plain
+    description: We can add plain text. _Output descriptions can use MarkDown too._
+    type: text
   number:
     label: A number (intensity*3)
     description: blabla, normalized [0,1]
