@@ -183,22 +183,22 @@
     }
   },
   "outputs": {
-    "NDVI>calculateNDVI.yml@199|rasters": {
-      "description": "Raster of the NDVI values summarised by the input statistic (mean, max, min, median) for each pixel within the time span choosen. If multiple indices were chosen, each band corresponds to a different vegetation index\n",
-      "label": "Vegetation index rasters",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 0
-    },
     "NDVI>calculateNDVI.yml@199|timeseries": {
       "description": "Time series of NDVI values for every date where there is data in the specified time period.",
       "label": "Time series of NDVI",
       "type": "text/csv",
-      "weight": 1
+      "weight": 0
     },
     "NDVI>calculateNDVI.yml@199|timeseries_plot": {
       "description": "Plot of NDVI values over time",
       "label": "NDVI time series plot",
       "type": "image/png",
+      "weight": 1
+    },
+    "NDVI>calculateNDVI.yml@199|rasters": {
+      "description": "Raster of the NDVI values summarised by the input statistic (mean, max, min, median) for each pixel within the time span choosen. If multiple indices were chosen, each band corresponds to a different vegetation index\n",
+      "label": "Vegetation index rasters",
+      "type": "image/tiff;application=geotiff[]",
       "weight": 2
     },
     "data>load_polygons.yml@211|polygon": {
