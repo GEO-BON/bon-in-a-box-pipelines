@@ -47,23 +47,23 @@ if (nrow(circles_sf)>1) {
 
   # use hierarchical clustering to split populations by geographical distancw
   pop_distance = input$pop_distance # maximal distnace to split populations
-  circles_sf$pop = paste0('pop_',cutree(hclust(D, method = 'average'), h=pop_distance))
+  circles_sf$name = paste0('pop_',cutree(hclust(D, method = 'average'), h=pop_distance))
 
 
 } else {
 
-    circles_sf$pop = 'pop_1'
+    circles_sf$name = 'pop_1'
 
   }
 
 
 # merge polygons by population identifier
 sf_use_s2(F)
-PopPoly = sf_dissolve(circles_sf, 'pop')
+PopPoly = sf_dissolve(circles_sf, 'name')
 
 
 ## remove overlap between features
-PopPoly=sf_dissolve(st_cast(st_intersection(st_cast(PopPoly,'MULTIPOLYGON'))),'pop')
+PopPoly=sf_dissolve(st_cast(st_intersection(st_cast(PopPoly,'MULTIPOLYGON'))),'name')
 
 ## correct geometries --> if geometry collections--> extract only polygons
 for (i in which(st_geometry_type(PopPoly)=='GEOMETRYCOLLECTION')) {
@@ -72,7 +72,7 @@ for (i in which(st_geometry_type(PopPoly)=='GEOMETRYCOLLECTION')) {
 PopPoly=PopPoly[which(st_geometry_type(PopPoly)!='GEOMETRYCOLLECTION'),]
 
 ## re-dissolve everything: 1 multipolygon per population
-PopPoly=sf_dissolve(st_cast(PopPoly,'MULTIPOLYGON'), 'pop')
+PopPoly=sf_dissolve(st_cast(PopPoly,'MULTIPOLYGON'), 'name')
 
 
 
