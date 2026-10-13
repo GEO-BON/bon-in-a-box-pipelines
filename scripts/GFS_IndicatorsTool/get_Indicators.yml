@@ -46,8 +46,8 @@ inputs:
   lc_classes:
     label: Land cover classes ID
     description: ID of LC classes used to evaluate habitat change
-    type: text
-    example: 120,140
+    type: int[]
+    example: [120,140]
 
 outputs:
 

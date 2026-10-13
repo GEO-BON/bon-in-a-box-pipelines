@@ -424,7 +424,7 @@ pm_plots = plotly::subplot(HA_plot, HAR_plot, nrows=2, titleX = T, titleY = T) %
 Title = input$runtitle
 
 ### Get landcover classes
-lc_classes = strsplit(input$lc_classes,',')[[1]]
+lc_classes = input$lc_classes
 # Load dictionary of lc classes
 LC_names = c(
   "Cropland, rainfed",
@@ -463,7 +463,7 @@ names(LC_names) = c(
   90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220
 )
 
-if (lc_classes[1]!='0') {
+if (lc_classes[1]!=0) {
 
   Title = paste0(Title,'\n Landcover classes: ', paste(LC_names[lc_classes], collapse = '; '),'.')
   

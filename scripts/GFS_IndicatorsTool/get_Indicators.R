@@ -186,12 +186,12 @@ pop_grid = st_intersection(pop_poly, grid)
 
 # create shared dataframe object (force convertion to multipolygon)
 merged_DF = st_cast(pop_grid, 'MULTIPOLYGON')
-
+print(merged_DF)
 
 
 # add colors info
-merged_DF$colorsRGB = paste0('rgba(',apply(col2rgb(PopCol[merged_DF$pop]), 2, paste, collapse=','),',0.3)')
-merged_DF$colors = PopCol[merged_DF$pop]
+merged_DF$colorsRGB = paste0('rgba(',apply(col2rgb(PopCol[merged_DF$name]), 2, paste, collapse=','),',0.3)')
+merged_DF$colors = PopCol[merged_DF$name]
 
 # create an empty MultiPolygon geometry (as a "geometry" placeholder in the shared matrix for non-spatial data)
 mp = list(list(matrix(0,ncol=2)))
@@ -315,7 +315,7 @@ NE_plot =   plot_ly(data = merged_DF_key,
                     hoverlabel = list(bgcolor = 'white'),
                     text=~pop,
                     color= ~pop,
-                    colors = PopCol[unique(merged_DF$pop)],
+                    colors = PopCol[unique(merged_DF$name)],
                     type = 'scatter', mode='lines') %>%
   add_trace(data = ne500line, x = ~TIME, y = ~ne500, color=I('black'), line = list(width=5, dash='dot')) %>% # add line at ne500
   layout(
@@ -349,7 +349,7 @@ HA_plot = plot_ly(data = merged_DF_key,
                   hoverlabel = list(bgcolor = 'white'),
                   text=~pop,
                   color= ~pop,
-                  colors = PopCol[unique(merged_DF$pop)],
+                  colors = PopCol[unique(merged_DF$name)],
                   type = 'scatter', mode='lines') %>%
   layout(
     xaxis = list(
@@ -385,7 +385,7 @@ HAR_plot = plot_ly(data = merged_DF_key,
                    hoverlabel = list(bgcolor = 'white'),
                    text=~pop,
                    color= ~pop,
-                   colors = PopCol[unique(merged_DF$pop)],
+                   colors = PopCol[unique(merged_DF$name)],
                    type = 'scatter', mode='lines') %>%
   layout(
     xaxis = list(
@@ -485,7 +485,7 @@ names(LC_names) = c(
   90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220
 )
 
-if (lc_classes[1]!='0') {
+if (lc_classes[1]!=0) {
 
   Title = paste0(Title,'\n Landcover classes: ', paste(LC_names[as.character(lc_classes)], collapse = '; '),'\n')
   

@@ -229,7 +229,7 @@ if (use_local) {
 
 
 ## Outputing result to JSON
-output <- list("tcyy"=tcyy_p, "output_maps"=output_maps, 'lc_classes'=list(1))
+output <- list("tcyy"=tcyy_p, "output_maps"=output_maps, 'lc_classes'="TC")
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
