@@ -1,0 +1,59 @@
+script: IUCN_redlist_spThreats.R
+name: IUCN list of species of a threat category
+description: Obtains a list of species assessed by the IUCN Red List of Species that are threatened by a threat type
+author:
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
+inputs:
+  threat_category_input:
+    label: Threat category
+    description: Select the species threat(s) to filter for. This returns a list of IUCN Red List species that are threatened by the categories selected.
+    type: options[]
+    example: [Geological events]
+    options:
+    - Do not filter by threat category
+    - Residential & commercial development
+    - Agriculture & aquaculture
+    - Energy production & mining
+    - Transportation & service corridors
+    - Biological resource use
+    - Human intrusions & disturbance
+    - Natural system modifications
+    - Invasive and other problematic species, genes & diseases
+    - Invasive alien species or diseases
+    - Pollution
+    - Geological events
+    - Climate change & severe weather
+    - Fisheries
+    - Other options
+outputs:
+  threat_category:
+    label: Threat category
+    description: IUCN threat category
+    type: text[]
+  threats_list:
+    label: List of IUCN threats
+    description: IUCN list of threats
+    type: text/csv
+  iucn_threats_splist:
+    label: Species list filtered by threat
+    description: List of species that are threatened by a chosen threat
+    type: text/csv
+  api_citation:
+    label: IUCN API citation
+    description: Citation for the data acquired using the IUCN Red List API
+    type: text
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-magrittr
+    - r-dplyr
+    - r-rredlist
+    - r-this.path
+    - r-rjson
+
+
+

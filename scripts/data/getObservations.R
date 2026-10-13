@@ -7,12 +7,16 @@
 #new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 #if(length(new.packages)) install.packages(new.packages)
 
+library("devtools")
+if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
+
 ## Load required packages
 library("rgbif")
 library("dplyr")
 library("raster")
 library("rjson")
 library("stringr")
+library("stacatalogue")
 
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "data/getObservationsFunc.R", sep = "/"))
@@ -26,8 +30,8 @@ print(input)
 
 
 # Tranform the vector to a bbox object
-bbox_wgs84 <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2], 
-            xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj)) %>% sf::st_as_sfc() %>% sf::st_transform(crs = "EPSG:4326") %>% 
+bbox_wgs84 <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2],
+            xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj)) %>% sf::st_as_sfc() %>% sf::st_transform(crs = "EPSG:4326") %>%
         sf::st_bbox()
 
 country <- input$country
@@ -44,7 +48,7 @@ if (is.null(bbox_buffer)) {
 occurrence_status <- str_split(input$occurrence_status, " ")[[1]]
 
 # Loading data from GBIF (https://www.gbif.org/)
-obs <- get_observations(database = "gbif", 
+obs <- get_observations(database = "gbif",
   species = input$species,
            year_start = input$year_start,
            year_end = input$year_end,
@@ -74,7 +78,7 @@ write.table(bbox, obs.bbox,
                   "n_presence" =  nrow(obs),
                   "presence" = obs.data,
                   "bbox" = obs.bbox
-                  ) 
+                  )
   jsonData <- toJSON(output, indent=2)
   write(jsonData, file.path(outputFolder,"output.json"))
-  
+

@@ -7,7 +7,6 @@ author:
     identifier: https://orcid.org/0000-0002-2400-2479
 references:
   - text: in prep
-    doi: .
 
 inputs:
   presence_background:
@@ -39,16 +38,23 @@ inputs:
       - lon_lon
       - lat_lat
     example: lat_lon
-  proj:
-    label: projection system
-    description: String, projection of the predictors
-    type: text
-    example: "EPSG:6623"
+  crs:
+    label: CRS
+    description: Object containing CRS.
+    type: bboxCRS
+    example:
   n_folds:
     label: number of folds
     description: Integer, number of random k-folds for randomkfold technique.
     type: int
     example: 5
+  spatial_res:
+    label: Spatial resolution
+    description: Integer, spatial resolution of the rasters in the same units as the coordinate reference system
+      (meters for projected reference systems and degrees for reference systems in lat long).
+    type: float
+    example: 1000.0
+
 outputs:
   sdm_pred:
     label: predictions
@@ -77,3 +83,18 @@ outputs:
     label: dmesh
     description: dual mesh used by the sdm model
     type: application/geo+json
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-terra
+    - r-rjson
+    - r-raster
+    - r-dplyr
+    - r-gdalcubes
+    - r-ENMeval
+    - r-devtools
+    - r-sf
+    - r-FNN
+    - r-stars

@@ -39,6 +39,13 @@
       "type": "int",
       "example": 3,
       "weight": 0
+    },
+    "helloWorld>helloPython.yml@0|study_area_bbox": {
+      "description": "Bounding box and CRS of study area",
+      "label": "Bounding box",
+      "type": "bboxCRS",
+      "weight": 1,
+      "example": null
     }
   },
   "outputs": {
@@ -53,7 +60,7 @@
   "metadata": {
     "name": "Hello World pipeline",
     "description": "This very simple pipeline shows how to connect a single script to a single output.\nThe input of the script is left blank, thus becoming a pipeline input.",
-    "lifecycle" : {
+    "lifecycle": {
       "status": "example"
     },
     "author": [
