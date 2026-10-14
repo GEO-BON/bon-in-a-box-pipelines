@@ -211,6 +211,9 @@
   "metadata": {
     "name": "Normalized Difference Vegetation Index",
     "description": "## Introduction\nThis pipeline calculates the Normalized Difference Vegetation Index (NDVI) using OpenEO  Copernicus Data Space Ecosystem. NDVI measures the \"greenness\" of vegetation, with higher  values indicating dense vegatation and low values indicating barren areas with rock, snow, sand, or exposed soils.\n\nThe red and infrared bands from Sentinel 2 L2A are used to calcuate NDVI. The pipeline  summarises these values over the time period of interest with the specified summary statistic. The NDVi layers are masked with the SCL dilation mask avoid erroneous values by taking out pixels covered by clouds.\n- Learn more about Sentinel 2 [here](https://dataspace.copernicus.eu/data-collections/copernicus-sentinel-data/sentinel-2)\n- Learn more about calculating NDVI with openEO [here](https://openeo.org/documentation/1.0/cookbook/#example-1-ndvi)\n## Before you start\nThe pipeline requires an API key for the Copernicus Data Space Ecosystem. To acquire an API key, visit the CDSE [website](https://dataspace.copernicus.eu/analyse/openeo).\n\nThe pipeline may take significant time to pull and summarise data,  especially at fine spatial resolutions for large areas.",
+    "lifecycle": {
+      "status": "subpipeline"
+    },
     "author": [
       {
         "name": "Guillaume Larocque",

@@ -8,66 +8,110 @@ lifecycle:
   status: in_review
 inputs:
   occurrence:
-    label: occurrence coordinate dataframe
-    description: Dataframe, presence data.
+    label: Occurrence records
+    description: 
+      Presence records (TSV with lon and lat columns, in the CRS of the bounding box). 
+      Use cleaned records. Fewer than about 50 presences in the region give a very small 
+      test set and unreliable fit statistics.
     type: text/tab-separated-values
     example: "/output/data/getObservations/9f7d1cc148464cd0517e01c67af0ab5b/obs_data.tsv"
   predictors:
-    label: geotiff predictor paths
-    description: paths to geotiff
+    label: Predictor rasters
+    description: 
+      Environmental rasters (GeoTIFF) on the same grid (extent, resolution, CRS).
+      Choose few variables that plausibly limit the species and avoid highly correlated ones.
+      Only the first 5 are shown in the Environment space output.
     type: image/tiff;application=geotiff[]
     example: "/output/foo/bar"
   bbox_crs:
-    label: Bounding box and CRS
-    description: Object containing the chosen bounding box and CRS.
+    label: Extent and CRS
+    description: 
+      Bounding box and CRS of the study area. Occurrences and rasters must be in this CRS.
+      Choose an area that contains enough presences (see Occurrence records).
     type: bboxCRS
     example:
   water_mask:
-    label: water mask
-    description: landcover layer containing open water pixels
+    label: Water mask
+    description: 
+      A single land-cover raster on the same grid as the predictors. Cells with value 210 (open water) 
+      are excluded; all others are kept. Intended for terrestrial species.
     type: image/tiff;application=geotiff[]
     example: "/output/foo/bar"
   max_candidate_pseudoabsences:
-    label: max candidate pseudoabsences
-    description: helps w large rasters
+    label: Candidate pseudoabsences
+    description: 
+      Maximum number of cells considered as pseudoabsence candidates, from which the pseudoabsences are then drawn. 
+      If the region has more valid cells (cells with data, outside the water mask) than this limit, a random subset of
+      that size is used, so lowering it speeds up large regions. Otherwise, every valid cell that is not a presence is a candidate
+      and the limit has no effect.
     type: int
     example: 100000
   pseudoabsence_buffer:
-    label: pseudoabsence buffer
-    description: minimum distance to a presence in kilometers
+    label: Pseudoabsence buffer
+    description: 
+      Minimum distance in kilometers between a pseudoabsence and any presence. Keep it well below the size of the study area, otherwise no candidate cell remains. Larger values make absences more distinct from presences but exclude nearby suitable habitat.
     type: float
     example: 10.0
   pa_proportion:
     label: Pseudoabsence proportion
-    description: The number of PAs, given by the proportion of the total occurrences to use.
+    description: 
+      Number of pseudoabsences per presence (for example 2.4 gives 2.4 pseudoabsences for each presence).
+      Higher values sample the environment more thoroughly but lower the share of presences in the test set, which
+      lowers precision and PR AUC without the model being worse. Compare these statistics only between runs with
+      the same value.
     type: float
     example: 2.4
 outputs:
   predicted_sdm:
-    label: predicted sdm
-    description: map of predicted occurrence probability
+    label: Predicted SDM
+    description: |
+      Map of the model's occurrence score. Higher means more suitable relative to the pseudoabsences. 
+      It is not a calibrated probability and may fall outside 0 to 1: use it to compare locations, 
+      not as an absolute likelihood.
     type: image/tiff;application=geotiff
   sdm_uncertainty:
-    label: sdm uncertainty
-    description: map of relative uncertainty
+    label: SDM uncertainty
+    description: |
+      Map of the variance predicted by the model for each cell (not a bootstrap uncertainty). 
+      Higher values mean less certain scores: use it to down-weight or mask areas of the predicted map.
     type: image/tiff;application=geotiff
   fit_stats:
-    label: fit statistics
-    description: JSON of model fit stats and threshold
+    label: Fit statistics
+    description: |
+      Test-set statistics and optimal threshold: 
+      - ROC AUC (0.5 is random, above 0.7 is acceptable), 
+      - PR AUC (compare with the share of presences in the test set), 
+      - MCC at the best threshold (0 is random, 1 is perfect). 
+      
+      
+      Computed on one small random split, so treat as indicative. Check the warning output for suspicious values.
     type: text/json
   range:
-    label: range
-    description: range map thresholded at todo
+    label: Range map
+    description: 
+      Binary map (1 is predicted suitable) obtained by applying the MCC-maximizing threshold to the Predicted SDM.
+      It shows where the model predicts suitability, not confirmed presence, and depends on the pseudoabsence settings.
     type: image/tiff;application=geotiff
   pseudoabsences:
-    label: pseudoabsences
-    description: pseudoabsence coordinates
+    label: Pseudoabsences
+    description: 
+      Coordinates of the pseudoabsence points used to train and test the model. Check that they cover the environments
+      of the study area and are not concentrated around the presences.
     type: text/tab-separated-values
   env_corners:
-    label: env_corners
-    description: location of presences and pseudoabsences in environment space
+    label: Environment space
+    description: 
+      Plot of presences (blue) and pseudoabsences (green) in environment space, for the first 5 predictors.
+      Presences in a distinct part of the cloud mean informative predictors; strong overlap means the model
+      can hardly separate them.
     type: image/jpg
   tuning:
-    label: tuning curve
-    description: tuning curve
+    label: Tuning curve
+    description: |
+      MCC as a function of the threshold between 0 and 1.
+      
+      
+      The peak is the threshold used for the Range map. A good curve has one clear peak at an intermediate threshold,
+      with an MCC well above 0.3. A flat curve, or a peak near 0 or 1, means weak separation or scores squeezed into
+      a narrow range.
     type: image/jpg
