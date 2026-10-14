@@ -688,5 +688,38 @@
       "type": "float",
       "weight": 7
     }
+  },
+  "metadata": {
+    "name": "Land cover loss by population from GBIF observations",
+    "description": "This Pipeline takes Input parameters such as Species, years of interest and Land cover classes to calculate Habitat loss for a certain Species based on ESA CCI Landcover data. It uses Point observations which are fetched from GBIF",
+    "author": [
+      {
+        "name": "Simon Pahls",
+        "email": "simon.pahls@uzh.ch",
+        "identifier": null
+      }
+    ],
+    "license": null,
+    "external_link": null,
+    "references": [
+      {
+        "text": "Genes from Space Project website",
+        "link": "https://genesfromspace.org/"
+      },
+      {
+        "text": "Genes from Space Interface",
+        "link": "https://gfstool.com/"
+      },
+      {
+        "text": "ESA Climate Change Initiative",
+        "link": "https://climate.esa.int/en/projects/land-cover/"
+      }
+    ],
+    "compute": {
+      "hpc": false,
+      "mem": "4Gi",
+      "cpus-per-task": 4,
+      "time": "02:00:00"
+    }
   }
 }

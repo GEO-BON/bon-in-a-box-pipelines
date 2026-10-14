@@ -572,5 +572,34 @@
       "type": "text",
       "weight": 4
     }
+  },
+  "metadata": {
+    "name": "Forest cover loss by population from GBIF observations",
+    "description": "This Pipeline takes Input parameters such as Species and years of interest to calculate Habitat loss for a certain Species based on Globalforestwatch data. It uses Point observations which are fetched from GBIF",
+    "author": [
+      {
+        "name": "Simon Pahls",
+        "email": "simon.pahls@uzh.ch",
+        "identifier": null
+      }
+    ],
+    "license": null,
+    "external_link": null,
+    "references": [
+      {
+        "text": "Genes from Space Project website",
+        "link": "https://genesfromspace.org/"
+      },
+      {
+        "text": "Genes from Space Interface",
+        "link": "https://gfstool.com/"
+      }
+    ],
+    "compute": {
+      "hpc": false,
+      "mem": "4Gi",
+      "cpus-per-task": 4,
+      "time": "02:00:00"
+    }
   }
 }
