@@ -1378,17 +1378,26 @@
     }
   },
   "outputs": {
+    "pipeline@121|default_output": {
+      "label": "Taxa",
+      "description": "Taxa supplied to the pipeline and used for GBIF occurrence retrieval and model fitting.",
+      "example": [
+        "Acer saccharum"
+      ],
+      "type": "text[]",
+      "weight": 0
+    },
     "filtering>cleanCoordinates.yml@34|clean_presence": {
       "description": "Cleaned GBIF occurrence records that passed the selected coordinate-cleaning tests. These records are used as presence points in the SDM workflow.",
       "label": "Presences",
       "type": "text/tab-separated-values",
-      "weight": 0
+      "weight": 1
     },
     "SDM>removeCollinearity.yml@97|rasters_selected": {
       "description": "GeoTIFF predictor rasters retained after collinearity filtering. These are the environmental variables used to fit and project the MaxEnt model.",
       "label": "Environmental predictors",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 1
+      "weight": 2
     },
     "SDM>runMaxent.yml@108|sdm_pred": {
       "description": "MaxEnt habitat suitability prediction raster fitted using the selected model settings.",
@@ -1398,21 +1407,12 @@
         0,
         1
       ],
-      "weight": 2
+      "weight": 3
     },
     "SDM>rangePredictions.yml@68|range_predictions": {
       "description": "The variability of the 95% confidence of each prediction can be viewed on a map to show uncertainty.",
       "label": "Variability of predictions",
       "type": "image/tiff;application=geotiff",
-      "weight": 3
-    },
-    "pipeline@121|default_output": {
-      "label": "Taxa list",
-      "description": "Taxa supplied to the pipeline and used for GBIF occurrence retrieval and model fitting.",
-      "example": [
-        "Acer saccharum"
-      ],
-      "type": "text[]",
       "weight": 4
     },
     "data>getGBIFObservations>getGBIFObservations.yml@142|gbif_doi": {

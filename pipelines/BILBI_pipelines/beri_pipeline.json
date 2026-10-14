@@ -521,10 +521,10 @@
     }
   },
   "outputs": {
-    "data>loadFromStac.yml@1|rasters": {
-      "description": "Output raster files in geotiff format.",
-      "label": "Raster layers of indicator for each year",
-      "type": "image/tiff;application=geotiff[]",
+    "bilbi_indicators>bilbi_weighted_mean.yml@0|time_series_plot": {
+      "description": "Plot of the geometric mean of the indicator over time in the study area of interest",
+      "label": "Time series plot",
+      "type": "image/png",
       "weight": 0
     },
     "bilbi_indicators>bilbi_weighted_mean.yml@0|summarised_values": {
@@ -533,10 +533,10 @@
       "type": "text/csv",
       "weight": 1
     },
-    "bilbi_indicators>bilbi_weighted_mean.yml@0|time_series_plot": {
-      "description": "Plot of the geometric mean of the indicator over time in the study area of interest",
-      "label": "Time series plot",
-      "type": "image/png",
+    "data>loadFromStac.yml@1|rasters": {
+      "description": "Output raster files in geotiff format.",
+      "label": "Raster layers of indicator for each year",
+      "type": "image/tiff;application=geotiff[]",
       "weight": 2
     }
   },
