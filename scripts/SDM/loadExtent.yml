@@ -5,12 +5,13 @@ author:
   - name: Sarah Valentin
     identifier: https://orcid.org/0000-0002-9028-681X
 external_link: https://googledrive.tidyverse.org/
-
+lifecycle:
+  status: core
 inputs:
   url:
     label: link
     description: String, link to the file.
-    type: text 
+    type: text
     example: "https://drive.google.com/file/d/1KKFOBKInnroe452Y7P8uu-h42QbHM6ff/view?usp=sharing"
   shp_name:
     label: shapefile name
@@ -20,6 +21,6 @@ inputs:
 outputs:
   extent:
     label: extent
-    description: Shape file representing the study extent 
+    description: Shape file representing the study extent
     type: application/dbf
     example: /output/studyExtent/studyExtent_R/9ab734795ba757bdabb32ae6708e18d1/study_extent.shp

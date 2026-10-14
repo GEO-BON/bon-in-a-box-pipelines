@@ -4,7 +4,8 @@ description: Load observations from [Biodiversité Québec's Atlas](https://biod
 author:
   - name: Guillaume Larocque
     identifier: https://orcid.org/0000-0002-5967-9156
-
+lifecycle:
+  status: core
 inputs:
   taxa:
     description: Array of taxa values
@@ -42,9 +43,10 @@ outputs:
     description: Date at which the database was last updated
     type: text
     example: "2024-01-01"
-conda: # Optional, only needed if your script has specific package dependencies
+conda:
   channels:
     - conda-forge
+    - r
   dependencies:
     - r-duckdb=1.0.0 #package=version
     - r-dplyr

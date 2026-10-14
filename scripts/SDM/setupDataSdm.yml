@@ -50,5 +50,18 @@ outputs:
     label: background presence
     description: Presence-background points with covariates values
     type: text/tab-separated-values
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-gdalcubes
+    - r-terra
+    - r-rjson
+    - r-raster
+    - r-dplyr
+    - r-ENMeval
+    - r-devtools
+
 
 

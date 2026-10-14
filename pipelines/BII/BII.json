@@ -1,11 +1,11 @@
 {
   "nodes": [
     {
-      "id": "25",
+      "id": "14",
       "type": "io",
       "position": {
-        "x": -42.71808404192598,
-        "y": 487.3252448665269
+        "x": 1886,
+        "y": 88.66666666666669
       },
       "data": {
         "descriptionFile": "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_bbox.json"
@@ -15,140 +15,390 @@
       "id": "26",
       "type": "io",
       "position": {
-        "x": 714.7696117462729,
-        "y": 412.9466080707863
+        "x": 2660,
+        "y": 266.5
       },
       "data": {
         "descriptionFile": "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_GFW_tree_canopy_2000-2023.json"
       }
     },
     {
-      "id": "27",
+      "id": "25",
       "type": "io",
       "position": {
-        "x": 1443.4798534675729,
-        "y": 542.1305561897038
+        "x": 2110,
+        "y": 411.8333333333333
       },
       "data": {
-        "descriptionFile": "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json"
+        "descriptionFile": "zonal_statistics>zonal_stats.yml"
       }
     },
     {
-      "id": "28",
+      "id": "56",
+      "type": "io",
+      "position": {
+        "x": 1421,
+        "y": 237
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "57",
+      "type": "constant",
+      "position": {
+        "x": 971,
+        "y": -28
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://stac.geobon.org/"
+      }
+    },
+    {
+      "id": "58",
+      "type": "constant",
+      "position": {
+        "x": 921,
+        "y": 26
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "bii_nhm"
+        ]
+      }
+    },
+    {
+      "id": "59",
+      "type": "constant",
+      "position": {
+        "x": 898,
+        "y": 241
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
+      }
+    },
+    {
+      "id": "60",
+      "type": "constant",
+      "position": {
+        "x": 898,
+        "y": 289
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "min",
+          "max",
+          "mean",
+          "median"
+        ]
+      }
+    },
+    {
+      "id": "61",
       "type": "output",
       "position": {
-        "x": 2213.734607460632,
-        "y": 542.738509172586
+        "x": 1888,
+        "y": 211.83333333333331
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "29",
+      "id": "63",
+      "type": "userInput",
+      "position": {
+        "x": 987,
+        "y": 72
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "64",
+      "type": "userInput",
+      "position": {
+        "x": 995,
+        "y": 110
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "66",
+      "type": "constant",
+      "position": {
+        "x": 967,
+        "y": 189
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "P5Y"
+      }
+    },
+    {
+      "id": "67",
+      "type": "userInput",
+      "position": {
+        "x": -320,
+        "y": 421.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "68",
+      "type": "io",
+      "position": {
+        "x": 199,
+        "y": 469
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "69",
       "type": "output",
       "position": {
-        "x": 2213.734607460632,
-        "y": 554.7502431151139
+        "x": 1037,
+        "y": 350.83333333333326
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "30",
-      "type": "output",
+      "id": "71",
+      "type": "constant",
       "position": {
-        "x": 2213.734607460632,
-        "y": 569.1643238461475
+        "x": -320,
+        "y": 490.5
       },
+      "dragHandle": ".dragHandle",
       "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "31",
-      "type": "output",
-      "position": {
-        "x": 2213.734607460632,
-        "y": 581.1760577886754
-      },
-      "data": {
-        "label": "Output"
+        "type": "float",
+        "value": 0
       }
     }
   ],
   "edges": [
     {
-      "source": "25",
-      "sourceHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons",
-      "target": "26",
-      "targetHandle": "pipeline@37",
-      "id": "reactflow__edge-25GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-26pipeline@37"
-    },
-    {
-      "source": "26",
-      "sourceHandle": "GFS_IndicatorsTool>get_TCY.yml@36|output_maps",
-      "target": "27",
-      "targetHandle": "GFS_IndicatorsTool>get_Indicators.yml@155|cover_maps",
-      "id": "reactflow__edge-26GFS_IndicatorsTool>get_TCY.yml@36|output_maps-27GFS_IndicatorsTool>get_Indicators.yml@155|cover_maps"
-    },
-    {
-      "source": "26",
-      "sourceHandle": "GFS_IndicatorsTool>get_TCY.yml@36|tcyy",
-      "target": "27",
-      "targetHandle": "pipeline@160",
-      "id": "reactflow__edge-26GFS_IndicatorsTool>get_TCY.yml@36|tcyy-27pipeline@160"
+      "source": "14",
+      "sourceHandle": "bii_change",
+      "target": "15",
+      "targetHandle": null,
+      "id": "reactflow__edge-14bii_change-15"
     },
     {
       "source": "25",
-      "sourceHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons",
-      "target": "27",
-      "targetHandle": "pipeline@161",
-      "id": "reactflow__edge-25GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-27pipeline@161"
+      "sourceHandle": "zonal_stats",
+      "target": "15",
+      "targetHandle": null,
+      "id": "reactflow__edge-25zonal_stats-15"
     },
     {
-      "source": "27",
-      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@155|interactive_plot",
-      "target": "28",
-      "targetHandle": null,
-      "id": "reactflow__edge-27GFS_IndicatorsTool>get_Indicators.yml@155|interactive_plot-28"
+      "source": "57",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-57-56stac_url"
     },
     {
-      "source": "27",
-      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@155|pm",
-      "target": "29",
-      "targetHandle": null,
-      "id": "reactflow__edge-27GFS_IndicatorsTool>get_Indicators.yml@155|pm-29"
+      "source": "58",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-58-56collections_items"
     },
     {
-      "source": "27",
-      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@155|ne_table",
-      "target": "30",
-      "targetHandle": null,
-      "id": "reactflow__edge-27GFS_IndicatorsTool>get_Indicators.yml@155|ne_table-30"
+      "source": "56",
+      "sourceHandle": "rasters",
+      "target": "14",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-56rasters-14rasters"
     },
     {
-      "source": "27",
-      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@155|ne500",
-      "target": "31",
+      "source": "59",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-59-56resampling"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-60-56aggregation"
+    },
+    {
+      "source": "56",
+      "sourceHandle": "rasters",
+      "target": "25",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-56rasters-25rasters"
+    },
+    {
+      "source": "56",
+      "sourceHandle": "rasters",
+      "target": "61",
       "targetHandle": null,
-      "id": "reactflow__edge-27GFS_IndicatorsTool>get_Indicators.yml@155|ne500-31"
+      "id": "reactflow__edge-56rasters-61"
+    },
+    {
+      "source": "63",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-63-56t0"
+    },
+    {
+      "source": "63",
+      "sourceHandle": null,
+      "target": "14",
+      "targetHandle": "start_year",
+      "id": "reactflow__edge-63-14start_year"
+    },
+    {
+      "source": "64",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-64-56t1"
+    },
+    {
+      "source": "64",
+      "sourceHandle": null,
+      "target": "14",
+      "targetHandle": "end_year",
+      "id": "reactflow__edge-64-14end_year"
+    },
+    {
+      "source": "66",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "temporal_res",
+      "id": "reactflow__edge-66-56temporal_res"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "25",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-67-25bbox_crs"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "68",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-67-68country_region_bbox"
+    },
+    {
+      "source": "68",
+      "sourceHandle": "polygon",
+      "target": "25",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-68polygon-25study_area_polygon"
+    },
+    {
+      "source": "68",
+      "sourceHandle": "polygon",
+      "target": "56",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-68polygon-56study_area"
+    },
+    {
+      "source": "68",
+      "sourceHandle": "polygon",
+      "target": "69",
+      "targetHandle": null,
+      "id": "reactflow__edge-68polygon-69"
+    },
+    {
+      "source": "71",
+      "sourceHandle": null,
+      "target": "68",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-71-68buffer"
+    },
+    {
+      "source": "68",
+      "sourceHandle": "bbox_crs",
+      "target": "56",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-68bbox_crs-56bbox_crs"
     }
   ],
   "inputs": {
-    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_bbox.json@25|pipeline@12": {
-      "description": "Scientific name of the species, used to look for occurrences in GBIF. ",
-      "label": "Species names",
-      "weight": 0,
-      "type": "text",
-      "example": "Quercus sartorii"
+    "data>load_polygons.yml@68|polygon_type": {
+      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.",
+      "label": "Polygon type",
+      "type": "options",
+      "options": [
+        "Country or region",
+        "Polygon of bounding box"
+      ],
+      "example": "Country or region",
+      "weight": 0
     },
-    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_bbox.json@25|pipeline@21": {
-      "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
-      "label": "Bounding box ",
-      "weight": 1,
-      "type": "float[]",
+    "pipeline@67": {
+      "label": "Bounding box and CRS",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box.",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 1
+    },
+    "zonal_statistics>zonal_stats.yml@25|summary_statistic": {
+      "description": "Summary statistic for layers",
+      "label": "Summary statistic",
+      "type": "options[]",
+      "options": [
+        "mean",
+        "median",
+        "sum",
+        "min",
+        "max",
+        "stdev",
+        "variance",
+        "mode"
+      ],
       "example": [
         "-99",
         "22",
@@ -156,112 +406,72 @@
         "29"
       ]
     },
-    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_bbox.json@25|GFS_IndicatorsTool>get_pop_poly.yml@5|buffer_size": {
-      "description": "Radius size [in km] to determine population presence around the coordinates of species observations.",
-      "label": "Size of buffer",
-      "weight": 2,
+    "data>loadFromStac.yml@56|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). If this is left blank it will use the native resolution of the rasters. If the spatial resolution is coarser than the native resolution of the rasters, the layers will be resampled using method \"near\".",
+      "label": "Spatial resolution (optional)",
       "type": "float",
-      "example": 10
+      "example": 0.00833,
+      "weight": 3
     },
-    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_bbox.json@25|GFS_IndicatorsTool>get_pop_poly.yml@5|pop_distance": {
-      "description": "Distance [in km] to separate species observations in different populations.",
-      "label": "Distance between populations",
-      "weight": 3,
-      "type": "float",
-      "example": 50
-    },
-    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_bbox.json@25|pipeline@15": {
-      "description": "Integer, 4 digit year, end date to retrieve occurrences",
-      "label": "End year",
-      "weight": 4,
-      "type": "int",
-      "example": 2000
-    },
-    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_bbox.json@25|pipeline@14": {
-      "description": "Integer, 4 digit year, start date to retrieve occurrences",
-      "label": "Start year",
-      "weight": 5,
-      "type": "int",
-      "example": 1980
-    },
-    "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_GFW_tree_canopy_2000-2023.json@26|pipeline@38": {
-      "description": "List of years for which tree cover should be extracted (maximum range 2000 - 2023).",
-      "label": "Years of interest",
-      "weight": 6,
-      "type": "int[]",
-      "example": [
-        2000,
-        2005,
-        2010,
-        2015,
-        2020
-      ]
-    },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@27|GFS_IndicatorsTool>get_Indicators.yml@155|runtitle": {
-      "description": "Set a name for the pipeline run.",
-      "label": "Title of the run",
-      "weight": 7,
+    "pipeline@63": {
+      "label": "Start date (optional)",
+      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "type": "text",
-      "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023"
+      "example": null,
+      "weight": 4
     },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@27|GFS_IndicatorsTool>get_Indicators.yml@155|ne_nc": {
-      "description": "Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, separated by a comma.",
-      "label": "Ne:Nc ratio estimate",
-      "weight": 8,
-      "type": "float[]",
-      "example": [
-        0.1,
-        0.2
-      ]
-    },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@27|GFS_IndicatorsTool>get_Indicators.yml@155|pop_density": {
-      "description": "Estimated density of the population [number of individuals per km2]. Multiple values can be provided, separated by a comma.",
-      "label": "Population density",
-      "weight": 9,
-      "type": "float[]",
-      "example": [
-        50,
-        100,
-        1000
-      ]
+    "pipeline@64": {
+      "label": "End date (optional)",
+      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
+      "type": "text",
+      "example": null,
+      "weight": 5
     }
   },
   "outputs": {
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@27|GFS_IndicatorsTool>get_Indicators.yml@155|ne_table": {
-      "description": "Estimated effective size of every population, based on the latest time point of the habitat cover map.",
-      "label": "Effective population size",
-      "weight": 0,
-      "type": "text/tab-separated-values"
+    "zonal_statistics>zonal_stats.yml@25|zonal_stats": {
+      "description": "Summary statistic over the polygon",
+      "label": "Summary statistic",
+      "type": "text/csv",
+      "weight": 0
     },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@27|GFS_IndicatorsTool>get_Indicators.yml@155|pm": {
-      "description": "Estimated proportion of mantained populations, comparing earliest and latest time point. A value of 1 means that no populations went extinct over the time frame.",
-      "label": "Population maintained indicator",
-      "weight": 1,
-      "type": "float"
+    "BII>BIIChange.yml@14|bii_change": {
+      "description": "Raster plot of change in BII. Higher numbers indicate greater BII loss.",
+      "label": "Change in BII",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 1
     },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@27|GFS_IndicatorsTool>get_Indicators.yml@155|interactive_plot": {
-      "description": "An interactive interface to explore indicators trends across geographical space and time.",
-      "label": "Interactive plot",
-      "weight": 2,
-      "type": "text/html"
+    "data>load_polygons.yml@68|polygon": {
+      "description": "Polygons of the country, WDPA, EEZs for the country or region of interest",
+      "label": "Polygon",
+      "type": "application/geopackage+sqlite3",
+      "weight": 2
     },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@27|GFS_IndicatorsTool>get_Indicators.yml@155|ne500": {
-      "description": "Estimated proportion of populations with Ne>500 at latest time point.",
-      "label": "Ne>500 indicator",
-      "weight": 3,
-      "type": "float"
+    "data>loadFromStac.yml@56|rasters": {
+      "description": "Output raster files in geotiff format.",
+      "label": "Rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 3
     }
   },
   "metadata": {
     "name": "Biodiversity Intactness Index",
-    "description": "This pipeline calculates zonal statistics of the biodiversity intactness index of a given country or region and change over time using the BII layers developed by the Natural History Museum.",
+    "description": "## Introduction \nThe Biodiversity Intactness Index (BII) is a metric designed to assess the degree to which ecosystems are intact and functioning relative to their natural state. It measures the abundance and diversity of species in a given area compared to what would be expected in an undisturbed ecosystem. The BII accounts for various factors, including habitat loss, fragmentation, and degradation, providing a comprehensive view of biodiversity health. A higher BII value indicates a more intact ecosystem with greater species diversity and abundance, while a lower value suggests significant ecological disruption. The biodiversity intactness index is a complimentary indicator in the GBF. The BII was created by the Natural History Museum and uses their PREDICTS database, which aggregates data from studies comparing terrestrial biodiversity at sites experiencing varying levels of human pressure. The database is used to establish a reference state using the biodiversity patterns in habitats with minimal disturbance levels. Then, it assigns sensitivity scores to each species based on their vulnerability to human pressure. Intactness is calculated by comparing the observed species abundance in a given area to what is expected under reference conditions with low human impact. It currently contains over 3 million records from more than 26,000 sites across 94 countries, representing a diverse array of over 45,000 plant, invertebrate, and vertebrate species.\n## Uses \nThe Biodiversity Intactness Index is a complimentary indicator in the GBF. This pipeline can be used to calculate summary statistics and plot a time series of the 10km resolution BII layer for a given country or region. The BII is expressed as a percentage, with higher percentages being more intact.\n## Pipeline limitations \nThe pipeline does not model the Biodiversity Intactness Index from the data, it calculates summary statistics over the 10 x 10 km BII layer pre-calcuated by the Natural History Museum calculated global layer. Therefore, you cannot customize the model or input custom data and you cannot increase the resolution of the layer. Additionally, because BII is a modelled data layer, the values may be less accurate in areas where there is a lack of data. To learn more about the PREDICTS database, visit the [page on the Natural History Museum website](https://www.nhm.ac.uk/our-science/research/projects/predicts/science.html).\n## Before you start \nThere are no data or API keys required for this analysis. To view the global layer, go to our [STAC catalog](https://stac.geobon.org/viewer/bii_nhm/bii_nhm_10km_2020).",
     "author": [
       {
         "name": "Jory Griffith",
-        "email": "jory.griffith@mcgill.ca"
+        "email": "jory.griffith@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0001-6020-6690",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Laetitia Tremblay",
+        "email": "laetita.tremblay@mcgill.ca",
+        "identifier": "https://www.linkedin.com/in/laetitia-tremblay-b0619b273/",
+        "role": "Pipeline documentation"
       }
     ],
-    "license": "CC-BY-NC-SA",
+    "license": "CC BY-NC-SA",
     "references": [
       {
         "text": "De Palma et al. 2024",
