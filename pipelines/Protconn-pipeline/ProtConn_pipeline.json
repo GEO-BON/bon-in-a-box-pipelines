@@ -494,34 +494,34 @@
       "type": "application/geopackage+sqlite3[]",
       "weight": 0
     },
-    "protconn_analysis>protconn_analysis.yml@42|protconn_result": {
-      "description": "The results of the ProtConn calculations. \"Prot\" and \"Unprot\" is the percentage of the study area that is \n      protected and unprotected, respectively. \"ProtConn\" is the percentage of the study area that is protected, and\n      connected, ProtUnconn is the percentage that is protected but unconnected. \"ProtConn Within\" is the percentage\n      of the landscape that is connected within a single protected area, i.e. the contribution to overall connectivity\n      coming from within the protected area, without species having to traverse unprotected land. \"ProtConn Contig\"\n      is the proportion connected through direct physical adjascency, capturing the value of neighboring or touching PAs. ",
-      "label": "ProtConn results",
-      "type": "text/csv",
-      "weight": 1
-    },
     "protconn_analysis>protconn_analysis.yml@42|result_plot": {
       "description": "Donut plot of the percentage of total area that is unprotected, protected and connected, and protected and unconnected for each input dispersal distance (in meters).",
       "label": "ProtConn result plot",
       "type": "image/png",
-      "weight": 2
-    },
-    "protconn_analysis>protconn_analysis.yml@42|result_yrs": {
-      "description": "Table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified.",
-      "label": "ProtConn time series results",
-      "type": "text/csv",
-      "weight": 3
+      "weight": 1
     },
     "protconn_analysis>protconn_analysis.yml@42|result_yrs_plot": {
       "description": "Change in the percentage area that is protected and the percentage that is protected and connected over time, at the chosen time interval, compared to the Kunming-Montreal GBF goals.",
       "label": "ProtConn time series plot",
       "type": "image/png[]",
-      "weight": 4
+      "weight": 2
     },
     "data>load_polygons.yml@61|polygon": {
       "description": "Polygon of the study area",
       "label": "Study area polygon",
       "type": "application/geopackage+sqlite3",
+      "weight": 3
+    },
+    "protconn_analysis>protconn_analysis.yml@42|result_yrs": {
+      "description": "Table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified.",
+      "label": "ProtConn time series results",
+      "type": "text/csv",
+      "weight": 4
+    },
+    "protconn_analysis>protconn_analysis.yml@42|protconn_result": {
+      "description": "The results of the ProtConn calculations. \"Prot\" and \"Unprot\" is the percentage of the study area that is \n      protected and unprotected, respectively. \"ProtConn\" is the percentage of the study area that is protected, and\n      connected, ProtUnconn is the percentage that is protected but unconnected. \"ProtConn Within\" is the percentage\n      of the landscape that is connected within a single protected area, i.e. the contribution to overall connectivity\n      coming from within the protected area, without species having to traverse unprotected land. \"ProtConn Contig\"\n      is the proportion connected through direct physical adjascency, capturing the value of neighboring or touching PAs. ",
+      "label": "ProtConn results",
+      "type": "text/csv",
       "weight": 5
     }
   },
