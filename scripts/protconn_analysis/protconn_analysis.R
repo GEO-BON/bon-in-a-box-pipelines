@@ -2,14 +2,14 @@
 biab_ensure_package(
     "samc", # required by Makurhini
     installer = function() {
-        install.packages(c("samc"), dependencies=FALSE); 
+        install.packages(c("samc"), dependencies=FALSE);
     }
 )
 
 biab_ensure_package(
     "graph4lg", # required by Makurhini
     installer = function() {
-        install.packages(c("graph4lg"), dependencies=FALSE); 
+        install.packages(c("graph4lg"), dependencies=FALSE);
     }
 )
 
@@ -42,11 +42,11 @@ if ((input$year_int) >= (input$years - input$start_year)) {
 units::units_options(set_units_mode = "standard")
 protected_areas_path <- c()
 # Load study area shapefile
-print("Loading study area")
+print("Step: loading study area")
 
 if (length(input$study_area_polygon) > 1) { # if there is userdata study area input then use that
   study_area_path <- input$study_area_polygon[grepl("/userdata", input$study_area_polygon)]
-  print(study_area_path)
+  print(paste("Study area file:", study_area_path))
   study_area <- st_read(study_area_path)
 } else {
   study_area <- st_read(input$study_area_polygon) # otherwise use the country polygon from the script
@@ -54,8 +54,7 @@ if (length(input$study_area_polygon) > 1) { # if there is userdata study area in
 
 
 study_area <- st_transform(study_area, st_crs(crs_input))
-print("CRS:")
-print(st_crs(study_area))
+print(paste("Study area reprojected to", crs_input))
 
 # check if there is WDPA data
 protected_areas <- input$protected_area_polygon[grepl("protected_areas_clean", input$protected_area_polygon)]
@@ -64,13 +63,13 @@ protected_areas <- input$protected_area_polygon[grepl("protected_areas_clean", i
 protected_areas_user <- input$protected_area_polygon[grepl("/userdata", input$protected_area_polygon)]
 
 if (length(protected_areas_user) > 0 && length(protected_areas) > 0) {
-  print("Using both WDPA and User input")
+  print("Protected area source: WDPA and user input")
   pa_input_type <- "Both"
 } else if (length(protected_areas_user) > 0) {
-  print("Only using user input data")
+  print("Protected area source: user input only")
   pa_input_type <- "User input"
 } else if (length(protected_areas) > 0) {
-  print("Using WDPA data")
+  print("Protected area source: WDPA only")
   pa_input_type <- "WDPA"
 } else {
   biab_error_stop("No files found: Please input or choose protected areas")
@@ -82,7 +81,7 @@ if (pa_input_type == "WDPA" || pa_input_type == "Both") { # if using WDPA data, 
   protected_areas <- st_read(protected_areas)
   protected_areas <- st_transform(protected_areas, st_crs(crs_input))
 
-  print(head(protected_areas))
+  print(paste("Loaded", nrow(protected_areas), "WDPA protected areas"))
 
   if (input$time_series == TRUE) {
     # label which rows are missing dates to remove later
@@ -108,7 +107,7 @@ if (pa_input_type == "WDPA" || pa_input_type == "Both") { # if using WDPA data, 
 
 if (pa_input_type == "User input" || pa_input_type == "Both") { # rename and parse date column
   protected_areas_user <- st_read(protected_areas_user) # load
-  print(protected_areas_user)
+  print(paste("Loaded", nrow(protected_areas_user), "user-defined protected areas"))
   protected_areas_user <- st_transform(protected_areas_user, st_crs(crs_input))
 
   if (input$time_series == TRUE) {
@@ -118,7 +117,7 @@ if (pa_input_type == "User input" || pa_input_type == "Both") { # rename and par
 
     if (!is.null(input$date_column)) {
       # Assign all PAs without a date to the start year for the time series
-      print("fixing date")
+      print("Step: assigning start year to user protected areas without a date")
 
       protected_areas_user <- protected_areas_user %>% rename(STATUS_YR = input$date_column)
       for (i in 1:nrow(protected_areas_user)) {
@@ -142,7 +141,7 @@ if (pa_input_type == "Both") {
   if (!"geom" %in% names(protected_areas)) { # check that geom column exists
     biab_error_stop("Geometry column must be called 'geom'")
   }
-  print("Combining user defined protected areas with WDPA data")
+  print("Step: combining user-defined protected areas with WDPA data")
   if (input$time_series == TRUE) {
     protected_areas <- protected_areas[, c("STATUS_YR", "geom")]
     protected_areas_user <- protected_areas_user[, c("STATUS_YR", "geom")]
@@ -154,23 +153,21 @@ if (pa_input_type == "Both") {
   protected_areas <- rbind(protected_areas, protected_areas_user)
 }
 
-print("Protected area geometry:")
-print(unique(st_geometry_type(protected_areas)))
-print(protected_areas)
-
-print(nrow(protected_areas))
+print(paste("Protected area geometry types:", paste(unique(st_geometry_type(protected_areas)), collapse = ", ")))
+print(paste("Total protected areas loaded:", nrow(protected_areas)))
+print("Step: fixing invalid protected area geometries")
 # buffer by a distance of 0 to fix some geometries
 protected_areas <- st_buffer(protected_areas, 0)
 
 any_invalid <- any(!st_is_valid(protected_areas))
-
 if (any_invalid) {
-  message("Invalid geometries detected. Fixing...")
+  print("Invalid geometries detected, repairing them")
   protected_areas <- st_make_valid(protected_areas)
 }
+
 ## Make function to get rid of overlapping geometries
 dissolve_overlaps <- function(x) {
-  print("Combining overlapping geometries")
+  print("Step: dissolving overlapping protected areas")
 
   protected_areas_clean <- x %>%
     st_buffer(dist = 10) %>%
@@ -178,15 +175,11 @@ dissolve_overlaps <- function(x) {
     st_cast("POLYGON") %>%
     st_as_sf()
 
-  print(protected_areas_clean)
-
   # Re-validate after union if needed
   invalid_after_union <- sum(!st_is_valid(protected_areas_clean))
   if (invalid_after_union > 0) {
-    print(paste(invalid_after_union, "invalid geometries found after union, running st_make_valid"))
+    print(paste(invalid_after_union, "invalid geometries found after union, repairing them"))
     protected_areas_clean <- st_make_valid(protected_areas_clean)
-  } else {
-    print("All geometries valid after union")
   }
 
   # Cast all to POLYGON (handles both POLYGON and MULTIPOLYGON)
@@ -196,30 +189,26 @@ dissolve_overlaps <- function(x) {
   # Checks to see if st_cast causes polygon loss
   # Before
   n_before <- nrow(protected_areas_clean)
-  print(n_before)
 
   protected_areas_clean <- protected_areas_clean %>%
     st_cast("POLYGON", group_or_split = TRUE)
 
   # After
   n_after <- nrow(protected_areas_clean)
-  print(n_after)
   if (n_after < n_before) {
     warning(paste(
       "Polygon loss detected:", n_before - n_after,
       "features lost during st_cast"
     ))
   } else {
-    print(paste("No polygon loss detected.", n_after, "polygons retained"))
+    print(paste("Dissolved into", n_after, "separate polygons"))
   }
 
   # Re-validate after cast if needed
   invalid_after_cast <- sum(!st_is_valid(protected_areas_clean))
   if (invalid_after_cast > 0) {
-    print(paste(invalid_after_cast, "invalid geometries found after cast, running st_make_valid"))
+    print(paste(invalid_after_cast, "invalid geometries found after cast, repairing them"))
     protected_areas_clean <- st_make_valid(protected_areas_clean)
-  } else {
-    print("All geometries valid after cast")
   }
 
   return(protected_areas_clean)
@@ -227,13 +216,12 @@ dissolve_overlaps <- function(x) {
 
 ############## CALCULATE PROTCONN ##################
 
-print("Calculating ProtConn")
+print("Step: calculating ProtConn")
 
 if ("STATUS_YR" %in% names(protected_areas)) {
   protected_areas <- protected_areas %>% filter(STATUS_YR <= input$years | is.na(STATUS_YR))
 }
-print("Num prot areas:")
-print(nrow(protected_areas))
+print(paste("Protected areas within the selected years:", nrow(protected_areas)))
 
 # Get rid of overlaps
 protected_areas_simp <- dissolve_overlaps(protected_areas)
@@ -241,13 +229,12 @@ protected_areas_simp <- dissolve_overlaps(protected_areas)
 # rename geometry column
 sf::st_geometry(protected_areas_simp) <- "geom"
 
-print("Num prot areas with overlaps dissolved and multipolygons expanded into different rows:")
-print(nrow(protected_areas_simp))
+print(paste("Protected areas after dissolving overlaps:", nrow(protected_areas_simp)))
 
 # Filter out protected areas smaller than the size threshold
 threshold <- units::set_units(input$pa_size_threshold, "m^2")
-print(threshold)
 protected_areas_simp <- protected_areas_simp %>% filter((st_area(protected_areas_simp)) > threshold)
+print(paste("Protected areas larger than", input$pa_size_threshold, "m2:", nrow(protected_areas_simp)))
 
 # output simplified protected areas
 protected_areas_simp_path <- file.path(outputFolder, "protected_areas_full.gpkg")
@@ -295,9 +282,7 @@ if (length(input$distance_threshold) == 1) {
   protconn_result[[name]] <- tmp
 }
 
-print("printing result:")
 study_area_km2 <- round((as.numeric(as.data.frame(protconn_result[[1]])[3, 2])) / 1e6, 2)
-print(class(study_area_km2))
 biab_output("study_area_km2", study_area_km2)
 protected_area_km2 <- round((as.numeric(as.data.frame(protconn_result[[1]])[4, 2]) / 1e6), 2)
 biab_output("protected_area_km2", protected_area_km2)
@@ -314,6 +299,7 @@ for (i in seq_along(protconn_result)) {
 
 # bind list
 protconn_result_long <- do.call(rbind, protconn_result_list)
+print("ProtConn results:")
 print(protconn_result_long)
 # turn to wide format for output
 protconn_result <- pivot_wider(protconn_result_long, id_cols = "Distance", names_from = "ProtConn indicator", values_from = "Percentage")
@@ -353,7 +339,7 @@ if (!(input$years %in% years)) { # check if the end year is there
 }
 
 # Calculate ProtConn for each specified year
-print("Calculating ProtConn time series")
+print("Step: calculating ProtConn time series")
 
 if (input$time_series == TRUE) {
   # drop Na dates if user chose not to include them
@@ -364,7 +350,7 @@ if (input$time_series == TRUE) {
 
   for (i in seq_along(years)) {
     yr <- years[i]
-    print(paste("Processing year:", yr))
+    print(paste0("Step: processing year ", yr, " (", i, "/", length(years), ")"))
 
 
     if (input$include_na_dates == TRUE && yr == input$years) { # skip end year because already calculated above
@@ -375,14 +361,13 @@ if (input$time_series == TRUE) {
         dplyr::filter(STATUS_YR <= yr)
 
       if (nrow(protected_areas_filt_yr) < 2) {
-        message(paste("Not enough protected area data from", yr, "- skipping"))
+        print(paste("Not enough protected areas in", yr, "(need at least 2), skipping year"))
         next
       }
 
       protected_areas_filt_yr <- dissolve_overlaps(protected_areas_filt_yr)
-      print(head(protected_areas_filt_yr))
       protected_areas_filt_yr <- protected_areas_filt_yr %>% filter((st_area(protected_areas_filt_yr)) > threshold)
-      print(nrow(protected_areas_filt_yr))
+      print(paste0("Protected areas in ", yr, " larger than ", input$pa_size_threshold, " m2: ", nrow(protected_areas_filt_yr)))
 
       protconn_result_yrs <- Makurhini::MK_ProtConn(
         nodes = protected_areas_filt_yr,
@@ -418,6 +403,7 @@ if (input$time_series == TRUE) {
       protconn_result_combined <- do.call(rbind, protconn_result_list)
       protconn_result_combined$Year <- yr
     }
+    print(paste("ProtConn results for", yr))
     print(protconn_result_combined)
     protconn_ts_result[[i]] <- protconn_result_combined
     if (exists("protected_areas_filt_yr")) {
@@ -431,7 +417,7 @@ if (input$time_series == TRUE) {
 
   # Final time series dataframe
   protconn_result_yrs <- do.call(rbind, protconn_ts_result)
-  print("Printing result years")
+  print("ProtConn time series results:")
   print(protconn_result_yrs)
 
   result_yrs <- tidyr::pivot_wider(

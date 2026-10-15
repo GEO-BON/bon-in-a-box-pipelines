@@ -929,7 +929,7 @@
     "license": "MIT",
     "external_link": "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/BRT",
     "lifecycle": {
-      "status": "stale",
+      "status": "in_development",
       "message": "This pipeline is not actively maintained. It might be non-functional."
     }
   }

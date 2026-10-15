@@ -49,11 +49,13 @@ connection.authenticate_oidc_client_credentials(
 
 # Load study area polygon
 polygon = gpd.read_file(polygon)
-# Simplify for openEO calculation
-if coord.is_projected:
+# Simplification tolerance must use the polygon's CRS, not the output CRS.
+if polygon.crs is None:
+    biab_error_stop("The study area polygon must have a defined CRS.")
+if polygon.crs.is_geographic:
     tolerance = 0.001  # in degrees
 else:
-    tolerance=100 # in meters
+    tolerance = 100  # in metres
 polygon['geometry'] = polygon.geometry.simplify(tolerance, preserve_topology=True)
 
 # Pull sentinel data and calculate NDVI

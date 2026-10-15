@@ -1,9 +1,19 @@
-# Species Habitat Index and Species Habitat Score
-### Author(s): Maria Isabel Arce-Plata, Guillaume Larocque, Jaime Burbano-Girón, Maria Camila Díaz, Timothée Poisot, Jory Griffith, Jean-Michel Lord
+# Species Habitat Index and Species Habitat Score  
+
+### Author(s): Maria Isabel Arce-Plata, Guillaume Larocque, Jaime Burbano-Girón, Maria Camila Díaz, Timothée Poisot, Jory Griffith, Jean-Michel Lord  
+
 #### Reviewed by: In review
 
 ## Introduction
-The [Species Habitat Index](https://geobon.org/ebvs/indicators/species-habitat-index-shi/) (SHI) is a component indicator for the Global Biodiversity Framework (GBF). SHI tracks changes in ecological integrity by measuring the change in the quality and connectivity of habitats of species. It is a composite of Species Habitat Scores (SHS), which measure the amount of suitable area for a single species of interest, relative to its total range size. The BON in a Box pipeline uses species range maps pulled from IUCN or species distribution models and information about elevational ranges and IUCN habitat preferences to determine the suitable area for the species. Then, the pipeline uses either Global Forest Watch or ESA landcover layers to calculate the area of suitable habitat and connectivity scores for each species of interest. This layer is then used to create a raster with the distances to habitat edges and the mean value for the area is used as the connectivity score. The habitat and connectivity score are combined to form the SHS. To calculate SHI, the SHS for each species is averaged and to calculate Steward’s SHI, this is also weighted by the proportion of the species’ range that is in the study area.
+The [Species Habitat Index](https://geobon.org/ebvs/indicators/species-habitat-index-shi/) (SHI) is a component indicator for the Global Biodiversity Framework (GBF). SHI tracks changes in ecological integrity by measuring the change in the quality and connectivity of habitats of species. It is a composite of Species Habitat Scores (SHS), which measure the amount of suitable area for a single species of interest, relative to its total range size.  
+
+The index has two components: 1) an Area Score and a 2) Connectivity score that are
+  measured for the habitat of the required species (Species Habitat Score). The
+  Species Habitat Index is the average between those scores for the study area 
+  Index. It can also have weight values assigned according to the proportion of
+  the area of the habitat of the species that is located in the study area. 
+
+The BON in a Box pipelines calculate SHS and SHI. The pipeline uses species range maps, the elevation ranges, and the habitat categories available from The International Union for Conservation of Nature (IUCN).  For the specific case of Quebec, it has range maps available from the Ministère de l’Environnement. Area of suitable habitat and connectivity  measured using the Global Forest Watch layers, and soon other land cover layers will be added. More information on the methodology of the pipeline can be read [here](https://cdn.mol.org/static/files/indicators/habitat/WCMC-species_habitat_index-15Feb2022.pdf).
 
 ## 'Use Case'/Context
 SHI is an important indicator for assessing progress towards Goal A of the GBF, which calls for the enhanced integrity of natural ecosystems. Read more about how SHI can be used to assess progress toward goal A here ([https://cdn.mol.org/static/files/indicators/habitat/WCMC-species_habitat_index-15Feb2022.pdf](https://cdn.mol.org/static/files/indicators/habitat/WCMC-species_habitat_index-15Feb2022.pdf)).
@@ -43,9 +53,9 @@ BON in a Box has a pipeline to calculate SHS and SHI for species, countries, and
 
 - **Max forest:** Maximum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Myrmecophaga-tridactyla]). For multiple species, input in the same order as the input in species and separate with a comma.
 
-- **Initial time:** Year at which the analysis should begin, must be 2000 or later. Check the time interval available for the Global Forecst Watch data [here](https://stac.geobon.org/collections/gfw-lossyear).
+- **Start Year:** Year at which the analysis should begin, must be 2000 or later. Check the time interval available for the Global Forecst Watch data [here](https://stac.geobon.org/collections/gfw-lossyear).
 
-- **Final time:** Year at which the analysis should end, must be a later than the `Initial time` input. It should be within the time interval for the Global Forest Watch (GFW) data which can be found [here](https://stac.geobon.org/collections/gfw-lossyear).
+- **End Year:** Year at which the analysis should end, must be a later than the `Initial time` input. It should be within the time interval for the Global Forest Watch (GFW) data which can be found [here](https://stac.geobon.org/collections/gfw-lossyear).
 
 - **Time step:** Temporal resolution for analysis, in number of years. To get values for the end year, the time step should fit evenly into the given analysis range.
 
@@ -54,6 +64,10 @@ BON in a Box has a pipeline to calculate SHS and SHI for species, countries, and
 - **Filter by elevation:** The user can decide whether they want to include elevation in the range map of the species of interest. If “yes” is chosen, the pipeline will extract the species elevation preferences from IUCN and remove areas within the range map that are outside of the elevational range of the species. The user can also specify a buffer to the elevation values.
 
 - **Elevation buffer:** Elevation buffer (in meters) to be added or subtracted to the reported species elevation range. Default is zero. Positive values will increase the range by that number in meters, while negative values will decrease the range by that number.
+
+- **Resampling method:** Resampling method used when rescaling the raster layers. See [gdalwrap](https://gdal.org/en/latest/programs/gdalwarp.html) for a description.
+
+- **Aggregation method:** Method used to aggregate items that overly each other. 
 
 ### Pipeline steps
 
@@ -95,6 +109,23 @@ This steps calculate the Species Habitat Index (SHI) for the species of interest
 **Sample run:** See an example SHI run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/_2025-10-16%3ESpeciesHabitatIndex%3ESHI_pipeline/6cc8d65e413c341d251ea2550dadeacc) and [viewer](https://pipelines-results.geobon.org/viewer/_2025-10-16%3ESpeciesHabitatIndex%3ESHI_pipeline%3E6cc8d65e413c341d251ea2550dadeacc).
 
 ## Troubleshooting
+### Common errors:
+- `Error: Script "data > Get species range map": ========== No range map available from expert source database ========== `: if you encounter this error, it means that there is no available expert range maps from IUCN, MoL, or  from the Ministère de l’Environnement du Québec (QC).  
+
+    Check that your species is listed in the source's lookup table before running:
+
+    - IUCN (International Union for Conservation of Nature): mammals, amphibians, reptiles and some plants (only plants with digitised IUCN range maps).
+    [Species list (column "binomial")](https://object-arbutus.cloud.computecanada.ca/bq-io/io/IUCN_rangemaps/iucn_fid_binomials.csv)
+
+    - MOL (Map of Life): mammals only.
+    [Species list (column "sciname")](https://object-arbutus.cloud.computecanada.ca/bq-io/io/mol_range_maps/mol_mammals.csv)
+
+    - QC (Ministère de l'Environnement du Québec): mammals, reptiles and amphibians, Québec extent only. Type names without accents.
+    [Species list (column "NOM_SCIENT")](https://object-arbutus.cloud.computecanada.ca/bq-io/io/qc_range_maps/qc_range_maps.csv)
+
+    Birds are not currently available from any source.
+
+- `Error: Script "data > Load from STAC": CRS is in degrees and resolution is in meters.`: if you get this error please ensure the CRS and resolution match. For example, CRS in degrees: EPSG:4326 or CRS in metres: EPSG:8857
 
 ## References
 Brooks, T. M., Pimm, S. L., Akçakaya, H. R., Buchanan, G. M., Butchart, S. H. M., Foden, W., Hilton-Taylor, C., Hoffmann, M., Jenkins, C. N., Joppa, L., Li, B. V., Menon, V., Ocampo-Peñuela, N., & Rondinini, C. (2019). Measuring Terrestrial Area of Habitat (AOH) and Its Utility for the IUCN Red List. Trends in Ecology & Evolution, 34(11), 977–986. [https://doi.org/10.1016/j.tree.2019.06.009](https://doi.org/10.1016/j.tree.2019.06.009)
