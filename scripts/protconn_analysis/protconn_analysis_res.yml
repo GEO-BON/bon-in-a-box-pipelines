@@ -226,3 +226,4 @@ conda:
 compute:
   mem: 25G
   cpus-per-task: 4
+  mem-max: 52G
