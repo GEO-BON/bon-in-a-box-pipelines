@@ -33,9 +33,9 @@ inputs:
     label: feature classes
     description:
       Vector of strings, feature classes for MaxEnt algorithm.
-      Accepted values are combinations of L (linear), Q (quadratic), P (product), H (hinge) or T (threshold).
+      Accepted values are combinations of L (linear), Q (quadratic), P (product), H (hinge) or T (threshold, deprecated).
     type: text[]
-    example: ["L", "LQ", "LQHP"]
+    example: ["L", "LQ", "LQH"]
   rm:
     label: regularization multiplier
     description: Vector of numbers, regularization multipliers for MaxEnt algorithm.

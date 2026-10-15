@@ -424,4 +424,4 @@ for (coll_it in collections_items) { # Loop through input array
   raster_paths <- c(raster_paths, paths)
 }
 
-biab_output("rasters", raster_paths)
+biab_output("rasters", as.list(raster_paths))

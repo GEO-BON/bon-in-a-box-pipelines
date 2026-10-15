@@ -59,7 +59,8 @@ def stac_create_item(file_path, file_url, name, datetime, collection, properties
     print('Raster statistics for STAC Item:', statistics)
     asset = pystac.Asset(
         href=file_url,
-        media_type=pystac.MediaType.COG
+        media_type=pystac.MediaType.COG,
+        roles=["data"]
     )
     raster_bands = [RasterBand.create(
         spatial_resolution=resolution,
