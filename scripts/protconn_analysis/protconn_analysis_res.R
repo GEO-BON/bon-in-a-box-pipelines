@@ -39,6 +39,24 @@ if ((input$year_int) >= (input$years - input$start_year)) {
   biab_error_stop("Please make sure the year interval is smaller than the difference between start year and year for cutoff.")
 }
 
+units::units_options(set_units_mode = "standard")
+protected_areas_path <- c()
+# Load study area shapefile
+print("Loading study area")
+
+if (length(input$study_area_polygon) > 1) { # if there is userdata study area input then use that
+  study_area_path <- input$study_area_polygon[grepl("/userdata", input$study_area_polygon)]
+  print(study_area_path)
+  study_area <- st_read(study_area_path)
+} else {
+  study_area <- st_read(input$study_area_polygon) # otherwise use the country polygon from the script
+}
+
+
+study_area <- st_transform(study_area, st_crs(crs_input))
+print("CRS:")
+print(st_crs(study_area))
+
 resistance_layer <- input$resistance_layer
 
 if (is.null(resistance_layer)) {
@@ -46,7 +64,7 @@ if (is.null(resistance_layer)) {
 } else {
   resistance_layer <- rast(resistance_layer)
   print("Resistance layer provided, using least-cost distance for ProtConn analysis.")
-  if(!isTRUE(sf::st_crs(terra::crs(resistance_layer))$epsg == crs_input)) {
+  if (!isTRUE(sf::st_crs(terra::crs(resistance_layer)) == sf::st_crs(crs_input))) {
     print("Reprojecting resistance raster to the analysis CRS.")
 
     resistance_layer <- terra::project(
@@ -55,7 +73,7 @@ if (is.null(resistance_layer)) {
       method = "bilinear"
     )
   }
-    # Include the transboundary buffer, when provided.
+  # Include the transboundary buffer, when provided.
   required_area <- sf::st_union(study_area)
   buffer_distance <- if (is.null(input$buffer)) 0 else input$buffer
 
@@ -89,24 +107,6 @@ if (is.null(resistance_layer)) {
 
 print("Resistance layer:")
 print(resistance_layer)
-
-units::units_options(set_units_mode = "standard")
-protected_areas_path <- c()
-# Load study area shapefile
-print("Loading study area")
-
-if (length(input$study_area_polygon) > 1) { # if there is userdata study area input then use that
-  study_area_path <- input$study_area_polygon[grepl("/userdata", input$study_area_polygon)]
-  print(study_area_path)
-  study_area <- st_read(study_area_path)
-} else {
-  study_area <- st_read(input$study_area_polygon) # otherwise use the country polygon from the script
-}
-
-
-study_area <- st_transform(study_area, st_crs(crs_input))
-print("CRS:")
-print(st_crs(study_area))
 
 # check if there is WDPA data
 protected_areas <- input$protected_area_polygon[grepl("protected_areas_clean", input$protected_area_polygon)]
