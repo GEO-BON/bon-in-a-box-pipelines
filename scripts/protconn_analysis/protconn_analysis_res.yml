@@ -224,6 +224,5 @@ conda:
     - r-vegan
 
 compute:
-  mem: 25G
+  mem: 50G
   cpus-per-task: 4
-  mem-max: 50Gi
