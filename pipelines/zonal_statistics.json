@@ -304,7 +304,7 @@
   },
   "outputs": {
     "zonal_statistics>zonal_stats.yml@4|zonal_stats": {
-      "description": "Download zonal_stats.csv: the layer column identifies each raster by filename, and each selected statistic has its own column. Values use the input raster units and scaling. Separate dates remain separate layers. ",
+      "description": "Download zonal_stats.csv: one row per polygon and raster layer, with polygon_id (the 1-based row number in the input polygon file), layer (the raster filename without extension), and one column per selected statistic. Available protected-area identifiers (SITE_ID, SITE_PID, WDPAID, WDPA_PID) and names (NAME, NAME_ENG) are included. Values use the input raster units and scaling. Separate dates remain separate layers.",
       "label": "Summary statistic",
       "type": "text/csv",
       "weight": 0
