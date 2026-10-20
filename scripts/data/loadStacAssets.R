@@ -54,6 +54,7 @@ if (has_text(input$study_area)) {
 # HTTP raster reads use GDAL's range requests rather than downloading whole files.
 Sys.setenv(GDAL_DISABLE_READDIR_ON_OPEN = "EMPTY_DIR", VSI_CACHE = "TRUE")
 
+
 read_asset <- function(href) {
   if (!has_text(href)) biab_error_stop("The selected STAC asset has no usable href.")
   path <- if (grepl("^https?://", href)) paste0("/vsicurl/", href) else href
@@ -62,7 +63,11 @@ read_asset <- function(href) {
 
 # Planetary Computer assets need a SAS token appended to their hrefs.
 is_planetary_computer <- function(catalog) {
-  grepl("planetarycomputer.microsoft.com", catalog, fixed = TRUE)
+  grepl(pattern ="planetarycomputer.microsoft.com", catalog, fixed = TRUE)
+}
+
+is_unbl <- function(catalog) {
+  grepl(pattern = "stac.api.unbiodiversitylab.org", catalog, fixed = TRUE)
 }
 
 sign_items <- function(items, catalog) {
@@ -70,7 +75,15 @@ sign_items <- function(items, catalog) {
   rstac::items_sign(items, sign_fn = rstac::sign_planetary_computer())
 }
 
+
+catalog_headers <- function(catalog) {
+  if (!is_unbl(catalog)) return(NULL)
+  httr::add_headers(`X-API-Key` = Sys.getenv("UNBL_API_KEY"))
+}
+
 selection_hrefs <- function(selection) {
+  hdr <- catalog_headers(selection$catalog)
+
   if (!isTRUE(selection$items_are_tiles)) {
     if (has_text(selection$href)) {
       if (!is_planetary_computer(selection$catalog)) return(selection$href)
@@ -82,17 +95,19 @@ selection_hrefs <- function(selection) {
     item <- rstac::stac(selection$catalog) |>
       rstac::collections(selection$collection) |>
       rstac::items(selection$item) |>
-      rstac::get_request() |>
+      rstac::get_request(hdr) |>
       sign_items(selection$catalog)
     return(item$assets[[selection$asset]]$href)
   }
+
+
 
   # Collection endpoints work with both static catalogs and STAC APIs.
   items <- rstac::stac(selection$catalog) |>
     rstac::collections(selection$collection) |>
     rstac::items() |>
-    rstac::get_request() |>
-    rstac::items_fetch() |>
+    rstac::get_request(hdr) |>
+    rstac::items_fetch(hdr) |>
     sign_items(selection$catalog)
   features <- items$features
   item_day <- function(item) {
