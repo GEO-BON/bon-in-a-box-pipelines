@@ -428,7 +428,7 @@
       "description": "Size threshold for PAs, in meters squared. Protected areas smaller than this area will be removed. A threshold of 1000m2 was used in Saura et al. 2017 because at larger scales, protected areas less than 1000m2 do not have a large impact on ProtConn values. Removing small protected areas significantly speeds up calculation and is recommended for large areas. Input a value of 0 to keep all protected areas.",
       "label": "PA size threshold",
       "type": "float",
-      "example": 1000,
+      "example": 100000,
       "weight": 10
     },
     "pipeline@68": {
