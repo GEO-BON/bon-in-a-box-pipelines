@@ -29,10 +29,14 @@ print(rasters)
 zonal_list <- list()
 # Extract summary statistics
 for (i in 1:length(input$summary_statistic)) {
-  zonal_result <- exact_extract(rasters, study_area, input$summary_statistic[i]) # calculate statistic
+  # Keep a table and statistic.layer names even for a single raster layer.
+  zonal_result <- exact_extract(
+    rasters, study_area, input$summary_statistic[i],
+    force_df = TRUE, full_colnames = TRUE
+  )
 
   # Make nicer table
-  zonal_result <- pivot_longer(zonal_result, cols = names(zonal_result)) %>% separate(col = name, into = c("statistic", "layer"), sep = "\\.")
+  zonal_result <- pivot_longer(zonal_result, cols = names(zonal_result)) %>% separate(col = name, into = c("statistic", "layer"), sep = "\\.", extra = "merge")
 
   zonal_list[[i]] <- zonal_result # put all into a list
 }

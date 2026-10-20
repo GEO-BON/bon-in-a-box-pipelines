@@ -4,8 +4,8 @@
       "id": "4",
       "type": "io",
       "position": {
-        "x": 1340,
-        "y": 198
+        "x": 1943,
+        "y": 202.5
       },
       "data": {
         "descriptionFile": "zonal_statistics>zonal_stats.yml"
@@ -15,30 +15,8 @@
       "id": "6",
       "type": "output",
       "position": {
-        "x": 1755,
-        "y": 169
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "25",
-      "type": "io",
-      "position": {
-        "x": 868,
-        "y": 24
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
-      "id": "26",
-      "type": "output",
-      "position": {
-        "x": 1340,
-        "y": 140
+        "x": 2361,
+        "y": 39.5
       },
       "data": {
         "label": "Output"
@@ -60,8 +38,8 @@
       "id": "28",
       "type": "io",
       "position": {
-        "x": 432,
-        "y": 218
+        "x": 433,
+        "y": 242.5
       },
       "data": {
         "descriptionFile": "data>load_polygons.yml"
@@ -71,13 +49,114 @@
       "id": "30",
       "type": "constant",
       "position": {
-        "x": 14,
-        "y": 232
+        "x": 46,
+        "y": 266
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float",
         "value": 0
+      }
+    },
+    {
+      "id": "37",
+      "type": "io",
+      "position": {
+        "x": 1341,
+        "y": 57.5
+      },
+      "data": {
+        "descriptionFile": "data>loadStacAssets.yml"
+      }
+    },
+    {
+      "id": "38",
+      "type": "output",
+      "position": {
+        "x": 1943,
+        "y": 16.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "39",
+      "type": "constant",
+      "position": {
+        "x": 888,
+        "y": 184.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "last",
+          "modal"
+        ]
+      }
+    },
+    {
+      "id": "40",
+      "type": "constant",
+      "position": {
+        "x": 888,
+        "y": 136.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "mean",
+        "options": [
+          "first",
+          "last",
+          "mean",
+          "median",
+          "min",
+          "max",
+          "sum"
+        ]
+      }
+    },
+    {
+      "id": "41",
+      "type": "constant",
+      "position": {
+        "x": 888,
+        "y": 88.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "mode"
+        ]
+      }
+    },
+    {
+      "id": "42",
+      "type": "constant",
+      "position": {
+        "x": 888,
+        "y": 40.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "bilinear",
+        "options": [
+          "near",
+          "bilinear",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "average",
+          "mode"
+        ]
       }
     }
   ],
@@ -88,27 +167,6 @@
       "target": "6",
       "targetHandle": null,
       "id": "reactflow__edge-4zonal_stats-6"
-    },
-    {
-      "source": "25",
-      "sourceHandle": "rasters",
-      "target": "4",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-25rasters-4rasters"
-    },
-    {
-      "source": "25",
-      "sourceHandle": "rasters",
-      "target": "26",
-      "targetHandle": null,
-      "id": "reactflow__edge-25rasters-26"
-    },
-    {
-      "source": "27",
-      "sourceHandle": null,
-      "target": "25",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-27-25bbox_crs"
     },
     {
       "source": "27",
@@ -134,21 +192,64 @@
     {
       "source": "28",
       "sourceHandle": "polygon",
-      "target": "25",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-28polygon-25study_area"
+      "target": "4",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-28polygon-4study_area_polygon"
+    },
+    {
+      "source": "37",
+      "sourceHandle": "rasters",
+      "target": "4",
+      "targetHandle": "rasters",
+      "id": "xy-edge__37rasters-4rasters"
+    },
+    {
+      "source": "37",
+      "sourceHandle": "rasters",
+      "target": "38",
+      "id": "xy-edge__37rasters-38"
+    },
+    {
+      "source": "39",
+      "target": "37",
+      "targetHandle": "categorical_aggregation",
+      "id": "xy-edge__39-37categorical_aggregation"
+    },
+    {
+      "source": "40",
+      "target": "37",
+      "targetHandle": "continuous_aggregation",
+      "id": "xy-edge__40-37continuous_aggregation"
+    },
+    {
+      "source": "41",
+      "target": "37",
+      "targetHandle": "categorical_resampling",
+      "id": "xy-edge__41-37categorical_resampling"
+    },
+    {
+      "source": "42",
+      "target": "37",
+      "targetHandle": "resampling",
+      "id": "xy-edge__42-37resampling"
+    },
+    {
+      "source": "27",
+      "target": "37",
+      "targetHandle": "bbox_crs",
+      "id": "xy-edge__27-37bbox_crs"
     },
     {
       "source": "28",
       "sourceHandle": "polygon",
-      "target": "4",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-28polygon-4study_area_polygon"
+      "target": "37",
+      "targetHandle": "study_area",
+      "id": "xy-edge__28polygon-37study_area"
     }
   ],
   "inputs": {
     "data>load_polygons.yml@28|polygon_type": {
-      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.",
+      "description": "Choose country or subnational region boundaries, World Database of Protected Areas (WDPA) polygons, or Exclusive Economic Zones (EEZs) for the selected area. The polygon loader masks the raster outputs to these boundaries.",
       "label": "Polygon type",
       "type": "options",
       "options": [
@@ -161,13 +262,13 @@
     },
     "pipeline@27": {
       "label": "Bounding box and CRS",
-      "description": "Select a country/region and a CRS to obtain the associated bounding box.",
+      "description": "Select a country or region and the coordinate reference system (CRS) for the analysis. ",
       "type": "bboxCRS",
       "example": null,
       "weight": 1
     },
     "zonal_statistics>zonal_stats.yml@4|summary_statistic": {
-      "description": "Summary statistic for layers",
+      "description": "Choose one or more statistics to calculate separately for each raster layer: mean, median, sum, minimum, maximum, standard deviation (stdev), variance, or mode. \n\nNote: Indicator-specific denominator weights are not included here; sum does not convert an index into habitat area or species counts.",
       "label": "Summary statistic",
       "type": "options[]",
       "options": [
@@ -186,98 +287,30 @@
       ],
       "weight": 2
     },
-    "data>loadFromStac.yml@25|stac_url": {
-      "description": "URL of the STAC catalog.",
-      "label": "STAC URL",
-      "type": "text",
-      "example": "https://stac.geobon.org/",
+    "data>loadStacAssets.yml@37|stac": {
+      "description": "Choose the environmental map layers to summarize zonal statistics.\n\nOpen the chooser and browse a catalog (an online data directory). Select a collection (a group of related data), an item (a particular observation or geographic piece), and an asset (the map file to load). Click Add to selection for each layer you want. STAC is the standard these catalogs use to organize geographic data.\n\nIf a layer is split into geographic pieces called tiles, select the mosaic option to join them into one map. Choose a date when available. Mark layers containing classes (e.g. landcover contains classes such as forest, water, etc.) as Categorical layer; leave this unchecked for continuous layers (e.g. temperature, elevation). This lets the loader use separate resampling and tile aggregation settings for each kind of data.\n\nThe selected layers will be cropped and prepared using the study area, coordinate system, and spatial resolution specified in this pipeline.",
+      "label": "STAC assets",
+      "type": "stac_asset[]",
+      "example": null,
       "weight": 3
     },
-    "data>loadFromStac.yml@25|collections_items": {
-      "description": "Vector of strings. To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. \"chelsa-clim|bio1\"). To extract a whole collection, type the collection name only (e.g. \"chelsa-clim\"). To pull collection items by date, write the collection name and provide a start date, end date, and temporal resolution.",
-      "label": "STAC collection items",
-      "type": "text[]",
-      "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
-      ],
-      "weight": 4
-    },
-    "data>loadFromStac.yml@25|t0": {
-      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
-      "label": "Start date (optional)",
-      "type": "text",
-      "example": null,
-      "weight": 5
-    },
-    "data>loadFromStac.yml@25|t1": {
-      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
-      "label": "End date (optional)",
-      "type": "text",
-      "example": null,
-      "weight": 6
-    },
-    "data>loadFromStac.yml@25|temporal_res": {
-      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
-      "label": "Temporal resolution (optional)",
-      "type": "text",
-      "example": null,
-      "weight": 7
-    },
-    "data>loadFromStac.yml@25|spatial_res": {
-      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). \n\nIf this is left blank it will use the native resolution of the rasters. \n\nIf the spatial resolution is coarser than the native resolution of the rasters, the layers will be resampled with the resampling method chosen below.",
-      "label": "Spatial resolution (optional)",
+    "data>loadStacAssets.yml@37|spatial_res": {
+      "description": "Positive output pixel size in the target CRS units (degrees for geographic coordinates, metres for a CRS measured in metres). Leave blank to retain native resolution when keeping the asset CRS; required when changing CRS. Resampling and pixel size can change the summary values.",
+      "label": "Spatial resolution",
       "type": "float",
-      "example": 1000,
-      "weight": 8
-    },
-    "data>loadFromStac.yml@25|resampling": {
-      "description": "Resampling method used when rescaling and/or reprojecting the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.\n\nWill be ignored if not resampling.",
-      "label": "Resampling method",
-      "type": "options",
-      "options": [
-        "near",
-        "bilinear",
-        "average",
-        "mode",
-        "cubic",
-        "cubicspline",
-        "lanczos",
-        "rms",
-        "min",
-        "max",
-        "sum",
-        "med",
-        "q1",
-        "q3"
-      ],
-      "example": "near",
-      "weight": 9
-    },
-    "data>loadFromStac.yml@25|aggregation": {
-      "description": "Method used to aggregate items when layers combining over time.\n\nWill be ignored if not combining over time.",
-      "label": "Aggregation method",
-      "type": "options",
-      "options": [
-        "first",
-        "min",
-        "max",
-        "mean",
-        "median"
-      ],
-      "example": "first",
-      "weight": 10
+      "example": null,
+      "weight": 4
     }
   },
   "outputs": {
     "zonal_statistics>zonal_stats.yml@4|zonal_stats": {
-      "description": "Summary statistic over the polygon",
+      "description": "Download zonal_stats.csv: the layer column identifies each raster by filename, and each selected statistic has its own column. Values use the input raster units and scaling. Separate dates remain separate layers. ",
       "label": "Summary statistic",
       "type": "text/csv",
       "weight": 0
     },
-    "data>loadFromStac.yml@25|rasters": {
-      "description": "Output raster files in geotiff format.",
+    "data>loadStacAssets.yml@37|rasters": {
+      "description": "One processed GeoTIFF per selected asset, with tiles mosaicked when requested, cropped, reprojected, and masked to the loaded polygons. These rasters are used for the summary; inspect them to check spatial coverage and missing values.",
       "label": "Rasters",
       "type": "image/tiff;application=geotiff[]",
       "weight": 1
@@ -285,9 +318,9 @@
   },
   "metadata": {
     "name": "Zonal statistics for STAC items in a region",
-    "description": "This pipeline extracts zonal statistics for STAC catalog items in a country or subnational region of interest.",
+    "description": "## Introduction\nSummarize raster assets from a STAC catalog for a country or subnational region. The pipeline loads polygons, retrieves and prepares the selected rasters, and calculates statistics separately for each layer using exactextractr. Outputs are a summary CSV and the processed GeoTIFFs.\n## Uses\nThis pipeline allows users to summarize across their country or region to easily report on available indicators or summary stats in the given area.",
     "lifecycle": {
-      "status": "core"
+      "status": "in_development"
     },
     "author": [
       {
@@ -295,6 +328,11 @@
         "email": "jory.griffith@mcgill.ca",
         "identifier": "https://orcid.org/0000-0001-6020-6690",
         "role": "Pipeline development"
+      },
+      {
+        "name": "Samara Manzin",
+        "email": "samara.manzin@mcgill.ca",
+        "identifier": "https://orcid.org/0009-0005-9134-9981"
       }
     ],
     "license": "CC BY",
