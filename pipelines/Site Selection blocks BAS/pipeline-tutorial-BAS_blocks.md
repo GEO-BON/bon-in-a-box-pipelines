@@ -98,9 +98,8 @@ Inspect the maps and download the environmental blocks, PCA summary, and selecte
 - **Selected points GeoJSON:** A GeoJSON file containing the proposed sampling locations in WGS84 (EPSG:4326).
 
 ## References
-[spbal: Spatially Balanced Sampling Algorithms](https://cran.r-project.org/web/packages/spbal/index.html)
-Survey-gap analysis in expeditionary research: where do we go from here?
-https://doi.org/10.1111/j.1095-8312.2005.00520.x
-Selection of sampling sites for biodiversity inventory: Effects of environmental and geographical considerations
-https://doi.org/10.1111/2041-210X.13869
-
+- [spbal: Spatially Balanced Sampling Algorithms](https://cran.r-project.org/web/packages/spbal/index.html)
+- Survey-gap analysis in expeditionary research: where do we go from here?
+  https://doi.org/10.1111/j.1095-8312.2005.00520.x
+- Selection of sampling sites for biodiversity inventory: Effects of environmental and geographical considerations
+  https://doi.org/10.1111/2041-210X.13869
