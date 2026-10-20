@@ -317,7 +317,7 @@
     }
   },
   "metadata": {
-    "name": "Zonal statistics for STAC items in a region",
+    "name": "Regional summaries over large scale spatial data",
     "description": "## Introduction\nSummarize raster assets from a STAC catalog for a country or subnational region. The pipeline loads polygons, retrieves and prepares the selected rasters, and calculates statistics separately for each layer using exactextractr. Outputs are a summary CSV and the processed GeoTIFFs.\n## Uses\nThis pipeline allows users to summarize across their country or region to easily report on available indicators or summary stats in the given area.",
     "lifecycle": {
       "status": "in_development"
