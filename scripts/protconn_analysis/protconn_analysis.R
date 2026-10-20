@@ -204,6 +204,11 @@ dissolve_overlaps <- function(x) {
     print(paste("Dissolved into", n_after, "separate polygons"))
   }
 
+  # Simplify so vertices are at least ~50 m apart (done after the buffer, which adds dense vertices)
+  print("Step: simplifying protected area geometries (50 m tolerance)")
+  protected_areas_clean <- st_simplify(protected_areas_clean, preserveTopology = TRUE, dTolerance = 50)
+  protected_areas_clean <- protected_areas_clean[!st_is_empty(protected_areas_clean), ]
+
   # Re-validate after cast if needed
   invalid_after_cast <- sum(!st_is_valid(protected_areas_clean))
   if (invalid_after_cast > 0) {
