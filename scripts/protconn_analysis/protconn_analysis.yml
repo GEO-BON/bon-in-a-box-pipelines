@@ -65,7 +65,7 @@ inputs:
      Saura et al. 2017 because at larger scales, protected areas less than 1km2 (1000 m2) do not have a large impact on ProtConn values. Removing small protected areas
      significantly speeds up calculation and is recommended for large areas. To not filter PAs by size threshold, input a value of 0.
     type: float
-    example: 100000
+    example: 1000000
   years:
     label: Year for cutoff
     description: Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs
