@@ -1,0 +1,549 @@
+{
+  "nodes": [
+    {
+      "id": "206",
+      "type": "io",
+      "position": {
+        "x": 966,
+        "y": 126
+      },
+      "data": {
+        "descriptionFile": "GenesFromSpace>ToolComponents>Interface>get_polygon.json"
+      }
+    },
+    {
+      "id": "211",
+      "type": "userInput",
+      "position": {
+        "x": 134,
+        "y": 284
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "Brazil",
+          "Colombia"
+        ]
+      }
+    },
+    {
+      "id": "214",
+      "type": "userInput",
+      "position": {
+        "x": 648.9721970980077,
+        "y": -59.78404183618399
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 10
+      }
+    },
+    {
+      "id": "215",
+      "type": "userInput",
+      "position": {
+        "x": 498.9221518744214,
+        "y": -12.72843603219933
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 50
+      }
+    },
+    {
+      "id": "216",
+      "type": "io",
+      "position": {
+        "x": 1609,
+        "y": 72.5
+      },
+      "data": {
+        "descriptionFile": "GenesFromSpace>ToolComponents>Interface>LC_area.json"
+      }
+    },
+    {
+      "id": "217",
+      "type": "userInput",
+      "position": {
+        "x": 1268,
+        "y": 42
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          1995,
+          2000,
+          2005,
+          2010,
+          2015,
+          2020
+        ]
+      }
+    },
+    {
+      "id": "218",
+      "type": "userInput",
+      "position": {
+        "x": 1252,
+        "y": 79
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          130,
+          140
+        ]
+      }
+    },
+    {
+      "id": "219",
+      "type": "output",
+      "position": {
+        "x": 2116,
+        "y": 49
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "220",
+      "type": "output",
+      "position": {
+        "x": 2116,
+        "y": 12
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "221",
+      "type": "output",
+      "position": {
+        "x": 2116,
+        "y": 167
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "222",
+      "type": "output",
+      "position": {
+        "x": 2116,
+        "y": 204
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "223",
+      "type": "io",
+      "position": {
+        "x": 2339.650134872208,
+        "y": 263.25716852370687
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>get_Indicators.yml"
+      }
+    },
+    {
+      "id": "224",
+      "type": "userInput",
+      "position": {
+        "x": 1815.4939888006866,
+        "y": 472.3694801912102
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          0.1,
+          0.2
+        ]
+      }
+    },
+    {
+      "id": "225",
+      "type": "userInput",
+      "position": {
+        "x": 1680.3452030905626,
+        "y": 277.25401472891207
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          50,
+          100,
+          1000
+        ]
+      }
+    },
+    {
+      "id": "226",
+      "type": "userInput",
+      "position": {
+        "x": 1367.9814533367003,
+        "y": 371.23164717634927
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023"
+      }
+    },
+    {
+      "id": "227",
+      "type": "output",
+      "position": {
+        "x": 3128.9075644819955,
+        "y": 264.72556340173844
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "228",
+      "type": "output",
+      "position": {
+        "x": 3128.9075644819955,
+        "y": 275.2769077686471
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "229",
+      "type": "output",
+      "position": {
+        "x": 3126.646562117658,
+        "y": 294.11859413812687
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "230",
+      "type": "output",
+      "position": {
+        "x": 3128.1538970272163,
+        "y": 305.4236059598147
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "214",
+      "target": "206",
+      "targetHandle": "pipeline@202",
+      "id": "xy-edge__214-206pipeline@202"
+    },
+    {
+      "source": "215",
+      "target": "206",
+      "targetHandle": "pipeline@203",
+      "id": "xy-edge__215-206pipeline@203"
+    },
+    {
+      "source": "217",
+      "target": "216",
+      "targetHandle": "pipeline@198",
+      "id": "xy-edge__217-216pipeline@198"
+    },
+    {
+      "source": "206",
+      "sourceHandle": "GFS_IndicatorsTool>get_pop_poly.yml@199|population_polygons",
+      "target": "216",
+      "targetHandle": "pipeline@197",
+      "id": "xy-edge__206GFS_IndicatorsTool>get_pop_poly.yml@199|population_polygons-216pipeline@197"
+    },
+    {
+      "source": "218",
+      "target": "216",
+      "targetHandle": "pipeline@199",
+      "id": "xy-edge__218-216pipeline@199"
+    },
+    {
+      "source": "216",
+      "sourceHandle": "GFS_IndicatorsTool>pop_area_by_habitat.yml@200|pop_area",
+      "target": "219",
+      "id": "xy-edge__216GFS_IndicatorsTool>pop_area_by_habitat.yml@200|pop_area-219"
+    },
+    {
+      "source": "216",
+      "sourceHandle": "GFS_IndicatorsTool>get_LCY.yml@195|lcyy",
+      "target": "220",
+      "id": "xy-edge__216GFS_IndicatorsTool>get_LCY.yml@195|lcyy-220"
+    },
+    {
+      "source": "216",
+      "sourceHandle": "GFS_IndicatorsTool>get_LCY.yml@195|lc_classes",
+      "target": "221",
+      "id": "xy-edge__216GFS_IndicatorsTool>get_LCY.yml@195|lc_classes-221"
+    },
+    {
+      "source": "216",
+      "sourceHandle": "GFS_IndicatorsTool>get_LCY.yml@195|output_maps",
+      "target": "222",
+      "id": "xy-edge__216GFS_IndicatorsTool>get_LCY.yml@195|output_maps-222"
+    },
+    {
+      "source": "211",
+      "target": "206",
+      "targetHandle": "pipeline@204",
+      "id": "xy-edge__211-206pipeline@204"
+    },
+    {
+      "source": "216",
+      "sourceHandle": "GFS_IndicatorsTool>get_LCY.yml@195|lc_classes",
+      "target": "223",
+      "targetHandle": "lc_classes",
+      "id": "xy-edge__216GFS_IndicatorsTool>get_LCY.yml@195|lc_classes-223lc_classes"
+    },
+    {
+      "source": "216",
+      "sourceHandle": "GFS_IndicatorsTool>get_LCY.yml@195|output_maps",
+      "target": "223",
+      "targetHandle": "cover_maps",
+      "id": "xy-edge__216GFS_IndicatorsTool>get_LCY.yml@195|output_maps-223cover_maps"
+    },
+    {
+      "source": "216",
+      "sourceHandle": "GFS_IndicatorsTool>pop_area_by_habitat.yml@200|pop_area",
+      "target": "223",
+      "targetHandle": "pop_area",
+      "id": "xy-edge__216GFS_IndicatorsTool>pop_area_by_habitat.yml@200|pop_area-223pop_area"
+    },
+    {
+      "source": "224",
+      "target": "223",
+      "targetHandle": "ne_nc",
+      "id": "xy-edge__224-223ne_nc"
+    },
+    {
+      "source": "225",
+      "target": "223",
+      "targetHandle": "pop_density",
+      "id": "xy-edge__225-223pop_density"
+    },
+    {
+      "source": "226",
+      "target": "223",
+      "targetHandle": "runtitle",
+      "id": "xy-edge__226-223runtitle"
+    },
+    {
+      "source": "223",
+      "sourceHandle": "ne_table",
+      "target": "227",
+      "id": "xy-edge__223ne_table-227"
+    },
+    {
+      "source": "223",
+      "sourceHandle": "pm",
+      "target": "228",
+      "id": "xy-edge__223pm-228"
+    },
+    {
+      "source": "223",
+      "sourceHandle": "interactive_plot",
+      "target": "229",
+      "id": "xy-edge__223interactive_plot-229"
+    },
+    {
+      "source": "223",
+      "sourceHandle": "ne500",
+      "target": "230",
+      "id": "xy-edge__223ne500-230"
+    },
+    {
+      "source": "206",
+      "sourceHandle": "GFS_IndicatorsTool>get_pop_poly.yml@199|population_polygons",
+      "target": "223",
+      "targetHandle": "population_polygons",
+      "id": "xy-edge__206GFS_IndicatorsTool>get_pop_poly.yml@199|population_polygons-223population_polygons"
+    }
+  ],
+  "inputs": {
+    "pipeline@217": {
+      "label": "Years of interest",
+      "description": "List of years for which landcover should be extracted (maximum range 1992 - 2020).",
+      "type": "int[]",
+      "example": [
+        1995,
+        2000,
+        2005,
+        2010,
+        2015,
+        2020
+      ],
+      "weight": 0
+    },
+    "pipeline@218": {
+      "label": "Landcover classes",
+      "description": "List of landcover class identifiers to be extract (for identifiers see https://savs.eumetsat.int/html/images/landcover_legend.png)",
+      "type": "int[]",
+      "example": [
+        130,
+        140
+      ],
+      "weight": 1
+    },
+    "pipeline@214": {
+      "label": "Size of buffer",
+      "description": "Radius size [in km] to determine population presence around the coordinates of species observations.",
+      "type": "float",
+      "example": 10,
+      "weight": 2
+    },
+    "pipeline@215": {
+      "label": "Distance between populations",
+      "description": "Distance [in km] to separate species observations in different populations.",
+      "type": "float",
+      "example": 50,
+      "weight": 3
+    },
+    "pipeline@211": {
+      "label": "Countries list",
+      "description": "countries of interest, will be used to look for GBIF observations.",
+      "type": "text[]",
+      "example": [
+        "Colombia"
+      ],
+      "weight": 4
+    },
+    "pipeline@224": {
+      "label": "Ne:Nc ratio estimate",
+      "description": "Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, separated by a comma.",
+      "type": "float[]",
+      "example": [
+        0.1,
+        0.2
+      ],
+      "weight": 5
+    },
+    "pipeline@225": {
+      "label": "Population density",
+      "description": "Estimated density of the population [number of individuals per km2]. Multiple values can be provided, separated by a comma.",
+      "type": "float[]",
+      "example": [
+        50,
+        100,
+        1000
+      ],
+      "weight": 6
+    },
+    "pipeline@226": {
+      "label": "Title of the run",
+      "description": "Set a name for the pipeline run.",
+      "type": "text",
+      "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023",
+      "weight": 7
+    },
+    "GenesFromSpace>ToolComponents>Interface>get_polygon.json@206|pipeline@201": {
+      "description": "Path to the table storing the species observation coordinates. The table must incude header with \"decimal_longitude\" and \"decimal_latitude\" columns, indicating the coordinates of every observation.",
+      "label": "Coordinates of species occurrence",
+      "type": "text/tab-separated-values",
+      "example": "/userdata/obs_data.tsv",
+      "weight": 8
+    }
+  },
+  "outputs": {
+    "GenesFromSpace>ToolComponents>Interface>LC_area.json@216|GFS_IndicatorsTool>pop_area_by_habitat.yml@200|pop_area": {
+      "description": "Table of estimated habitat area by population (rows). If available, time points are displayed as columns.",
+      "label": "Table of habitat area by population",
+      "type": "text/tab-separated-values",
+      "weight": 0
+    },
+    "GenesFromSpace>ToolComponents>Interface>LC_area.json@216|GFS_IndicatorsTool>get_LCY.yml@195|lcyy": {
+      "description": "Path to folder with tif files showing the year-by-year disrtribution of land cover classes of interest across populations.",
+      "label": "Land cover year-by-year",
+      "type": "text",
+      "weight": 1
+    },
+    "GenesFromSpace>ToolComponents>Interface>LC_area.json@216|GFS_IndicatorsTool>get_LCY.yml@195|lc_classes": {
+      "description": "ID of LC classes used to evaluate habitat change",
+      "label": "Land cover classes ID",
+      "type": "text",
+      "weight": 2
+    },
+    "GenesFromSpace>ToolComponents>Interface>LC_area.json@216|GFS_IndicatorsTool>get_LCY.yml@195|output_maps": {
+      "description": "resampled maps of cover, cover gain and cover loss map used to visualize cover dynamics in final plot",
+      "label": "Cover, cover gain and cover loss map",
+      "type": "text",
+      "weight": 3
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@223|ne_table": {
+      "description": "Estimated effective size of every population, based on the latest time point of the habitat cover map.",
+      "label": "Effective population size",
+      "type": "text/tab-separated-values",
+      "weight": 4
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@223|pm": {
+      "description": "Estimated proportion of mantained populations, comparing earliest and latest time point. A value of 1 means that no populations went extinct over the time frame.",
+      "label": "Population maintained indicator",
+      "type": "float",
+      "weight": 5
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@223|interactive_plot": {
+      "description": "An interactive interface to explore indicators trends across geographical space and time.",
+      "label": "Interactive plot",
+      "type": "text/html",
+      "weight": 6
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@223|ne500": {
+      "description": "Estimated proportion of populations with Ne>500 at latest time point.",
+      "label": "Ne>500 indicator",
+      "type": "float",
+      "weight": 7
+    }
+  },
+  "metadata": {
+    "name": "Land cover loss by population from CSV File",
+    "description": "This Pipeline takes Input parameters such as Species, years of interest and Land cover classes to calculate Habitat loss for a certain Species based on ESA CCI Landcover data. It uses Point observations which are fetched from GBIF",
+    "author": [
+      {
+        "name": "Simon Pahls",
+        "email": "simon.pahls@uzh.ch",
+        "identifier": null
+      }
+    ],
+    "license": null,
+    "external_link": null,
+    "references": [
+      {
+        "text": "Genes from Space Project website",
+        "link": "https://genesfromspace.org/"
+      },
+      {
+        "text": "Genes from Space Interface",
+        "link": "https://gfstool.com/"
+      },
+      {
+        "text": "ESA Climate Change Initiative",
+        "link": "https://climate.esa.int/en/projects/land-cover/"
+      }
+    ],
+    "compute": {
+      "hpc": false,
+      "mem": "4Gi",
+      "cpus-per-task": 4,
+      "time": "02:00:00"
+    }
+  }
+}
