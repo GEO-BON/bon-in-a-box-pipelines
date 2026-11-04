@@ -1,5 +1,5 @@
 script: load_polygons.R
-name: Load country, region, WDPA or EEZ polygons
+name: Load country, region, WDPCA or EEZ polygons
 lifecycle:
   status: core
 description: |
@@ -12,11 +12,11 @@ author:
 inputs:
   polygon_type:
     label: Polygon type
-    description: Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.
+    description: Type of polygon to load. Country or region polygons, World database of Protected and Conserved Areas (WDPCA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.
     type: options
     options:
       - Country or region
-      - WDPA
+      - WDPCA
       - EEZ
       - Polygon of bounding box
     example: Country or region
@@ -25,17 +25,22 @@ inputs:
     description: Use the chooser to select a country/ region or create a custom bounding box (region selections will be ignored for EEZs since they are national).
     type: bboxCRS
     example:
+  clip_to_location:
+    label: Clip to country or region
+    description: For WDPCA, clip protected areas within the bounding box to the perimeter of the country or region selected. Note that a country or region must be selected for this option to work.
+    type: boolean
+    example:
   buffer:
     label: Transboundary buffer
-    description: Buffer for pulling transboundary protected areas (WDPA data only).
+    description: Buffer for pulling transboundary protected areas (WDPCA data only).
       The buffer will pull protected areas within that distance of the country border or bounding box in the unit of the coordinate reference system (meters or degrees).
-      If pulling WDPA data with a custom bounding box, the buffer will not be applied.
+      If pulling WDPCA data with a custom bounding box, the buffer will not be applied.
     type: float
     example: 0
 outputs:
   polygon:
     label: Polygon
-    description: Polygons of the country, WDPA, EEZs for the country or region of interest
+    description: Polygons of the country, WDPCA, EEZs for the country or region of interest
     type: application/geopackage+sqlite3
   bbox_crs:
     label: Bounding box and crs of polygon
@@ -47,22 +52,5 @@ conda:
   dependencies:
     # Required for BON in a Box IO
     - r-rjson
-
-    # Required for duckdbfs 0.1.2
-    - r-dbplyr=2.5.2
-    - r-dplyr=1.2.1
-    - r-duckdb=1.4.4
-    - r-fs=2.1.0
-
-    # Required for duckspatial 0.9.0
-    - r-arrow=24.0.0
-    - r-nanoarrow=0.8.0
-    - r-geoarrow=0.4.2
-    - r-sf=1.1-0
-
-    # Not sure
-    - r-stringi=1.8.7
-    - r-stringr=1.6.0
-    - r-tidyr=1.3.2
-    - r-uuid=1.2_2
-    - r-remotes=2.5.0
+    - r-duckdb=1.5.5
+    - r-sf=1.1-0 # only for checking CRS units
