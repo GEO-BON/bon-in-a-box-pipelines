@@ -50,7 +50,6 @@ conda:
   channels:
     - conda-forge
   dependencies:
-    # Required for BON in a Box IO
     - r-rjson
     - r-duckdb=1.5.5
-    - r-sf=1.1-0 # only for checking CRS units
+    - r-sf=1.1-0
