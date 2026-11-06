@@ -28,7 +28,7 @@ input <- biab_inputs()
 # Parquet URLS for polygons
 countries_url <- "https://data.fieldmaps.io/adm0/osm/intl/adm0_polygons.parquet"
 regions_url <- "https://data.fieldmaps.io/edge-matched/humanitarian/intl/adm1_polygons.parquet"
-wdpa_url <- "https://object-arbutus.alliancecan.ca/3857940e33774dca8ae21e4999fe402e:vectors-cloud/wdpa/wdpa_oct2026.parquet"
+wdpa_url <- "https://object-arbutus.alliancecan.ca/3857940e33774dca8ae21e4999fe402e:vectors-cloud/wdpa/wdpa.parquet"
 eez_url <- "https://object-arbutus.alliancecan.ca/3857940e33774dca8ae21e4999fe402e:vectors-cloud/marine_regions_eez/eez_v12.parquet"
 
 crs_input <- paste0(input$country_region_bbox$CRS$authority, ":", input$country_region_bbox$CRS$code)
