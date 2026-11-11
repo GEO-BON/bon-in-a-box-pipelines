@@ -4,8 +4,8 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 1358,
-        "y": 94
+        "x": 1848,
+        "y": 92
       },
       "data": {
         "descriptionFile": "site_selection_BAS>Block_creation.yml"
@@ -15,8 +15,8 @@
       "id": "2",
       "type": "io",
       "position": {
-        "x": 876,
-        "y": 300
+        "x": 1368,
+        "y": 162
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -26,8 +26,8 @@
       "id": "6",
       "type": "output",
       "position": {
-        "x": 1976,
-        "y": 343
+        "x": 2465,
+        "y": 69.5
       },
       "data": {
         "label": "Output"
@@ -37,8 +37,8 @@
       "id": "13",
       "type": "output",
       "position": {
-        "x": 1976,
-        "y": 163
+        "x": 2465,
+        "y": 34.5
       },
       "data": {
         "label": "Output"
@@ -48,8 +48,8 @@
       "id": "14",
       "type": "output",
       "position": {
-        "x": 1976,
-        "y": 391
+        "x": 2465,
+        "y": 323
       },
       "data": {
         "label": "Output"
@@ -59,8 +59,8 @@
       "id": "26",
       "type": "io",
       "position": {
-        "x": 1976,
-        "y": 221
+        "x": 2465,
+        "y": 206
       },
       "data": {
         "descriptionFile": "site_selection_BAS>BAS_algorithm.yml"
@@ -70,8 +70,8 @@
       "id": "31",
       "type": "output",
       "position": {
-        "x": 2523,
-        "y": 304.5
+        "x": 3011,
+        "y": 290.5
       },
       "data": {
         "label": "Output"
@@ -81,8 +81,8 @@
       "id": "50",
       "type": "output",
       "position": {
-        "x": 1358,
-        "y": 271
+        "x": 1848,
+        "y": 12
       },
       "data": {
         "label": "Output"
@@ -92,8 +92,8 @@
       "id": "52",
       "type": "constant",
       "position": {
-        "x": 206,
-        "y": 290
+        "x": 895,
+        "y": 251.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -121,8 +121,8 @@
       "id": "53",
       "type": "constant",
       "position": {
-        "x": 206,
-        "y": 337
+        "x": 895,
+        "y": 298.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -141,8 +141,8 @@
       "id": "55",
       "type": "constant",
       "position": {
-        "x": 236,
-        "y": 164
+        "x": 994,
+        "y": 153.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -153,8 +153,8 @@
       "id": "56",
       "type": "constant",
       "position": {
-        "x": 236,
-        "y": 122
+        "x": 994,
+        "y": 104.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -166,8 +166,8 @@
       "id": "58",
       "type": "constant",
       "position": {
-        "x": 236,
-        "y": 80
+        "x": 981,
+        "y": 55.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -179,8 +179,8 @@
       "id": "59",
       "type": "constant",
       "position": {
-        "x": 236,
-        "y": 206
+        "x": 994,
+        "y": 202.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -192,8 +192,8 @@
       "id": "60",
       "type": "userInput",
       "position": {
-        "x": 229,
-        "y": 12
+        "x": 12,
+        "y": 36.166666666666686
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -204,8 +204,8 @@
       "id": "61",
       "type": "io",
       "position": {
-        "x": 865.1255198182539,
-        "y": 15.91400744111553
+        "x": 432,
+        "y": 355.5
       },
       "data": {
         "descriptionFile": "data>load_polygons.yml"
@@ -215,8 +215,8 @@
       "id": "63",
       "type": "constant",
       "position": {
-        "x": 495.1255198182539,
-        "y": 70.91400744111553
+        "x": 31,
+        "y": 422
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -228,8 +228,8 @@
       "id": "64",
       "type": "userInput",
       "position": {
-        "x": 495.32133620092657,
-        "y": -91.6759297806111
+        "x": 106,
+        "y": 343
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -239,6 +239,18 @@
           "Country or region",
           "Polygon of bounding box"
         ]
+      }
+    },
+    {
+      "id": "65",
+      "type": "userInput",
+      "position": {
+        "x": 165,
+        "y": 379
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "boolean"
       }
     }
   ],
@@ -402,6 +414,12 @@
       "target": "61",
       "targetHandle": "polygon_type",
       "id": "xy-edge__64-61polygon_type"
+    },
+    {
+      "source": "65",
+      "target": "61",
+      "targetHandle": "clip_to_location",
+      "id": "xy-edge__65-61clip_to_location"
     }
   ],
   "inputs": {
@@ -412,12 +430,19 @@
       "example": null,
       "weight": 0
     },
+    "pipeline@65": {
+      "label": "Clip to country or region",
+      "description": "For WDPCA, clip protected areas within the bounding box to the perimeter of the country or region selected. Note that a country or region must be selected for this option to work.",
+      "type": "boolean",
+      "example": null,
+      "weight": 1
+    },
     "data>loadFromStac.yml@2|spatial_res": {
       "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). This input may be blank when using ESPG:4326.",
       "label": "Spatial resolution",
       "type": "float",
       "example": 0.00883,
-      "weight": 1
+      "weight": 2
     },
     "pipeline@64": {
       "label": "Polygon type",
@@ -428,7 +453,7 @@
         "Country or region",
         "Polygon of bounding box"
       ],
-      "weight": 2
+      "weight": 3
     },
     "data>loadFromStac.yml@2|collections_items": {
       "description": "Provide at least two continuous environmental raster variables, using the format `collection|item`, such as `chelsa-clim|bio1` and `chelsa-clim|bio12`. The pipeline performs PCA on these variables to create the environmental blocks.",
@@ -438,7 +463,7 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio12"
       ],
-      "weight": 3
+      "weight": 4
     },
     "site_selection_BAS>BAS_algorithm.yml@26|options_bas": {
       "description": "Select and option between equal BAS or unequal probability BAS. \"Equal\" will not consider the blocks and place all sampling randomly in the whole study area.  \"Unequal\" will take into account the size of the each environmental block and redistribute the sampling sites based on the size of block.  ",
@@ -449,28 +474,28 @@
         "unequal"
       ],
       "example": "equal",
-      "weight": 4
+      "weight": 5
     },
     "site_selection_BAS>BAS_algorithm.yml@26|ndesign": {
       "description": "A number of target sampling sites to obtain with the algorithm. The user must decide on a number of sites based on their sampling goals and scale of the study. \n\nLarger study areas should have greater number of sampling locations, but constraints exist (e.g budget, staff, etc.) that may limit sampling locations and coverage. \n\nResearchers should take into account their specifics sampling goals and timelines, and proceed with caution. ",
       "label": "Target total sites",
       "type": "int",
       "example": 100,
-      "weight": 5
+      "weight": 6
     },
     "site_selection_BAS>Block_creation.yml@0|n_cols": {
       "description": "Number of columns for the environmental space grid (together with rows will define the final number of environmental blocks). \n\nBlocks are based on a PCA of the environmental variables selected and represent  a proxy of ecozones in areas with lacking information. \n\nA general recommendation is to start with fewer blocks because it would simplify computation and understanding of the study region, 5-10 blocks, and later increase if needed.",
       "label": "Number of columns",
       "type": "int",
       "example": 10,
-      "weight": 6
+      "weight": 7
     },
     "site_selection_BAS>Block_creation.yml@0|n_rows": {
       "description": "Number of rows for the environmental space grid (together with columns will define the final number environmental blocks). \n\nBlocks are based on a PCA of the environmental variables selected and represent  a proxy of ecozones in areas with lacking information. \n\nA general recommendation is to start with fewer blocks because it would simplify computation and understanding of the study region, 5-10 blocks, and later increase if needed.",
       "label": "Number of rows",
       "type": "int",
       "example": 10,
-      "weight": 7
+      "weight": 8
     }
   },
   "outputs": {

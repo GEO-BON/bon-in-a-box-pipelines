@@ -68,6 +68,18 @@
         "type": "float",
         "value": 0
       }
+    },
+    {
+      "id": "213",
+      "type": "constant",
+      "position": {
+        "x": 172.8580420133692,
+        "y": 159.51029922582018
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "boolean"
+      }
     }
   ],
   "edges": [
@@ -126,6 +138,12 @@
       "target": "208",
       "targetHandle": null,
       "id": "reactflow__edge-211polygon-208"
+    },
+    {
+      "source": "213",
+      "target": "211",
+      "targetHandle": "clip_to_location",
+      "id": "xy-edge__213-211clip_to_location"
     }
   ],
   "inputs": {
