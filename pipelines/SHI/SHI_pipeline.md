@@ -115,13 +115,13 @@ This steps calculate the Species Habitat Index (SHI) for the species of interest
     Check that your species is listed in the source's lookup table before running:
 
     - IUCN (International Union for Conservation of Nature): mammals, amphibians, reptiles and some plants (only plants with digitised IUCN range maps).
-    [Species list (column "binomial")](https://object-arbutus.cloud.computecanada.ca/bq-io/io/IUCN_rangemaps/iucn_fid_binomials.csv)
+    [Species list (column "binomial")](https://object-arbutus.alliancecan.ca/86e1f3d5df8442d39450533329f621ae:stac/IUCN_rangemaps/iucn_fid_binomials.csv)
 
     - MOL (Map of Life): mammals only.
-    [Species list (column "sciname")](https://object-arbutus.cloud.computecanada.ca/bq-io/io/mol_range_maps/mol_mammals.csv)
+    [Species list (column "sciname")](https://object-arbutus.alliancecan.ca/86e1f3d5df8442d39450533329f621ae:stac/mol_range_maps/mol_mammals.csv)
 
     - QC (Ministère de l'Environnement du Québec): mammals, reptiles and amphibians, Québec extent only. Type names without accents.
-    [Species list (column "NOM_SCIENT")](https://object-arbutus.cloud.computecanada.ca/bq-io/io/qc_range_maps/qc_range_maps.csv)
+    [Species list (column "NOM_SCIENT")](https://object-arbutus.alliancecan.ca/86e1f3d5df8442d39450533329f621ae:stac/qc_range_maps/qc_range_maps.csv)
 
     Birds are not currently available from any source.
 
