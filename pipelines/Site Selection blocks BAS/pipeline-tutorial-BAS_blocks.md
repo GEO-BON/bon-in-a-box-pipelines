@@ -1,4 +1,8 @@
-_Author(s): Francis van Oordt, Samara Manzin_
+# Balanced Acceptance Sampling (BAS) with environmental blocks
+
+**Author(s):** Francis van Oordt, Samara Manzin
+
+**Review status:** In review
 
 ## Introduction
 
@@ -72,13 +76,13 @@ Researchers should take into account their specifics sampling goals and timeline
 
 ### Pipeline steps
 
-#### 1. Retrieve environmental data 
+#### **1. Retrieve environmental data**
 Load the selected environmental rasters and the study-area polygon.
-#### 2. Create environmental blocks 
+#### **2. Create environmental blocks**
 Aggregate and mask the rasters, perform PCA, and divide the first two principal components into the requested grid.
-#### 3. Select sampling sites 
+#### **3. Select sampling sites**
 Apply equal BAS or the block-weighted unequal sampling procedure.
-#### 4. Review and export results
+#### **4. Review and export results**
 Inspect the maps and download the environmental blocks, PCA summary, and selected-site files.
 
 ### Pipeline outputs

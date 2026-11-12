@@ -1,8 +1,8 @@
-# Species Habitat Index and Species Habitat Score  
+# Species Habitat Index and Species Habitat Score
 
-### Author(s): Maria Isabel Arce-Plata, Guillaume Larocque, Jaime Burbano-Girón, Maria Camila Díaz, Timothée Poisot, Jory Griffith, Jean-Michel Lord  
+**Author(s):** Maria Isabel Arce-Plata, Guillaume Larocque, Jaime Burbano-Girón, Maria Camila Díaz, Timothée Poisot, Jory Griffith, Jean-Michel Lord
 
-#### Reviewed by: In review
+**Review status:** In review
 
 ## Introduction
 The [Species Habitat Index](https://geobon.org/ebvs/indicators/species-habitat-index-shi/) (SHI) is a component indicator for the Global Biodiversity Framework (GBF). SHI tracks changes in ecological integrity by measuring the change in the quality and connectivity of habitats of species. It is a composite of Species Habitat Scores (SHS), which measure the amount of suitable area for a single species of interest, relative to its total range size.  
@@ -15,7 +15,7 @@ The index has two components: 1) an Area Score and a 2) Connectivity score that 
 
 The BON in a Box pipelines calculate SHS and SHI. The pipeline uses species range maps, the elevation ranges, and the habitat categories available from The International Union for Conservation of Nature (IUCN).  For the specific case of Quebec, it has range maps available from the Ministère de l’Environnement. Area of suitable habitat and connectivity  measured using the Global Forest Watch layers, and soon other land cover layers will be added. More information on the methodology of the pipeline can be read [here](https://cdn.mol.org/static/files/indicators/habitat/WCMC-species_habitat_index-15Feb2022.pdf).
 
-## 'Use Case'/Context
+## Uses
 SHI is an important indicator for assessing progress towards Goal A of the GBF, which calls for the enhanced integrity of natural ecosystems. Read more about how SHI can be used to assess progress toward goal A here ([https://cdn.mol.org/static/files/indicators/habitat/WCMC-species_habitat_index-15Feb2022.pdf](https://cdn.mol.org/static/files/indicators/habitat/WCMC-species_habitat_index-15Feb2022.pdf)).
 
 ## Pipeline limitations
@@ -105,11 +105,11 @@ This steps calculate the Species Habitat Index (SHI) for the species of interest
 
 - **Steward's SHI time series:** Plot of Steward’s SHI over time. Steward’s SHI is weighted by the proportion of the species’ range that is in the study area.
 
-## Example
+## Examples
 **Sample run:** See an example SHI run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/_2025-10-16%3ESpeciesHabitatIndex%3ESHI_pipeline/6cc8d65e413c341d251ea2550dadeacc) and [viewer](https://pipelines-results.geobon.org/viewer/_2025-10-16%3ESpeciesHabitatIndex%3ESHI_pipeline%3E6cc8d65e413c341d251ea2550dadeacc).
 
 ## Troubleshooting
-### Common errors:
+### Common errors
 - `Error: Script "data > Get species range map": ========== No range map available from expert source database ========== `: if you encounter this error, it means that there is no available expert range maps from IUCN, MoL, or  from the Ministère de l’Environnement du Québec (QC).  
 
     Check that your species is listed in the source's lookup table before running:
