@@ -1,4 +1,9 @@
-_Author(s): Rachel Mason, Saxbee Affleck, Manuela Gómez-Suárez, Hanno Seebens, Samara Manzin, Melodie McGeoch_
+# Invasive Alien Species
+
+**Author(s):** Rachel Mason, Saxbee Affleck, Manuela Gómez-Suárez, Hanno Seebens, Samara Manzin, Melodie McGeoch
+
+**Review status:** In development
+
 
 ## Introduction
 Invasive alien species are a major threat to biodiversity. Reducing the rates of introduction and establishment of invasive species is an important component of Target 6 of the Kunming-Montreal Global Biodiversity Framework (GBF). 
@@ -107,7 +112,7 @@ This step chooses the appropriate model to calculate the rate of introduction of
 
 - **Qualitative model interpretation:** Interpretation selected from the fitted IAS-observation and survey effort trend combination. A trend is classified as stable when its fitted time slope is not significant at alpha = 0.05. Evidence for and increasing certainty in successful prevention/management (UAS observations: decreasing; survey effort: increasing)
 
-## Example
+## Examples
 
 
 ## Troubleshooting

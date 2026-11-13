@@ -1,12 +1,26 @@
+# Species Distribution Models (SDMs)
+
+## Introduction
+
 Species distributions are an important EBV in the ‘species populations’ class. Knowing where species are is essential for understanding biodiversity patterns and informing conservation efforts. However, less than 10% of the world is well sampled, and even the longest running and well-sampled biodiversity observation networks have substantial data gaps. Information on species occurrences is often sparse and heavily spatially and taxonomically biased, necessitating the need for species distribution models (SDMs) to fill these data gaps and provide a better, less biased idea of where species are. SDM outputs be used as key base layers for a wide variety of purposes including: creating maps for sampling prioritization, quantifying the impact of environmental stressors on species, mapping habitat suitability for at-risk species, mapping biodiversity hotspots across the landscape, identifying the locations of conservation priorities and protected area expansion, identifying sampling gaps and the needed locations of future sampling, and calculating a range of biodiversity indicators including the Species Habitat Index (SHI), the Species Protection Index (SPI)
 
-### **MaxEnt**
+## Choosing an SDM approach
 
-_Authors: [Sarah Valentin](https://orcid.org/0000-0002-9028-681X), [Guillaume Larocque](https://orcid.org/0000-0002-5967-9156), [François Rousseu](https://orcid.org/0000-0002-2400-2479)_
+The repository includes three SDM pipelines. Their input data and modeling approaches differ, so choose the method that fits the data available and the analysis goal.
 
-Review status: Under development
+| Method | Data and modeling approach | Key distinction |
+| --- | --- | --- |
+| [MaxEnt](#maxent) | Presence-background modeling | Models relative habitat suitability from species occurrences and environmental predictors. |
+| [Boosted Regression Trees (BRT)](#boosted-regression-trees-brt) | Presence-absence modeling | Requires absence data or generated pseudoabsences; results can depend strongly on how pseudoabsences are generated. |
+| [ewlgcpSDM (mapSpecies)](#ewlgcpsdm-mapspecies) | Presence-only, effort-weighted point-process modeling | Uses an effort-weighted adjustment; the current pipeline does not yet use the method's spatial component. |
 
-### **Introduction:**
+## MaxEnt
+
+**Author(s):** [Sarah Valentin](https://orcid.org/0000-0002-9028-681X), [Guillaume Larocque](https://orcid.org/0000-0002-5967-9156), [François Rousseu](https://orcid.org/0000-0002-2400-2479)
+
+**Review status:** In development
+
+### Introduction
   The MaxEnt pipeline builds a species distribution model using occurrence
   records from the [Global Biodiversity Information Facility (GBIF)](https://www.gbif.org/) and
   environmental raster layers from the [GEO BON STAC catalog](https://stac.geobon.org/). The pipeline retrieves GBIF
@@ -28,7 +42,7 @@ Review status: Under development
   occurrence records, selected environmental predictors, a GBIF download DOI,
   and a raster summarizing variability among model runs.  
 
-### **Uses:**
+### Uses
 
   SDMs predict where species are likely to occur based on a suite of environmental variables that are associated with known occurrences (Peterson, 2001; Elith and Leathwick, 2009). The MaxEnt pipeline can be used to estimate the potential distribution or relative habitat suitability of one or more species within a selected study area. Outputs can support conservation planning, sampling prioritization, identification of biodiversity hotspots, protected area planning, risk assessment for species of conservation concern, and environmental impact
   assessments.  
@@ -41,7 +55,7 @@ Review status: Under development
   provides a reproducible workflow for generating species distribution maps from
   public biodiversity and environmental data.
 
- ## **Pipeline limitations:**
+### Pipeline limitations
 
   * MaxEnt uses presence-background data, not confirmed absence data.
   Predictions should be interpreted as relative habitat suitability or relative
@@ -73,7 +87,7 @@ Review status: Under development
   * Larger study areas, finer spatial resolutions, more environmental
   predictors, and more model runs increase computation time and memory use.
 
-## **Before you start:**
+### Before you start
 
   A GBIF API key is required to run this pipeline and can be added into the
   runner.env file.  
@@ -93,8 +107,8 @@ Review status: Under development
   appropriate depending on the species. Avoid including many predictors that
   represent the same underlying environmental gradient.
 
-## **Running the pipeline:**
-### Pipeline inputs
+### Running the pipeline
+#### Pipeline inputs
 The BON in a Box pipeline allows you to run an SDM for a specific region and species (or multiple species) of interest. The pipeline has the following inputs:
 
 - **Taxa list:** Comma-separated list of [taxa](https://en.wikipedia.org/wiki/Taxon). Each value could be a species name, order, class, genus, kingdom or family, as long as it is an exact match with the GBIF taxonomic backbone. Individual species can be looked up [on the GBIF website](https://www.gbif.org/species/).
@@ -124,33 +138,33 @@ The BON in a Box pipeline allows you to run an SDM for a specific region and spe
 - **Number of folds:** Number of folds for random k-fold MaxEnt partitioning when partition type = random k-fold.
 - **Number of runs:** The number of SDMs to run to compute the 95% confidence interval through cross validation.
 
-### Pipeline steps
+#### Pipeline steps
 
-#### **1. Input data: pulling occurences from GBIF and loading environmental layers**
+##### **1. Input data: pulling occurences from GBIF and loading environmental layers**
 
 This step retrieves occurrence records for the target species from GBIF and downloads environmental predictor layers from the GEO BON STAC catalog. Environmental layers may include climatic, topographic, and land-cover variables used to characterize habitat suitability.
  
-#### **2. Cleaning input data**
+##### **2. Cleaning input data**
 
 This step cleans the GBIF occurence records by multiple empirical tests. Environmental predictors are also screened for collinearity, and highly correlated variables are removed to reduce model overfitting.
 
-#### **3. Generating background points**
+##### **3. Generating background points**
 
 This step creates a set of pseudo-absences (background points) using one of the five available methods: random, inclusion buffer, weighted raster, unweighted raster, thickening. 
 
-#### **4. Setting up the SDM data**
+##### **4. Setting up the SDM data**
 
 This step extracts environmental predictor values at species occurrence and background locations and combines them into a modelling dataset suitable for species distribution modelling.
  
-#### **5. Running the MaxEnt model**
+##### **5. Running the MaxEnt model**
 
  This step runs the SDM on the clean data using the MaxEnt algorithm using the ENMeval R package (Kass et al. 2021). The MaxEnt SDM is run by 1\) partitioning occurrence and background points into subsets for training and evaluation, 2\) building the model with different algorithmic settings (model tuning), and 3\) evaluating their performance ([see package vignette](https://jamiemkass.github.io/ENMeval/articles/ENMeval-2.0-vignette.html#partition)). This step produces spatial predictions of habitat suitability across the study area.
  
-#### **6. Generating uncertainty estimates**
+##### **6. Generating uncertainty estimates**
  
  This step computes the 95% confidence interval using bootstrapping and cross validation techniques.
 
-### **Pipeline outputs**
+#### Pipeline outputs
 The pipeline creates the following outputs:
 
 - **DOI of GBIF download:** A permanent DOI assigned to this specific GBIF data download. Must be cited in any publication using these data — see [GBIF's citation guidelines](https://www.gbif.org/citation-guidelines).
@@ -160,10 +174,10 @@ The pipeline creates the following outputs:
 - **Predictions:** MaxEnt habitat suitability prediction raster fitted using the selected model settings.
 - **Variability of predictions:** The variability of the 95% confidence of each prediction can be viewed on a map to show uncertainty.
 
-## **Examples:**
+### Examples
 [See an example output here](https://pipelines-results.geobon.org/viewer/_2025-10-16%3ESDM%3ESDM_maxEnt%3E78ed53b7ea6b96ef58008075a4dfb487)
 
-## **References:**
+### References
 
 Baston D (2025). exactextractr: Fast Extraction from Raster Datasets using Polygons. [doi:10.32614/CRAN.package.exactextractr](doi:10.32614/CRAN.package.exactextractr)
 
@@ -177,27 +191,28 @@ Phillips, S. J., Dudík, M., Elith, J., Graham, C. H., Lehmann, A., Leathwick, J
 
 Vollering, J., Halvorsen, R., Auestad, I., & Rydgren, K. (2019). Bunching up the background betters bias in species distribution models. Ecography, 42(10), 1717-1727. [https://doi.org/10.1111/ecog.04503](https://doi.org/10.1111/ecog.04503)
 
-### **Boosted Regression Trees**
+## Boosted Regression Trees (BRT)
 
-_Author: [Michael D. Catchen](https://orcid.org/0000-0002-6506-6487)_
+**Author(s):** [Michael D. Catchen](https://orcid.org/0000-0002-6506-6487)
 
-Review status: Under development
+**Review status:** In development
+
+### Introduction
 
 This document describes the methodology behind the BON in a Box pipeline for using Boosted Regression Trees (BRTs) for species distribution modeling.
 
-**Summary**
+This pipeline builds a model to predict the distribution of a species (a type of essential biodiversity variable), by using occurrence data from the Global Biodiversity Information Facility (GBIF), and environmental predictors from an arbitrary STAC Catalogue.
 
-This pipeline builds a model to predict the distribution of a species (a type of
-essential biodiversity variable), by using occurrence data from the Global
-Biodiversity Information Facility (GBIF), and environmental predictors from an
-arbitrary STAC Catalogue.
+In particular, this pipeline uses a specific model called a Boosted Regression Tree (BRT), a machine-learning model which tends to work well with spatial data. The details of how a BRT works are in the description of the key script in the pipeline, [`fitBRT.jl`](../../scripts/SDM/BRT/fitBRT.md). See [`SDM_BRT.md`](./SDM_BRT.md) for additional pipeline documentation.
 
-In particular, this pipeline uses a specific model called a Boosted Regression
-Tree (BRT), a machine-learning model which tends to work well with spatial data. The
-details of how a BRT works are in the description of the key script in the
-pipeline, [`fitBRT.jl`](../../scripts/SDM/BRT/fitBRT.md).
+### Pipeline limitations
 
-**Inputs**:
+> [!IMPORTANT]
+> Using BRTs to fit a species distribution model requires _absence data_. For the majority of species where no absence data is available, there are various methods to generate pseudoabsences (PAs) based on heuristics about species occurrence. However, the performance characteristics of an SDM fit using PAs can be widely variable depending on the method and parameters used to generate PAs. This means the results of BRT should be explicitly considered as a function of how PAs were generated, and sensitivity analysis to different PAs is _highly_ encouraged.
+
+### Running the pipeline
+
+#### Pipeline inputs
 
 - **Species**: The name of the taxon the build a species distribution model for
 - **Environmental Predictors**: The set of environmental predictors to use
@@ -211,31 +226,7 @@ pipeline, [`fitBRT.jl`](../../scripts/SDM/BRT/fitBRT.md).
 - **Mask**: a mask of regions to ignore
 - **STAC URL**: the URL to the STAC catalogue where the environmental predictors are hosted
 
-**Outputs**
-
-- **Predicted SDM**: map of the predicted occurrence score at each location
-- **SDM Uncertainty**: map of relative uncertainty of the SDM at each location
-- **Fit Statistics**: describes different metrics of how
-  good the model is on the test set
-- **Pseudoabsences**: generated locations where species is assumed to not occur,
-  based on hueristics.
-
-[See an example pipeline output here](https://pipelines-results.geobon.org/viewer/_2025-10-16%3ESDM%3ESDM_BRT%3E933ca049e112ab67db9711517e6ee30a)
-
-> [!IMPORTANT]
-> Using BRTs to fit a species distribution model requires _absence data_. For the majority of species where no absence data is available, there are various methods to generate pseudoabsences (PAs) based on heuristics about species occurrence. However, the performance characteristics of an SDM fit using PAs can be widely variable depending on the method and parameters used to generate PAs. This means the results of BRT should be explicitly considered as a function of how PAs were generated, and sensitivity analysis to different PAs is _highly_ encouraged.
-
-- **Range Map**: species range, computed by thresholding the predicted SDM at
-  the optimum threshold (defined as the threshold the maximizes the Matthew's
-  Correlation Coefficient)
-- **Environment Space**: diagnostic **corners plot** of the locations of occurrences and
-  pseudoabsences in environmetal space
-- **Tuning Curve**: diagnostic **tuning curve** plot of the value of the Matthew's Correlation
-  Coefficient across various thresholding values between 0 and 1.
-- **Presences**: cleaned occurrence data after cleaning
-- **DOI of GBIF download**
-
-**Pipeline Steps**
+#### Pipeline steps
 
 ```mermaid
 flowchart LR
@@ -256,23 +247,50 @@ flowchart LR
     k --> h
 ```
 
-### **ewlgcpSDM (mapSpecies)**
+#### Pipeline outputs
 
-_Authors: [François Rousseu](https://orcid.org/0000-0002-2400-2479), [Guillaume Blanchet](https://orcid.org/0000-0001-5149-2488), [Dominique Gravel](https://orcid.org/0000-0002-4498-7076)_
+- **Predicted SDM**: map of the predicted occurrence score at each location
+- **SDM Uncertainty**: map of relative uncertainty of the SDM at each location
+- **Fit Statistics**: describes different metrics of how
+  good the model is on the test set
+- **Pseudoabsences**: generated locations where species is assumed to not occur,
+  based on hueristics.
+- **Range Map**: species range, computed by thresholding the predicted SDM at
+  the optimum threshold (defined as the threshold the maximizes the Matthew's
+  Correlation Coefficient)
+- **Environment Space**: diagnostic **corners plot** of the locations of occurrences and
+  pseudoabsences in environmetal space
+- **Tuning Curve**: diagnostic **tuning curve** plot of the value of the Matthew's Correlation
+  Coefficient across various thresholding values between 0 and 1.
+- **Presences**: cleaned occurrence data after cleaning
+- **DOI of GBIF download**
 
-Review status: Under development
+### Examples
 
-**Methods:**
+[See an example pipeline output here](https://pipelines-results.geobon.org/viewer/_2025-10-16%3ESDM%3ESDM_BRT%3E933ca049e112ab67db9711517e6ee30a)
+
+## ewlgcpSDM (mapSpecies)
+
+**Author(s):** [François Rousseu](https://orcid.org/0000-0002-2400-2479), [Guillaume Blanchet](https://orcid.org/0000-0001-5149-2488), [Dominique Gravel](https://orcid.org/0000-0002-4498-7076)
+
+**Review status:** In development
+
+### Introduction
 The species distribution modeling method provided in the package ewlgcpSDM (Effort-Weighted Log-Gaussian Cox Process) is based on spatial point processes and presence-only observations. It implements the method proposed by Simpson et al. (2016) to estimate log-Gaussian Cox processes using INLA (Rue et al. 2009) and the SPDE approach (Lindgren et al. 2009). The model relies on a discrete grid (the mesh) of arbitrary resolution to approximate the spatial component of the model. The method proposed in ewlgcpSDM contains three key aspects for species distribution modeling, namely:
 
 - a spatial component that can help in accounting for variation in relative intensities not explained by predictors
 - an effort-weighted adjustment analogous to target-group background selection (Phillips et al. 2009)
 - a suit of model-based prediction uncertainty layers thanks to the bayesian approach used by INLA
 
+### Pipeline limitations
+
 The current version of the pipeline does not make use of the spatial component yet as some more work is needed to allow the adjustments necessary for the spatial component to work properly. The current version of the pipeline thus corresponds to an effort-weighted inhomogeneous Poisson point process.
 
-**BON in a Box pipeline:**
+### Running the pipeline
+
 The pipeline is used to run an SDM for a set of species in a specific region and using a set of environmental predictors. Some inputs are yet to be added to the list of inputs required by the user. Currently, the pipeline mostly reuses the same inputs as the MaxEnt pipeline, namely:
+
+#### Pipeline inputs
 
 - **Taxa list:** The user can specify the species (or multiple species) they are interested in.
 - **Bounding box**: The user can specify the bounding box where they want to distribution to be predicted (units must be in the chosen CRS).
@@ -286,6 +304,8 @@ The pipeline is used to run an SDM for a set of species in a specific region and
 - **Mask**: If the user is only interested in a specific country or study area, they can upload a polygon and the pipeline will crop the results to only that area.
 - **Spatial resolution**: The spatial resolution of the predictors used
 
+#### Pipeline outputs
+
 The pipeline creates the following outputs:
 
 - **Predictions**: model intensity predictions (analogous to relative densities)
@@ -298,10 +318,11 @@ The pipeline creates the following outputs:
 - **Dmesh:** dual mesh used by the sdm model (INLA mesh)
 - **DOI of GBIF download:** Used for citing downloaded data.
 
+### Examples
+
 [See an example pipeline output here](https://pipelines-results.geobon.org/viewer/_2025-10-16%3ESDM%3ESDM_ewlgcp%3Edfbdc18c5e923c2a9fa426efc502843c)
 
-
-**Citations:**
+### References
 Lindgren, F., Rue, H., and Lindström, J. 2011. An explicit link between Gaussian fields and Gaussian Markov random fields: the stochastic partial differential equation approach. Journal of the Royal Statistical Society Series B: Statistical Methodology, 73(4): 423-498.
 
 Phillips, S. J., Dudík, M., Elith, J., Graham, C. H., Lehmann, A., Leathwick, J. and Ferrier, S. 2009. Sample selection bias and presence-only distribution models: implications for background and pseudo-absence data. Ecological Applications, 19(1): 181-197, https://doi.org/10.1890/07-2153.1

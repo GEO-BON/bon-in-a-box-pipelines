@@ -1,4 +1,8 @@
-_Authors: Francis van Oordt, Samara Manzin_
+# Stepwise site optimization
+
+**Author(s):** Francis van Oordt, Samara Manzin
+
+**Review status:** In review
 
 ## Introduction
 
@@ -61,15 +65,15 @@ The environmental variables, raster resolution, and supplied demand points deter
 
 ### Pipeline steps
 
-#### 1. **Retrieve environmental data** 
+#### **1. Retrieve environmental data**
 Load the study-area polygon and selected environmental rasters.
-#### 2. **Calculate site distances** 
+#### **2. Calculate site distances**
 Standardize the environmental rasters and calculate Euclidean distances between the values extracted at sites. Separately, calculate ellipsoidal geodesic distances in metres from the WGS84 coordinates. Multiply corresponding entries to create the joint distance matrix. Site classification (vini) is used by the optimizer, not in either distance calculation.
 
 With this multiplication, a zero distance in either component gives a zero joint distance. Changing the raster CRS or resolution can affect environmental values; it does not change the geographic distance method.
-#### 3. **Select additional sites** 
+#### **3. Select additional sites**
 Scale the joint distance matrix by its maximum value so all entries are between 0 and 1, preserving their relative differences. This accommodates the distance cap used internally by SURDES. Run the stepwise optimization using the current-site classifications and requested number of iterations. If all demand points are requested, the sole remaining point is added directly at the final step to avoid a single-candidate limitation in SURDES.
-#### 4. **Inspect the results** 
+#### **4. Inspect the results**
 Review the selection values, map, and remaining uncovered-variability curve.
 
 ### Pipeline outputs
