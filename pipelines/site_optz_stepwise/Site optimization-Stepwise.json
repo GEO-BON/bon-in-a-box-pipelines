@@ -93,7 +93,8 @@
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "application/geopackage+sqlite3"
+        "type": "application/geopackage+sqlite3",
+        "value": null
       }
     },
     {
@@ -232,6 +233,18 @@
           "Country or region",
           "Polygon of bounding box"
         ]
+      }
+    },
+    {
+      "id": "74",
+      "type": "userInput",
+      "position": {
+        "x": 838.6338413761578,
+        "y": -53.751444872767614
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "boolean"
       }
     }
   ],
@@ -423,6 +436,12 @@
       "target": "66",
       "targetHandle": null,
       "id": "reactflow__edge-61sites_gpkg-66"
+    },
+    {
+      "source": "74",
+      "target": "63",
+      "targetHandle": "clip_to_location",
+      "id": "xy-edge__74-63clip_to_location"
     }
   ],
   "inputs": {
@@ -433,6 +452,13 @@
       "example": null,
       "weight": 0
     },
+    "pipeline@74": {
+      "label": "Clip to country or region",
+      "description": "For WDPCA, clip protected areas within the bounding box to the perimeter of the country or region selected. Note that a country or region must be selected for this option to work.",
+      "type": "boolean",
+      "example": null,
+      "weight": 1
+    },
     "pipeline@73": {
       "label": "Polygon type",
       "description": "Type of polygon loaded. If a country or region is selected in the above `Choose Bounding Box`, select `Country or region`. If a bounding box is drawn in the above `Choose Bounding Box`, select `Polygon of bounding box`",
@@ -442,14 +468,14 @@
         "Country or region",
         "Polygon of bounding box"
       ],
-      "weight": 1
+      "weight": 2
     },
     "data>loadFromStac.yml@45|spatial_res": {
       "description": "Environmental raster resolution in the selected CRS units: metres for a CRS measured in metres, degrees for EPSG:4326. \n\nIf blank, the loader attempts native resolution, requiring compatible CRS units. \n\nThis does not change the required WGS84 input coordinates or the geodesic distance method.",
       "label": "Spatial resolution",
       "type": "float",
       "example": 0.00883,
-      "weight": 2
+      "weight": 3
     },
     "data>loadFromStac.yml@45|collections_items": {
       "description": "Provide the environmental variables using the format `collection|item`, such as `chelsa-clim|bio1` and `chelsa-clim|bio12`. These variables define the environmental differences between sites.",
@@ -459,21 +485,21 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio12"
       ],
-      "weight": 3
+      "weight": 4
     },
     "pipeline@52": {
       "label": "Sampling locations",
       "description": "Path to one CSV with lon and lat in WGS84 decimal degrees (EPSG:4326), and vini: 1 for current sites, 0 for demand points. Input coordinates always use WGS84, independently of the selected processing CRS.",
       "type": "text/csv",
       "example": "/scripts/site_optz_stepwise/site_optz_stepwise_EXAMPLE_samp_loc_peru.csv",
-      "weight": 4
+      "weight": 5
     },
     "pipeline@54": {
       "label": "Algorithm Iterations",
       "description": "Positive integer number of demand points to add. Must not exceed the number of rows with vini = 0. For example, 40 current sites and 60 demand points allow at most 60 additions. More iterations take longer.",
       "type": "int",
       "example": 30,
-      "weight": 5
+      "weight": 6
     }
   },
   "outputs": {
