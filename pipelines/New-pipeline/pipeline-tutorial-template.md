@@ -1,4 +1,10 @@
-_Author(s): Author name(s)_
+# [Pipeline name]
+
+**Author(s):** 
+
+**Review status:** 
+
+**Reviewed by:**
 
 *This is a template for creating a tutorial for a pipeline, which will be included in the online documentation. These are the suggested sections, but the contributor can include additional sections or change titles if desired. Should you need to add any images, please add them in the images folder of the bon-in-a-box-pipelines repository and link them to this file.*
 
@@ -46,7 +52,7 @@ Etc.
 
 - **Output 3:** *description of output 3 and what it means.*
 
-## Example
+## Examples
 *Leave blank,a link to an example run and its outputs will added here*
 
 ## Troubleshooting

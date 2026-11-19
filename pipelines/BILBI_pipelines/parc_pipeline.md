@@ -1,6 +1,8 @@
-_Authors: Jory Griffith_
+# Protected Area Representativeness and Connectedness (PARC)
 
-Review status: In review
+**Author(s):** Jory Griffith and Nina Obiar
+
+**Review status:** In review
 
 ## Introduction
 
@@ -26,7 +28,7 @@ potential additions to the system of protected areas and OECMs might make to
 improving present PARC scores, thereby providing a foundation for prioritising
 such actions.
 
-### Pipeline limitations
+## Pipeline limitations
 
 - PARC is a modeled layer, therefore there are greater uncertainties in areas with less data. Interpret the results with caution.
 
@@ -82,7 +84,7 @@ This step calculates the weighted arithmetic mean for the PARC layers to calcula
 
 - **Region:** the region of interest, if selected.
 
-## Example
+## Examples
 
 Example output available soon.
 

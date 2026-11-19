@@ -132,6 +132,42 @@ Boosted Regression Trees combine gradient boosting with _Random Forest_ style ba
 We can associated uncertainty with the predictions made using a BRT by using [maximum likelihood estimation (MLE)](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation) to estimate the values of the splits. We do this using the `GaussianMLE` loss function in [EvoTrees.jl](https://github.com/Evovest/EvoTrees.jl/blob/4caa1269e1a663830887e248e980dc63494dfe3e/src/loss.jl#L87 ),  For example, if each rule $j$ of the decision tree has the from $x_i > \alpha_j$ , the value of $\alpha_j$ is inferred by [Gaussian MLE](http://jrmeyer.github.io/machinelearning/2017/08/18/mle.html), where the true value of $\alpha_j \sim \mathcal{N}(\mu_j, \sigma_j)$. This means for a fitted tree, we can infer the uncertainty associated with each set of input features $\vec{x}_i$  by summing up the $\sigma_j$ values at each decision rule $j$ in the tree that each input feature goes through on the way to an output score $p_i$.
 
 
+# Known limitations
+
+These describe the current implementation. Interpret the outputs with them in mind.
+
+## Model evaluation
+
+- **A single random train/test split is used (20% test).** With few occurrences the test set becomes very small (for example 41 occurrences gave 6 test presences and 21 test absences), which makes the fit statistics unstable and the ROC AUC in particular unreliable.
+- **The threshold is chosen on the test set that is also used to report the statistics.** The reported MCC is therefore optimistically biased. The range map uses that same threshold.
+- **The split is random in space.** Test points are often close to training points, so spatial autocorrelation makes the statistics more optimistic than they would be for new areas.
+- **No random seed is set.** The train/test split and the pseudoabsences are random, so two runs with the same inputs give different models, statistics and maps.
+- **The final model is trained on the training set only**, not refit on all the data.
+- **The hyperparameters are fixed** (`max_depth=6`, `nbins=16`, `eta=0.05`, `nrounds=120`). There is no tuning and no early stopping.
+- **The statistics are checked only by simple rules of thumb** (see "Warnings" below), not by formal tests.
+
+## Pseudoabsences and scores
+
+- **Pseudoabsences are not true absences.** Statistics such as precision, PR AUC and MCC depend on how many pseudoabsences are generated (`pa_proportion`) and on the buffer distance, so they are not comparable between runs with different settings.
+- **The predicted score is not a calibrated probability of occurrence.** The model is a Gaussian regression on 0/1 labels, so the score is not guaranteed to stay within 0 and 1. The threshold search and the tuning curve only cover 0 to 1, in 250 evenly spaced steps, which is coarse when scores are concentrated in a narrow range.
+- **The uncertainty map is the variance predicted by the Gaussian likelihood**, not a bootstrap or parameter uncertainty (see above).
+- **When the region has fewer valid cells than `max_candidate_pseudoabsences`**, all non-presence cells are candidates for pseudoabsences. Otherwise a random subset is used.
+
+## Inputs
+
+- **Occurrences are rasterised.** Several occurrences in the same cell count as one presence, and occurrences falling on masked or missing cells are dropped without notice (the number kept is logged).
+- **The water mask must contain a single layer**, otherwise the script stops with an error. Land-cover class 210 (water) is hard-coded as the class to exclude, so other masks are not supported as is. The mask is read in full instead of being clipped to the bounding box.
+- **All predictors must share the same grid.** The first predictor is used as the template for the occurrence layer.
+- **The `lon` and `lat` columns are interpreted as coordinates in the selected CRS**, even though the columns are named after degrees.
+
+## Runtime
+
+- **Julia packages are installed on first use, without pinned versions.** A new run can therefore pick up newer package versions, which has already broken the script once. The first run in a fresh environment is slow and restarts Julia once or twice.
+
+## Warnings
+
+The script reports warnings (as the `warning` output) when the fit statistics look suspicious: ROC AUC below 0.5 or 0.7, PR AUC below the test prevalence, MCC below 0 or 0.3, a very small test set, contradictions between statistics, or an extreme threshold. These cut-offs are heuristics and not standards.
+
 # Future Steps
 
 - CV splits are its own thing

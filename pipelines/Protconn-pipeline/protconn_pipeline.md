@@ -1,13 +1,11 @@
-_Authors: Jory Griffith, Guillaume Larocque, Laetitia Tremblay, Jean-Michel Lord_
+# Protected Connected Index (ProtConn)
 
-Review status: Reviewed
+**Author(s):** Jory Griffith, Guillaume Larocque, Laetitia Tremblay, Jean-Michel Lord
 
-Reviewed by: Santiago Saura, Oscar Godinez-Gomez, Camilo Andrés Correa-Ayram, Teresa Goicolea, Corey Ruha
+**Review status:** Reviewed
 
+**Reviewed by:** Santiago Saura, Oscar Godinez-Gomez, Camilo Andrés Correa-Ayram, Teresa Goicolea, Corey Ruha
 
-name: Protected Connected Index (ProtConn)
-
-description:
 
 ## Introduction
 

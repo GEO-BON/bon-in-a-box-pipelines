@@ -1,3 +1,6 @@
+# According to M. Catchen:
+# TODO almost all of the behavior in confusion.jl is now in SpeciesDistributionToolkit, so potentially we should use those versions instead
+
 struct ConfusionMatrix{T <: Number}
     tp::T
     tn::T
@@ -48,7 +51,9 @@ function compute_fit_stats(model, features, labels, test_idx)
         M[i] = ConfusionMatrix(test_preds[:, 1], labels[test_idx], Float32(T[i]))
     end
     rocauc = auc(fpr.(M), tpr.(M)) 
-    prauc = auc(tpr.(M), ppv.(M))  
+    precision = ppv.(M)
+    precision[isnan.(precision)] .= 1.0 # no positive prediction at this threshold: precision is undefined, 1 by convention
+    prauc = auc(tpr.(M), precision)
     thresh_idx = last(findmax(vec(mcc.(M))))
     τ = T[thresh_idx]
 
@@ -59,6 +64,63 @@ function compute_fit_stats(model, features, labels, test_idx)
         :threshold => τ
     ), M
 end 
+
+# Heuristic checks; each message is a plain-language sentence followed by a technical one.
+function fit_stats_warnings(fit_stats, confusion_matrices)
+    warnings = String[]
+    add!(plain, technical) = push!(warnings, "$plain $technical")
+    r(x) = round(x; digits=2)
+
+    rocauc, prauc, mcc_val, τ = fit_stats[:rocauc], fit_stats[:prauc], fit_stats[:mcc], fit_stats[:threshold]
+
+    # tp + fn and fp + tn do not depend on the threshold.
+    M = first(confusion_matrices)
+    n_pos, n_neg = M.tp + M.fn, M.fp + M.tn
+    baseline = prevalence(M)
+
+    if !all(isfinite, (rocauc, prauc, mcc_val, τ))
+        add!("Some performance scores could not be computed, so the model could not be properly evaluated.",
+            "At least one of ROC AUC, PR AUC, MCC or threshold is NaN or infinite, usually because the test set lacks presences or absences.")
+    end
+
+    if n_pos < 10 || n_neg < 10
+        add!("The data used to test the model is very small ($n_pos presences and $n_neg absences), so the scores below are unreliable and may change a lot between runs.",
+            "With so few test points the ROC AUC, PR AUC and MCC have very wide confidence intervals, and the MCC-maximizing threshold is optimistically biased since it is selected on the same test set.")
+    end
+
+    if rocauc < 0.5
+        add!("The model ranks locations worse than random guessing: places where the species was observed tend to score lower than places where it was not.",
+            "ROC AUC = $(r(rocauc)) < 0.5, i.e. the score ordering is inverted relative to the labels.")
+    elseif rocauc < 0.7
+        add!("The model is only weakly able to tell where the species is present from where it is absent.",
+            "ROC AUC = $(r(rocauc)) is below the 0.7 usually required for acceptable discrimination.")
+    end
+
+    if prauc < baseline
+        add!("Among the locations the model flags as suitable, the species is found no more often than by random picking.",
+            "PR AUC = $(r(prauc)) is below the no-skill baseline, which equals the test prevalence ($(r(baseline))).")
+    end
+
+    if mcc_val <= 0
+        add!("At the chosen cut-off, the model's presence/absence predictions are no better than chance.",
+            "MCC = $(r(mcc_val)) ≤ 0 at the MCC-maximizing threshold.")
+    elseif mcc_val < 0.3
+        add!("At the chosen cut-off, the model's presence/absence predictions agree only weakly with the observations.",
+            "MCC = $(r(mcc_val)) < 0.3 at the MCC-maximizing threshold.")
+    end
+
+    if rocauc < 0.5 && (mcc_val >= 0.3 || prauc > baseline)
+        add!("The performance scores contradict each other (one says worse than random, others say better), so none of them should be trusted as is.",
+            "ROC AUC < 0.5 while MCC = $(r(mcc_val)) and PR AUC = $(r(prauc)) (baseline $(r(baseline))). Typical causes are a small test set, predictions concentrated in a narrow part of the [0, 1] threshold grid, or predictions outside [0, 1].")
+    end
+
+    if τ < 0.05 || τ > 0.95
+        add!("The cut-off that turns the model's scores into presence/absence is extreme ($(r(τ))), which means the scores are squeezed into a very narrow range.",
+            "The MCC-maximizing threshold is at $(r(τ)) on a uniform [0, 1] grid of 250 points, which suggests poorly calibrated predictions and a coarse effective threshold resolution.")
+    end
+
+    return warnings
+end
 
 tpr(M::ConfusionMatrix) = M.tp / (M.tp + M.fn)
 tnr(M::ConfusionMatrix) = M.tn / (M.tn + M.fp)

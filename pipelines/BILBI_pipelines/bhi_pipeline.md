@@ -1,6 +1,8 @@
-_Authors: Jory Griffith_
+# Biodiversity Habitat Index (BHI)
 
-Review status: In review
+**Author(s):** Jory Griffith and Nina Obiar
+
+**Review status:** In review
 
 ## Introduction
 
@@ -37,7 +39,7 @@ enhancing the present capacity of ecosystems to retain species diversity,
 thereby providing a foundation for strategic prioritisation of such actions by
 countries.
 
-### Pipeline limitations
+## Pipeline limitations
 
 - BHI is a modeled layer, therefore there are greater uncertainties in areas with less data. Interpret the results with caution.
 
@@ -94,7 +96,7 @@ This step calculates the weighted arithmetic mean for the BHI layers to calculat
 
 - **Region:** the region of interest, if selected.
 
-## Example
+## Examples
 Example output available soon.
 
 ## Troubleshooting

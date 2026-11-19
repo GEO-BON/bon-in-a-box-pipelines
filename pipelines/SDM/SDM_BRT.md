@@ -1,10 +1,10 @@
-_Author: Michael D. Catchen_
+**Author(s):** Michael D. Catchen
 
-Review status: Under development
+**Review status:** In development
 
 This document describes the methodology behind the BON in a Box pipeline for using Boosted Regression Trees (BRTs) for species distribution modeling.
 
-# Summary
+## Introduction
 
 > [!WARNING]
 > This really should change to PAs being in a separate script from BRT, but that
@@ -20,7 +20,9 @@ Tree (BRT), a machine-learning model which tends to work well with spatial data.
 details of how a BRT works are in the description of the key script in the
 pipeline, [`fitBRT.jl`](../../scripts/SDM/BRT/fitBRT.md).
 
-## Inputs:
+## Running the pipeline
+
+### Pipeline inputs
 
 - **Species**: The name of the taxon the build a species distribution model for
 - **Environmental Predictors**: The set of environmental predictors to use
@@ -34,7 +36,7 @@ pipeline, [`fitBRT.jl`](../../scripts/SDM/BRT/fitBRT.md).
 - **Mask**: a mask of regions to ignore
 - **STAC URL**: the URL to the STAC catalogue where the environmental predictors are hosted
 
-## Outputs
+### Pipeline outputs
 
 - **Predicted SDM**: map of the predicted occurrence score at each location
 - **SDM Uncertainty**: map of relative uncertainty of the SDM at each location
@@ -58,7 +60,7 @@ pipeline, [`fitBRT.jl`](../../scripts/SDM/BRT/fitBRT.md).
 - **Presences**: cleaned occurrence data after cleaning
 - **DOI of GBIF download**
 
-# Pipeline Steps
+### Pipeline steps
 
 ```mermaid
 flowchart LR

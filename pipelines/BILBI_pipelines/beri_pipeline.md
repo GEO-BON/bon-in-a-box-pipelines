@@ -1,6 +1,8 @@
-_Authors: Jory Griffith_
+# Bioclimatic Ecosystem Resilience Index (BERI)
 
-Review status: In review
+**Author(s):** Jory Griffith, Nina Obiar
+
+**Review status:** In review
 
 ## Introduction
 
@@ -23,19 +25,12 @@ The code to calculate the weighted mean was adapted from the "Calculating weight
 CSIRO BILBI indicator" script on the
 [CSIRO data access portal](https://doi.org/10.25919/4vvz-4j96)
 
-### Uses
+## Uses
+BERI can be used to assess Target 8 of the GBF. This indicator can be used to monitor and report past-to-present trends of the resilience of ecosystem condition and connectivity in the face of ongoing climate change. The index repeatedly recalculates the indicator using the best-available mapping of ecosystem condition or integrity observed at multiple points in time. 
 
-The BERI can be used to monitor and report past-to-present trends in the
-capacity of ecosystems to retain species diversity in the face of ongoing
-climate change by repeatedly recalculating the indicator using best-available
-mapping of ecosystem condition or integrity observed at multiple points in
-time, e.g. for different years. It can also serve as a leading indicator for
-assessing the contribution that proposed or implemented area-based actions are
-expected to make to enhancing the present capacity of ecosystems to retain
-species diversity, thereby providing a foundation for strategic prioritisation
-of such actions by countries.
+It can also identify areas where biodiversity may be especially vulnerable to climate change, which areas are best to protect, and assess how proposed or implemented area-based actions are expected to retain species diversity thereby providing a stronger foundation for strategic prioritisation of such actions by member countries.
 
-### Pipeline limitations
+## Pipeline limitations
 
 - BERI is a modeled layer, therefore there are greater uncertainties in areas with less data. Interpret the results with caution.
 
@@ -92,7 +87,7 @@ This step calculates the weighted arithmetic mean for the BERI layers to calcula
 
 - **Region:** the region of interest, if any.
 
-## Example
+## Examples
 
 Example output available soon.
 

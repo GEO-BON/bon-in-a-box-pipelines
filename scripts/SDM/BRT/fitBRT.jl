@@ -1,17 +1,16 @@
-using Pkg
-Pkg.activate("/julia_depot")
+biab_ensure_package(["SpeciesDistributionToolkit", "CairoMakie", "ArchGDAL", "CSV", "DataFrames", "EvoTrees"])
 
 using EvoTrees
 using CSV
 using DataFrames
 using JSON
+using ArchGDAL
 using SpeciesDistributionToolkit
 using SpeciesDistributionToolkit.SimpleSDMLayers
 using Statistics
 using CairoMakie
 
 const _PROJ = SpeciesDistributionToolkit.SimpleSDMLayers.Proj
-const _ARCHGDAL = SpeciesDistributionToolkit.SimpleSDMLayers.ArchGDAL
 
 include("io.jl")
 include("pseudoabsences.jl")
@@ -20,6 +19,13 @@ include("diagnostics.jl")
 include("util.jl")
 
 function mask_water!(water, occurrence, predictor_layers)
+    if water.x != occurrence.x || water.y != occurrence.y
+        biab_error_stop(
+            "The water mask does not cover the same area and resolution as the predictors, so it cannot be applied. " *
+            "The grids differ: water mask has $(size(water.grid)) cells with x = $(water.x), y = $(water.y); " *
+            "predictors have $(size(occurrence.grid)) cells with x = $(occurrence.x), y = $(occurrence.y)."
+        )
+    end
     mask!(occurrence, water)
     map(l -> mask!(l, water), predictor_layers)
 end
@@ -35,7 +41,7 @@ function process_inputs(RUNTIME_DIR)
     bbox = _get_wgs84_bbox(transformer, bounding_box...)
 
     predictor_layers = SDMLayer.(inputs["predictors"]; bbox...)
-    water = _get_water_mask(inputs["water_mask"])
+    water = _get_water_mask(inputs["water_mask"]; bbox...)
 
     occurrence_df = CSV.read(joinpath(inputs["occurrence"]), DataFrame)
     occurrence_layer = _get_occurrence_layer(transformer, first(predictor_layers), occurrence_df)
@@ -69,6 +75,7 @@ function main()
 
     @info "Loading inputs..."
     inputs, predictors, presence_layer = process_inputs(RUNTIME_DIR)
+    @info "Occurrences remaining after masking: $(sum(presence_layer)) (on $(sum(presence_layer.indices)) valid cells)"
 
     max_candidate_pseudoabsences = inputs["max_candidate_pseudoabsences"]
     pa_buffer_distance = inputs["pseudoabsence_buffer"]
@@ -78,11 +85,17 @@ function main()
 
     features, labels = get_features_and_labels(predictors, presence_layer, pseudoabsences)
     train_idx, test_idx = crossvalidation_split(labels)
+    n_test_presences = sum(labels[test_idx])
+    @info "Test split: $n_test_presences presences, $(length(test_idx) - n_test_presences) absences (training: $(length(train_idx)) points)"
 
     @info "Fitting BRT..."
     brt_config = EvoTreeMLE(max_depth=6, nbins=16, eta=0.05, nrounds=120, loss=:gaussian_mle)
     model = EvoTrees.fit(brt_config; x_train=features[train_idx, :], y_train=labels[train_idx])
     fit_stats, confusion_matrices = compute_fit_stats(model, features, labels, test_idx)
+
+    # biab_warning keeps a single message, so the warnings are joined.
+    warnings = fit_stats_warnings(fit_stats, confusion_matrices)
+    isempty(warnings) || biab_warning(join(warnings, "\n\n"))
 
     @info "Predicting SDM..."
     predicted_sdm, sdm_uncertainty = predict_sdm(model, predictors)

@@ -1,0 +1,534 @@
+{
+  "nodes": [
+    {
+      "id": "39",
+      "type": "io",
+      "position": {
+        "x": 2296,
+        "y": 314
+      },
+      "data": {
+        "descriptionFile": "site_optz_stepwise>distance_matrix.yml"
+      }
+    },
+    {
+      "id": "45",
+      "type": "io",
+      "position": {
+        "x": 1721,
+        "y": 162
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "46",
+      "type": "constant",
+      "position": {
+        "x": 1288,
+        "y": 56
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://stac.geobon.org/"
+      }
+    },
+    {
+      "id": "49",
+      "type": "constant",
+      "position": {
+        "x": 1195.9831281936738,
+        "y": 289.51458701850186
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
+      }
+    },
+    {
+      "id": "50",
+      "type": "constant",
+      "position": {
+        "x": 1197.3026361044467,
+        "y": 329.91704746463733
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "min",
+          "max",
+          "mean",
+          "median"
+        ]
+      }
+    },
+    {
+      "id": "51",
+      "type": "constant",
+      "position": {
+        "x": 1064,
+        "y": 369
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3"
+      }
+    },
+    {
+      "id": "52",
+      "type": "userInput",
+      "position": {
+        "x": 1860,
+        "y": 322
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv",
+        "value": "Sample Peru"
+      }
+    },
+    {
+      "id": "54",
+      "type": "userInput",
+      "position": {
+        "x": 2561,
+        "y": 118
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 100
+      }
+    },
+    {
+      "id": "61",
+      "type": "io",
+      "position": {
+        "x": 3231.6000061035156,
+        "y": 136.79999542236328
+      },
+      "data": {
+        "descriptionFile": "site_optz_stepwise>site_optz_stepwise.yml"
+      }
+    },
+    {
+      "id": "63",
+      "type": "io",
+      "position": {
+        "x": 1109.1297482207376,
+        "y": -81.927692783396
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "66",
+      "type": "output",
+      "position": {
+        "x": 4087.9853137767586,
+        "y": 154.16432079877748
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "67",
+      "type": "userInput",
+      "position": {
+        "x": 509.11140941552844,
+        "y": -24.77440148948895
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "68",
+      "type": "constant",
+      "position": {
+        "x": 1170.3279505323394,
+        "y": 150.8537739207222
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": null
+      }
+    },
+    {
+      "id": "69",
+      "type": "constant",
+      "position": {
+        "x": 1205.9546641232077,
+        "y": 185.16097960081748
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "70",
+      "type": "constant",
+      "position": {
+        "x": 1192.7595850154792,
+        "y": 222.10720110245853
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "72",
+      "type": "constant",
+      "position": {
+        "x": 764.4035082335045,
+        "y": -214.93196475146232
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
+      }
+    },
+    {
+      "id": "73",
+      "type": "userInput",
+      "position": {
+        "x": 528.5545451511291,
+        "y": -82.92030732670429
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Country or region",
+        "options": [
+          "Country or region",
+          "Polygon of bounding box"
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "46",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-46-45stac_url"
+    },
+    {
+      "source": "49",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-49-45resampling"
+    },
+    {
+      "source": "50",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-50-45aggregation"
+    },
+    {
+      "source": "51",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-51-45study_area"
+    },
+    {
+      "source": "45",
+      "sourceHandle": "rasters",
+      "target": "39",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-45rasters-39rasters"
+    },
+    {
+      "source": "52",
+      "sourceHandle": null,
+      "target": "39",
+      "targetHandle": "locations_csv",
+      "id": "reactflow__edge-52-39locations_csv"
+    },
+    {
+      "source": "54",
+      "sourceHandle": null,
+      "target": "61",
+      "targetHandle": "iters",
+      "id": "reactflow__edge-54-61iters"
+    },
+    {
+      "source": "39",
+      "sourceHandle": "mdist",
+      "target": "61",
+      "targetHandle": "mdist",
+      "id": "reactflow__edge-39mdist-61mdist"
+    },
+    {
+      "source": "45",
+      "sourceHandle": "rasters",
+      "target": "61",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-45rasters-61rasters"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "uncov",
+      "target": "62",
+      "targetHandle": null,
+      "id": "reactflow__edge-61uncov-62"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "point_sel",
+      "target": "62",
+      "targetHandle": null,
+      "id": "reactflow__edge-61point_sel-62"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "surdes_map",
+      "target": "62",
+      "targetHandle": null,
+      "id": "reactflow__edge-61surdes_map-62"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "surdes_uncov",
+      "target": "62",
+      "targetHandle": null,
+      "id": "reactflow__edge-61surdes_uncov-62"
+    },
+    {
+      "source": "52",
+      "sourceHandle": null,
+      "target": "61",
+      "targetHandle": "locations_csv",
+      "id": "reactflow__edge-52-61locations_csv"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "point_sel",
+      "target": "66",
+      "targetHandle": null,
+      "id": "reactflow__edge-61point_sel-66"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "uncov",
+      "target": "66",
+      "targetHandle": null,
+      "id": "reactflow__edge-61uncov-66"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "surdes_uncov",
+      "target": "66",
+      "targetHandle": null,
+      "id": "reactflow__edge-61surdes_uncov-66"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "surdes_map",
+      "target": "66",
+      "targetHandle": null,
+      "id": "reactflow__edge-61surdes_map-66"
+    },
+    {
+      "source": "63",
+      "sourceHandle": "polygon",
+      "target": "61",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-63polygon-61country_polygon"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "63",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-67-63country_region_bbox"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-67-45bbox_crs"
+    },
+    {
+      "source": "68",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-68-45t0"
+    },
+    {
+      "source": "69",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-69-45t1"
+    },
+    {
+      "source": "70",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "temporal_res",
+      "id": "reactflow__edge-70-45temporal_res"
+    },
+    {
+      "source": "72",
+      "sourceHandle": null,
+      "target": "63",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-72-63buffer"
+    },
+    {
+      "source": "73",
+      "target": "63",
+      "targetHandle": "polygon_type",
+      "id": "xy-edge__73-63polygon_type"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "sites_gpkg",
+      "target": "66",
+      "targetHandle": null,
+      "id": "reactflow__edge-61sites_gpkg-66"
+    }
+  ],
+  "inputs": {
+    "pipeline@67": {
+      "label": "Country, region, or bounding box",
+      "description": "Define the study extent and choose the coordinate reference system used to retrieve environmental data.",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
+    "pipeline@73": {
+      "label": "Polygon type",
+      "description": "Type of polygon loaded. If a country or region is selected in the above `Choose Bounding Box`, select `Country or region`. If a bounding box is drawn in the above `Choose Bounding Box`, select `Polygon of bounding box`",
+      "type": "options",
+      "example": "Country or region",
+      "options": [
+        "Country or region",
+        "Polygon of bounding box"
+      ],
+      "weight": 1
+    },
+    "data>loadFromStac.yml@45|spatial_res": {
+      "description": "Environmental raster resolution in the selected CRS units: metres for a CRS measured in metres, degrees for EPSG:4326. \n\nIf blank, the loader attempts native resolution, requiring compatible CRS units. \n\nThis does not change the required WGS84 input coordinates or the geodesic distance method.",
+      "label": "Spatial resolution",
+      "type": "float",
+      "example": 0.00883,
+      "weight": 2
+    },
+    "data>loadFromStac.yml@45|collections_items": {
+      "description": "Provide the environmental variables using the format `collection|item`, such as `chelsa-clim|bio1` and `chelsa-clim|bio12`. These variables define the environmental differences between sites.",
+      "label": "STAC collection items",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio12"
+      ],
+      "weight": 3
+    },
+    "pipeline@52": {
+      "label": "Sampling locations",
+      "description": "Path to one CSV with lon and lat in WGS84 decimal degrees (EPSG:4326), and vini: 1 for current sites, 0 for demand points. Input coordinates always use WGS84, independently of the selected processing CRS.",
+      "type": "text/csv",
+      "example": "/scripts/site_optz_stepwise/site_optz_stepwise_EXAMPLE_samp_loc_peru.csv",
+      "weight": 4
+    },
+    "pipeline@54": {
+      "label": "Algorithm Iterations",
+      "description": "Positive integer number of demand points to add. Must not exceed the number of rows with vini = 0. For example, 40 current sites and 60 demand points allow at most 60 additions. More iterations take longer.",
+      "type": "int",
+      "example": 30,
+      "weight": 5
+    }
+  },
+  "outputs": {
+    "site_optz_stepwise>site_optz_stepwise.yml@61|point_sel": {
+      "label": "Selection of demand points",
+      "description": "CSV of newly selected demand points in selection order, including lon, lat, vini, site_row (original CSV row, starting at 1), selected, selection_order, and status. Current sites are excluded.",
+      "type": "text/csv",
+      "weight": 0
+    },
+    "site_optz_stepwise>site_optz_stepwise.yml@61|uncov": {
+      "label": "Uncovered variability",
+      "description": "CSV with iteration and uncovered_variability, calculated as the sum of SURDES p-median scores at each iteration. This diagnostic is not a percentage of biodiversity represented and is not guaranteed to decrease monotonically.",
+      "type": "text/csv",
+      "weight": 1
+    },
+    "site_optz_stepwise>site_optz_stepwise.yml@61|surdes_uncov": {
+      "label": "Uncovered variability plot",
+      "description": "PNG showing the sum of SURDES p-median scores at each iteration. Inspect alongside the selected sites; this diagnostic is not a percentage of biodiversity represented.",
+      "type": "image/png",
+      "weight": 2
+    },
+    "site_optz_stepwise>site_optz_stepwise.yml@61|surdes_map": {
+      "label": "Map for selected points",
+      "description": "PNG showing current sites, unselected demand points, and selected demand points in different colours.",
+      "type": "image/png",
+      "weight": 3
+    },
+    "site_optz_stepwise>site_optz_stepwise.yml@61|sites_gpkg": {
+      "label": "Sampling sites GeoPackage",
+      "description": "GeoPackage containing all input sites in WGS84 with vini, site_row, selected, selection_order, and status (Current, Demand, or Selected). Use status for viewer styling; automatic colours depend on the viewer.",
+      "type": "application/geopackage+sqlite3",
+      "weight": 4
+    }
+  },
+  "metadata": {
+    "name": "Site optimization sampling",
+    "description": "## Introduction\n\nBiodiversity monitoring programmes may need to expand their sampling network or revisit sites that are no longer regularly monitored. Choosing additional sites can help improve coverage of environmental conditions and geographic areas that are poorly represented by the current network.\n\nThis pipeline uses a stepwise p-median optimization procedure as described in Medina et al., 2013.  It is implemented in the [SURDES package](https://rdrr.io/rforge/SURDES/man/SURDES-package.html) to select additional sites from a user-provided candidate list. Selection considers environmental differences and geodesic distances between site coordinates in metres, with the aim of complementing sites already included in the monitoring network.\n\n## Uses\n\nUse this pipeline to prioritize demand points when expanding or rotating a monitoring network. Demand points may include historical sampling locations or proposed new sites.\n\nThe input list must identify two groups:\n\n- **Current sites (`vini = 1`):** Sites already included in the monitoring network.\n- **Demand points (`vini = 0`):** Sites available for additional sampling.\n\nTogether, these groups define the set of sites considered in the analysis. The pipeline extracts environmental values at their locations, calculates distance matrices, and selects additional sites through successive optimization steps.\n\nThe results include site-selection values, a map, and a curve showing how the remaining uncovered variability changes as sites are added. These outputs support decisions about which demand points to include and how many additional sites to sample.\n\n## Limitations\n\n- All sites need valid environmental data. Locations outside raster coverage or within cells containing missing values may prevent the analysis from completing.\n- Computation time increases with the number of sites and optimization iterations. Start with a small run to assess performance.\n- The uncovered-variability output is a measure derived from the optimization’s distance matrix. It should not be interpreted as a percentage of biodiversity represented.\n\n## Before you start\n\nPrepare a CSV containing one row per site and the following columns:\n\n- **lon:** Longitude in decimal degrees, WGS84 (EPSG:4326).\n\n- **lat:** Latitude in decimal degrees, WGS84 (EPSG:4326).\n\n- **vini:** The initial site-selection indicator used by the optimization. Use 1 for current monitoring sites and 0 for demand points available for additional sampling.\n\nUse numeric values without missing coordinates or classifications. Include at least one current site and one demand point. Extra columns may contain site identifiers or other attributes; they do not enter the distance calculations.\n\nInput coordinates must always be WGS84 longitude and latitude, regardless of the CRS selected in the location chooser. Sites are reprojected internally for extracting environmental data; geographic distances are calculated directly from WGS84 coordinates.\n\nPlace the file in your BON in a Box `userdata` directory and enter its container path in **Sampling locations**, for example `/userdata/sampling_sites.csv`.\n\nThe environmental variables, raster resolution, and supplied demand points determine the differences considered by the optimization. Choose variables relevant to the monitoring objectives and ensure their coverage includes all supplied sites. Set the number of additional sites to a value no greater than the number of rows with `vini = 0`.\n\n",
+    "author": [
+      {
+        "name": "Francis van Oordt",
+        "email": "francis.vanoordtlahoz@mail.mcgill.ca",
+        "identifier": "https://orcid.org/0000-0002-8471-235X"
+      },
+      {
+        "name": "Samara Manzin",
+        "email": "samara.manzin@mcgill.ca",
+        "identifier": "https://orcid.org/0009-0005-9134-9981"
+      }
+    ],
+    "license": "CC-BY",
+    "references": [
+      {
+        "text": "Medina, N. G., Lara, F., Mazimpaka, V., & Hortal, J. (2013). Designing bryophyte surveys for an optimal coverage of diversity gradients. Biodiversity and Conservation, 22(13–14), 3121–3139.",
+        "doi": "https://doi.org/10.1007/s10531-013-0574-5"
+      }
+    ]
+  }
+}

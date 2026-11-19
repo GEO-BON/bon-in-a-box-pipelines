@@ -1,6 +1,8 @@
-_Authors: Maria Camila Diaz, Victor Julio Rincon, Laetitia Tremblay, Jory Griffith_
+# Red List Index (RLI)
 
-Review status: In review
+**Author(s):** Maria Camila Diaz, Victor Julio Rincon, Laetitia Tremblay, Jory Griffith
+
+**Review status:** In review
 
 ## Introduction
 
@@ -8,7 +10,7 @@ The Red List Index (RLI) shows trends in overall extinction risk for species, an
 
 RLI has been widely integrated into various policy frameworks. Initially used to assess progress towards the Convention on Biological Diversity’s 2010 target (Rodrigues, 2006), it has since been employed in regional, thematic, and global assessments by bodies such as the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES), the Global Environment Outlook, and others (Global Biodiversity Outlook, 2010).
 
-### Uses
+## Uses
 
 The RLI is a key indicator for the UN Sustainable Development Goals, particularly Goal 15, and is adopted by the Convention on Migratory Species and its agreements. It also serves as a headline indicator for Goal A and Target 4 of the CBD’s Kunming-Montreal Global Biodiversity Framework (CBD, 2022). Furthermore, by tracking the proportion of threatened species showing status improvement, the RLI plays a central role in evaluating progress toward Goal A. Beyond global trends, the RLI can be used to track changes in extinction risk across biogeographic realms, political units, ecosystems, habitats, taxonomic groups, threat types, use or trades, and those relevant to various international agreements and treaties (Butchart et al., 2004; Butchart et al., 2005). The RLI supports progress towards several other goals and targets within the framework, such as Goal B, Target 2, and Target 5, highlighting changes in extinction risk, including for utilized species. By calculating the RLI in more specific contexts, such as for species impacted by pollution (Target 7), species affected by invasive alien species (Target 6b), or those used for food and medicine (Target 9b), the indicator provides targeted insights that directly inform efforts to meet these goals. To read more about the RLI indicator in the Global Biodiversity Framework, see the metadata [here](https://www.gbf-indicators.org/metadata/headline/A-3).
 
@@ -48,7 +50,7 @@ The following are suggested inputs that are goal-specific:
 - Threat category: Fisheries
 - Species use: Do not filter by species use or trade
 
-### Pipeline limitations
+## Pipeline limitations
 
 - On large or species-rich countries, as well as in threat or use categories that have a substantial number of species, this pipeline takes a significant amount of time to retrieve the data.
 
@@ -140,7 +142,7 @@ This step calculates the Red List Index for the species using their history of a
 
 - **IUCN API citation:** Citation for the data acquired using the IUCN Red List API.
 
-## Example
+## Examples
 
 **Sample run:** See an example RLI run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/_2025-10-16%3ERLI_pipeline%3EIUCN_RLI_pipeline/40d810fb1dd12ea71f08381383a0686a) and [viewer](https://pipelines-results.geobon.org/viewer/_2025-10-16%3ERLI_pipeline%3EIUCN_RLI_pipeline%3E40d810fb1dd12ea71f08381383a0686a).
 
