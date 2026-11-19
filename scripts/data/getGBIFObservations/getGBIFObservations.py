@@ -2,6 +2,7 @@ import sys
 import gbif_api
 import tempfile
 import re
+import math
 from pyproj import Proj
 import datetime
 
@@ -60,12 +61,20 @@ proj = data['bbox_crs']['CRS']['authority']+':'+str(data['bbox_crs']['CRS']['cod
 if proj=='' or ('EPSG' not in proj and 'WKT' not in proj):
 	biab_error_stop("Please specify proper projection")
 else:
-	myProj = Proj(proj)
-	lon1, lat1 = myProj(bbox[0], bbox[1], inverse=True)
-	lon2, lat2 = myProj(bbox[2], bbox[3], inverse=True)
-	bbox_wgs84 = [lon1, lat1, lon2, lat2]
-	if lon1>lon2 or lat1>lat2 :
+	xmin, ymin, xmax, ymax = bbox
+	if xmin > xmax or ymin > ymax:
 		biab_error_stop("Please specify a valid bounding box")
+	myProj = Proj(proj)
+	corners = [
+		myProj(xmin, ymin, inverse=True),
+		myProj(xmin, ymax, inverse=True),
+		myProj(xmax, ymin, inverse=True),
+		myProj(xmax, ymax, inverse=True),
+	]
+	if any(not math.isfinite(value) for corner in corners for value in corner):
+		biab_error_stop("Could not transform the bounding box to WGS84")
+	longitudes, latitudes = zip(*corners)
+	bbox_wgs84 = [min(longitudes), min(latitudes), max(longitudes), max(latitudes)]
 
 out={}
 
