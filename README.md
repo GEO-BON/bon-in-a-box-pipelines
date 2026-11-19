@@ -13,11 +13,8 @@ A *pipeline* is a reproducible computational workflow that transforms input data
 Pipelines are open-source and designed to be transparent, reproducible, and adaptable to local contexts.
 
 <p align="center">
-  <img
-    src="https://github.com/user-attachments/assets/1994e95c-6e57-497b-b3b4-7e09eaca47e8"
-    alt="Example of a BON in a Box pipeline showing interconnected scripts and their inputs and outputs"
-    width="400"
-  >
+  <img width="400" alt="pipeline" src="https://github.com/user-attachments/assets/945a9502-433b-4a46-b291-2a78cc270c04" />
+
 </p>
 
 <p align="center">
