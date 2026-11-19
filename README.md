@@ -16,7 +16,7 @@ Pipelines are open-source and designed to be transparent, reproducible, and adap
   <img
     src="https://github.com/user-attachments/assets/1994e95c-6e57-497b-b3b4-7e09eaca47e8"
     alt="Example of a BON in a Box pipeline showing interconnected scripts and their inputs and outputs"
-    width="650"
+    width="400"
   >
 </p>
 
