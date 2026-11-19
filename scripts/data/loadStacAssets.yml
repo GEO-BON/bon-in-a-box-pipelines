@@ -1,0 +1,87 @@
+script: loadStacAssets.R
+name: Load selected STAC assets
+description: Load raster assets selected with the STAC chooser, crop and reproject them, and mosaic tiles from a collection on the selected date. Produces one GeoTIFF per selection, with separate resampling and tile aggregation controls for categorical and continuous layers.
+author:
+  - name: Samara Manzin
+    email: samara.manzin@mcgill.ca
+    identifier: https://orcid.org/0009-0005-9134-9981
+lifecycle:
+  status: in_development
+inputs:
+  stac:
+    label: STAC assets
+    description: Choose a catalog, collection, item and raster asset. For tiled layers, select the mosaic option and a date if available. Mark class layers as categorical to use the categorical resampling and aggregation controls.
+    type: stac_asset[]
+    example: null
+  bbox_crs:
+    label: Bounding box and CRS
+    description: Bounding box and coordinate reference system for the output rasters.
+    type: crsBBox
+    example: null
+  spatial_res:
+    label: Spatial resolution
+    description: Positive output pixel size in target CRS units (degrees or metres). Leave blank to use the native resolution when keeping the asset CRS. Required when changing CRS.
+    type: float
+    example: null
+  resampling:
+    label: Continuous resampling method
+    description: Method used when reprojecting or rescaling continuous rasters. Use average to average source pixels when reducing spatial resolution.
+    type: options
+    options:
+      - near
+      - bilinear
+      - cubic
+      - cubicspline
+      - lanczos
+      - average
+      - mode
+    example: bilinear
+  categorical_resampling:
+    label: Categorical resampling method
+    description: Method used when reprojecting or rescaling categorical rasters. Use near to select the nearest source pixel, or mode to use the most common source class when reducing spatial resolution.
+    type: options
+    options:
+      - near
+      - mode
+    example: near
+  continuous_aggregation:
+    label: Continuous tile aggregation
+    description: Method used to combine overlapping tile values within each continuous selection. Does not combine separate selections or aggregate over time. First and last use the first or last non-missing value in catalog order.
+    type: options
+    options:
+      - first
+      - last
+      - mean
+      - median
+      - min
+      - max
+      - sum
+    example: first
+  categorical_aggregation:
+    label: Categorical tile aggregation
+    description: Method used to combine overlapping tile values within each categorical selection. Modal chooses the most common class. First and last use the first or last non-missing value in catalog order. Does not combine separate selections or aggregate over time.
+    type: options
+    options:
+      - first
+      - last
+      - modal
+    example: first
+  study_area:
+    label: Study area
+    description: Optional study-area polygon in GeoPackage format used to mask the output rasters.
+    type: application/geopackage+sqlite3
+    example: null
+outputs:
+  rasters:
+    label: Rasters
+    description: One GeoTIFF per selected asset, with tiles mosaicked when requested.
+    type: image/tiff;application=geotiff[]
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-terra
+    - r-rjson
+    - r-rcurl
+    - r-rstac
