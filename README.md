@@ -12,6 +12,24 @@ A *pipeline* is a reproducible computational workflow that transforms input data
 
 Pipelines are open-source and designed to be transparent, reproducible, and adaptable to local contexts.
 
+<p align="center">
+  <img
+    src="https://github.com/user-attachments/assets/1994e95c-6e57-497b-b3b4-7e09eaca47e8"
+    alt="Example of a BON in a Box pipeline showing interconnected scripts and their inputs and outputs"
+    width="650"
+  >
+</p>
+
+<p align="center">
+  <em>Figure 2. A BON in a Box pipeline consists of interconnected,
+  modular scripts that transform data into EBVs and biodiversity
+  indicators. From Griffith et al. (2026).
+  Licensed under
+  <a href="https://creativecommons.org/licenses/by-nc/4.0/">
+  CC BY-NC 4.0</a>.</em>
+</p>
+
+
 ## Explore available pipelines
 
 BON in a Box includes pipelines for calculating biodiversity indicators and EBVs, as well as other analyses to support biodiversity monitoring and assessment.
