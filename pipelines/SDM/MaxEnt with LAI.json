@@ -1247,12 +1247,26 @@
       "example": 1000,
       "weight": 4
     },
+    "filtering>cleanCoordinates.yml@34|custom_occurrences": {
+      "description": "Optional CSV or TSV file with species occurence records. \n\nThe file must include scientific_name, decimal_longitude, and decimal_latitude columns. An id column is optional. \n\nRecords are appended to GBIF occurrences before cleaning.",
+      "label": "Upload occurrences (optional)",
+      "type": "text/csv",
+      "example": null,
+      "weight": 5
+    },
+    "filtering>cleanCoordinates.yml@34|custom_occurrences_crs": {
+      "description": "Required with upload occurrences. CRS of uploaded occurrence coordinates. If omitted, EPSG:4326 is assumed.",
+      "label": "Custom occurrence CRS (optional)",
+      "type": "CRS",
+      "example": null,
+      "weight": 6
+    },
     "data>loadFromStac.yml@144|stac_url": {
       "description": "URL of the STAC catalog used to retrieve environmental predictor layers.",
       "label": "STAC URL",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 5
+      "weight": 7
     },
     "data>loadFromStac.yml@144|collections_items": {
       "description": "To pull a specific collection item, input the collection name followed by | followed by the item ID (e.g. \"chelsa-clim|bio1\").\n\nTo extract a whole collection, type the collection name only (e.g. \"chelsa-clim\").\n\nIf pulling a layer that is tiled (e.g. https://stac.geobon.org/viewer/gfw-lossyear/_80N_180W), enter the collection name (e.g. gfw-lossyear) and a bounding box, and the script will assemble the tiles into a continuous layer automatically.",
@@ -1268,49 +1282,49 @@
         "soilgrids|phh2o_0-5cm",
         "soilgrids|soc_0-5cm"
       ],
-      "weight": 6
+      "weight": 8
     },
     "pipeline@145": {
       "label": "Start date - GBIF",
       "description": "Earliest year for GBIF records YYYY.\n\nIt is recommended to use an early start date (e.g. 1980) to maximize the number of occurrence records for a given species.\n\nNote that Leaf Area Index (LAI) data is only available from 2015 onward. If an earlier year is selected the LAI data will only be pulled from 2015 onward.",
       "type": "text",
       "example": "1980",
-      "weight": 7
+      "weight": 9
     },
     "pipeline@165": {
       "label": "Start date - LAI",
       "description": "Start date for the LAI layers YYYY-MM-DD.\n\nMust be 2015 onwards",
       "type": "text",
       "example": "2015-01-01",
-      "weight": 8
+      "weight": 10
     },
     "pipeline@146": {
       "label": "End date - GBIF",
       "description": "Latest year for GBIF records YYYY.",
       "type": "text",
       "example": "2026",
-      "weight": 9
+      "weight": 11
     },
     "pipeline@167": {
       "label": "End date - LAI",
       "description": "End date of the observation period in format YYYY-MM-DD.",
       "type": "text",
       "example": "2026-06-01",
-      "weight": 10
+      "weight": 12
     },
     "data>loadFromStac.yml@144|temporal_res": {
       "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is monthly, and \"P1D\" is daily). \n\nIf there is no temporal option all items will be extracted. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated using the 'first' method.",
       "label": "Temporal resolution",
       "type": "text",
       "example": "P1Y",
-      "weight": 11
+      "weight": 13
     },
     "SDM>selectBackground.yml@40|n_background": {
       "description": "Target number of background points to generate within the study extent. These points are used to represent the available environment.\n\nTypically it is recommended to start with 10000 points. If you have a very large study area you can increase this amount to fully capture the available environmental space. If you have a very small study area (i.e. fewer than 10000 pixels) you can reduce the number of background points.",
       "label": "Number of background points",
       "type": "int",
       "example": 10000,
-      "weight": 12
+      "weight": 14
     },
     "SDM>selectBackground.yml@40|method_background": {
       "description": "Background points are generated using one of the five available methods. Choosing the right method can help correct for sampling bias in the GBIF data.\n- `random`: background points are randomly sampled throughout the whole study extent. Good choice if your occurrence data has little spatial bias toward human activity/accessibility (e.g., roads, cities, well-surveyed areas).\n- `weighted_raster`: background points are sampled in proportion to the number of observations in the observation-density heatmap of the selected taxonomic group. Recommended for heavily biased data, or when occurrences are missing due to gaps in survey/study coverage. This is the more extreme correction of the two raster-based methods (weighted and unweighted).\n- `unweighted_raster`: background points are sampled only in cells where there are observations from a target group. Also addresses sampling bias and survey gaps, but more conservatively than weighted_raster. Recommended as the default of the two (weighted and unweighted).\n- `inclusion_buffer`: background points are sampled within a buffer around observations. Useful if you don't think your species is well represented by the target taxonomic group. \n- `thickening`: background points are sampled in proportion to the local density of observations, within a buffer around each observation. Also useful when the target taxon group doesn't represent your species well, as an alternative to inclusion_buffer.",
@@ -1324,14 +1338,14 @@
         "thickening"
       ],
       "example": "random",
-      "weight": 13
+      "weight": 15
     },
     "pipeline@46": {
       "label": "Number of runs",
       "description": "Number of bootstrap or cross-validation runs used when preparing SDM training and testing data. The number of runs correspond to the number of times the occurrence and background data are partitioned into training/testing subsets during model tuning (cross-validation) or resampled to estimate prediction uncertainty (bootstrap). Higher values can provide smoother confidence intervals but will increase run time proportionately. ",
       "type": "int",
       "example": 2,
-      "weight": 14
+      "weight": 16
     },
     "SDM>runMaxent.yml@108|fc": {
       "description": "MaxEnt feature classes control the shapes of relationships the model can learn between species occurrence and environmental predictors. Simpler classes, such as L or LQ, fit smoother, more constrained responses and are often safer for small datasets. More complex combinations, such as LQH or LQHP, can capture more flexible ecological responses but may overfit when occurrence records are limited. This pipeline tests all values provided here and selects the best-performing combination using the parameter selection method configured in the MaxEnt step. Accepted values are combinations of L (linear), Q (quadratic), P (product), H (hinge) or T (threshold, deprecated).",
@@ -1342,7 +1356,7 @@
         "LQ",
         "LQH"
       ],
-      "weight": 15
+      "weight": 17
     },
     "SDM>runMaxent.yml@108|rm": {
       "description": "Regularization multiplier values to evaluate for MaxEnt model tuning. The regularization multiplier controls how strongly MaxEnt penalizes model complexity. Lower values allow a more flexible model that may fit local patterns closely. Higher values produce smoother, more generalized predictions and reduce overfitting risk. ",
@@ -1353,7 +1367,7 @@
         1,
         2
       ],
-      "weight": 16
+      "weight": 18
     },
     "SDM>runMaxent.yml@108|partition_type": {
       "description": "This option controls how ENMeval partitions presence and background data while tuning MaxEnt parameters.\n\nIt is recommended to start with random k-fold. If you suspect overfitting or spatial autocorrelation, switch to block or checkerboard because these partition data geographically rather than randomly, which makes evaluation more robust to spatial autocorrelation between nearby points. If you don't have enough occurrence points for spatial partitioning, use jackknife.\n\n   - Random k-fold \\- partitions groups randomly into a user-specified (K) number of bins, and runs the model k times, with each bin used once as testing. Recommended to start with 10 folds.\n  - Block \\- partitions the bounding box into four equally sized quadrants and assigns groups by quadrant. Because each fold is a large, contiguous geographic region, this tests how well the model transfers to broad, spatially distinct areas. This is a stricter test of spatial autocorrelation than checkerboard.\n  - Checkerboard 1 \\- generates a checkerboard grid from the study area and assigns groups based on which square the points fall in. Folds are smaller and spatially interspersed (alternating across the study area) rather than large contiguous blocks, so it tests spatial independence at a finer scale than block.\n  - Checkerboard 2 \\- Similar to checkerboard 1 but performs this separately for occurrence and background points\n  - Jackknife \\- Does not partition the background points into testing and training (uses them all), performs leave one out cross validation. Recommended for small datasets only.",
@@ -1367,19 +1381,19 @@
         "checkerboard2"
       ],
       "example": "randomkfold",
-      "weight": 17
+      "weight": 19
     },
     "pipeline@147": {
       "label": "Number of folds",
       "description": "Number of folds for random k-fold MaxEnt partitioning when partition type = random k-fold. Can be left blank when another method is chosen.",
       "type": "int",
       "example": 10,
-      "weight": 18
+      "weight": 20
     }
   },
   "outputs": {
     "filtering>cleanCoordinates.yml@34|clean_presence": {
-      "description": "Cleaned GBIF occurrence records that passed the selected coordinate-cleaning tests. These records are used as presence points in the SDM workflow.",
+      "description": "GBIF and optional uploaded occurrence records that passed coordinate cleaning. These records are used as presence points in the SDM workflow.",
       "label": "Presences",
       "type": "text/tab-separated-values",
       "weight": 0
