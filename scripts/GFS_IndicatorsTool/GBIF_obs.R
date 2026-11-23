@@ -76,7 +76,7 @@ gbif_data<-gbif_download %>%
   occ_download_get() %>%
   occ_download_import() %>%
   setNames(tolower(names(.))) %>% # set lowercase column names to work with CoordinateCleaner
-  filter(occurrencestatus  == "PRESENT") %>%
+  filter(occurrencestatus  == "DETECTED") %>%
   filter(!basisofrecord %in% c("FOSSIL_SPECIMEN","LIVING_SPECIMEN")) %>%
   filter(year >= 1900) %>% 
   filter(coordinateprecision < 0.01 | is.na(coordinateprecision)) %>% 
