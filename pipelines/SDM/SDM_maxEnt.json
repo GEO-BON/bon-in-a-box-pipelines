@@ -399,26 +399,6 @@
       }
     },
     {
-      "id": "137",
-      "type": "constant",
-      "position": {
-        "x": 12,
-        "y": 870.3333333333334
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "first",
-        "options": [
-          "first",
-          "min",
-          "max",
-          "mean",
-          "median"
-        ]
-      }
-    },
-    {
       "id": "138",
       "type": "constant",
       "position": {
@@ -436,14 +416,7 @@
           "mode",
           "cubic",
           "cubicspline",
-          "lanczos",
-          "rms",
-          "min",
-          "max",
-          "sum",
-          "med",
-          "q1",
-          "q3"
+          "lanczos"
         ]
       }
     },
@@ -493,17 +466,6 @@
       }
     },
     {
-      "id": "144",
-      "type": "io",
-      "position": {
-        "x": 888,
-        "y": 258
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
       "id": "145",
       "type": "userInput",
       "position": {
@@ -543,27 +505,83 @@
       }
     },
     {
-      "id": "148",
-      "type": "constant",
+      "id": "150",
+      "type": "io",
       "position": {
-        "x": 108,
-        "y": 610.6666666666667
+        "x": 701,
+        "y": 374.66666666666663
       },
-      "dragHandle": ".dragHandle",
       "data": {
-        "type": "text"
+        "descriptionFile": "data>loadStacAssets.yml"
       }
     },
     {
-      "id": "149",
-      "type": "constant",
+      "id": "151",
+      "type": "userInput",
       "position": {
         "x": 108,
-        "y": 661.6666666666667
+        "y": 362.16666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "text"
+        "type": "stac_asset[]"
+      }
+    },
+    {
+      "id": "152",
+      "type": "constant",
+      "position": {
+        "x": 55.3569168140118,
+        "y": 431.46135000364205
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "mode"
+        ]
+      }
+    },
+    {
+      "id": "153",
+      "type": "constant",
+      "position": {
+        "x": 18.48644125762857,
+        "y": 485.09113263110856
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "mean",
+        "options": [
+          "first",
+          "last",
+          "mean",
+          "median",
+          "min",
+          "max",
+          "sum"
+        ]
+      }
+    },
+    {
+      "id": "154",
+      "type": "constant",
+      "position": {
+        "x": 15.134579843411899,
+        "y": 545.4246380870084
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "last",
+          "modal"
+        ]
       }
     }
   ],
@@ -842,41 +860,6 @@
       "id": "reactflow__edge-142observations_file-34presence"
     },
     {
-      "source": "137",
-      "sourceHandle": null,
-      "target": "144",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-137-144aggregation"
-    },
-    {
-      "source": "138",
-      "sourceHandle": null,
-      "target": "144",
-      "targetHandle": "resampling",
-      "id": "reactflow__edge-138-144resampling"
-    },
-    {
-      "source": "128",
-      "sourceHandle": null,
-      "target": "144",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-128-144spatial_res"
-    },
-    {
-      "source": "140",
-      "sourceHandle": null,
-      "target": "144",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-140-144bbox_crs"
-    },
-    {
-      "source": "144",
-      "sourceHandle": "rasters",
-      "target": "97",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-144rasters-97rasters"
-    },
-    {
       "source": "145",
       "target": "142",
       "targetHandle": "min_year",
@@ -895,22 +878,59 @@
       "id": "xy-edge__147-108n_folds"
     },
     {
-      "source": "148",
-      "target": "144",
-      "targetHandle": "t0",
-      "id": "xy-edge__148-144t0"
-    },
-    {
-      "source": "149",
-      "target": "144",
-      "targetHandle": "t1",
-      "id": "xy-edge__149-144t1"
-    },
-    {
       "source": "140",
       "target": "108",
       "targetHandle": "crs",
       "id": "xy-edge__140-108crs"
+    },
+    {
+      "source": "150",
+      "sourceHandle": "rasters",
+      "target": "97",
+      "targetHandle": "rasters",
+      "id": "xy-edge__150rasters-97rasters"
+    },
+    {
+      "source": "151",
+      "target": "150",
+      "targetHandle": "stac",
+      "id": "xy-edge__151-150stac"
+    },
+    {
+      "source": "140",
+      "target": "150",
+      "targetHandle": "bbox_crs",
+      "id": "xy-edge__140-150bbox_crs"
+    },
+    {
+      "source": "128",
+      "target": "150",
+      "targetHandle": "spatial_res",
+      "id": "xy-edge__128-150spatial_res"
+    },
+    {
+      "source": "138",
+      "target": "150",
+      "targetHandle": "resampling",
+      "id": "xy-edge__138-150resampling"
+    },
+    {
+      "source": "152",
+      "target": "150",
+      "targetHandle": "categorical_resampling",
+      "id": "xy-edge__152-150categorical_resampling"
+    },
+    {
+      "source": "153",
+      "target": "150",
+      "targetHandle": "continuous_aggregation",
+      "id": "xy-edge__153-150continuous_aggregation"
+    },
+    {
+      "source": "154",
+      "target": "150",
+      "targetHandle": "categorical_aggregation",
+      "id": "xy-edge__154-150categorical_aggregation"
     }
   ],
   "inputs": {
@@ -973,13 +993,6 @@
       "type": "text",
       "example": "2024",
       "weight": 8
-    },
-    "data>loadFromStac.yml@144|temporal_res": {
-      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is monthly, and \"P1D\" is daily). \n\nIf there is no temporal option all items will be extracted. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated using the 'first' method.",
-      "label": "Temporal resolution",
-      "type": "text",
-      "example": "P1Y",
-      "weight": 9
     },
     "SDM>selectBackground.yml@40|n_background": {
       "description": "Target number of background points to generate within the study extent. These points are used to represent the available environment.\n\nTypically it is recommended to start with 10000 points. If you have a very large study area you can increase this amount to fully capture the available environmental space. If you have a very small study area (i.e. fewer than 10000 pixels) you can reduce the number of background points.",
@@ -1051,6 +1064,13 @@
       "type": "int",
       "example": 10,
       "weight": 16
+    },
+    "data>loadStacAssets.yml@150|study_area": {
+      "description": "Optional study-area polygon in GeoPackage format used to mask the output rasters.",
+      "label": "Study area",
+      "type": "application/geopackage+sqlite3",
+      "example": null,
+      "weight": 5
     }
   },
   "outputs": {
