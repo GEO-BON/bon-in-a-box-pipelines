@@ -97,8 +97,8 @@ inputs:
     type: bboxCRS
     example:
   stac:
-    label: STAC Item
-    description: Using the STAC item chooser to select a STAC item.
+    label: Geospatial layers
+    description: Using the STAC item chooser to select a geospatial layers from a [STAC](https://stacspec.org/).
     type: stac_asset[]
     example:
 
@@ -159,8 +159,8 @@ outputs:
     type: text
     example: ESPG:4326
   stac_assets:
-    label: STAC assets
-    description: The first asset from the selected STAC asset list. 
+    label: Geospatial layer
+    description: The first layer from the selected input geospatial layers.
     type: json
 references:
   - text: John Doe, The ins and outs of copy-pasting, CopyScience, Volume 71, Issue 5, May 2021, Pages 448–451
