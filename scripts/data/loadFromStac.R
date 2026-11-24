@@ -23,6 +23,10 @@ gdalcubes_set_gdal_config("GDAL_NUM_THREADS", 1) # restrict GDAL threads to 1
 
 gdalcubes::gdalcubes_options(parallel = 1)
 
+# GDAL does not retry failed HTTP requests by default. This covers 429/5xx responses and connection timeouts/resets.
+# Set as environment variables so they apply to terra as well as gdalcubes.
+Sys.setenv(GDAL_HTTP_MAX_RETRY = "5", GDAL_HTTP_RETRY_DELAY = "5")
+
 # Remote reads occasionally return truncated data ("TIFFFillTile: Read error ... got X bytes, expected Y",
 # "IReadBlock failed"). GDAL does not retry those, and terra only reports them as warnings,
 # leaving NA cells (or failing later with "there are no cell values"). Retry the whole operation instead.
