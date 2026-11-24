@@ -44,8 +44,8 @@
       "description": "Bounding box and CRS of study area",
       "label": "Bounding box",
       "type": "bboxCRS",
-      "weight": 1,
-      "example": null
+      "example": null,
+      "weight": 1
     }
   },
   "outputs": {
@@ -59,7 +59,7 @@
   },
   "metadata": {
     "name": "Hello World pipeline",
-    "description": "This very simple pipeline shows how to connect a single script to a single output.\nThe input of the script is left blank, thus becoming a pipeline input.",
+    "description": "This very simple example pipeline shows how to connect a single script to a single output.\nThe input of the script is left blank, thus becoming a pipeline input.",
     "lifecycle": {
       "status": "example"
     },

@@ -1,0 +1,274 @@
+library(dplyr)
+library(gt)
+library(readr)
+library(rjson)
+
+input <- biab_inputs()
+
+merged_data <- read.csv(input$merged_dataset, stringsAsFactors = FALSE)
+gbif_observations <- read.csv(input$gbif_country_observations, stringsAsFactors = FALSE)
+
+# The membership column is emitted only for national-checklist merge runs.
+national_mode <- "inNationalChecklist" %in% names(merged_data)
+required_merged_columns <- c("taxon", "kingdom", "eventDate")
+if (!national_mode) {
+  required_merged_columns <- c(required_merged_columns, "origDB", "isInvasiveAnywhere")
+}
+missing_merged_columns <- setdiff(required_merged_columns, colnames(merged_data))
+if (length(missing_merged_columns) > 0) {
+  biab_error_stop(paste(
+    "Merged dataset is missing required column(s):",
+    paste(missing_merged_columns, collapse = ", ")
+  ))
+}
+
+if (!"year" %in% colnames(gbif_observations)) {
+  biab_error_stop("GBIF observations file is missing required column: year")
+}
+
+gbif_count_column <- dplyr::case_when(
+  "recordscount" %in% colnames(gbif_observations) ~ "recordscount",
+  "RecordsCount" %in% colnames(gbif_observations) ~ "RecordsCount",
+  "count" %in% colnames(gbif_observations) ~ "count",
+  TRUE ~ NA_character_
+)
+if (is.na(gbif_count_column)) {
+  biab_error_stop("GBIF observations file must contain recordscount, RecordsCount or count")
+}
+
+safe_percent <- function(numerator, denominator) {
+  if (is.na(denominator) || denominator == 0) {
+    return(NA_real_)
+  }
+  round(numerator / denominator * 100, 2)
+}
+
+format_count_percent <- function(count, percent) {
+  if (is.na(percent)) {
+    return(paste0(count, " (NA%)"))
+  }
+  paste0(count, " (", percent, "%)")
+}
+
+format_year_taxa <- function(records) {
+  if (nrow(records) == 0) {
+    return(NA_character_)
+  }
+  year <- unique(records$eventDate)
+  taxa <- paste(unique(records$taxon), collapse = ", ")
+  paste0(paste(year, collapse = ", "), " (", taxa, ")")
+}
+
+filter_min_year <- function(records) {
+  if (nrow(records) == 0) {
+    return(records)
+  }
+  records %>% filter(eventDate == min(eventDate, na.rm = TRUE))
+}
+
+filter_max_year <- function(records) {
+  if (nrow(records) == 0) {
+    return(records)
+  }
+  records %>% filter(eventDate == max(eventDate, na.rm = TRUE))
+}
+
+country_label <- if ("location" %in% colnames(merged_data)) {
+  paste(unique(stats::na.omit(merged_data$location)), collapse = ", ")
+} else if ("country" %in% colnames(gbif_observations)) {
+  paste(unique(stats::na.omit(gbif_observations$country)), collapse = ", ")
+} else {
+  "Selected country"
+}
+
+merged_data <- merged_data %>%
+  mutate(
+    kingdom = stringr::str_to_title(kingdom),
+    eventDate = suppressWarnings(as.integer(eventDate))
+  )
+
+if (national_mode) {
+  membership <- toupper(trimws(as.character(merged_data$inNationalChecklist)))
+  if (any(!is.na(membership) & !membership %in% c("TRUE", "FALSE", ""))) {
+    biab_error_stop("inNationalChecklist must contain TRUE, FALSE or missing values.")
+  }
+  checklist_data <- merged_data[membership %in% "TRUE", , drop = FALSE]
+  # National membership defines this summary; it does not establish invasiveness.
+  summary_species <- checklist_data
+  summary_subtitle <- paste0(
+    "National checklist species; total checklist records: ", nrow(checklist_data),
+    ". Membership does not imply confirmed invasive status."
+  )
+} else {
+  merged_data$isInvasiveAnywhere <- as.character(merged_data$isInvasiveAnywhere)
+  checklist_data <- merged_data %>%
+    filter(grepl("GRIIS", origDB, ignore.case = TRUE))
+  # Preserve the original contains-TRUE rule, including mixed source flags.
+  summary_species <- checklist_data %>%
+    filter(grepl("TRUE", isInvasiveAnywhere, ignore.case = TRUE))
+  summary_subtitle <- paste0(
+    "GRIIS-linked taxa invasive anywhere; total checklist records: ", nrow(checklist_data)
+  )
+}
+number_of_species <- nrow(checklist_data)
+
+count_ias_anywhere <- nrow(summary_species)
+count_ias_anywhere_pcnt <- safe_percent(count_ias_anywhere, number_of_species)
+
+count_ias_anywhere_animals <- summary_species %>%
+  filter(kingdom == "Animalia") %>%
+  nrow()
+count_ias_anywhere_plants <- summary_species %>%
+  filter(kingdom == "Plantae") %>%
+  nrow()
+
+count_ias_anywhere_pcnt_animals <- safe_percent(
+  count_ias_anywhere_animals,
+  count_ias_anywhere
+)
+count_ias_anywhere_pcnt_plants <- safe_percent(
+  count_ias_anywhere_plants,
+  count_ias_anywhere
+)
+
+with_first_records <- summary_species %>%
+  filter(!is.na(eventDate))
+
+count_ias_anywhere_with_fr <- nrow(with_first_records)
+count_ias_anywhere_with_fr_animals <- with_first_records %>%
+  filter(kingdom == "Animalia") %>%
+  nrow()
+count_ias_anywhere_with_fr_plants <- with_first_records %>%
+  filter(kingdom == "Plantae") %>%
+  nrow()
+
+count_ias_anywhere_with_fr_pcnt <- safe_percent(
+  count_ias_anywhere_with_fr,
+  count_ias_anywhere
+)
+count_ias_anywhere_with_fr_pcnt_animals <- safe_percent(
+  count_ias_anywhere_with_fr_animals,
+  count_ias_anywhere
+)
+count_ias_anywhere_with_fr_pcnt_plants <- safe_percent(
+  count_ias_anywhere_with_fr_plants,
+  count_ias_anywhere
+)
+
+count_ias_anywhere_with_fr_post1970 <- with_first_records %>%
+  filter(eventDate >= 1970) %>%
+  nrow()
+count_ias_anywhere_with_fr_pre1970 <- with_first_records %>%
+  filter(eventDate < 1970) %>%
+  nrow()
+
+count_ias_anywhere_with_fr_pcnt_post1970 <- safe_percent(
+  count_ias_anywhere_with_fr_post1970,
+  count_ias_anywhere_with_fr
+)
+count_ias_anywhere_with_fr_pcnt_pre1970 <- safe_percent(
+  count_ias_anywhere_with_fr_pre1970,
+  count_ias_anywhere_with_fr
+)
+
+earliest_record_pre1970 <- with_first_records %>%
+  filter(eventDate < 1970) %>%
+  filter_min_year()
+
+earliest_record_post1970 <- with_first_records %>%
+  filter(eventDate >= 1970) %>%
+  filter_min_year()
+
+latest_record <- with_first_records %>%
+  filter(eventDate <= 2020) %>%
+  filter_max_year()
+
+summary <- tibble::tibble(
+  Group = c(
+    "Total Count",
+    "Total Count",
+    "Taxonomic Group",
+    "Taxonomic Group",
+    "First Records",
+    "First Records",
+    "First Records",
+    "First Records",
+    "First Records",
+    "Date Range",
+    "Date Range",
+    "Date Range"
+  ),
+  Variable = c(
+    "Number of IAS",
+    "IAS Anywhere Proportion",
+    "Plantae",
+    "Animalia",
+    "All Species",
+    "Plantae",
+    "Animalia",
+    "Pre 1970",
+    "Post 1970",
+    "Earliest Record - Pre 1970",
+    "Earliest Record - Post 1970",
+    "Most Recent Record"
+  ),
+  isInvasiveAnywhere = c(
+    format_count_percent(count_ias_anywhere, count_ias_anywhere_pcnt),
+    NA_character_,
+    format_count_percent(count_ias_anywhere_plants, count_ias_anywhere_pcnt_plants),
+    format_count_percent(count_ias_anywhere_animals, count_ias_anywhere_pcnt_animals),
+    format_count_percent(count_ias_anywhere_with_fr, count_ias_anywhere_with_fr_pcnt),
+    format_count_percent(count_ias_anywhere_with_fr_plants, count_ias_anywhere_with_fr_pcnt_plants),
+    format_count_percent(count_ias_anywhere_with_fr_animals, count_ias_anywhere_with_fr_pcnt_animals),
+    format_count_percent(count_ias_anywhere_with_fr_pre1970, count_ias_anywhere_with_fr_pcnt_pre1970),
+    format_count_percent(count_ias_anywhere_with_fr_post1970, count_ias_anywhere_with_fr_pcnt_post1970),
+    format_year_taxa(earliest_record_pre1970),
+    format_year_taxa(earliest_record_post1970),
+    format_year_taxa(latest_record)
+  )
+)
+
+if (national_mode) {
+  # Avoid labelling an uploaded species list as independently confirmed IAS.
+  summary <- summary[summary$Variable != "IAS Anywhere Proportion", ]
+  summary$Variable[summary$Variable == "Number of IAS"] <- "National checklist species"
+  names(summary)[names(summary) == "isInvasiveAnywhere"] <- "nationalChecklist"
+}
+
+first_records_by_year <- with_first_records %>%
+  count(year = eventDate, name = "firstRecordCount")
+
+gbif_by_year <- gbif_observations %>%
+  transmute(
+    year = as.integer(year),
+    gbifRecordsCount = as.numeric(.data[[gbif_count_column]])
+  ) %>%
+  group_by(year) %>%
+  summarise(gbifRecordsCount = sum(gbifRecordsCount, na.rm = TRUE), .groups = "drop")
+
+annual_summary <- full_join(gbif_by_year, first_records_by_year, by = "year") %>%
+  arrange(year) %>%
+  mutate(
+    gbifRecordsCount = tidyr::replace_na(gbifRecordsCount, 0),
+    firstRecordCount = tidyr::replace_na(firstRecordCount, 0)
+  )
+
+summary_table <- gt(summary,
+                    groupname_col = "Group",
+                    rowname_col = "Variable") %>%
+  tab_header(
+    title = md(paste0("**Integrated Data Summary: ", country_label, "**")),
+    subtitle = summary_subtitle
+  )
+
+summary_csv_path <- file.path(outputFolder, "ias_summary.csv")
+annual_summary_path <- file.path(outputFolder, "ias_annual_summary.csv")
+summary_table_path <- file.path(outputFolder, "ias_summary.html")
+
+write.csv(summary, summary_csv_path, row.names = FALSE)
+write.csv(annual_summary, annual_summary_path, row.names = FALSE)
+gt::gtsave(summary_table, summary_table_path)
+
+biab_output("ias_summary", summary_csv_path)
+biab_output("ias_annual_summary", annual_summary_path)
+biab_output("ias_summary_table", summary_table_path)

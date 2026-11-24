@@ -4,8 +4,8 @@
       "id": "34",
       "type": "io",
       "position": {
-        "x": 1947,
-        "y": 199.66666666666663
+        "x": 2015,
+        "y": 55.5
       },
       "data": {
         "descriptionFile": "filtering>cleanCoordinates.yml"
@@ -15,8 +15,8 @@
       "id": "35",
       "type": "constant",
       "position": {
-        "x": 1540,
-        "y": 177.66666666666663
+        "x": 1610,
+        "y": 33
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -37,8 +37,8 @@
       "id": "40",
       "type": "io",
       "position": {
-        "x": 2899,
-        "y": 456.66666666666663
+        "x": 2987,
+        "y": 441
       },
       "data": {
         "descriptionFile": "SDM>selectBackground.yml"
@@ -48,8 +48,8 @@
       "id": "44",
       "type": "io",
       "position": {
-        "x": 3482,
-        "y": 566.1666666666666
+        "x": 3574,
+        "y": 557
       },
       "data": {
         "descriptionFile": "SDM>setupDataSdm.yml"
@@ -59,8 +59,8 @@
       "id": "45",
       "type": "constant",
       "position": {
-        "x": 3019,
-        "y": 587.6666666666666
+        "x": 3111,
+        "y": 578
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -77,8 +77,8 @@
       "id": "46",
       "type": "userInput",
       "position": {
-        "x": 3152,
-        "y": 634.6666666666666
+        "x": 3243,
+        "y": 626
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -90,8 +90,8 @@
       "id": "47",
       "type": "constant",
       "position": {
-        "x": 3061,
-        "y": 669.6666666666666
+        "x": 3167,
+        "y": 662
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -103,8 +103,8 @@
       "id": "48",
       "type": "constant",
       "position": {
-        "x": 3075,
-        "y": 711.6666666666666
+        "x": 3181,
+        "y": 705
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -116,8 +116,8 @@
       "id": "64",
       "type": "constant",
       "position": {
-        "x": 1546,
-        "y": 311.66666666666663
+        "x": 1618,
+        "y": 204
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -129,8 +129,8 @@
       "id": "68",
       "type": "io",
       "position": {
-        "x": 4534,
-        "y": 723.6666666666666
+        "x": 4635,
+        "y": 886
       },
       "data": {
         "descriptionFile": "SDM>rangePredictions.yml"
@@ -140,8 +140,8 @@
       "id": "69",
       "type": "output",
       "position": {
-        "x": 4941,
-        "y": 783.1666666666666
+        "x": 5011,
+        "y": 947
       },
       "data": {
         "label": "Output"
@@ -151,8 +151,8 @@
       "id": "97",
       "type": "io",
       "position": {
-        "x": 1319,
-        "y": 581.6666666666666
+        "x": 1373,
+        "y": 510.5546901051755
       },
       "data": {
         "descriptionFile": "SDM>removeCollinearity.yml"
@@ -162,8 +162,8 @@
       "id": "98",
       "type": "constant",
       "position": {
-        "x": 846,
-        "y": 511.66666666666663
+        "x": 900,
+        "y": 440
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -182,8 +182,8 @@
       "id": "99",
       "type": "constant",
       "position": {
-        "x": 846,
-        "y": 558.6666666666666
+        "x": 900,
+        "y": 488
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -200,8 +200,8 @@
       "id": "100",
       "type": "constant",
       "position": {
-        "x": 902,
-        "y": 605.6666666666666
+        "x": 970,
+        "y": 536
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -213,8 +213,8 @@
       "id": "101",
       "type": "constant",
       "position": {
-        "x": 888,
-        "y": 647.6666666666666
+        "x": 956,
+        "y": 615
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -226,8 +226,8 @@
       "id": "102",
       "type": "constant",
       "position": {
-        "x": 902,
-        "y": 689.6666666666666
+        "x": 970,
+        "y": 658
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -239,8 +239,8 @@
       "id": "104",
       "type": "io",
       "position": {
-        "x": 2418,
-        "y": 371.16666666666663
+        "x": 2501,
+        "y": 353
       },
       "data": {
         "descriptionFile": "SDM>studyExtent.yml"
@@ -250,8 +250,8 @@
       "id": "105",
       "type": "constant",
       "position": {
-        "x": 1975,
-        "y": 392.66666666666663
+        "x": 2048,
+        "y": 374
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -269,8 +269,8 @@
       "id": "107",
       "type": "constant",
       "position": {
-        "x": 2031,
-        "y": 439.66666666666663
+        "x": 2118,
+        "y": 458
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -282,8 +282,8 @@
       "id": "108",
       "type": "io",
       "position": {
-        "x": 4100,
-        "y": 733.6666666666666
+        "x": 4196,
+        "y": 728
       },
       "data": {
         "descriptionFile": "SDM>runMaxent.yml"
@@ -293,8 +293,8 @@
       "id": "109",
       "type": "output",
       "position": {
-        "x": 4534,
-        "y": 688.6666666666666
+        "x": 4635,
+        "y": 705
       },
       "data": {
         "label": "Output"
@@ -304,8 +304,8 @@
       "id": "115",
       "type": "constant",
       "position": {
-        "x": 3647,
-        "y": 859.6666666666666
+        "x": 3743,
+        "y": 855
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -322,8 +322,8 @@
       "id": "116",
       "type": "constant",
       "position": {
-        "x": 3647,
-        "y": 766.6666666666666
+        "x": 3743,
+        "y": 760
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -341,8 +341,8 @@
       "id": "121",
       "type": "userInput",
       "position": {
-        "x": 190,
-        "y": 12
+        "x": 189,
+        "y": 574.6666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -356,8 +356,8 @@
       "id": "122",
       "type": "output",
       "position": {
-        "x": 505,
-        "y": 16.16666666666663
+        "x": 555,
+        "y": 579
       },
       "data": {
         "label": "Output"
@@ -367,8 +367,8 @@
       "id": "123",
       "type": "output",
       "position": {
-        "x": 2418,
-        "y": 331.16666666666663
+        "x": 2501,
+        "y": 712
       },
       "data": {
         "label": "Output"
@@ -378,8 +378,8 @@
       "id": "124",
       "type": "output",
       "position": {
-        "x": 1947,
-        "y": 481.66666666666663
+        "x": 2015,
+        "y": 422
       },
       "data": {
         "label": "Output"
@@ -389,8 +389,8 @@
       "id": "128",
       "type": "userInput",
       "position": {
-        "x": 119,
-        "y": 874.8333333333333
+        "x": 118,
+        "y": 918.3333333333334
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -399,11 +399,31 @@
       }
     },
     {
+      "id": "137",
+      "type": "constant",
+      "position": {
+        "x": 12,
+        "y": 870.3333333333334
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "min",
+          "max",
+          "mean",
+          "median"
+        ]
+      }
+    },
+    {
       "id": "138",
       "type": "constant",
       "position": {
         "x": 12,
-        "y": 827.8333333333333
+        "y": 822.3333333333334
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -431,8 +451,8 @@
       "id": "139",
       "type": "io",
       "position": {
-        "x": 814,
-        "y": 741.6666666666666
+        "x": 864,
+        "y": 734
       },
       "data": {
         "descriptionFile": "data>GBIFHeatmapFromSTAC.yml"
@@ -442,8 +462,8 @@
       "id": "140",
       "type": "userInput",
       "position": {
-        "x": 42,
-        "y": 792.8333333333333
+        "x": -69.45718370615631,
+        "y": 443.2910926234467
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -454,8 +474,8 @@
       "id": "142",
       "type": "io",
       "position": {
-        "x": 505,
-        "y": 61.16666666666663
+        "x": 555,
+        "y": 93
       },
       "data": {
         "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
@@ -465,11 +485,22 @@
       "id": "143",
       "type": "output",
       "position": {
-        "x": 1319,
-        "y": 132.66666666666663
+        "x": 1373,
+        "y": 168
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "144",
+      "type": "io",
+      "position": {
+        "x": 888,
+        "y": 258
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
       }
     },
     {
@@ -477,7 +508,7 @@
       "type": "userInput",
       "position": {
         "x": 44,
-        "y": 73.66666666666663
+        "y": 104
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -489,8 +520,8 @@
       "id": "146",
       "type": "userInput",
       "position": {
-        "x": 47,
-        "y": 108.66666666666663
+        "x": 46,
+        "y": 140
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -502,8 +533,8 @@
       "id": "147",
       "type": "userInput",
       "position": {
-        "x": 3778,
-        "y": 824.6666666666666
+        "x": 3873,
+        "y": 819
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -512,83 +543,27 @@
       }
     },
     {
-      "id": "150",
-      "type": "io",
-      "position": {
-        "x": 701,
-        "y": 374.66666666666663
-      },
-      "data": {
-        "descriptionFile": "data>loadStacAssets.yml"
-      }
-    },
-    {
-      "id": "151",
-      "type": "userInput",
+      "id": "148",
+      "type": "constant",
       "position": {
         "x": 108,
-        "y": 362.16666666666663
+        "y": 610.6666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "stac_asset[]"
+        "type": "text"
       }
     },
     {
-      "id": "152",
+      "id": "149",
       "type": "constant",
       "position": {
-        "x": 55.3569168140118,
-        "y": 431.46135000364205
+        "x": 108,
+        "y": 661.6666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "options",
-        "value": "near",
-        "options": [
-          "near",
-          "mode"
-        ]
-      }
-    },
-    {
-      "id": "153",
-      "type": "constant",
-      "position": {
-        "x": 18.48644125762857,
-        "y": 485.09113263110856
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "mean",
-        "options": [
-          "first",
-          "last",
-          "mean",
-          "median",
-          "min",
-          "max",
-          "sum"
-        ]
-      }
-    },
-    {
-      "id": "154",
-      "type": "constant",
-      "position": {
-        "x": 15.134579843411899,
-        "y": 545.4246380870084
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "first",
-        "options": [
-          "first",
-          "last",
-          "modal"
-        ]
+        "type": "text"
       }
     }
   ],
@@ -867,6 +842,41 @@
       "id": "reactflow__edge-142observations_file-34presence"
     },
     {
+      "source": "137",
+      "sourceHandle": null,
+      "target": "144",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-137-144aggregation"
+    },
+    {
+      "source": "138",
+      "sourceHandle": null,
+      "target": "144",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-138-144resampling"
+    },
+    {
+      "source": "128",
+      "sourceHandle": null,
+      "target": "144",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-128-144spatial_res"
+    },
+    {
+      "source": "140",
+      "sourceHandle": null,
+      "target": "144",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-140-144bbox_crs"
+    },
+    {
+      "source": "144",
+      "sourceHandle": "rasters",
+      "target": "97",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-144rasters-97rasters"
+    },
+    {
       "source": "145",
       "target": "142",
       "targetHandle": "min_year",
@@ -885,59 +895,22 @@
       "id": "xy-edge__147-108n_folds"
     },
     {
+      "source": "148",
+      "target": "144",
+      "targetHandle": "t0",
+      "id": "xy-edge__148-144t0"
+    },
+    {
+      "source": "149",
+      "target": "144",
+      "targetHandle": "t1",
+      "id": "xy-edge__149-144t1"
+    },
+    {
       "source": "140",
       "target": "108",
       "targetHandle": "crs",
       "id": "xy-edge__140-108crs"
-    },
-    {
-      "source": "150",
-      "sourceHandle": "rasters",
-      "target": "97",
-      "targetHandle": "rasters",
-      "id": "xy-edge__150rasters-97rasters"
-    },
-    {
-      "source": "151",
-      "target": "150",
-      "targetHandle": "stac",
-      "id": "xy-edge__151-150stac"
-    },
-    {
-      "source": "140",
-      "target": "150",
-      "targetHandle": "bbox_crs",
-      "id": "xy-edge__140-150bbox_crs"
-    },
-    {
-      "source": "128",
-      "target": "150",
-      "targetHandle": "spatial_res",
-      "id": "xy-edge__128-150spatial_res"
-    },
-    {
-      "source": "138",
-      "target": "150",
-      "targetHandle": "resampling",
-      "id": "xy-edge__138-150resampling"
-    },
-    {
-      "source": "152",
-      "target": "150",
-      "targetHandle": "categorical_resampling",
-      "id": "xy-edge__152-150categorical_resampling"
-    },
-    {
-      "source": "153",
-      "target": "150",
-      "targetHandle": "continuous_aggregation",
-      "id": "xy-edge__153-150continuous_aggregation"
-    },
-    {
-      "source": "154",
-      "target": "150",
-      "targetHandle": "categorical_aggregation",
-      "id": "xy-edge__154-150categorical_aggregation"
     }
   ],
   "inputs": {
@@ -992,21 +965,28 @@
       "description": "Earliest year for GBIF records. Accepts YYYY or YYYY-MM-DD; if a full date is supplied, only the year is used.\n\nIt is recommended to use an early start date (e.g. 1980) to maximize the number of occurrence records for a given species.",
       "type": "text",
       "example": "1980",
-      "weight": 5
+      "weight": 7
     },
     "pipeline@146": {
       "label": "Maximum year or end date",
       "description": "Latest year for GBIF records. Accepts YYYY or YYYY-MM-DD; if a full date is supplied, only the year is used.",
       "type": "text",
       "example": "2024",
-      "weight": 6
+      "weight": 8
+    },
+    "data>loadFromStac.yml@144|temporal_res": {
+      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is monthly, and \"P1D\" is daily). \n\nIf there is no temporal option all items will be extracted. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated using the 'first' method.",
+      "label": "Temporal resolution",
+      "type": "text",
+      "example": "P1Y",
+      "weight": 9
     },
     "SDM>selectBackground.yml@40|n_background": {
       "description": "Target number of background points to generate within the study extent. These points are used to represent the available environment.\n\nTypically it is recommended to start with 10000 points. If you have a very large study area you can increase this amount to fully capture the available environmental space. If you have a very small study area (i.e. fewer than 10000 pixels) you can reduce the number of background points.",
       "label": "Number of background points",
       "type": "int",
       "example": 10000,
-      "weight": 7
+      "weight": 10
     },
     "SDM>selectBackground.yml@40|method_background": {
       "description": "Background points are generated using one of the five available methods. Choosing the right method can help correct for sampling bias in the GBIF data.\n- `random`: background points are randomly sampled throughout the whole study extent. Good choice if your occurrence data has little spatial bias toward human activity/accessibility (e.g., roads, cities, well-surveyed areas).\n- `weighted_raster`: background points are sampled in proportion to the number of observations in the observation-density heatmap of the selected taxonomic group. Recommended for heavily biased data, or when occurrences are missing due to gaps in survey/study coverage. This is the more extreme correction of the two raster-based methods (weighted and unweighted).\n- `unweighted_raster`: background points are sampled only in cells where there are observations from a target group. Also addresses sampling bias and survey gaps, but more conservatively than weighted_raster. Recommended as the default of the two (weighted and unweighted).\n- `inclusion_buffer`: background points are sampled within a buffer around observations. Useful if you don't think your species is well represented by the target taxonomic group. \n- `thickening`: background points are sampled in proportion to the local density of observations, within a buffer around each observation. Also useful when the target taxon group doesn't represent your species well, as an alternative to inclusion_buffer.",
@@ -1020,14 +1000,14 @@
         "thickening"
       ],
       "example": "random",
-      "weight": 8
+      "weight": 11
     },
     "pipeline@46": {
       "label": "Number of runs",
       "description": "Number of bootstrap or cross-validation runs used when preparing SDM training and testing data.",
       "type": "int",
       "example": 2,
-      "weight": 9
+      "weight": 12
     },
     "SDM>runMaxent.yml@108|fc": {
       "description": "MaxEnt feature classes control the shapes of relationships the model can learn between species occurrence and environmental predictors. Simpler classes, such as L or LQ, fit smoother, more constrained responses and are often safer for small datasets. More complex combinations, such as LQH or LQH, can capture more flexible ecological responses but may overfit when occurrence records are limited. \n\nThis pipeline tests all values provided here and selects the best-performing combination using the parameter selection method configured in the MaxEnt step. \n\nAccepted values are combinations of L (linear), Q (quadratic), P (product), H (hinge) or T (threshold, deprecated).",
@@ -1038,7 +1018,7 @@
         "LQ",
         "LQH"
       ],
-      "weight": 10
+      "weight": 13
     },
     "SDM>runMaxent.yml@108|rm": {
       "description": "Regularization multiplier values to evaluate for MaxEnt model tuning. The regularization multiplier controls how strongly MaxEnt penalizes model complexity. Lower values allow a more flexible model that may fit local patterns closely. Higher values produce smoother, more generalized predictions and reduce overfitting risk. ",
@@ -1049,7 +1029,7 @@
         1,
         2
       ],
-      "weight": 11
+      "weight": 14
     },
     "SDM>runMaxent.yml@108|partition_type": {
       "description": "This option controls how ENMeval partitions presence and background data while tuning MaxEnt parameters.\n\nIt is recommended to start with random k-fold. If you suspect overfitting or spatial autocorrelation, switch to block or checkerboard because these partition data geographically rather than randomly, which makes evaluation more robust to spatial autocorrelation between nearby points. If you don't have enough occurrence points for spatial partitioning, use jackknife.\n\n   - Random k-fold \\- partitions groups randomly into a user-specified (K) number of bins, and runs the model k times, with each bin used once as testing. Recommended to start with 10 folds.\n  - Block \\- partitions the bounding box into four equally sized quadrants and assigns groups by quadrant. Because each fold is a large, contiguous geographic region, this tests how well the model transfers to broad, spatially distinct areas. This is a stricter test of spatial autocorrelation than checkerboard.\n  - Checkerboard 1 \\- generates a checkerboard grid from the study area and assigns groups based on which square the points fall in. Folds are smaller and spatially interspersed (alternating across the study area) rather than large contiguous blocks, so it tests spatial independence at a finer scale than block.\n  - Checkerboard 2 \\- Similar to checkerboard 1 but performs this separately for occurrence and background points\n  - Jackknife \\- Does not partition the background points into testing and training (uses them all), performs leave one out cross validation. Recommended for small datasets only.",
@@ -1063,35 +1043,37 @@
         "checkerboard2"
       ],
       "example": "randomkfold",
-      "weight": 12
+      "weight": 15
     },
     "pipeline@147": {
       "label": "Number of folds",
       "description": "Number of folds for random k-fold MaxEnt partitioning when partition type = random k-fold. Can be left blank when another method is chosen.",
       "type": "int",
       "example": 10,
-      "weight": 13
-    },
-    "data>loadStacAssets.yml@150|study_area": {
-      "description": "Optional study-area polygon in GeoPackage format used to mask the output rasters.",
-      "label": "Study area",
-      "type": "application/geopackage+sqlite3",
-      "example": null,
-      "weight": 14
+      "weight": 16
     }
   },
   "outputs": {
+    "pipeline@121|default_output": {
+      "label": "Taxa",
+      "description": "Taxa supplied to the pipeline and used for GBIF occurrence retrieval and model fitting.",
+      "example": [
+        "Acer saccharum"
+      ],
+      "type": "text[]",
+      "weight": 0
+    },
     "filtering>cleanCoordinates.yml@34|clean_presence": {
       "description": "Cleaned GBIF occurrence records that passed the selected coordinate-cleaning tests. These records are used as presence points in the SDM workflow.",
       "label": "Presences",
       "type": "text/tab-separated-values",
-      "weight": 0
+      "weight": 1
     },
     "SDM>removeCollinearity.yml@97|rasters_selected": {
       "description": "GeoTIFF predictor rasters retained after collinearity filtering. These are the environmental variables used to fit and project the MaxEnt model.",
       "label": "Environmental predictors",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 1
+      "weight": 2
     },
     "SDM>runMaxent.yml@108|sdm_pred": {
       "description": "MaxEnt habitat suitability prediction raster fitted using the selected model settings.",
@@ -1101,21 +1083,12 @@
         0,
         1
       ],
-      "weight": 2
+      "weight": 3
     },
     "SDM>rangePredictions.yml@68|range_predictions": {
       "description": "The variability of the 95% confidence of each prediction can be viewed on a map to show uncertainty.",
       "label": "Variability of predictions",
       "type": "image/tiff;application=geotiff",
-      "weight": 3
-    },
-    "pipeline@121|default_output": {
-      "label": "Taxa list",
-      "description": "Taxa supplied to the pipeline and used for GBIF occurrence retrieval and model fitting.",
-      "example": [
-        "Acer saccharum"
-      ],
-      "type": "text[]",
       "weight": 4
     },
     "data>getGBIFObservations>getGBIFObservations.yml@142|gbif_doi": {

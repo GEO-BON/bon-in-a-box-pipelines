@@ -172,12 +172,19 @@
       "example": null,
       "weight": 0
     },
+    "data>loadFromStac.yml@42|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). \n\nIf this is left blank it will use the native resolution of the rasters. \n\nIf the spatial resolution is coarser than the native resolution of the rasters, the layers will be resampled with the resampling method chosen below.",
+      "label": "Spatial resolution (optional)",
+      "type": "float",
+      "example": 0.008833,
+      "weight": 1
+    },
     "data>loadFromStac.yml@42|stac_url": {
       "description": "URL of the STAC catalog.",
       "label": "STAC URL",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 1
+      "weight": 2
     },
     "data>loadFromStac.yml@42|collections_items": {
       "description": "Vector of strings. To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. \"chelsa-clim|bio1\"). To extract a whole collection, type the collection name only (e.g. \"chelsa-clim\"). To pull collection items by date, write the collection name and provide a start date, end date, and temporal resolution.\n\nLayers used in this pipeline must be categorical variables (e.g. landcover). ",
@@ -186,34 +193,27 @@
       "example": [
         "esacci-lc|esacci-lc-2020"
       ],
-      "weight": 2
+      "weight": 3
     },
     "data>loadFromStac.yml@42|t0": {
       "description": "Start date for time series layers in format YYYY-MM-DD. Leave blank if extracting items by name.",
       "label": "Start date",
       "type": "text",
       "example": "2020-01-01",
-      "weight": 3
+      "weight": 4
     },
     "data>loadFromStac.yml@42|t1": {
       "description": "End date for time series layers in format YYYY-MM-DD. Leave blank if extracting items by name.",
       "label": "End date",
       "type": "text",
       "example": "2020-12-31",
-      "weight": 4
+      "weight": 5
     },
     "data>loadFromStac.yml@42|temporal_res": {
       "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
       "label": "Temporal resolution",
       "type": "text",
       "example": "P1Y",
-      "weight": 5
-    },
-    "data>loadFromStac.yml@42|spatial_res": {
-      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). \n\nIf this is left blank it will use the native resolution of the rasters. \n\nIf the spatial resolution is coarser than the native resolution of the rasters, the layers will be resampled with the resampling method chosen below.",
-      "label": "Spatial resolution (optional)",
-      "type": "float",
-      "example": 0.008833,
       "weight": 6
     },
     "data>loadFromStac.yml@42|resampling": {

@@ -7,7 +7,6 @@ Reviewed by: Santiago Saura, Oscar Godinez-Gomez, Camilo Andrés Correa-Ayram, T
 
 name: Protected Connected Index (ProtConn)
 
-description:
 
 ## Introduction
 

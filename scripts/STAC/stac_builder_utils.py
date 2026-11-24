@@ -39,7 +39,7 @@ def extract_date_from_filename(filename: str) -> Optional[datetime]:
 
 def stac_create_item(file_path, file_url, name, datetime, collection, properties={}, units=''):
 
-    bbox, bbox_wgs84, footprint, footprint_wgs84, crs, resolution, dtype = get_raster_metadata(file_path)
+    bbox, bbox_wgs84, footprint, footprint_wgs84, crs, resolution, dtype, shape, geotransform = get_raster_metadata(file_path)
     stats_dict = get_raster_statistics(file_path, classes = False, render_info={})
     print('Raster stats dict:', stats_dict)
     histogram = Histogram.create(
@@ -72,6 +72,8 @@ def stac_create_item(file_path, file_url, name, datetime, collection, properties
     ]
     raster_ext = RasterExtension.ext(asset)
     raster_ext.bands = raster_bands
+    # Copy so items don't share the default dict
+    properties = dict(properties)
     properties['proj:bbox'] = bbox
 
     item = pystac.Item(id=name,
@@ -95,6 +97,9 @@ def stac_create_item(file_path, file_url, name, datetime, collection, properties
     else:
         proj_ext.epsg = None
         proj_ext.wkt2 = crs
+    # Pixel grid, needed by odc-stac / openEO load_stac
+    proj_ext.shape = shape
+    proj_ext.transform = geotransform
 
     # Caller should set_self_href() to the real item JSON path so asset hrefs
     # can stay relative to that folder (e.g. "./file.tif" next to the item JSON).
@@ -172,7 +177,9 @@ def get_raster_metadata(raster_uri):
         pixelSizeX, pixelSizeY  = ds.res
         # Convert dtype to STAC-compliant format
         dtype_stac = convert_dtype_to_stac(ds.meta['dtype'])
-    return (bbox,bbox_wgs84, mapping(footprint), mapping(footprint_wgs84), crs, pixelSizeX, dtype_stac)
+        shape = list(ds.shape)
+        geotransform = list(ds.transform)[:6]
+    return (bbox,bbox_wgs84, mapping(footprint), mapping(footprint_wgs84), crs, pixelSizeX, dtype_stac, shape, geotransform)
 
 def get_raster_statistics(raster_uri, classes=False, render_info=None):
     """

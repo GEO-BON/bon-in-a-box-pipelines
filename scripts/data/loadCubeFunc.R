@@ -64,6 +64,13 @@ load_cube <-
   # Force each dataset to have the data role. Fix 08/2023
     for (i in 1:length(it_obj$features)){
         it_obj$features[[i]]$assets[[1]]$roles<-'data'
+        # gdalcubes only reads proj:epsg; STAC projection v2 uses proj:code (e.g. "EPSG:4326")
+        props <- it_obj$features[[i]]$properties
+        if (is.null(props$`proj:epsg`) && !is.null(props$`proj:code`) &&
+            grepl("^EPSG:", props$`proj:code`, ignore.case = TRUE)) {
+          it_obj$features[[i]]$properties$`proj:epsg` <-
+            as.integer(sub("^EPSG:", "", props$`proj:code`, ignore.case = TRUE))
+        }
     }
     
 

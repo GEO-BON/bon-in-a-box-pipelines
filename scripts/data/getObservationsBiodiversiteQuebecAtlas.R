@@ -8,7 +8,7 @@ options(timeout = 1000)
 dbExecute(atlas_con, "SET temp_directory='/tmp/dbtmp';SET extension_directory='/tmp/dbtmp';")
 dbExecute(atlas_con, "INSTALL httpfs;LOAD httpfs;")
 
-base_url <- "https://object-arbutus.cloud.computecanada.ca/bq-io/atlas/parquet/"
+base_url <- "https://object-arbutus.alliancecan.ca/d68de45e9bdf42269bb4a5fba19d525f:bq-atlas/parquet/"
 atlas_dates <- read.csv(paste0(base_url, "atlas_export_dates.csv"), header = FALSE, col.names = c("dates"))
 dbdate <- tail(atlas_dates$dates, n = 1)
 file_name <- paste0(base_url, "atlas_public_", dbdate, ".parquet")
