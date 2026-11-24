@@ -57,12 +57,7 @@ basis_of_record = [
     "OCCURRENCE"
 ]
 
-issues = [
-    "COORDINATE_INVALID",
-    "ZERO_COORDINATE",
-    "COORDINATE_OUT_OF_RANGE",
-    "COUNTRY_COORDINATE_MISMATCH"
-]
+# Coordinate issues are excluded using hasGeospatialIssue=False, which matches the R SQL approach.
 
 results = []
 normalized_iso3 = str(country_code).strip().upper().split("_", 1)[0]
@@ -77,7 +72,7 @@ def get_gbif_count(year, kingdom_key, maximum_attempts=4):
                 kingdomKey=kingdom_key,
                 basisOfRecord=basis_of_record,
                 hasCoordinate=True,
-                issue=issues,
+                hasGeospatialIssue=False,
                 limit=0,
                 timeout=120,
             )["count"]
