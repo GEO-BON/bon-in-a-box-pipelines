@@ -121,7 +121,18 @@ sign_asset_href <- function(href, catalog) {
   signed$assets[[1]]$href
 }
 
+is_unbl <- function(catalog) {
+  grepl("stac.api.unbiodiversitylab.org", catalog, fixed = TRUE)
+}
+
+# The UN Biodiversity Lab STAC API requires an API key header.
+catalog_headers <- function(catalog) {
+  if (!is_unbl(catalog)) return(NULL)
+  httr::add_headers(`X-API-Key` = Sys.getenv("UNBL_API_KEY"))
+}
+
 selection_hrefs <- function(selection) {
+  headers <- catalog_headers(selection$catalog)
   if (!isTRUE(selection$items_are_tiles)) {
     href <- selection$href
     if (has_text(href) && is_absolute_asset_href(href)) {
@@ -131,7 +142,7 @@ selection_hrefs <- function(selection) {
     item <- rstac::stac(selection$catalog) |>
       rstac::collections(selection$collection) |>
       rstac::items(selection$item) |>
-      rstac::get_request()
+      rstac::get_request(headers)
     if (!has_text(href)) href <- item$assets[[selection$asset]]$href
     if (!has_text(href)) biab_error_stop("The selected STAC asset has no usable href.")
     item_url <- paste0(sub("/+$", "", selection$catalog), "/collections/",
@@ -145,8 +156,8 @@ selection_hrefs <- function(selection) {
   items <- rstac::stac(selection$catalog) |>
     rstac::collections(selection$collection) |>
     rstac::items() |>
-    rstac::get_request() |>
-    rstac::items_fetch()
+    rstac::get_request(headers) |>
+    rstac::items_fetch(headers)
   features <- items$features
   item_day <- function(item) {
     timestamp <- item$properties$datetime
