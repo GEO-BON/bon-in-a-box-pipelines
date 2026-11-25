@@ -73,7 +73,7 @@ sql <- paste0(
   "    OR basisOfRecord = 'HUMAN_OBSERVATION'\n",
   "    OR basisOfRecord = 'MACHINE_OBSERVATION'\n",
   "    OR basisOfRecord = 'OCCURRENCE')\n",
-  "  AND occurrenceStatus = 'PRESENT'\n",
+  "  AND (occurrenceStatus = 'DETECTED' OR occurrenceStatus = 'PRESENT')\n",
   "  AND decimalLongitude IS NOT NULL\n",
   "  AND decimalLatitude IS NOT NULL\n",
   "  AND NOT ARRAY_CONTAINS(issue, 'COORDINATE_INVALID')\n",
