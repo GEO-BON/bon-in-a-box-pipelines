@@ -4,8 +4,8 @@
       "id": "22",
       "type": "io",
       "position": {
-        "x": 1808,
-        "y": 184
+        "x": 1821,
+        "y": 246.33333333333334
       },
       "data": {
         "descriptionFile": "zonal_statistics>percentage_cover_classes.yml"
@@ -15,8 +15,8 @@
       "id": "28",
       "type": "output",
       "position": {
-        "x": 2424,
-        "y": 154.5
+        "x": 2432,
+        "y": 223.83333333333334
       },
       "data": {
         "label": "Output"
@@ -26,8 +26,8 @@
       "id": "42",
       "type": "io",
       "position": {
-        "x": 1363,
-        "y": 12
+        "x": 1371,
+        "y": 67.33333333333334
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -37,8 +37,8 @@
       "id": "43",
       "type": "userInput",
       "position": {
-        "x": 34,
-        "y": 252.5
+        "x": 35,
+        "y": 59
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -49,8 +49,8 @@
       "id": "44",
       "type": "io",
       "position": {
-        "x": 465,
-        "y": 223.5
+        "x": 475,
+        "y": 253.83333333333334
       },
       "data": {
         "descriptionFile": "data>load_polygons.yml"
@@ -60,8 +60,8 @@
       "id": "45",
       "type": "output",
       "position": {
-        "x": 1363,
-        "y": 194
+        "x": 1371,
+        "y": 231.33333333333334
       },
       "data": {
         "label": "Output"
@@ -72,7 +72,7 @@
       "type": "constant",
       "position": {
         "x": 12,
-        "y": 204.5
+        "y": 12
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -89,13 +89,26 @@
       "id": "47",
       "type": "constant",
       "position": {
-        "x": 68,
-        "y": 288.5
+        "x": 54,
+        "y": 287.83333333333337
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float",
         "value": 0
+      }
+    },
+    {
+      "id": "48",
+      "type": "constant",
+      "position": {
+        "x": 188,
+        "y": 244.83333333333334
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "boolean",
+        "value": true
       }
     }
   ],
@@ -162,6 +175,12 @@
       "target": "44",
       "targetHandle": "buffer",
       "id": "reactflow__edge-47-44buffer"
+    },
+    {
+      "source": "48",
+      "target": "44",
+      "targetHandle": "clip_to_location",
+      "id": "xy-edge__48-44clip_to_location"
     }
   ],
   "inputs": {

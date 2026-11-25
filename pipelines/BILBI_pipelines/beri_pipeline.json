@@ -4,8 +4,8 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 1577,
-        "y": 151.66666666666663
+        "x": 1898,
+        "y": 223.5
       },
       "data": {
         "descriptionFile": "bilbi_indicators>bilbi_weighted_mean.yml"
@@ -15,8 +15,8 @@
       "id": "1",
       "type": "io",
       "position": {
-        "x": 1124,
-        "y": 427.66666666666663
+        "x": 1438,
+        "y": 79.5
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -26,8 +26,8 @@
       "id": "2",
       "type": "io",
       "position": {
-        "x": 1124,
-        "y": 181.66666666666663
+        "x": 1438,
+        "y": 304.5
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -37,8 +37,8 @@
       "id": "3",
       "type": "constant",
       "position": {
-        "x": 651,
-        "y": 431.66666666666663
+        "x": 991,
+        "y": 88.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -50,8 +50,8 @@
       "id": "4",
       "type": "constant",
       "position": {
-        "x": 651,
-        "y": 57.66666666666663
+        "x": 991,
+        "y": 234.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -63,8 +63,8 @@
       "id": "6",
       "type": "output",
       "position": {
-        "x": 2246,
-        "y": 547.5
+        "x": 2564,
+        "y": 287.16666666666663
       },
       "data": {
         "label": "Output"
@@ -74,8 +74,8 @@
       "id": "8",
       "type": "constant",
       "position": {
-        "x": 641,
-        "y": 508.66666666666663
+        "x": 954,
+        "y": 137.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -89,8 +89,8 @@
       "id": "9",
       "type": "constant",
       "position": {
-        "x": 641,
-        "y": 99.66666666666663
+        "x": 954,
+        "y": 318.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -104,8 +104,8 @@
       "id": "13",
       "type": "output",
       "position": {
-        "x": 1577,
-        "y": 582.1666666666666
+        "x": 1898,
+        "y": 57
       },
       "data": {
         "label": "Output"
@@ -115,8 +115,8 @@
       "id": "15",
       "type": "constant",
       "position": {
-        "x": 651,
-        "y": 141.66666666666663
+        "x": 1004,
+        "y": 395.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -128,8 +128,8 @@
       "id": "16",
       "type": "constant",
       "position": {
-        "x": 651,
-        "y": 183.66666666666663
+        "x": 1004,
+        "y": 528.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -140,8 +140,8 @@
       "id": "17",
       "type": "constant",
       "position": {
-        "x": 651,
-        "y": 225.66666666666663
+        "x": 1004,
+        "y": 577.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -152,8 +152,8 @@
       "id": "18",
       "type": "userInput",
       "position": {
-        "x": 677,
-        "y": 396.66666666666663
+        "x": 961,
+        "y": 283.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -181,8 +181,8 @@
       "id": "19",
       "type": "userInput",
       "position": {
-        "x": 647,
-        "y": 350.66666666666663
+        "x": 1012,
+        "y": 199.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -194,8 +194,8 @@
       "id": "20",
       "type": "userInput",
       "position": {
-        "x": 672,
-        "y": 473.66666666666663
+        "x": 956,
+        "y": 360.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -211,22 +211,11 @@
       }
     },
     {
-      "id": "22",
-      "type": "output",
-      "position": {
-        "x": 1124,
-        "y": 12
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "24",
       "type": "userInput",
       "position": {
         "x": 12,
-        "y": 366.91666666666663
+        "y": 69.16666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -237,8 +226,8 @@
       "id": "25",
       "type": "io",
       "position": {
-        "x": 162.99622326667782,
-        "y": 524.0062154671593
+        "x": 442,
+        "y": 444.5
       },
       "data": {
         "descriptionFile": "data>load_polygons.yml"
@@ -248,13 +237,25 @@
       "id": "27",
       "type": "constant",
       "position": {
-        "x": 65.96249389648438,
-        "y": 307.7999954223633
+        "x": 31,
+        "y": 511
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float",
         "value": 0
+      }
+    },
+    {
+      "id": "28",
+      "type": "constant",
+      "position": {
+        "x": 165,
+        "y": 468
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "boolean"
       }
     }
   ],
@@ -433,6 +434,12 @@
       "target": "2",
       "targetHandle": "bbox_crs",
       "id": "reactflow__edge-25bbox_crs-2bbox_crs"
+    },
+    {
+      "source": "28",
+      "target": "25",
+      "targetHandle": "clip_to_location",
+      "id": "xy-edge__28-25clip_to_location"
     }
   ],
   "inputs": {

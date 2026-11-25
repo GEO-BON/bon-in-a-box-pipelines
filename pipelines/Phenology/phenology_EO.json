@@ -4,8 +4,8 @@
       "id": "37",
       "type": "io",
       "position": {
-        "x": 1341,
-        "y": 71.16666666666666
+        "x": 1358,
+        "y": 40.333333333333336
       },
       "data": {
         "descriptionFile": "phenology>summarise_phenology.yml"
@@ -15,8 +15,8 @@
       "id": "39",
       "type": "output",
       "position": {
-        "x": 1932,
-        "y": 48.166666666666664
+        "x": 1944,
+        "y": 12
       },
       "data": {
         "label": "Output"
@@ -26,8 +26,8 @@
       "id": "44",
       "type": "userInput",
       "position": {
-        "x": 1062,
-        "y": 102.5
+        "x": 1070,
+        "y": 205.66666666666669
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -39,8 +39,8 @@
       "id": "45",
       "type": "userInput",
       "position": {
-        "x": 1068,
-        "y": 218.83333333333331
+        "x": 1076,
+        "y": 240.66666666666669
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -52,8 +52,8 @@
       "id": "48",
       "type": "io",
       "position": {
-        "x": 1932,
-        "y": 165.16666666666666
+        "x": 1944,
+        "y": 127.33333333333334
       },
       "data": {
         "descriptionFile": "phenology>phenology_difference.yml"
@@ -63,8 +63,8 @@
       "id": "49",
       "type": "output",
       "position": {
-        "x": 2537,
-        "y": 84.16666666666666
+        "x": 2545,
+        "y": 203
       },
       "data": {
         "label": "Output"
@@ -74,8 +74,8 @@
       "id": "67",
       "type": "output",
       "position": {
-        "x": 1341,
-        "y": 12.166666666666664
+        "x": 1358,
+        "y": 187.33333333333334
       },
       "data": {
         "label": "Output"
@@ -86,7 +86,7 @@
       "type": "userInput",
       "position": {
         "x": 12,
-        "y": 12
+        "y": 32
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -97,8 +97,8 @@
       "id": "69",
       "type": "io",
       "position": {
-        "x": 433,
-        "y": 254.83333333333331
+        "x": 432,
+        "y": 70.33333333333334
       },
       "data": {
         "descriptionFile": "data>load_polygons.yml"
@@ -108,13 +108,25 @@
       "id": "71",
       "type": "constant",
       "position": {
-        "x": 46,
-        "y": 278.3333333333333
+        "x": 31,
+        "y": 136.83333333333334
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float",
         "value": 0
+      }
+    },
+    {
+      "id": "72",
+      "type": "constant",
+      "position": {
+        "x": 165,
+        "y": 93.83333333333334
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "boolean"
       }
     }
   ],
@@ -223,6 +235,12 @@
       "target": "67",
       "targetHandle": null,
       "id": "reactflow__edge-69polygon-67"
+    },
+    {
+      "source": "72",
+      "target": "69",
+      "targetHandle": "clip_to_location",
+      "id": "xy-edge__72-69clip_to_location"
     }
   ],
   "inputs": {

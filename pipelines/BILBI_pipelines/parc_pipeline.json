@@ -4,8 +4,8 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 1597,
-        "y": 182.5
+        "x": 1878,
+        "y": 201
       },
       "data": {
         "descriptionFile": "bilbi_indicators>bilbi_weighted_mean.yml"
@@ -15,8 +15,8 @@
       "id": "1",
       "type": "io",
       "position": {
-        "x": 1144,
-        "y": 40.5
+        "x": 1428,
+        "y": 57
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -26,8 +26,8 @@
       "id": "2",
       "type": "io",
       "position": {
-        "x": 1144,
-        "y": 259.5
+        "x": 1428,
+        "y": 367
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -37,8 +37,8 @@
       "id": "3",
       "type": "constant",
       "position": {
-        "x": 641,
-        "y": 56.5
+        "x": 1001,
+        "y": 45.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -50,8 +50,8 @@
       "id": "4",
       "type": "constant",
       "position": {
-        "x": 641,
-        "y": 196.5
+        "x": 1001,
+        "y": 248
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -63,8 +63,8 @@
       "id": "6",
       "type": "output",
       "position": {
-        "x": 2186,
-        "y": 40.5
+        "x": 2464,
+        "y": 57
       },
       "data": {
         "label": "Output"
@@ -74,8 +74,8 @@
       "id": "7",
       "type": "output",
       "position": {
-        "x": 2186,
-        "y": 237
+        "x": 2464,
+        "y": 260.5
       },
       "data": {
         "label": "Output"
@@ -85,8 +85,8 @@
       "id": "8",
       "type": "constant",
       "position": {
-        "x": 631,
-        "y": 98.5
+        "x": 964,
+        "y": 94.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -100,8 +100,8 @@
       "id": "9",
       "type": "constant",
       "position": {
-        "x": 631,
-        "y": 273.5
+        "x": 964,
+        "y": 381
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -115,8 +115,8 @@
       "id": "13",
       "type": "output",
       "position": {
-        "x": 1597,
-        "y": 12
+        "x": 1878,
+        "y": 34.5
       },
       "data": {
         "label": "Output"
@@ -126,8 +126,8 @@
       "id": "15",
       "type": "constant",
       "position": {
-        "x": 641,
-        "y": 350.5
+        "x": 1014,
+        "y": 458
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -139,8 +139,8 @@
       "id": "16",
       "type": "constant",
       "position": {
-        "x": 641,
-        "y": 392.5
+        "x": 1014,
+        "y": 507
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -151,8 +151,8 @@
       "id": "17",
       "type": "constant",
       "position": {
-        "x": 641,
-        "y": 434.5
+        "x": 1014,
+        "y": 556
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -163,8 +163,8 @@
       "id": "18",
       "type": "userInput",
       "position": {
-        "x": 667,
-        "y": 238.5
+        "x": 971,
+        "y": 213
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -192,8 +192,8 @@
       "id": "19",
       "type": "userInput",
       "position": {
-        "x": 637,
-        "y": 150.5
+        "x": 1022,
+        "y": 167
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -205,8 +205,8 @@
       "id": "20",
       "type": "userInput",
       "position": {
-        "x": 662,
-        "y": 315.5
+        "x": 966,
+        "y": 423
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -226,7 +226,7 @@
       "type": "userInput",
       "position": {
         "x": 12,
-        "y": 39.25
+        "y": 28.25
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -237,8 +237,8 @@
       "id": "24",
       "type": "output",
       "position": {
-        "x": 1028.7353991427563,
-        "y": 476.7438787363183
+        "x": 1428,
+        "y": 12
       },
       "data": {
         "label": "Output"
@@ -248,8 +248,8 @@
       "id": "25",
       "type": "io",
       "position": {
-        "x": 525.5185571826676,
-        "y": 481.8260063799862
+        "x": 452,
+        "y": 297
       },
       "data": {
         "descriptionFile": "data>load_polygons.yml"
@@ -259,13 +259,25 @@
       "id": "27",
       "type": "constant",
       "position": {
-        "x": 137.2528277702536,
-        "y": 630.4449873158251
+        "x": 31,
+        "y": 363.5
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float",
         "value": null
+      }
+    },
+    {
+      "id": "28",
+      "type": "constant",
+      "position": {
+        "x": 165,
+        "y": 320.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "boolean"
       }
     }
   ],
@@ -451,6 +463,12 @@
       "target": "0",
       "targetHandle": "study_area",
       "id": "reactflow__edge-25polygon-0study_area"
+    },
+    {
+      "source": "28",
+      "target": "25",
+      "targetHandle": "clip_to_location",
+      "id": "xy-edge__28-25clip_to_location"
     }
   ],
   "inputs": {
