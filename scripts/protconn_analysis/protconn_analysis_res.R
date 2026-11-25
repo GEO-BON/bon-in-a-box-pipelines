@@ -190,9 +190,9 @@ if (pa_input_type == "User input") {
 }
 
 if (pa_input_type == "Both") {
-  if (!"geom" %in% names(protected_areas)) { # check that geom column exists
-    biab_error_stop("Geometry column must be called 'geom'")
-  }
+  # Geometry column name depends on the format (GeoPackage: "geom", shapefile: "geometry")
+  st_geometry(protected_areas) <- "geom"
+  st_geometry(protected_areas_user) <- "geom"
   print("Step: combining user-defined protected areas with WDPA data")
   if (input$time_series == TRUE) {
     protected_areas <- protected_areas[, c("STATUS_YR", "geom")]
