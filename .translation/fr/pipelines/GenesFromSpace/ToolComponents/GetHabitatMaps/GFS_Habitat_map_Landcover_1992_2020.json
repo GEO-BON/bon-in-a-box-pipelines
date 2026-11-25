@@ -1,0 +1,132 @@
+{
+  "nodes": [
+    {
+      "id": "115",
+      "type": "io",
+      "position": {
+        "x": 538.190091303112,
+        "y": 305.30990869688776
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>get_LCY.yml"
+      }
+    },
+    {
+      "id": "120",
+      "type": "output",
+      "position": {
+        "x": 1149.4658756520394,
+        "y": 252.942785122668
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "121",
+      "type": "output",
+      "position": {
+        "x": 1151.9556241228036,
+        "y": 330.12498771636245
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "115",
+      "sourceHandle": "lcyy",
+      "target": "120",
+      "targetHandle": null,
+      "id": "reactflow__edge-115lcyy-120"
+    },
+    {
+      "source": "115",
+      "sourceHandle": "time_points",
+      "target": "121",
+      "targetHandle": null,
+      "id": "reactflow__edge-115time_points-121"
+    }
+  ],
+  "inputs": {
+    "GFS_IndicatorsTool>get_LCY.yml@115|population_polygons": {
+      "description": "Chemin vers le fichier GeoJSON stockant des polygones de populations.",
+      "label": "Polygones des populations",
+      "type": "application/geo+json",
+      "example": "/userdata/population_polygons.geojson",
+      "weight": 0
+    },
+    "GFS_IndicatorsTool>get_LCY.yml@115|res": {
+      "description": "La résolution souhaitée pour la carte couverture du sol sera obtenue par rééchantillonnage. À préciser en degrés décimaux (0,01 ~ 1 km). Valeur minimale 0,003 (~300 m).",
+      "label": "Résolution de la carte couverture du sol",
+      "type": "float",
+      "example": 0.01,
+      "weight": 1
+    },
+    "GFS_IndicatorsTool>get_LCY.yml@115|yoi": {
+      "description": "Liste des années pour lesquelles couverture du sol doit être extrait (intervalle maximal 1992-2020).",
+      "label": "Années d'intérêt",
+      "type": "int[]",
+      "example": [
+        1995,
+        2000,
+        2005,
+        2010,
+        2015,
+        2020
+      ],
+      "weight": 2
+    },
+    "GFS_IndicatorsTool>get_LCY.yml@115|lc_classes": {
+      "description": "Liste des identifiants de classe couverture du sol à extraire (pour les identifiants voir https://savs.eumetsat.int/html/images/landcover_legend.png)",
+      "label": "Classes couverture du sol",
+      "type": "int[]",
+      "example": [
+        130,
+        140
+      ],
+      "weight": 3
+    }
+  },
+  "outputs": {
+    "GFS_IndicatorsTool>get_LCY.yml@115|lcyy": {
+      "description": "Dossier Tif montrant la répartition annuelle des catégories d'intérêt couverture du sol.",
+      "label": "Couverture du sol année par année",
+      "type": "image/tiff;application=geotiff",
+      "weight": 0
+    },
+    "GFS_IndicatorsTool>get_LCY.yml@115|time_points": {
+      "description": "Liste des années pour lesquelles des informations couverture du sol sont disponibles.",
+      "label": "Années avec information couverture du sol",
+      "type": "text[]",
+      "weight": 1
+    }
+  },
+  "metadata": {
+    "name": "Obtenir couverture du sol changement de couverture 1992-2020",
+    "description": "Composante de l'outil Genes from Space. Compte tenu d'un domaine d'intérêt, l'outil crée une pile raster décrivant la présence d'habitats pour les classes couverture du sol et pour les années d'intérêt (intervalle de temps autorisé : 1992-2020). ",
+    "lifecycle": {
+      "status": "subpipeline"
+    },
+    "author": [
+      {
+        "name": "Oliver Selmoni",
+        "email": "oliver.selmoni@gmail.com"
+      }
+    ],
+    "license": "MIT",
+    "external_link": "https://teams.issibern.ch/genesfromspace/",
+    "references": [
+      {
+        "text": "Schuman et al., EcoEvoRxiv.",
+        "doi": "https://doi.org/10.32942/X2RS58"
+      },
+      {
+        "text": "ESA. Land Cover CCI Product User Guide Version 2. Tech. Rep. (2017)",
+        "doi": "https://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Ph2-PUGv2_2.0.pdf"
+      }
+    ]
+  }
+}

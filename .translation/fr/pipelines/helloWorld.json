@@ -1,0 +1,75 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 236.8125,
+        "y": 287
+      },
+      "data": {
+        "descriptionFile": "helloWorld>helloPython.yml"
+      }
+    },
+    {
+      "id": "1",
+      "type": "output",
+      "position": {
+        "x": 626.8125,
+        "y": 282
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "0",
+      "sourceHandle": "increment",
+      "target": "1",
+      "targetHandle": null,
+      "id": "reactflow__edge-0increment-1"
+    }
+  ],
+  "inputs": {
+    "helloWorld>helloPython.yml@0|some_int": {
+      "description": "Un nombre que nous augmenterons",
+      "label": "Quelques int",
+      "type": "int",
+      "example": 3,
+      "weight": 0
+    },
+    "helloWorld>helloPython.yml@0|study_area_bbox": {
+      "description": "Emprise et SCR de zone d'étude",
+      "label": "Emprise",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 1
+    }
+  },
+  "outputs": {
+    "helloWorld>helloPython.yml@0|increment": {
+      "description": "bla bla",
+      "label": "Un nombre (input++)",
+      "type": "int",
+      "example": 4,
+      "weight": 0
+    }
+  },
+  "metadata": {
+    "name": "Ligne Hello World",
+    "description": "Ce pipeline d'exemple très simple montre comment connecter un script à une sortie unique. L'entrée du script est laissé vide, devenant ainsi une entrée de pipeline.",
+    "lifecycle": {
+      "status": "example"
+    },
+    "author": [
+      {
+        "name": "Jean-Michel Lord",
+        "identifier": "https://orcid.org/0009-0007-3826-1125"
+      }
+    ],
+    "license": "MIT",
+    "external_link": "https://github.com/GEO-BON/biab-2.0"
+  }
+}

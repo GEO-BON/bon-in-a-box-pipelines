@@ -1,0 +1,578 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 1577,
+        "y": 151.66666666666663
+      },
+      "data": {
+        "descriptionFile": "bilbi_indicators>bilbi_weighted_mean.yml"
+      }
+    },
+    {
+      "id": "1",
+      "type": "io",
+      "position": {
+        "x": 1124,
+        "y": 427.66666666666663
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "2",
+      "type": "io",
+      "position": {
+        "x": 1124,
+        "y": 181.66666666666663
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "3",
+      "type": "constant",
+      "position": {
+        "x": 651,
+        "y": 431.66666666666663
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://stac.geobon.org/"
+      }
+    },
+    {
+      "id": "4",
+      "type": "constant",
+      "position": {
+        "x": 651,
+        "y": 57.66666666666663
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://stac.geobon.org/"
+      }
+    },
+    {
+      "id": "6",
+      "type": "output",
+      "position": {
+        "x": 2246,
+        "y": 547.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "8",
+      "type": "constant",
+      "position": {
+        "x": 641,
+        "y": 508.66666666666663
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "csiro_beri"
+        ]
+      }
+    },
+    {
+      "id": "9",
+      "type": "constant",
+      "position": {
+        "x": 641,
+        "y": 99.66666666666663
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "csiro_denominator"
+        ]
+      }
+    },
+    {
+      "id": "13",
+      "type": "output",
+      "position": {
+        "x": 1577,
+        "y": 582.1666666666666
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "15",
+      "type": "constant",
+      "position": {
+        "x": 651,
+        "y": 141.66666666666663
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": null
+      }
+    },
+    {
+      "id": "16",
+      "type": "constant",
+      "position": {
+        "x": 651,
+        "y": 183.66666666666663
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "17",
+      "type": "constant",
+      "position": {
+        "x": 651,
+        "y": 225.66666666666663
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "18",
+      "type": "userInput",
+      "position": {
+        "x": 677,
+        "y": 396.66666666666663
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
+      }
+    },
+    {
+      "id": "19",
+      "type": "userInput",
+      "position": {
+        "x": 647,
+        "y": 350.66666666666663
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 1000
+      }
+    },
+    {
+      "id": "20",
+      "type": "userInput",
+      "position": {
+        "x": 672,
+        "y": 473.66666666666663
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "min",
+          "max",
+          "mean",
+          "median"
+        ]
+      }
+    },
+    {
+      "id": "22",
+      "type": "output",
+      "position": {
+        "x": 1124,
+        "y": 12
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "24",
+      "type": "userInput",
+      "position": {
+        "x": 12,
+        "y": 366.91666666666663
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "25",
+      "type": "io",
+      "position": {
+        "x": 162.99622326667782,
+        "y": 524.0062154671593
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "27",
+      "type": "constant",
+      "position": {
+        "x": 65.96249389648438,
+        "y": 307.7999954223633
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-3-1stac_url"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-4-2stac_url"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "rasters",
+      "target": "0",
+      "targetHandle": "bilbi_denominator",
+      "id": "reactflow__edge-2rasters-0bilbi_denominator"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "rasters",
+      "target": "0",
+      "targetHandle": "bilbi_indicator",
+      "id": "reactflow__edge-1rasters-0bilbi_indicator"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "summarised_values",
+      "target": "6",
+      "targetHandle": null,
+      "id": "reactflow__edge-0summarised_values-6"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-8-1collections_items"
+    },
+    {
+      "source": "9",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-9-2collections_items"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "rasters",
+      "target": "13",
+      "targetHandle": null,
+      "id": "reactflow__edge-1rasters-13"
+    },
+    {
+      "source": "15",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-15-2t0"
+    },
+    {
+      "source": "16",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-16-2t1"
+    },
+    {
+      "source": "17",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "temporal_res",
+      "id": "reactflow__edge-17-2temporal_res"
+    },
+    {
+      "source": "18",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-18-1resampling"
+    },
+    {
+      "source": "18",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-18-2resampling"
+    },
+    {
+      "source": "19",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-19-2spatial_res"
+    },
+    {
+      "source": "19",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-19-1spatial_res"
+    },
+    {
+      "source": "20",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-20-2aggregation"
+    },
+    {
+      "source": "20",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-20-1aggregation"
+    },
+    {
+      "source": "24",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-24-1bbox_crs"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "time_series_plot",
+      "target": "6",
+      "targetHandle": null,
+      "id": "reactflow__edge-0time_series_plot-6"
+    },
+    {
+      "source": "24",
+      "sourceHandle": null,
+      "target": "25",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-24-25country_region_bbox"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "polygon",
+      "target": "2",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-25polygon-2study_area"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "polygon",
+      "target": "1",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-25polygon-1study_area"
+    },
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "25",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-27-25buffer"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "polygon",
+      "target": "0",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-25polygon-0study_area"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "bbox_crs",
+      "target": "2",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-25bbox_crs-2bbox_crs"
+    }
+  ],
+  "inputs": {
+    "pipeline@24": {
+      "label": "Emprise et SCR",
+      "description": "Sélectionnez un pays/région et un SCR pour obtenir le emprise associé. Vous pouvez également dessiner/injecter un emprise personnalisé avec un SCR.",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
+    "data>load_polygons.yml@25|polygon_type": {
+      "description": "Type de polygone à charger. \n\n- `Country or region` charge un polygone du pays ou de la région sélectionné.\n- `Polygon of bounding box` charge un polygone du emprise associé au pays ou à la région sélectionné, ou le emprise dessiné.",
+      "label": "Type de polygone",
+      "type": "options",
+      "options": [
+        "Country or region",
+        "Polygon of bounding box"
+      ],
+      "example": "Country or region",
+      "weight": 1
+    },
+    "data>loadFromStac.yml@1|t0": {
+      "description": "Année de début pour les séries chronologiques couches. Laisser vide si vous utilisez toutes les dates disponibles.\n\nDoit être l'un des: 2000, 2005, 2015, 2010, 2020",
+      "label": "Année de début (facultatif)",
+      "type": "text",
+      "example": null,
+      "weight": 2
+    },
+    "data>loadFromStac.yml@1|t1": {
+      "description": "Année de fin pour les séries chronologiques couches. Laisser vide si vous utilisez toutes les dates disponibles.\n\nDoit être l'un des: 2000, 2005, 2015, 2010, 2020",
+      "label": "Année de fin (facultatif)",
+      "type": "text",
+      "example": null,
+      "weight": 3
+    },
+    "data>loadFromStac.yml@1|temporal_res": {
+      "description": "Résolution temporelle à utiliser lors de la requête de items STAC par date, dans le format (\"P\", intervalle de temps et unité de temps, par exemple \"P1Y\" est annuel, \"P1M\" est mensuel et \"P1D\" est quotidien). Laisser vide si ce n'est pas par date. \n\nDoit être de: P5Y, P10Y, P15Y, P20Y\n\nSi la résolution temporelle est plus grossière que la résolution temporelle des séries chronologiques, le couches sera agrégé avec la méthode d'agrégation choisie ci-dessous.",
+      "label": "Résolution temporelle (facultatif)",
+      "type": "text",
+      "example": null,
+      "weight": 4
+    },
+    "pipeline@19": {
+      "label": "Résolution spatiale",
+      "description": "Entier, résolution spatiale du rasters dans les mêmes unités que le système de coordonnées de référence (mètres pour les systèmes de référence projetés et degrés pour les systèmes de référence en lat long). \n\nSi c'est laissé vide il utilisera la résolution native du rasters. \n\nSi la résolution spatiale est plus grossière que la résolution native du rasters, le couches sera rééchantillonné avec la méthode de rééchantillonnage choisie ci-dessous.",
+      "type": "float",
+      "example": 0.008833,
+      "weight": 5
+    },
+    "pipeline@18": {
+      "label": "Méthode de rééchantillonnage",
+      "description": "Méthode de rééchantillonnage utilisée lors du rééchelonnement et/ou du réaménagement du raster couches. Voir [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) pour la description.\n\nSera ignoré si pas rééchantillonnage.",
+      "type": "options",
+      "example": "near",
+      "options": [
+        "near",
+        "bilinear",
+        "average",
+        "mode",
+        "cubic",
+        "cubicspline",
+        "lanczos",
+        "rms",
+        "min",
+        "max",
+        "sum",
+        "med",
+        "q1",
+        "q3"
+      ],
+      "weight": 6
+    },
+    "pipeline@20": {
+      "label": "Méthode d'agrégation",
+      "description": "Méthode utilisée pour agréger les éléments lorsque couches se combine avec le temps.\n\nSera ignoré si pas agréger.",
+      "type": "options",
+      "example": "first",
+      "options": [
+        "first",
+        "min",
+        "max",
+        "mean",
+        "median"
+      ],
+      "weight": 7
+    }
+  },
+  "outputs": {
+    "bilbi_indicators>bilbi_weighted_mean.yml@0|time_series_plot": {
+      "description": "Graphique de la moyenne géométrique de l'indicateur dans le temps dans le zone d'étude d'intérêt",
+      "label": "Séries chronologiques graphique",
+      "type": "image/png",
+      "weight": 0
+    },
+    "bilbi_indicators>bilbi_weighted_mean.yml@0|summarised_values": {
+      "description": "Moyenne géométrique pondérée annuelle de BERI dans le polygone zone d'étude.\n\n\nLa valeur, allant de 0 à 1 représente la proportion de l'habitat relié qui devrait demeurer sous le changement climatique par rapport à ce qui existerait sans modification humaine ou changement climatique.",
+      "label": "BERI résumé",
+      "type": "text/csv",
+      "weight": 1
+    },
+    "data>loadFromStac.yml@1|rasters": {
+      "description": "Sortie des fichiers raster au format GeoTIFF.",
+      "label": "Raster couches de l'indicateur pour chaque année",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 2
+    }
+  },
+  "metadata": {
+    "name": "Indice de résilience des écosystèmes bioclimatiques (BERI)",
+    "description": "\n## Présentation\nL'indice de résilience des écosystèmes bioclimatiques (BERI) du CSIRO est un indicateur complémentaire reconnu au sein du Cadre mondial de la biodiversité de Kunming-Montréal (GBF). Il soutient la surveillance de la cible 8 du FBG, qui vise à minimiser les impacts du changement climatique sur la biodiversité et à renforcer la résilience. BERI mesure la capacité des écosystèmes naturels à conserver la biodiversité face aux changements climatiques (Ferrier et al., 2020). L'indicateur est fonction de la zone de l'écosystème, de la connectivité et de l'intégrité. BERI est un produit mondial de 30 arc-seconde pour les années 2000, 2005, 2010, 2015 et 2020 et est modélisé à partir de données pour plus de 400 000 espèces de plantes, de vertébrés et d'invertébrés (Harwood et al., 2022).\n\nBERI évalue dans quelle mesure la configuration de l'habitat naturel d'un paysage peut tenir compte des changements climatiques dans la répartition des espèces. Pour chaque maille de l'habitat naturel, l'indice évalue la connectivité fonctionnelle de la cellule aux zones avoisinantes qui devraient pouvoir soutenir un assemblage d'espèces semblables à celui qui est actuellement associé à cette cellule, face au changement climatique. Les cellules dont l'habitat est bien relié ont une note élevée, tandis que les zones isolées qui n'ont pas de cote d'analogie climatique accessible ont une note faible. L'indicateur peut ensuite être agrégé et communiqué par n'importe quelle unité spatiale souhaitée (par exemple, un type d'écosystème, un pays ou la planète entière).\n\nCe pipeline ne calcule pas BERI. Il résume le CSIRO BERI couches comme une moyenne géométrique pondérée sur une région d'intérêt. Le code pour calculer la moyenne pondérée a été adapté à partir du script «Moyens géométriques pondérés de CSIRO BILBI (Infrastructure de modélisation biogéographique pour les indicateurs de biodiversité à grande échelle)» sur le [Portail d'accès aux données du CSIRO](https://doi.org/10.25919/4vvz-4j96).\n## Utilisations\nBERI peut être utilisé pour surveiller et signaler les tendances passées à ce jour de la résilience de l'état des écosystèmes et de la connectivité face aux changements climatiques en cours, à l'appui de la cible 8 du FBG. BERI est calculé séparément pour chaque point de temps en utilisant la meilleure cartographie disponible de l'état de l'écosystème (intégrité) pour cette année.\n## Limites du pipeline\n- BERI est une couche modélisée, il y a donc de plus grandes incertitudes dans les zones où les données sont moins nombreuses. Interpréter les résultats avec prudence.\n- Le pipeline résume BERI couches existant; il ne peut pas utiliser des données personnalisées.\n- BERI n'est disponible que pour 2000, 2005, 2010, 2015 et 2020, à une résolution de 30 arc-seconde (environ 1 km).",
+    "lifecycle": {
+      "status": "in_review"
+    },
+    "author": [
+      {
+        "name": "Jory Griffith",
+        "email": "jory.griffith@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0001-6020-6690"
+      },
+      {
+        "name": "Nina Obiar",
+        "email": "nina.obiar@mcgill.ca",
+        "identifier": "https://orcid.org/0009-0002-6555-9908"
+      },
+      {
+        "name": "Samara Manzin",
+        "email": "samara.manzin@mcgill.ca",
+        "identifier": "https://orcid.org/0009-0005-9134-9981"
+      }
+    ],
+    "license": "CC-BY-NC",
+    "references": [
+      {
+        "text": "Ferrier et al. 2020",
+        "doi": "https://doi.org/10.1016/j.ecolind.2020.106554"
+      },
+      {
+        "text": "Harwood et al. 2022",
+        "doi": "https://doi.org/10.25919/4vvz-4j96"
+      }
+    ]
+  }
+}

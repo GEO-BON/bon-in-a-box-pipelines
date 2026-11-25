@@ -1,0 +1,616 @@
+{
+  "nodes": [
+    {
+      "id": "29",
+      "type": "userInput",
+      "position": {
+        "x": 1526,
+        "y": 286
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3[]",
+        "value": [
+          "/userdata/fake_protected_areas_colombia.gpkg"
+        ]
+      }
+    },
+    {
+      "id": "41",
+      "type": "userInput",
+      "position": {
+        "x": 1568,
+        "y": 96
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3[]"
+      }
+    },
+    {
+      "id": "48",
+      "type": "io",
+      "position": {
+        "x": 1383,
+        "y": 142
+      },
+      "data": {
+        "descriptionFile": "data>cleanWDPA.yml"
+      }
+    },
+    {
+      "id": "60",
+      "type": "userInput",
+      "position": {
+        "x": 34,
+        "y": 230.4
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "61",
+      "type": "io",
+      "position": {
+        "x": 475,
+        "y": 81
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "62",
+      "type": "output",
+      "position": {
+        "x": 1383,
+        "y": 58
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "64",
+      "type": "io",
+      "position": {
+        "x": 475,
+        "y": 172
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "65",
+      "type": "constant",
+      "position": {
+        "x": 12,
+        "y": 153
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "WDPA",
+        "options": [
+          "Country or region",
+          "WDPA",
+          "EEZ"
+        ]
+      }
+    },
+    {
+      "id": "66",
+      "type": "constant",
+      "position": {
+        "x": 12,
+        "y": 62
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Country or region",
+        "options": [
+          "Country or region",
+          "WDPA",
+          "EEZ"
+        ]
+      }
+    },
+    {
+      "id": "67",
+      "type": "constant",
+      "position": {
+        "x": 68,
+        "y": 110
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
+      }
+    },
+    {
+      "id": "68",
+      "type": "userInput",
+      "position": {
+        "x": 892,
+        "y": 257
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options[]",
+        "value": [
+          "Designated",
+          "Inscribed",
+          "Established",
+          "Proposed",
+          "Adopted"
+        ],
+        "options": [
+          "Designated",
+          "Inscribed",
+          "Established",
+          "Adopted",
+          "Proposed"
+        ]
+      }
+    },
+    {
+      "id": "69",
+      "type": "userInput",
+      "position": {
+        "x": 84,
+        "y": 350.6666666666667
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
+      }
+    },
+    {
+      "id": "70",
+      "type": "io",
+      "position": {
+        "x": 2318,
+        "y": 109
+      },
+      "data": {
+        "descriptionFile": "protconn_analysis>protconn_analysis_res.yml"
+      }
+    },
+    {
+      "id": "71",
+      "type": "output",
+      "position": {
+        "x": 3118,
+        "y": 155.28571428571428
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "72",
+      "type": "userInput",
+      "position": {
+        "x": 1704,
+        "y": 332
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-60-48crs"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "61",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-60-61country_region_bbox"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "polygon",
+      "target": "48",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-61polygon-48study_area_polygon"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "polygon",
+      "target": "62",
+      "targetHandle": null,
+      "id": "reactflow__edge-61polygon-62"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "64",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-60-64country_region_bbox"
+    },
+    {
+      "source": "65",
+      "sourceHandle": null,
+      "target": "64",
+      "targetHandle": "polygon_type",
+      "id": "reactflow__edge-65-64polygon_type"
+    },
+    {
+      "source": "64",
+      "sourceHandle": "polygon",
+      "target": "48",
+      "targetHandle": "protected_area_file",
+      "id": "reactflow__edge-64polygon-48protected_area_file"
+    },
+    {
+      "source": "66",
+      "sourceHandle": null,
+      "target": "61",
+      "targetHandle": "polygon_type",
+      "id": "reactflow__edge-66-61polygon_type"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "61",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-67-61buffer"
+    },
+    {
+      "source": "68",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "status_type",
+      "id": "reactflow__edge-68-48status_type"
+    },
+    {
+      "source": "69",
+      "sourceHandle": null,
+      "target": "64",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-69-64buffer"
+    },
+    {
+      "source": "70",
+      "sourceHandle": "protected_areas",
+      "target": "71",
+      "id": "xy-edge__70protected_areas-71"
+    },
+    {
+      "source": "70",
+      "sourceHandle": "resistance_layer",
+      "target": "71",
+      "id": "xy-edge__70resistance_layer-71"
+    },
+    {
+      "source": "70",
+      "sourceHandle": "protconn_result",
+      "target": "71",
+      "id": "xy-edge__70protconn_result-71"
+    },
+    {
+      "source": "70",
+      "sourceHandle": "result_plot",
+      "target": "71",
+      "id": "xy-edge__70result_plot-71"
+    },
+    {
+      "source": "70",
+      "sourceHandle": "result_yrs_plot",
+      "target": "71",
+      "id": "xy-edge__70result_yrs_plot-71"
+    },
+    {
+      "source": "70",
+      "sourceHandle": "result_yrs",
+      "target": "71",
+      "id": "xy-edge__70result_yrs-71"
+    },
+    {
+      "source": "48",
+      "sourceHandle": "study_area_clean",
+      "target": "70",
+      "targetHandle": "study_area_polygon",
+      "id": "xy-edge__48study_area_clean-70study_area_polygon"
+    },
+    {
+      "source": "41",
+      "target": "70",
+      "targetHandle": "study_area_polygon",
+      "id": "xy-edge__41-70study_area_polygon"
+    },
+    {
+      "source": "48",
+      "sourceHandle": "protected_areas_clean",
+      "target": "70",
+      "targetHandle": "protected_area_polygon",
+      "id": "xy-edge__48protected_areas_clean-70protected_area_polygon"
+    },
+    {
+      "source": "29",
+      "target": "70",
+      "targetHandle": "protected_area_polygon",
+      "id": "xy-edge__29-70protected_area_polygon"
+    },
+    {
+      "source": "72",
+      "target": "70",
+      "targetHandle": "resistance_layer",
+      "id": "xy-edge__72-70resistance_layer"
+    },
+    {
+      "source": "69",
+      "target": "70",
+      "targetHandle": "buffer",
+      "id": "xy-edge__69-70buffer"
+    },
+    {
+      "source": "60",
+      "target": "70",
+      "targetHandle": "crs",
+      "id": "xy-edge__60-70crs"
+    }
+  ],
+  "inputs": {
+    "pipeline@60": {
+      "label": "Emprise et SCR",
+      "description": "Sélectionnez un pays/région et un SCR pour obtenir le emprise associé.\n\nLe SCR ** doit être dans un système de coordonnées de référence projeté (en mètres) pour calculer les distances correctes entre aires protégées. ",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
+    "pipeline@41": {
+      "label": "Polygone de zone d'étude (facultatif)",
+      "description": "Polygone du zone d'étude, au format GeoPackage. Pour utiliser un zone d'étude personnalisé, entrez le chemin vers le fichier dans les données utilisateur (par exemple /userdata/study area polygon.gpkg) et il remplacera le polygone du pays à partir du script \"Get country polygon\". Laisser vide pour utiliser des polygones de pays ou de région tirés du script \"Get country polygon\". Aires protégées à l'extérieur du pays polygone sera cultivé.",
+      "type": "application/geopackage+sqlite3[]",
+      "example": [],
+      "weight": 1
+    },
+    "pipeline@29": {
+      "label": "Polygone de aires protégées (facultatif)",
+      "description": "Le aires protégées (AP) d'intérêt. Pour combiner les données WDPA et les données personnalisées, ajoutez le chemin à la GeoPackage personnalisée ici \"par exemple /userdata/my protected areas.gpkg). Ils seront combinés dans le script. Si vous souhaitez utiliser uniquement des polygones personnalisés, veuillez utiliser l'analyse \"ProtConn avec un pipeline AP personnalisé\". Laisser vide pour utiliser uniquement les données WDPA.",
+      "type": "application/geopackage+sqlite3[]",
+      "example": [],
+      "weight": 2
+    },
+    "pipeline@72": {
+      "label": "Couche de résistance",
+      "description": "Option raster représentant combien il est difficile de se déplacer à travers le paysage. Des valeurs cellulaires plus élevées indiquent une plus grande résistance au mouvement; des valeurs plus faibles indiquent un mouvement plus facile.\n\nLorsqu'elle est fournie, la connectivité entre aires protégées est calculée en utilisant les distances les moins coûteuses à travers ce raster.\n\nLe raster devrait couvrir le zone d'étude et tout tampon transfrontière.\n\nLaisser vide pour utiliser des distances linéaires entre les bords aire protégée.\n",
+      "type": "application/geopackage+sqlite3",
+      "example": null,
+      "weight": 3
+    },
+    "pipeline@69": {
+      "label": "Transfrontière tampon",
+      "description": "Tampon pour tirer aires protégées transfrontière (données WDPA seulement). Le tampon tirera aires protégées à l'intérieur de cette distance de la frontière du pays ou emprise dans l'unité du système de coordonnées de référence (mètres ou degrés). Si vous tirez des données WDPA avec un emprise personnalisé, le tampon ne sera pas appliqué.\n\nIl est recommandé que l'utilisateur choisisse une distance transfrontière 5 fois supérieure au seuil de distance le plus élevé, ce qui correspond à une probabilité de dispersion de ~0.03.",
+      "type": "float",
+      "example": 0,
+      "weight": 4
+    },
+    "pipeline@68": {
+      "label": "AP types de statut juridique à inclure",
+      "description": "Statut juridique types de aires protégées à inclure.\n\n**Proposition :** Le site est en voie d'être reconnu par des moyens légaux ou autres. Il peut encore être géré comme un aire protégée pendant ce processus. \n\n**Inscription :** aires protégées désigné en vertu de la Convention du patrimoine mondial de l'UNESCO.\n\n**Adoptée:** Spécialement aires protégées d'importance marine (SPAMI) créée dans le cadre de la convention de Barcelone, axée sur la protection du milieu marin et de la région côtière de la Méditerranée.\n\n**Désigné :** Le site est légalement reconnu comme un aire protégée. Cela implique un engagement contraignant spécifique en faveur de la conservation à long terme. \n\n**Créée :** Le site est reconnu comme aire protégée par d'autres moyens efficaces. Cela implique un engagement à long terme en faveur de la conservation, mais sans reconnaissance juridique.",
+      "type": "options[]",
+      "example": [
+        "Designated",
+        "Inscribed",
+        "Established",
+        "Proposed",
+        "Adopted"
+      ],
+      "options": [
+        "Designated",
+        "Inscribed",
+        "Established",
+        "Adopted",
+        "Proposed"
+      ],
+      "weight": 5
+    },
+    "data>cleanWDPA.yml@48|include_unesco": {
+      "description": "Vérifier d'inclure les réserves de biosphère de l'UNESCO. Ils servent de sites d'apprentissage pour le développement durable et combinent la conservation de la biodiversité avec l'utilisation durable des ressources naturelles et le développement durable. Elles peuvent ne pas être protégées par la loi et ne pas être entièrement conservées, car elles sont souvent utilisées pour le développement ou les établissements humains. À l'exclusion de celles-ci, l'ensemble de données se limitera à respecter des normes de conservation plus strictes.\n",
+      "label": "Inclure les réserves de biosphère de l'UNESCO",
+      "type": "boolean",
+      "example": true,
+      "weight": 6
+    },
+    "data>cleanWDPA.yml@48|buffer_points": {
+      "description": "Basculer sur tampon aire protégée points par zone signalée. Certains aires protégées sont signalés comme des points uniques plutôt que des polygones. Si coché, cela créera une circulaire aire protégée autour du point signalé qui est égal à la zone déclarée. S'il n'y a pas de zone signalée, il supprimera le point. Si elle n'est pas cochée, tous les aires protégées représentés en points seront supprimés.\n",
+      "label": "Points tampon aire protégée",
+      "type": "boolean",
+      "example": true,
+      "weight": 7
+    },
+    "data>cleanWDPA.yml@48|include_oecm": {
+      "description": "Inclure des zones avec d'autres mesures de conservation efficaces (AMCE). Ceux-ci ne sont pas officiellement désignés aires protégées mais atteignent toujours des résultats en matière de conservation.\n",
+      "label": "Inclure AMCE",
+      "type": "boolean",
+      "example": true,
+      "weight": 8
+    },
+    "data>cleanWDPA.yml@48|include_marine": {
+      "description": "Accélérer pour inclure aires protégées marin et côtier. Notez que l'analyse se limite encore aux limites du polygone zone d'étude.\n",
+      "label": "Y compris le aires protégées marin et côtier",
+      "type": "boolean",
+      "example": false,
+      "weight": 9
+    },
+    "protconn_analysis>protconn_analysis_res.yml@70|date_column_name": {
+      "description": "Nom de la colonne dans l'utilisateur fourni fichier aire protégée qui spécifie quand le AP a été créé. Laisser vide si seulement en utilisant des données WDPA ou votre fichier aire protégée n'a pas de colonne de date.",
+      "label": "Nom de la colonne de date",
+      "type": "text",
+      "example": null,
+      "weight": 10
+    },
+    "protconn_analysis>protconn_analysis_res.yml@70|distance_threshold": {
+      "description": "Se réfère à la distance de seuil (en mètres) utilisée pour estimer si les zones sont reliées dans une analyse spatiale. Ce seuil représente la probabilité médiane de dispersion (c.-à-d. lorsque la probabilité de dispersion entre les patchs est de 0,5). La probabilité de dispersion est calculée avec une fonction de désintégration exponentielle avec une distance croissante.\n\nLes distances de dispersion communes qui englobent une grande majorité d'espèces terrestres sont de 1000 mètres, 3000 mètres, 10 000 mètres et 100 000 mètres (Saura et al., 2017).\n\nNotez que plus vous incluez de distances, plus le pipeline prendra de temps pour compléter et plus il aura besoin de mémoire. De plus, les distances de dispersion plus grandes seront plus intensives en calcul.\n",
+      "label": "Seuil d'analyse de distance",
+      "type": "int[]",
+      "example": [
+        1000,
+        10000
+      ],
+      "weight": 11
+    },
+    "protconn_analysis>protconn_analysis_res.yml@70|pa_size_threshold": {
+      "description": "Seuil de taille pour AP, en mètres carrés. Aires protégées plus petit que cette zone sera enlevé. Un seuil de 1 km2 a été utilisé dans Saura et al. 2017 parce qu'à des échelles plus grandes, aires protégées moins de 1 km2 (1000 m2) n'ont pas d'impact important sur les valeurs de ProtConn. L'élimination du petit aires protégées accélère significativement le calcul et est recommandée pour les grandes surfaces. Pour ne pas filtrer AP par seuil de taille, entrez une valeur de 0.",
+      "label": "AP seuil de taille",
+      "type": "float",
+      "example": 1000,
+      "weight": 12
+    },
+    "protconn_analysis>protconn_analysis_res.yml@70|years": {
+      "description": "Année pour laquelle vous voulez calculer ProtConn (p. ex., une entrée de 2000 calculera ProtConn pour seulement AP qui ont été désignés avant l'année 2000). Laisser vide si seulement les données WDPA ou votre fichier aire protégée n'ont pas de dates. Notez que si votre fichier aire protégée n'a pas de dates, vous ne pouvez pas faire l'analyse des séries chronologiques.",
+      "label": "Année limite",
+      "type": "int",
+      "example": 2025,
+      "weight": 13
+    },
+    "protconn_analysis>protconn_analysis_res.yml@70|time_series": {
+      "description": "Indique s'il faut calculer les valeurs de la série temporelle graphique de ProtConn en fonction de la date de l'établissement AP",
+      "label": "Séries chronologiques",
+      "type": "boolean",
+      "example": true,
+      "weight": 14
+    },
+    "protconn_analysis>protconn_analysis_res.yml@70|include_na_dates": {
+      "description": "Comment les valeurs manquantes pour la date devraient être traitées dans l'analyse des séries chronologiques. Si la case est cochée, aires protégées avec des valeurs manquantes pour la date d'établissement sera inclus dans l'analyse des séries chronologiques et assigné à la valeur choisie pour année de début. Si elles ne sont pas cochées, ces aires protégées seront omis de l'analyse des séries chronologiques (à noter qu'elles seront toujours incluses dans l'analyse principale).",
+      "label": "Inclure les valeurs manquantes pour la date",
+      "type": "boolean",
+      "example": true,
+      "weight": 15
+    },
+    "protconn_analysis>protconn_analysis_res.yml@70|start_year": {
+      "description": "Année pour le début de la série graphique. Les dates manquantes pour l'établissement aire protégée seront automatiquement attribuées à cette année pour l'analyse des séries chronologiques. Laisser vide si les séries chronologiques ne sont pas sélectionnées.",
+      "label": "Année de début",
+      "type": "int",
+      "example": 1980,
+      "weight": 16
+    },
+    "protconn_analysis>protconn_analysis_res.yml@70|year_int": {
+      "description": "Intervalle d'année pour la série temporelle graphique de valeurs ProtConn (par exemple, une entrée de 20 calculera ProtConn pour tous les 20 ans en filtrant aires protégées établie avant cette année). La dernière année sera toujours l'année d'entrée. Laisser vide si les séries chronologiques ne sont pas sélectionnées.",
+      "label": "Année",
+      "type": "int",
+      "example": 20,
+      "weight": 17
+    }
+  },
+  "outputs": {
+    "data>load_polygons.yml@61|polygon": {
+      "description": "Polygone du zone d'étude",
+      "label": "Polygone zone d'étude",
+      "type": "application/geopackage+sqlite3",
+      "weight": 0
+    },
+    "protconn_analysis>protconn_analysis_res.yml@70|protected_areas": {
+      "description": "Aires protégées sur lequel ProtConn a été calculé. La superposition de aires protégées a été fusionnée pour accélérer le calcul. On a également enlevé aires protégées de moins que le seuil.",
+      "label": "Aires protégées",
+      "type": "application/geopackage+sqlite3[]",
+      "weight": 1
+    },
+    "protconn_analysis>protconn_analysis_res.yml@70|resistance_layer": {
+      "description": "Raster couche représentant la résistance du paysage pour le mouvement des espèces. Des valeurs plus élevées indiquent une résistance plus élevée.",
+      "label": "Couche de résistance",
+      "type": "application/raster+geotiff",
+      "weight": 2
+    },
+    "protconn_analysis>protconn_analysis_res.yml@70|protconn_result": {
+      "description": "Les résultats des calculs ProtConn. \"Prot\" et \"Unprot\" est le pourcentage du zone d'étude qui est protégé et non protégé, respectivement. \"ProtConn\" est le pourcentage de zone d'étude qui est protégé, et connecté, ProtUnconn est le pourcentage qui est protégé mais non connecté. «ProtConn intérieur» est le pourcentage du paysage qui est relié à l'intérieur d'un seul aire protégée, c'est-à-dire la contribution à la connectivité globale provenant de l'intérieur du aire protégée, sans que les espèces aient à traverser des terres non protégées. \"ProtConn Contig\" est la proportion connectée par adjascence physique directe, captant la valeur de AP voisine ou touchante.\n",
+      "label": "Résultats ProtConn",
+      "type": "text/csv",
+      "weight": 3
+    },
+    "protconn_analysis>protconn_analysis_res.yml@70|result_plot": {
+      "description": "Donut graphique du pourcentage de la superficie totale non protégée, connectée et non reliée pour chaque distance de dispersion d'entrée (en mètres).\n",
+      "label": "Résultat ProtConn graphique",
+      "type": "image/png",
+      "weight": 4
+    },
+    "protconn_analysis>protconn_analysis_res.yml@70|result_yrs_plot": {
+      "description": "Changement dans le pourcentage de zone protégée et le pourcentage de zone protégée et connectée au fil du temps, à l'intervalle de temps choisi, par rapport aux buts de Kunming-Montreal GBF.",
+      "label": "ProtConn série chronologique graphique",
+      "type": "image/png[]",
+      "weight": 5
+    },
+    "protconn_analysis>protconn_analysis_res.yml@70|result_yrs": {
+      "description": "Tableau des séries chronologiques des valeurs ProtConn et ProtUnconn, calculées à l'intervalle de temps spécifié",
+      "label": "Résultats des séries chronologiques ProtConn",
+      "type": "text/csv",
+      "weight": 6
+    }
+  },
+  "metadata": {
+    "name": "ProtConn Analyse avec WDPA - Résistance",
+    "description": "\n## Présentation\nLe Protected Connected Index (ProtConn) est un indicateur clé au sein du Cadre mondial de la biodiversité de Kunming-Montréal (GBF) pour évaluer les progrès vers les objectifs A et 3 qui visent à protéger 30 % de la planète grâce à des réseaux bien connectés d'ici 2030. ProtConn quantifie le pourcentage d'un pays ou d'une région où aires protégées est effectivement connecté, ce qui permet le déplacement des espèces et le flux écologique. \n\nProtConn mesure à quel point une région est protégée et connectée (Saura et al. 2017, 2018). ProtConn est calculé en évaluant l'arrangement spatial de aires protégées pour déterminer la facilité avec laquelle les espèces peuvent se déplacer entre elles dans un paysage. Il traite aires protégées comme \\\"nodes\\\" et le mouvement potentiel entre eux comme \\\"links\\\", mesurant la probabilité qu'une espèce avec une distance de dispersion donnée puisse voyager entre aires protégées. Par défaut, les probabilités de déplacement sont calculées en utilisant des distances linéaires entre les bords les plus proches de aires protégées. Les utilisateurs peuvent en option fournir une résistance raster pour calculer les distances les moins coûteuses, en tenant compte des différences dans la difficulté pour les espèces de se déplacer dans le paysage. Les valeurs raster plus élevées représentent une plus grande résistance au mouvement. Pour chaque méthode, les probabilités de déplacement sont calculées à l'aide d'un noyau de dispersion exponentielle négative, avec une probabilité de 0,5 au seuil de dispersion spécifié. La valeur finale du ProtConn est exprimée en pourcentage du zone d'étude total, divisé en pourcentages représentant la connectivité à l'intérieur du AP, entre les différents AP et entre les frontières internationales. Pour en savoir plus sur la méthode ProtConn, voir Saura et al. 2017, 2018, 2019. \n\nLe pipeline utilise le paquet «Makurhini» (Godinez-Gomez et al. 2026) pour calculer les paramètres ProtConn. Le pipeline peut être exécuté avec des données de la base de données mondiale de aires protégées (UNEP-WCMC et UICN 2026) tirées pour un pays ou une région spécifique dans le pipeline, des fichiers de forme personnalisés de aires protégées qui sont téléchargés par l'utilisateur, ou une combinaison des deux. Cela permet aux utilisateurs d'évaluer ProtConn actuellement et avec l'ajout du futur aires protégées. ProtConn peut être calculé au niveau du pays ou de la région. \n## Utilisations\nProtConn peut être utilisé pour évaluer les progrès actuels vers les objectifs A et 3 du FBG. Le pipeline peut également être utilisé pour comparer la connectivité de différents aires protégées proposés, aidant à la planification et à la conception. Le pipeline peut être exécuté avec une combinaison de aires protégées actuel de WDPA et de polygones d'entrée utilisateur des sites aire protégée proposés, permettant aux utilisateurs d'évaluer différents plans pour l'expansion de aire protégée.\n## Limites du pipeline \n* Sur les ensembles de données plus grands, le pipeline est lent et utilise beaucoup de mémoire, surtout avec des distances de dispersion d'entrée plus grandes. \n\n## Avant de commencer \nAucune clé API n'est nécessaire pour exécuter ce pipeline. Si vous souhaitez lancer le pipeline avec un polygone personnalisé pour votre zone d'étude, entrez votre chemin de fichier à partir du dossier de données utilisateur dans la boîte d'entrée \\\"polygon de zone d'étude\\\" (ex: /userdata/study area polygon.gpkg).\n\nSi vous souhaitez exécuter le pipeline avec une combinaison de polygones aire protégée personnalisés et de données WDPA, assurez-vous que vos données sont au format GeoPackage et entrez le chemin de fichier dans l'entrée \\\"polygone de aires protégées\\\" (ex: /userdata/my PA polygons.gpkg).\n\nSi vous souhaitez lancer l'analyse uniquement avec des données aire protégée personnalisées, veuillez utiliser le pipeline `ProtConn Analysis with custom PAs`. Pour tenir compte de la résistance du paysage, fournir un raster dans l'entrée \\\"Resistance couche. Le raster devrait couvrir le zone d'étude et tout tampon transfrontière, avec des valeurs plus élevées indiquant une plus grande difficulté de mouvement. Choisissez les valeurs de résistance appropriées pour l'espèce ou le groupe d'espèces à évaluer. Laissez cette entrée vide pour calculer la connectivité en utilisant des distances linéaires entre les bords de aire protégée.\n\nCliquez sur [ici](https://boninabox.geobon.org/indicator?i=ProtConn) pour plus d'informations sur le paramétrage et Exécution du pipeline,\n## Utilisations\nProtConn peut être utilisé pour évaluer les progrès actuels vers les objectifs A et 3 du FBG. Le pipeline peut également être utilisé pour comparer la connectivité de différents aires protégées proposés, aidant à la planification et à la conception. Le pipeline peut être exécuté avec une combinaison de aires protégées actuel de WDPA et de polygones d'entrée utilisateur des sites aire protégée proposés, permettant aux utilisateurs d'évaluer différents plans pour l'expansion de aire protégée.\n## Limites du pipeline \n* Sur les ensembles de données plus grands, le pipeline est lent et utilise beaucoup de mémoire, surtout avec des distances de dispersion d'entrée plus grandes. \n\n## Avant de commencer \nAucune clé API n'est nécessaire pour exécuter ce pipeline. Si vous souhaitez lancer le pipeline avec un polygone personnalisé pour votre zone d'étude, entrez votre chemin de fichier à partir du dossier de données utilisateur dans la boîte d'entrée \"polygon de zone d'étude\" (ex: /userdata/study area polygon.gpkg).\n\nSi vous souhaitez lancer le pipeline avec une combinaison de polygones aire protégée personnalisés et de données WDPA, assurez-vous que vos données sont au format GeoPackage et entrez le chemin de fichier dans l'entrée \"polygone de aires protégées\" (ex: /userdata/my PA polygons.gpkg).\n\nSi vous souhaitez lancer l'analyse uniquement avec des données aire protégée personnalisées, veuillez utiliser le pipeline `ProtConn Analysis with custom PAs`.\n\n\n Cliquez sur [ici](https://boninabox.geobon.org/indicator?i=ProtConn) pour plus d'informations sur le paramétrage et Exécution du pipeline.",
+    "author": [
+      {
+        "name": "Jory Griffith",
+        "email": "jory.griffith@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0001-6020-6690",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Guillaume Larocque",
+        "email": "guillaume.larocque@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0002-5967-9156",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Laetitia Tremblay",
+        "email": "laetita.tremblay@mcgill.ca",
+        "identifier": "https://www.linkedin.com/in/laetitia-tremblay-b0619b273/",
+        "role": "Pipeline testing, debugging and documentation"
+      },
+      {
+        "name": "Jean-Michel Lord",
+        "email": "jean-michel.lord@mcgill.ca",
+        "identifier": "https://orcid.org/0009-0007-3826-1125",
+        "role": "Environment setup, technical support, standards review"
+      },
+      {
+        "name": "Samara Manzin",
+        "email": "samara.manzin@mcgill.ca",
+        "identifier": "https://orcid.org/0009-0005-9134-9981"
+      }
+    ],
+    "lifecycle": {
+      "status": "in_development"
+    },
+    "references": [
+      {
+        "text": "Godínez-Gómez, O., Correa Ayram, C.A., Goicolea, T., Saura, S. 2026. Makurhini An R package for comprehensive analysis of landscape fragmentation and connectivity. Environmental Modelling & Software.",
+        "doi": "https://doi.org/10.34892/6fwd-af11"
+      },
+      {
+        "text": "Saura, Santiago, Lucy Bastin, Luca Battistella, Andrea Mandrici, and Grégoire Dubois. 2017. “Protected Areas in the World’s Ecoregions: How Well Connected Are They?” Ecological Indicators 76:144–58.",
+        "doi": "https://doi.org/10.1016/j.ecolind.2016.12.047"
+      },
+      {
+        "text": "Saura, Santiago, Bastian Bertzky, Lucy Bastin, Luca Battistella, Andrea Mandrici, and Grégoire Dubois. 2018. “Protected Area Connectivity: Shortfalls in Global Targets and Country-Level Priorities.” Biological Conservation 219:53–67.",
+        "doi": "https://doi.org/10.1016/j.biocon.2017.12.020"
+      },
+      {
+        "text": "Saura, Santiago, Bastian Bertzky, Lucy Bastin, Luca Battistella, Andrea Mandrici, and Grégoire Dubois. 2019. “Global Trends in Protected Area Connectivity from 2010 to 2018.” Biological Conservation 238:108183.",
+        "doi": "https://doi.org/doi:10.1016/j.biocon.2019.07.028"
+      },
+      {
+        "text": "UNEP-WCMC and IUCN (2026), Protected Planet: The World Database on Protected Areas (WDPA), Cambridge, UK: UNEP-WCMC and IUCN.",
+        "doi": "https://doi.org/10.34892/6fwd-af11"
+      }
+    ]
+  }
+}

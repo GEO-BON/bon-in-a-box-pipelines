@@ -1,0 +1,121 @@
+{
+  "nodes": [
+    {
+      "id": "23",
+      "type": "io",
+      "position": {
+        "x": -16,
+        "y": 49.5
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>get_TCY.yml"
+      }
+    },
+    {
+      "id": "26",
+      "type": "output",
+      "position": {
+        "x": 654,
+        "y": 12
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "27",
+      "type": "output",
+      "position": {
+        "x": 654,
+        "y": 102
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "23",
+      "sourceHandle": "tcyy",
+      "target": "26",
+      "targetHandle": null,
+      "id": "reactflow__edge-23tcyy-26"
+    },
+    {
+      "source": "23",
+      "sourceHandle": "time_points",
+      "target": "27",
+      "targetHandle": null,
+      "id": "reactflow__edge-23time_points-27"
+    }
+  ],
+  "inputs": {
+    "GFS_IndicatorsTool>get_TCY.yml@23|population_polygons": {
+      "description": "Chemin vers le fichier GeoJSON stockant des polygones de populations.",
+      "label": "Polygones des populations",
+      "type": "application/geo+json",
+      "example": "/userdata/populations.geojson",
+      "weight": 0
+    },
+    "GFS_IndicatorsTool>get_TCY.yml@23|res": {
+      "description": "La résolution souhaitée pour la carte couvert arboré sera obtenue par rééchantillonnage. À préciser en degrés décimaux (0,01 ~ 1 km). Valeur minimale 0,001 (~100 m).",
+      "label": "Résolution de la carte couvert arboré",
+      "type": "float",
+      "example": 0.01,
+      "weight": 1
+    },
+    "GFS_IndicatorsTool>get_TCY.yml@23|yoi": {
+      "description": "Liste des années pour lesquelles couvert arboré doit être extrait (intervalle maximal 2000-2023).",
+      "label": "Années d'intérêt",
+      "type": "int[]",
+      "example": [
+        2000,
+        2005,
+        2010,
+        2015,
+        2020
+      ],
+      "weight": 2
+    }
+  },
+  "outputs": {
+    "GFS_IndicatorsTool>get_TCY.yml@23|tcyy": {
+      "description": "Fichier Tif de couvert arboré, découpé selon bbox",
+      "label": "Couvert arboré année par année",
+      "type": "image/tiff;application=geotiff",
+      "weight": 0
+    },
+    "GFS_IndicatorsTool>get_TCY.yml@23|time_points": {
+      "description": "Liste des années pour lesquelles des informations couvert arboré sont disponibles.",
+      "label": "Années avec information couvert arboré",
+      "type": "text[]",
+      "weight": 1
+    }
+  },
+  "metadata": {
+    "name": "Obtenir GFW couvert forestier changement 2000-2023",
+    "description": "Composante de l'outil Genes from Space. Compte tenu d'une zone d'intérêt, l'outil crée une cheminée raster décrivant la présence d'habitats forestiers pour les années d'intérêt (intervalle maximal : de 2000 à 2023). Présence d'habitat forestier disponible par le Global Forest Watch (https://www.globalforestwatch.org/)",
+    "lifecycle": {
+      "status": "subpipeline"
+    },
+    "author": [
+      {
+        "name": "Oliver Selmoni",
+        "email": "oliver.selmoni@gmail.com"
+      }
+    ],
+    "license": "MIT",
+    "external_link": "https://teams.issibern.ch/genesfromspace/",
+    "references": [
+      {
+        "text": "Schuman et al., EcoEvoRxiv.",
+        "doi": "https://doi.org/10.32942/X2RS58"
+      },
+      {
+        "text": "Hansen et al., Science (2013)",
+        "doi": "https://doi.org/10.1126/science.1244693"
+      }
+    ]
+  }
+}

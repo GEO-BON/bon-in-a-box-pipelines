@@ -1,0 +1,473 @@
+# Machine translation settings for pipeline .json and .md files.
+# Translations are written to .translation/<lang>/<same path as source>.
+
+source: en
+languages: [fr]
+include:
+  - "pipelines/**/*.json"
+  - "pipelines/**/*.md"
+
+# Glossary rules, per target language:
+#   - no `translations` key       -> term is never translated
+#   - language listed             -> term is replaced with that exact text
+#   - `translations` without lang -> term is translated by LibreTranslate
+# Matching is case-insensitive, on whole words. Longer terms win.
+glossary:
+  - term: BON in a Box
+  - term: GEO BON
+  - term: STAC
+  - term: GBIF
+  - term: BII
+  - term: SHI
+  - term: Biodiversity Intactness Index
+    translations:
+      fr: Indice d'intégrité de la biodiversité
+  - term: Kunming-Montreal Global Biodiversity Framework
+    translations:
+      fr: Cadre mondial de la biodiversité de Kunming-Montréal
+  - term: Essential Biodiversity Variable
+    translations:
+      fr: Variable essentielle de biodiversité
+  - term: raster
+  - term: rasters
+  - term: pipeline output
+    translations: 
+      fr: sortie du pipeline
+  - term: pipeline outputs
+    translations: 
+      fr: sorties du pipeline
+
+  # Names kept in English
+  - term: PREDICTS
+  - term: Natural History Museum
+  - term: GeoTIFF
+  - term: YYYY-MM-DD
+  - term: SpatioTemporal Asset Catalog
+  - term: Spatio Temporal Asset Catalog
+
+  # GIS and technical terms
+  - term: bounding box
+    translations:
+      fr: emprise
+  - term: bounding boxes
+    translations:
+      fr: emprises
+  - term: CRS
+    translations:
+      fr: SCR
+  - term: coordinate reference system
+    translations:
+      fr: système de coordonnées de référence
+  - term: coordinate reference systems
+    translations:
+      fr: systèmes de coordonnées de référence
+  - term: vector of strings
+    translations:
+      fr: vecteur de chaînes de caractères
+  - term: STAC collection items
+    translations:
+      fr: items de collection STAC
+  - term: raster plot
+    translations:
+      fr: carte raster
+  - term: change in BII
+    translations:
+      fr: variation du BII
+  - term: R package
+    translations:
+      fr: package R
+  - term: leave blank
+    translations:
+      fr: laisser vide
+  - term: left blank
+    translations:
+      fr: laissé vide
+  - term: summary statistic
+    translations:
+      fr: statistique sommaire
+  - term: summary statistics
+    translations:
+      fr: statistiques sommaires
+  - term: (optional)
+    translations:
+      fr: (facultatif)
+
+  # Headings and fixed phrases
+  - term: Running the pipeline
+    translations:
+      fr: Exécution du pipeline
+  - term: Pipeline limitations
+    translations:
+      fr: Limites du pipeline
+  - term: Pipeline inputs
+    translations:
+      fr: Entrées du pipeline
+  - term: Sample run
+    translations:
+      fr: Exemple d'exécution
+
+  # --- From the review of all pipelines ---
+  # Names, products and identifiers kept in English
+  - term: Hello World
+  - term: Genes from Space
+  - term: Global Forest Watch
+  - term: GFW
+  - term: geoBoundaries
+  - term: Fieldmaps
+  - term: Map of Life
+  - term: ProtConn
+  - term: Protected Connected Index
+  - term: exactextractr
+  - term: ewlgcpSDM
+  - term: mapSpecies
+  - term: habitatChange
+  - term: popPolygons
+  - term: openEO
+  - term: Copernicus
+  - term: GeoTIFFs
+  - term: GeoJSON
+  - term: GeoPackage
+  - term: bbox
+  - term: Ne:Nc
+  - term: Steward’s SHI
+  - term: AUC
+  - term: ROC AUC
+  - term: PR AUC
+  - term: MCC
+  - term: BHI
+  - term: BERI
+  - term: PARC
+  - term: RLI
+  - term: SHS
+  - term: LAI
+  - term: NDVI
+  - term: EBV
+  - term: EBVs
+  - term: WDPA
+  - term: SDM
+  - term: BRT
+  - term: "[!NOTE]"
+  - term: "[!TIP]"
+  - term: "[!IMPORTANT]"
+  - term: "[!WARNING]"
+  - term: "[!CAUTION]"
+
+  # Official French names
+  - term: Global Biodiversity Information Facility
+    translations:
+      fr: Système mondial d'information sur la biodiversité
+  - term: Global Biodiversity Framework
+    translations:
+      fr: Cadre mondial de la biodiversité
+  - term: Red List Index
+    translations:
+      fr: Indice de la Liste rouge
+  - term: IUCN Red List
+    translations:
+      fr: Liste rouge de l'UICN
+  - term: Red List
+    translations:
+      fr: Liste rouge
+  - term: Leaf Area Index
+    translations:
+      fr: indice de surface foliaire
+  - term: Normalized Difference Vegetation Index
+    translations:
+      fr: indice de végétation par différence normalisée
+  - term: Species Habitat Index
+    translations:
+      fr: Indice d'habitat des espèces
+  - term: Species Habitat Score
+    translations:
+      fr: Score d'habitat des espèces
+  - term: Biodiversity Habitat Index
+    translations:
+      fr: Indice d'habitat de la biodiversité
+  - term: Principal Component Analysis
+    translations:
+      fr: analyse en composantes principales
+  - term: PCA
+    translations:
+      fr: ACP
+  - term: Boosted Regression Trees
+    translations:
+      fr: arbres de régression boostés
+  - term: Boosted Regression Tree
+    translations:
+      fr: arbre de régression boosté
+  - term: OECMs
+    translations:
+      fr: AMCE
+  - term: OECM
+    translations:
+      fr: AMCE
+
+  # IUCN Red List categories (official French)
+  - term: Extinct in the wild
+    translations:
+      fr: Éteint à l'état sauvage
+  - term: Regionally extinct
+    translations:
+      fr: Disparu au niveau régional
+  - term: Critically endangered
+    translations:
+      fr: En danger critique
+  - term: Endangered
+    translations:
+      fr: En danger
+  - term: Near threatened
+    translations:
+      fr: Quasi menacé
+  - term: Least concern
+    translations:
+      fr: Préoccupation mineure
+  - term: Data deficient
+    translations:
+      fr: Données insuffisantes
+  - term: Lower risk
+    translations:
+      fr: Risque faible
+  - term: Conservation dependent
+    translations:
+      fr: Dépendant de mesures de conservation
+  - term: "EW:"
+  - term: "RE:"
+  - term: "CR:"
+  - term: "EN:"
+  - term: "VU:"
+  - term: "DD:"
+  - term: LC or LR/lc
+  - term: NT or LR/nt
+  - term: LR/cd
+
+  # Protected areas
+  - term: protected area
+    translations:
+      fr: aire protégée
+  - term: protected areas
+    translations:
+      fr: aires protégées
+  - term: PA
+    translations:
+      fr: AP
+  - term: PAs
+    translations:
+      fr: AP
+
+  # Species distribution modelling
+  - term: taxa
+    translations:
+      fr: taxons
+  - term: kingdoms
+    translations:
+      fr: règnes
+  - term: occurrence
+    translations:
+      fr: occurrence
+  - term: occurrences
+    translations:
+      fr: occurrences
+  - term: background points
+    translations:
+      fr: points d'arrière-plan
+  - term: feature classes
+    translations:
+      fr: classes de variables
+  - term: regularization multiplier
+    translations:
+      fr: multiplicateur de régularisation
+  - term: partition type
+    translations:
+      fr: type de partition
+  - term: number of runs
+    translations:
+      fr: nombre d'exécutions
+  - term: prediction
+    translations:
+      fr: prédiction
+  - term: predictions
+    translations:
+      fr: prédictions
+  - term: fit statistics
+    translations:
+      fr: statistiques d'ajustement
+  - term: environment space
+    translations:
+      fr: espace environnemental
+  - term: range map
+    translations:
+      fr: carte de répartition
+  - term: range maps
+    translations:
+      fr: cartes de répartition
+  - term: expert range map
+    translations:
+      fr: carte de répartition d'experts
+  - term: species range
+    translations:
+      fr: aire de répartition de l'espèce
+  - term: study area
+    translations:
+      fr: zone d'étude
+  - term: elevation ranges
+    translations:
+      fr: plages d'altitude
+  - term: species range polygons
+    translations:
+      fr: polygones des aires de répartition des espèces
+  - term: species range maps
+    translations:
+      fr: cartes de répartition des espèces
+  - term: elevation
+    translations:
+      fr: altitude
+
+  # GIS, rasters and STAC
+  - term: land cover
+    translations:
+      fr: couverture du sol
+  - term: landcover
+    translations:
+      fr: couverture du sol
+  - term: tree cover
+    translations:
+      fr: couvert arboré
+  - term: forest cover
+    translations:
+      fr: couvert forestier
+  - term: raster bands
+    translations:
+      fr: bandes raster
+  - term: output layers
+    translations:
+      fr: couches de sortie
+  - term: layers
+    translations:
+      fr: couches
+  - term: cropped to
+    translations:
+      fr: découpé selon
+  - term: STAC collection
+    translations:
+      fr: collection STAC
+  - term: STAC collections
+    translations:
+      fr: collections STAC
+  - term: STAC item
+    translations:
+      fr: item STAC
+  - term: STAC items
+    translations:
+      fr: items STAC
+  - term: collection items
+    translations:
+      fr: items de collection
+  - term: collection name
+    translations:
+      fr: nom de la collection
+  - term: collection description
+    translations:
+      fr: description de la collection
+  - term: collection license
+    translations:
+      fr: licence de la collection
+  - term: aggregate function
+    translations:
+      fr: fonction d'agrégation
+  - term: time step
+    translations:
+      fr: pas de temps
+  - term: initial time
+    translations:
+      fr: temps initial
+  - term: final time
+    translations:
+      fr: temps final
+  - term: time points
+    translations:
+      fr: points temporels
+  - term: start year
+    translations:
+      fr: année de début
+  - term: end year
+    translations:
+      fr: année de fin
+  - term: buffer
+    translations:
+      fr: tampon
+
+  # Plots, outputs and runs
+  # Verb uses of "plot" first (longer terms win)
+  - term: plot a time series
+    translations:
+      fr: tracer une série chronologique
+  - term: plot the
+    translations:
+      fr: tracer les
+  - term: plot
+    translations:
+      fr: graphique
+  - term: plots
+    translations:
+      fr: graphiques
+  - term: outputs
+    translations:
+      fr: sorties
+  - term: model outputs
+    translations:
+      fr: sorties du modèle
+  - term: pipeline run
+    translations:
+      fr: exécution du pipeline
+  - term: title of the run
+    translations:
+      fr: titre de l'exécution
+  - term: run UI
+    translations:
+      fr: interface d'exécution
+  - term: viewer
+    translations:
+      fr: visualiseur
+  - term: results viewer
+    translations:
+      fr: visualiseur de résultats
+  - term: read the paper
+    translations:
+      fr: lire l'article
+
+  # Checklists and records (invasive species)
+  - term: checklist
+    translations:
+      fr: liste de référence
+  - term: checklists
+    translations:
+      fr: listes de référence
+  - term: first record
+    translations:
+      fr: premier signalement
+  - term: first records
+    translations:
+      fr: premiers signalements
+  - term: excluded records
+    translations:
+      fr: enregistrements exclus
+
+  # Review status lines
+  - term: Review status
+    translations:
+      fr: Statut de révision
+  - term: Reviewed by
+    translations:
+      fr: Révisé par
+  - term: In review
+    translations:
+      fr: En révision
+  - term: In development
+    translations:
+      fr: En développement
+  - term: Under development
+    translations:
+      fr: En développement
+  - term: Beta testing
+    translations:
+      fr: Test bêta

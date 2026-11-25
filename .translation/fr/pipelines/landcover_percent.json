@@ -1,0 +1,293 @@
+{
+  "nodes": [
+    {
+      "id": "22",
+      "type": "io",
+      "position": {
+        "x": 1808,
+        "y": 184
+      },
+      "data": {
+        "descriptionFile": "zonal_statistics>percentage_cover_classes.yml"
+      }
+    },
+    {
+      "id": "28",
+      "type": "output",
+      "position": {
+        "x": 2424,
+        "y": 154.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "42",
+      "type": "io",
+      "position": {
+        "x": 1363,
+        "y": 12
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "43",
+      "type": "userInput",
+      "position": {
+        "x": 34,
+        "y": 252.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "44",
+      "type": "io",
+      "position": {
+        "x": 465,
+        "y": 223.5
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "45",
+      "type": "output",
+      "position": {
+        "x": 1363,
+        "y": 194
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "46",
+      "type": "constant",
+      "position": {
+        "x": 12,
+        "y": 204.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Country or region",
+        "options": [
+          "Country or region",
+          "WDPA",
+          "EEZ"
+        ]
+      }
+    },
+    {
+      "id": "47",
+      "type": "constant",
+      "position": {
+        "x": 68,
+        "y": 288.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "22",
+      "sourceHandle": "class_percentage",
+      "target": "28",
+      "targetHandle": null,
+      "id": "reactflow__edge-22class_percentage-28"
+    },
+    {
+      "source": "42",
+      "sourceHandle": "rasters",
+      "target": "22",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-42rasters-22rasters"
+    },
+    {
+      "source": "43",
+      "sourceHandle": null,
+      "target": "42",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-43-42bbox_crs"
+    },
+    {
+      "source": "43",
+      "sourceHandle": null,
+      "target": "44",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-43-44country_region_bbox"
+    },
+    {
+      "source": "44",
+      "sourceHandle": "polygon",
+      "target": "42",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-44polygon-42study_area"
+    },
+    {
+      "source": "44",
+      "sourceHandle": "polygon",
+      "target": "22",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-44polygon-22study_area_polygon"
+    },
+    {
+      "source": "44",
+      "sourceHandle": "polygon",
+      "target": "45",
+      "targetHandle": null,
+      "id": "reactflow__edge-44polygon-45"
+    },
+    {
+      "source": "46",
+      "sourceHandle": null,
+      "target": "44",
+      "targetHandle": "polygon_type",
+      "id": "reactflow__edge-46-44polygon_type"
+    },
+    {
+      "source": "47",
+      "sourceHandle": null,
+      "target": "44",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-47-44buffer"
+    }
+  ],
+  "inputs": {
+    "pipeline@43": {
+      "label": "Emprise et SCR",
+      "description": "Sélectionnez un pays/région et un SCR pour obtenir le emprise associé.",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
+    "data>loadFromStac.yml@42|spatial_res": {
+      "description": "Entier, résolution spatiale du rasters dans les mêmes unités que le système de coordonnées de référence (mètres pour les systèmes de référence projetés et degrés pour les systèmes de référence en lat long). \n\nSi c'est laissé vide il utilisera la résolution native du rasters. \n\nSi la résolution spatiale est plus grossière que la résolution native du rasters, le couches sera rééchantillonné avec la méthode de rééchantillonnage choisie ci-dessous.",
+      "label": "Résolution spatiale (facultatif)",
+      "type": "float",
+      "example": 0.008833,
+      "weight": 1
+    },
+    "data>loadFromStac.yml@42|stac_url": {
+      "description": "URL du catalogue STAC.",
+      "label": "URL STAC",
+      "type": "text",
+      "example": "https://stac.geobon.org/",
+      "weight": 2
+    },
+    "data>loadFromStac.yml@42|collections_items": {
+      "description": "Vecteur de chaînes de caractères. Pour tirer items de collection spécifique, entrez le nom de la collection suivi de '|' suivi d'un item id (par exemple \"chelsa-clim|bio1\"). Pour extraire une collection entière, tapez uniquement le nom de la collection (par exemple \"chelsa-clim\"). Pour tirer items de collection par date, écrivez le nom de la collection et fournissez une date de début, une date de fin et une résolution temporelle.\n\nCouches utilisé dans ce pipeline doit être des variables catégoriques (p. ex. Couverture du sol). ",
+      "label": "items de collection STAC",
+      "type": "text[]",
+      "example": [
+        "esacci-lc|esacci-lc-2020"
+      ],
+      "weight": 3
+    },
+    "data>loadFromStac.yml@42|t0": {
+      "description": "Date de début de la série temporelle couches au format YYYY-MM-DD. Laisser vide si l'extraction d'éléments par nom.",
+      "label": "Date de début",
+      "type": "text",
+      "example": "2020-01-01",
+      "weight": 4
+    },
+    "data>loadFromStac.yml@42|t1": {
+      "description": "Date de fin de la série temporelle couches au format YYYY-MM-DD. Laisser vide si l'extraction d'éléments par nom.",
+      "label": "Date de fin",
+      "type": "text",
+      "example": "2020-12-31",
+      "weight": 5
+    },
+    "data>loadFromStac.yml@42|temporal_res": {
+      "description": "Résolution temporelle à utiliser lors de la requête de items STAC par date, dans le format (\"P\", intervalle de temps et unité de temps, par exemple \"P1Y\" est annuel, \"P1M\" est montly et \"P1D\" est quotidien). Laisser vide si ce n'est pas par date. Si la résolution temporelle est plus grossière que la résolution temporelle des séries chronologiques, le couches sera agrégé avec la méthode d'agrégation choisie ci-dessous.",
+      "label": "Résolution temporelle",
+      "type": "text",
+      "example": "P1Y",
+      "weight": 6
+    },
+    "data>loadFromStac.yml@42|resampling": {
+      "description": "Méthode de rééchantillonnage utilisée lors du rééchelonnement et/ou du réaménagement du raster couches. Voir [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) pour la description.",
+      "label": "Méthode de rééchantillonnage",
+      "type": "options",
+      "options": [
+        "near",
+        "bilinear",
+        "average",
+        "mode",
+        "cubic",
+        "cubicspline",
+        "lanczos",
+        "rms",
+        "min",
+        "max",
+        "sum",
+        "med",
+        "q1",
+        "q3"
+      ],
+      "example": "near",
+      "weight": 7
+    },
+    "data>loadFromStac.yml@42|aggregation": {
+      "description": "Méthode utilisée pour agréger les éléments lorsque couches se combine avec le temps.",
+      "label": "Méthode d'agrégation",
+      "type": "options",
+      "options": [
+        "first",
+        "min",
+        "max",
+        "mean",
+        "median"
+      ],
+      "example": "first",
+      "weight": 8
+    }
+  },
+  "outputs": {
+    "zonal_statistics>percentage_cover_classes.yml@22|class_percentage": {
+      "description": "Pourcentage de chaque classe catégorisée dans une couche raster sur un polygone ou emprise d'intérêt",
+      "label": "Pourcentage de classes",
+      "type": "text/csv",
+      "weight": 0
+    },
+    "data>load_polygons.yml@44|polygon": {
+      "description": "Polygones du pays, WDPA, ZEE pour le pays ou la région d'intérêt",
+      "label": "Polygone",
+      "type": "application/geopackage+sqlite3",
+      "weight": 1
+    }
+  },
+  "metadata": {
+    "name": "Pourcentage des classes raster",
+    "description": "Calculer le pourcentage de classes sur un emprise ou un polygone d'intérêt dans rasters catégorique.",
+    "lifecycle": {
+      "status": "subpipeline"
+    },
+    "author": [
+      {
+        "name": "Jory Griffith",
+        "email": "jory.griffith@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0001-6020-6690",
+        "role": "Pipeline development"
+      }
+    ],
+    "license": "CC BY",
+    "references": [
+      {
+        "text": "Bastion 2023",
+        "doi": "https://doi.org/10.32614/CRAN.package.exactextractr"
+      }
+    ]
+  }
+}

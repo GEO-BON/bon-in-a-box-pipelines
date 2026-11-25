@@ -1,0 +1,488 @@
+{
+  "nodes": [
+    {
+      "id": "14",
+      "type": "io",
+      "position": {
+        "x": 1886,
+        "y": 88.66666666666669
+      },
+      "data": {
+        "descriptionFile": "BII>BIIChange.yml"
+      }
+    },
+    {
+      "id": "15",
+      "type": "output",
+      "position": {
+        "x": 2660,
+        "y": 266.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "25",
+      "type": "io",
+      "position": {
+        "x": 2110,
+        "y": 411.8333333333333
+      },
+      "data": {
+        "descriptionFile": "zonal_statistics>zonal_stats.yml"
+      }
+    },
+    {
+      "id": "56",
+      "type": "io",
+      "position": {
+        "x": 1421,
+        "y": 237
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "57",
+      "type": "constant",
+      "position": {
+        "x": 971,
+        "y": -28
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://stac.geobon.org/"
+      }
+    },
+    {
+      "id": "58",
+      "type": "constant",
+      "position": {
+        "x": 921,
+        "y": 26
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "bii_nhm"
+        ]
+      }
+    },
+    {
+      "id": "59",
+      "type": "constant",
+      "position": {
+        "x": 838.0801336527227,
+        "y": 236.00667780439358
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
+      }
+    },
+    {
+      "id": "60",
+      "type": "constant",
+      "position": {
+        "x": 836.831803103821,
+        "y": 277.7650250598855
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "min",
+          "max",
+          "mean",
+          "median"
+        ]
+      }
+    },
+    {
+      "id": "61",
+      "type": "output",
+      "position": {
+        "x": 1888,
+        "y": 211.83333333333331
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "63",
+      "type": "userInput",
+      "position": {
+        "x": 987,
+        "y": 72
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "64",
+      "type": "userInput",
+      "position": {
+        "x": 995,
+        "y": 110
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "66",
+      "type": "constant",
+      "position": {
+        "x": 840.9186145609373,
+        "y": 180.2616861576887
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "P5Y"
+      }
+    },
+    {
+      "id": "67",
+      "type": "userInput",
+      "position": {
+        "x": -320,
+        "y": 421.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "68",
+      "type": "io",
+      "position": {
+        "x": 199,
+        "y": 469
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "69",
+      "type": "output",
+      "position": {
+        "x": 1037,
+        "y": 350.83333333333326
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "71",
+      "type": "constant",
+      "position": {
+        "x": -320,
+        "y": 490.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "14",
+      "sourceHandle": "bii_change",
+      "target": "15",
+      "targetHandle": null,
+      "id": "reactflow__edge-14bii_change-15"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "zonal_stats",
+      "target": "15",
+      "targetHandle": null,
+      "id": "reactflow__edge-25zonal_stats-15"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-57-56stac_url"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-58-56collections_items"
+    },
+    {
+      "source": "56",
+      "sourceHandle": "rasters",
+      "target": "14",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-56rasters-14rasters"
+    },
+    {
+      "source": "59",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-59-56resampling"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-60-56aggregation"
+    },
+    {
+      "source": "56",
+      "sourceHandle": "rasters",
+      "target": "25",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-56rasters-25rasters"
+    },
+    {
+      "source": "56",
+      "sourceHandle": "rasters",
+      "target": "61",
+      "targetHandle": null,
+      "id": "reactflow__edge-56rasters-61"
+    },
+    {
+      "source": "63",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-63-56t0"
+    },
+    {
+      "source": "63",
+      "sourceHandle": null,
+      "target": "14",
+      "targetHandle": "start_year",
+      "id": "reactflow__edge-63-14start_year"
+    },
+    {
+      "source": "64",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-64-56t1"
+    },
+    {
+      "source": "64",
+      "sourceHandle": null,
+      "target": "14",
+      "targetHandle": "end_year",
+      "id": "reactflow__edge-64-14end_year"
+    },
+    {
+      "source": "66",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "temporal_res",
+      "id": "reactflow__edge-66-56temporal_res"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "25",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-67-25bbox_crs"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "68",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-67-68country_region_bbox"
+    },
+    {
+      "source": "68",
+      "sourceHandle": "polygon",
+      "target": "25",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-68polygon-25study_area_polygon"
+    },
+    {
+      "source": "68",
+      "sourceHandle": "polygon",
+      "target": "56",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-68polygon-56study_area"
+    },
+    {
+      "source": "68",
+      "sourceHandle": "polygon",
+      "target": "69",
+      "targetHandle": null,
+      "id": "reactflow__edge-68polygon-69"
+    },
+    {
+      "source": "71",
+      "sourceHandle": null,
+      "target": "68",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-71-68buffer"
+    },
+    {
+      "source": "68",
+      "sourceHandle": "bbox_crs",
+      "target": "56",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-68bbox_crs-56bbox_crs"
+    }
+  ],
+  "inputs": {
+    "pipeline@67": {
+      "label": "Emprise et SCR",
+      "description": "Sélectionnez un pays/région et un SCR pour obtenir le emprise associé. Vous pouvez également dessiner/injecter un emprise personnalisé avec un SCR.",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
+    "data>load_polygons.yml@68|polygon_type": {
+      "description": "Type de polygone à charger. \n\n- `Country or region` charge un polygone du pays ou de la région sélectionné.\n- `Polygon of bounding box` charge un polygone du emprise associé au pays ou à la région sélectionné, ou le emprise dessiné.",
+      "label": "Type de polygone",
+      "type": "options",
+      "options": [
+        "Country or region",
+        "Polygon of bounding box"
+      ],
+      "example": "Country or region",
+      "weight": 1
+    },
+    "zonal_statistics>zonal_stats.yml@25|summary_statistic": {
+      "description": "Statistique sommaire pris à travers le polygone. Choisissez un ou plusieurs.",
+      "label": "Statistique sommaire",
+      "type": "options[]",
+      "options": [
+        "mean",
+        "median",
+        "sum",
+        "min",
+        "max",
+        "stdev",
+        "variance",
+        "mode"
+      ],
+      "example": [
+        "mean"
+      ],
+      "weight": 2
+    },
+    "data>loadFromStac.yml@56|spatial_res": {
+      "description": "Entier, résolution spatiale du rasters dans les mêmes unités que le système de coordonnées de référence (mètres pour les systèmes de référence projetés et degrés pour les systèmes de référence en lat long). Si c'est laissé vide, il utilisera la résolution native du rasters. Si la résolution spatiale est plus grossière que la résolution native du rasters, le couches sera rééchantillonné en utilisant la méthode \"near\".",
+      "label": "Résolution spatiale (facultatif)",
+      "type": "float",
+      "example": 0.00833,
+      "weight": 3
+    },
+    "pipeline@63": {
+      "label": "Année de début (facultatif)",
+      "description": "Année de début pour les séries chronologiques couches. Laisser vide si vous utilisez toutes les dates disponibles.\n\nDoit être l'un des: 2000, 2005, 2010, 2015, 2020",
+      "type": "text",
+      "example": null,
+      "weight": 4
+    },
+    "pipeline@64": {
+      "label": "Année de fin (facultatif)",
+      "description": "Année de fin pour les séries chronologiques couches. Laisser vide si vous utilisez toutes les dates disponibles.\n\nDoit être l'un des: 2000, 2005, 2010, 2015, 2020",
+      "type": "text",
+      "example": null,
+      "weight": 5
+    }
+  },
+  "outputs": {
+    "zonal_statistics>zonal_stats.yml@25|zonal_stats": {
+      "description": "Statistique sommaire sur le polygone.",
+      "label": "Statistique sommaire",
+      "type": "text/csv",
+      "weight": 0
+    },
+    "BII>BIIChange.yml@14|bii_change": {
+      "description": "Carte raster de variation du BII. Des chiffres plus élevés indiquent une plus grande perte de BII.",
+      "label": "variation du BII",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 1
+    },
+    "data>load_polygons.yml@68|polygon": {
+      "description": "Polygones du pays, WDPA, ZEE pour le pays ou la région d'intérêt",
+      "label": "Polygone",
+      "type": "application/geopackage+sqlite3",
+      "weight": 2
+    },
+    "data>loadFromStac.yml@56|rasters": {
+      "description": "Sortie des fichiers raster au format GeoTIFF.",
+      "label": "Rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 3
+    }
+  },
+  "metadata": {
+    "name": "Indice d'intégrité de la biodiversité",
+    "description": "## Présentation \nLe Indice d'intégrité de la biodiversité (BII) est une mesure conçue pour évaluer le degré d'intégrité et de fonctionnement des écosystèmes terrestres par rapport à leur état naturel. Il mesure l'abondance des espèces présentes à l'origine dans une région donnée par rapport à ce qui serait attendu dans un écosystème non perturbé. Le BII explique les effets de l'utilisation des terres et de la pression humaine sur l'abondance des espèces, offrant une vue d'ensemble de la santé de la biodiversité. Une valeur BII plus élevée indique une communauté plus proche de sa composition naturelle, alors qu'une valeur plus faible suggère une perturbation écologique importante. Le BII est un indicateur complémentaire permettant d'évaluer l'objectif A dans le Cadre mondial de la biodiversité de Kunming-Montréal (GBF). \n\nCe pipeline ne calcule pas le BII; il résume le BII couches produit par le Natural History Museum au fil de l'espace et du temps. Le BII a été créé par le Natural History Museum, Londres, et utilise leur base de données PREDICTS, qui regroupe les données d'études comparant la biodiversité terrestre à des sites présentant des niveaux de pression humaine variables (Newbold et al., 2016). \n\nVoici comment le couches est produit. La base de données sert à établir un état de référence en utilisant les profils de biodiversité dans les habitats à niveaux de perturbation minimes. Ensuite, il attribue des scores de sensibilité à chaque espèce en fonction de leur vulnérabilité à la pression humaine. L'intégrité est calculée en comparant l'abondance des espèces observées dans une zone donnée à ce qui est attendu dans des conditions de référence à faible impact humain. PREDICTS contenait plus de 3 millions d'enregistrements provenant de plus de 26 000 sites répartis dans 94 pays, représentant plus de 45 000 espèces de plantes, d'invertébrés et de vertébrés.\n## Utilisations  \n\nCe pipeline résume le Natural History Museum global 10 x 10 km BII couches pour un pays ou une région d'intérêt. \n\nIl peut être utilisé pour: \n  \n\n  - calculer un statistique sommaire de BII (moyenne, médiane ou mode) pour chaque année disponible\n- voir comment BII dans une zone a changé au fil du temps \n- carte où BII a augmenté ou diminué entre deux années choisies\n\nBII est exprimé en pourcentage, avec des pourcentages plus élevés indiquant un écosystème plus intact.\n## Limites du pipeline \nLe pipeline ne modélise pas le Indice d'intégrité de la biodiversité à partir des données, il calcule statistiques sommaires sur la couche 10 x 10 km BII précalculée par la couche globale calculée Natural History Museum. Par conséquent, vous ne pouvez pas personnaliser le modèle ou saisir des données personnalisées. De plus, comme BII est une couche de données modélisées, les valeurs peuvent être moins précises dans les zones où il y a un manque de données. Pour en savoir plus sur la base de données PREDICTS, visitez le [page sur le site Natural History Museum](https://www.nhm.ac.uk/our-science/research/projects/predicts/science.html).\n## Avant de commencer \nIl n'y a pas de données ou de clés API nécessaires pour cette analyse. Pour voir la couche globale, allez à notre [Catalogue STAC](https://stac.geobon.org/viewer/bii_nhm/bii_nhm_10km_2020).",
+    "author": [
+      {
+        "name": "Jory Griffith",
+        "email": "jory.griffith@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0001-6020-6690",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Laetitia Tremblay",
+        "email": "laetita.tremblay@mcgill.ca",
+        "identifier": "https://www.linkedin.com/in/laetitia-tremblay-b0619b273/",
+        "role": "Pipeline documentation"
+      }
+    ],
+    "license": "CC BY-NC-SA",
+    "references": [
+      {
+        "text": "De Palma et al. 2024",
+        "doi": "https://doi.org/10.5519/k33reyb6"
+      },
+      {
+        "text": "Newbold et al. 2016",
+        "doi": "https://doi.org/10.1126/science.aaf2201"
+      },
+      {
+        "text": "Bastion 2023",
+        "doi": "https://doi.org/10.32614/CRAN.package.exactextractr"
+      }
+    ]
+  }
+}

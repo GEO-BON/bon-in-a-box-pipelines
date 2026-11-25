@@ -1,0 +1,728 @@
+{
+  "nodes": [
+    {
+      "id": "37",
+      "type": "io",
+      "position": {
+        "x": 641,
+        "y": 344
+      },
+      "data": {
+        "descriptionFile": "IAS>download_firstrecords.yml"
+      }
+    },
+    {
+      "id": "38",
+      "type": "io",
+      "position": {
+        "x": 483,
+        "y": 242
+      },
+      "data": {
+        "descriptionFile": "IAS>download_griischecklist.yml"
+      }
+    },
+    {
+      "id": "41",
+      "type": "userInput",
+      "position": {
+        "x": 94,
+        "y": 208
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "country"
+      }
+    },
+    {
+      "id": "42",
+      "type": "constant",
+      "position": {
+        "x": 12,
+        "y": 245.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv",
+        "value": "/scripts/IAS/compendiumCountries.xlsx"
+      }
+    },
+    {
+      "id": "92",
+      "type": "constant",
+      "position": {
+        "x": 12,
+        "y": 416
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv",
+        "value": "/scripts/IAS/species_isInvasiveAnywhere.csv"
+      }
+    },
+    {
+      "id": "52",
+      "type": "io",
+      "position": {
+        "x": 2092,
+        "y": 518
+      },
+      "data": {
+        "descriptionFile": "IAS>merge_datasets.yml"
+      }
+    },
+    {
+      "id": "73",
+      "type": "userInput",
+      "position": {
+        "x": 1792,
+        "y": 190
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 1970
+      }
+    },
+    {
+      "id": "74",
+      "type": "userInput",
+      "position": {
+        "x": 1798,
+        "y": 226
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2025
+      }
+    },
+    {
+      "id": "76",
+      "type": "io",
+      "position": {
+        "x": 3066,
+        "y": 685
+      },
+      "data": {
+        "descriptionFile": "IAS>summarise_ias.yml"
+      }
+    },
+    {
+      "id": "80",
+      "type": "io",
+      "position": {
+        "x": 1300,
+        "y": 378
+      },
+      "data": {
+        "descriptionFile": "IAS>prepare_datasets.yml"
+      }
+    },
+    {
+      "id": "81",
+      "type": "io",
+      "position": {
+        "x": 2871,
+        "y": 107
+      },
+      "data": {
+        "descriptionFile": "IAS>model_data.yml"
+      }
+    },
+    {
+      "id": "87",
+      "type": "output",
+      "position": {
+        "x": 3670.1406772254813,
+        "y": 141.9188526302701
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "89",
+      "type": "output",
+      "position": {
+        "x": 2090,
+        "y": 655
+      },
+      "data": {
+        "label": "SInAS excluded records"
+      }
+    },
+    {
+      "id": "91",
+      "type": "io",
+      "position": {
+        "x": 2135,
+        "y": 157
+      },
+      "data": {
+        "descriptionFile": "data>getGBIFObservations>get_GBIF_country_SQL.yml"
+      }
+    },
+    {
+      "id": "96",
+      "type": "io",
+      "position": {
+        "x": 675,
+        "y": 530
+      },
+      "data": {
+        "descriptionFile": "IAS>import_national_checklist.yml"
+      }
+    },
+    {
+      "id": "97",
+      "type": "userInput",
+      "position": {
+        "x": 68,
+        "y": 459
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv"
+      }
+    },
+    {
+      "id": "98",
+      "type": "userInput",
+      "position": {
+        "x": 114,
+        "y": 495
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "species"
+      }
+    },
+    {
+      "id": "99",
+      "type": "userInput",
+      "position": {
+        "x": 83,
+        "y": 531
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "100",
+      "type": "userInput",
+      "position": {
+        "x": 114,
+        "y": 567
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "user_input_data"
+      }
+    },
+    {
+      "id": "101",
+      "type": "output",
+      "position": {
+        "x": 2853.0482474847227,
+        "y": 712.0319843975556
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "102",
+      "type": "output",
+      "position": {
+        "x": 523.8400179759146,
+        "y": 106.92669529090196
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "80",
+      "sourceHandle": "national_clean",
+      "target": "52",
+      "targetHandle": "national_clean",
+      "id": "xy-edge__80national_clean-52national_clean"
+    },
+    {
+      "source": "41",
+      "target": "37",
+      "targetHandle": "country_name",
+      "id": "xy-edge__41-37country_name"
+    },
+    {
+      "source": "41",
+      "target": "38",
+      "targetHandle": "country_name",
+      "id": "xy-edge__41-38country_name"
+    },
+    {
+      "source": "42",
+      "target": "38",
+      "targetHandle": "compendium_countries",
+      "id": "xy-edge__42-38compendium_countries"
+    },
+    {
+      "source": "92",
+      "target": "38",
+      "targetHandle": "global_invasive_checklist",
+      "id": "xy-edge__92-38global_invasive_checklist"
+    },
+    {
+      "source": "92",
+      "target": "80",
+      "targetHandle": "global_invasive_checklist",
+      "id": "xy-edge__92-80global_invasive_checklist"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "merged_dataset",
+      "target": "76",
+      "targetHandle": "merged_dataset",
+      "id": "xy-edge__52merged_dataset-76merged_dataset"
+    },
+    {
+      "source": "41",
+      "target": "52",
+      "targetHandle": "country_name",
+      "id": "xy-edge__41-52country_name"
+    },
+    {
+      "source": "38",
+      "sourceHandle": "griis_checklist",
+      "target": "80",
+      "targetHandle": "griis_checklist",
+      "id": "xy-edge__38griis_checklist-80griis_checklist"
+    },
+    {
+      "source": "37",
+      "sourceHandle": "firstrecords_cleaned",
+      "target": "80",
+      "targetHandle": "first_records",
+      "id": "xy-edge__37firstrecords_cleaned-80first_records"
+    },
+    {
+      "source": "41",
+      "target": "80",
+      "targetHandle": "country_name",
+      "id": "xy-edge__41-80country_name"
+    },
+    {
+      "source": "80",
+      "sourceHandle": "griis_clean",
+      "target": "52",
+      "targetHandle": "griis_clean",
+      "id": "xy-edge__80griis_clean-52griis_clean"
+    },
+    {
+      "source": "80",
+      "sourceHandle": "first_records_clean",
+      "target": "52",
+      "targetHandle": "first_records_clean",
+      "id": "xy-edge__80first_records_clean-52first_records_clean"
+    },
+    {
+      "source": "80",
+      "sourceHandle": "full_taxa_list",
+      "target": "52",
+      "targetHandle": "full_taxa_list",
+      "id": "xy-edge__80full_taxa_list-52full_taxa_list"
+    },
+    {
+      "source": "80",
+      "sourceHandle": "cleaning_summary",
+      "target": "52",
+      "targetHandle": "cleaning_summary",
+      "id": "xy-edge__80cleaning_summary-52cleaning_summary"
+    },
+    {
+      "source": "80",
+      "sourceHandle": "qc_status",
+      "target": "52",
+      "targetHandle": "qc_status",
+      "id": "xy-edge__80qc_status-52qc_status"
+    },
+    {
+      "source": "80",
+      "sourceHandle": "unmatched_values",
+      "target": "52",
+      "targetHandle": "unmatched_values",
+      "id": "xy-edge__80unmatched_values-52unmatched_values"
+    },
+    {
+      "source": "41",
+      "target": "81",
+      "targetHandle": "country_name",
+      "id": "xy-edge__41-81country_name"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "merged_dataset",
+      "target": "81",
+      "targetHandle": "integrated_data",
+      "id": "xy-edge__52merged_dataset-81integrated_data"
+    },
+    {
+      "source": "81",
+      "sourceHandle": "qualitative_plot",
+      "target": "87",
+      "id": "xy-edge__81qualitative_plot-87"
+    },
+    {
+      "source": "80",
+      "sourceHandle": "excluded_records",
+      "target": "89",
+      "id": "xy-edge__80excluded_records-89"
+    },
+    {
+      "source": "74",
+      "target": "91",
+      "targetHandle": "end_year",
+      "id": "xy-edge__74-91end_year"
+    },
+    {
+      "source": "73",
+      "target": "91",
+      "targetHandle": "start_year",
+      "id": "xy-edge__73-91start_year"
+    },
+    {
+      "source": "41",
+      "target": "91",
+      "targetHandle": "country_name",
+      "id": "xy-edge__41-91country_name"
+    },
+    {
+      "source": "91",
+      "sourceHandle": "gbif_country_observations",
+      "target": "81",
+      "targetHandle": "covariate_data",
+      "id": "xy-edge__91gbif_country_observations-81covariate_data"
+    },
+    {
+      "source": "91",
+      "sourceHandle": "gbif_country_observations",
+      "target": "76",
+      "targetHandle": "gbif_country_observations",
+      "id": "xy-edge__91gbif_country_observations-76gbif_country_observations"
+    },
+    {
+      "source": "96",
+      "sourceHandle": "national_checklist",
+      "target": "80",
+      "targetHandle": "national_checklist",
+      "id": "xy-edge__96national_checklist-80national_checklist"
+    },
+    {
+      "source": "97",
+      "target": "96",
+      "targetHandle": "national_checklist",
+      "id": "xy-edge__97-96national_checklist"
+    },
+    {
+      "source": "41",
+      "target": "96",
+      "targetHandle": "country_name",
+      "id": "xy-edge__41-96country_name"
+    },
+    {
+      "source": "98",
+      "target": "96",
+      "targetHandle": "species_column",
+      "id": "xy-edge__98-96species_column"
+    },
+    {
+      "source": "99",
+      "target": "96",
+      "targetHandle": "first_record_column",
+      "id": "xy-edge__99-96first_record_column"
+    },
+    {
+      "source": "100",
+      "target": "96",
+      "targetHandle": "dataset_citation",
+      "id": "xy-edge__100-96dataset_citation"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "merged_dataset",
+      "target": "101",
+      "id": "xy-edge__52merged_dataset-101"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "run_summary",
+      "target": "101",
+      "id": "xy-edge__52run_summary-101"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "data_quality_report",
+      "target": "101",
+      "id": "xy-edge__52data_quality_report-101"
+    },
+    {
+      "source": "81",
+      "sourceHandle": "model_outputs",
+      "target": "87",
+      "id": "xy-edge__81model_outputs-87"
+    },
+    {
+      "source": "81",
+      "sourceHandle": "model_decision",
+      "target": "87",
+      "id": "xy-edge__81model_decision-87"
+    },
+    {
+      "source": "81",
+      "sourceHandle": "data_summary",
+      "target": "87",
+      "id": "xy-edge__81data_summary-87"
+    },
+    {
+      "source": "81",
+      "sourceHandle": "qualitative_interpretation",
+      "target": "87",
+      "id": "xy-edge__81qualitative_interpretation-87"
+    },
+    {
+      "source": "81",
+      "sourceHandle": "quantitative_plot",
+      "target": "87",
+      "id": "xy-edge__81quantitative_plot-87"
+    },
+    {
+      "source": "41",
+      "target": "102",
+      "id": "xy-edge__41-102"
+    }
+  ],
+  "inputs": {
+    "pipeline@41": {
+      "label": "Nom du pays",
+      "description": "Nom du pays pour l'analyse des espèces exotiques envahissantes.\n\nÀ l'heure actuelle, ce pipeline ne peut être exploité pour les pays suivants en raison de problèmes de données sources non résolus, de nom liste de référence ou de cartographie de localisation : États-Unis d'Amérique (États-Unis), Belgique (BEL), Thaïlande (THA), Eswatini (SWZ), Hongrie (HUN) et Norvège (NOR).",
+      "type": "country",
+      "example": null,
+      "weight": 0
+    },
+    "pipeline@73": {
+      "label": "Année de début",
+      "description": "Année de début pour lequel obtenir des observations GBIF. Ils serviront de substitut à l'effort d'échantillonnage dans un pays donné.",
+      "type": "int",
+      "example": 1970,
+      "weight": 1
+    },
+    "pipeline@74": {
+      "label": "Année de fin",
+      "description": "Année de fin pour lequel obtenir des observations GBIF. Ils serviront de substitut à l'effort d'échantillonnage dans un pays donné.",
+      "type": "int",
+      "example": 2025,
+      "weight": 2
+    },
+    "pipeline@97": {
+      "label": "National liste de référence (facultatif)",
+      "description": "Fichier national facultatif liste de référence CSV. Ce fichier doit contenir une colonne contenant des noms scientifiques d'espèces et éventuellement une colonne contenant l'année associée de la première introduction enregistrée.\n\nLaissez vide pour utiliser les ensembles de données GRIIS et premiers signalements pour le pays sélectionné.",
+      "type": "text/csv",
+      "example": null,
+      "weight": 3
+    },
+    "pipeline@98": {
+      "label": "Colonne d'espèces (facultatif)",
+      "description": "Nom exact de la colonne contenant les noms d'espèces scientifiques. \n\nRequis seulement lorsqu'un liste de référence est téléchargé.",
+      "type": "text",
+      "example": null,
+      "weight": 4
+    },
+    "pipeline@99": {
+      "label": "Premier signalement colonne (facultatif)",
+      "description": "Nom exact de la colonne contenant la première année occurrence documentée dans le pays sélectionné. \n\nRequis uniquement lorsqu'un liste de référence est téléchargé; laisser vide s'il n'est pas fourni. La date de normalisation intervient lors de la préparation des données.",
+      "type": "text",
+      "example": null,
+      "weight": 5
+    },
+    "pipeline@100": {
+      "label": "Citation de l'ensemble de données (facultatif)",
+      "description": "Inclure une citation pour l'ensemble de données nationales. Par défaut vers user input data lorsque vide.",
+      "type": "text",
+      "example": null,
+      "weight": 6
+    },
+    "IAS>prepare_datasets.yml@80|kingdoms": {
+      "label": "Règnes",
+      "description": "Règnes à conserver dans les ensembles de données GRIIS et premiers signalements.",
+      "type": "options[]",
+      "options": [
+        "PLANTAE",
+        "ANIMALIA"
+      ],
+      "example": [
+        "PLANTAE",
+        "ANIMALIA"
+      ],
+      "weight": 7
+    },
+    "IAS>prepare_datasets.yml@80|habitats": {
+      "label": "Types d'habitat",
+      "description": "Valeurs de l'habitat à conserver dans les ensembles de données GRIIS et premiers signalements.",
+      "type": "options[]",
+      "options": [
+        "TERRESTRIAL",
+        "FRESHWATER",
+        "FRESHWATER|BRACKISH",
+        "TERRESTRIAL|FRESHWATER",
+        "MARINE|FRESHWATER|BRACKISH",
+        "TERRESTRIAL|BRACKISH",
+        "TERRESTRIAL|FRESHWATER|BRACKISH",
+        "TERRESTRIAL|MARINE|FRESHWATER",
+        "TERRESTRIAL|MARINE|BRACKISH",
+        "MARINE|FRESHWATER",
+        "TERRESTRIAL|MARINE"
+      ],
+      "example": [
+        "TERRESTRIAL",
+        "FRESHWATER",
+        "FRESHWATER|BRACKISH",
+        "TERRESTRIAL|FRESHWATER",
+        "MARINE|FRESHWATER|BRACKISH",
+        "TERRESTRIAL|BRACKISH",
+        "TERRESTRIAL|FRESHWATER|BRACKISH",
+        "TERRESTRIAL|MARINE|FRESHWATER",
+        "TERRESTRIAL|MARINE|BRACKISH",
+        "MARINE|FRESHWATER",
+        "TERRESTRIAL|MARINE"
+      ],
+      "weight": 8
+    }
+  },
+  "outputs": {
+    "pipeline@41|default_output": {
+      "label": "Nom du pays",
+      "description": "Nom du pays pour l'analyse des espèces exotiques envahissantes.",
+      "example": null,
+      "type": "country",
+      "weight": 0
+    },
+    "IAS>merge_datasets.yml@52|merged_dataset": {
+      "description": "Un enregistrement par combinaison normalisée taxon-localisation-établissement.",
+      "label": "Ensemble de données fusionné SInAS",
+      "type": "text/csv",
+      "weight": 1
+    },
+    "IAS>merge_datasets.yml@52|data_quality_report": {
+      "description": "Le statut de contrôle de qualité combiné, les valeurs inégalées et les conflits de fusion, y compris les mesures prises pour chaque numéro.",
+      "label": "Rapport sur la qualité des données SInAS",
+      "type": "text/csv",
+      "weight": 2
+    },
+    "IAS>prepare_datasets.yml@80|excluded_records": {
+      "description": "Enregistrements sources complets exclus de la fusion parce que leurs emplacements n'ont pas pu être normalisés.",
+      "label": "SInAS enregistrements exclus",
+      "type": "text/csv",
+      "weight": 3
+    },
+    "IAS>merge_datasets.yml@52|run_summary": {
+      "description": "Préparation et fusion des comptes d'enregistrement, des comptes d'avertissement, des exclusions et du statut global de contrôle de la qualité.",
+      "label": "SInAS résumé de l'exécution",
+      "type": "text/csv",
+      "weight": 4
+    },
+    "IAS>model_data.yml@81|model_outputs": {
+      "description": "Hypothèses, paramètres du modèle, statistiques d'ajustement, état de convergence, direction de tendance estimée, interprétation et mises en garde pour chaque option du modèle. Les tendances du premier enregistrement ne sont pas automatiquement équivalentes aux tendances de l'introduction.",
+      "label": "Sorties du modèle",
+      "type": "text/csv",
+      "weight": 5
+    },
+    "IAS>model_data.yml@81|model_decision": {
+      "description": "Scénario de données choisi, critères d'adéquation, niveau d'inférence soutenu, directives d'interprétation, portée partagée et références.",
+      "label": "Décision concernant la modélisation",
+      "type": "text/csv",
+      "weight": 6
+    },
+    "IAS>model_data.yml@81|data_summary": {
+      "description": "Statistiques sur l'adéquation des données pour le pays sélectionné. L'exhaustivité du premier enregistrement est le pourcentage de GRIIS taxons envahissant partout où il y a une année du premier enregistrement; ce n'est pas l'exhaustivité globale du liste de référence.",
+      "label": "Résumé des données de modélisation",
+      "type": "text/csv",
+      "weight": 7
+    },
+    "IAS>model_data.yml@81|quantitative_plot": {
+      "description": "Dossiers de découverte annuels ajustés à partir de modèles comportant d'autres hypothèses de détection. Comparer statistiques d'ajustement seulement parmi les modèles convergents installés dans le même pays et les mêmes séries chronologiques.",
+      "label": "Comparaison quantitative des modèles",
+      "type": "image/png",
+      "weight": 8
+    },
+    "IAS>model_data.yml@81|qualitative_plot": {
+      "description": "Comparaison descriptive de l'IAS premiers signalements avec le proxy d'observation GBIF. Des patrons similaires peuvent indiquer un effet d'observation-effort; ce graphique n'est pas une estimation corrigée du taux d'introduction.",
+      "label": "Modèle qualitatif graphique",
+      "type": "image/png",
+      "weight": 9
+    },
+    "IAS>model_data.yml@81|qualitative_interpretation": {
+      "description": "Interprétation choisie à partir de la combinaison IAS-observation et enquête-effort. Une tendance est classée comme stable lorsque sa pente de temps adaptée n'est pas significative à alpha = 0,05.",
+      "label": "Interprétation qualitative du modèle",
+      "type": "text",
+      "weight": 10
+    }
+  },
+  "metadata": {
+    "name": "Espèces exotiques envahissantes",
+    "description": "## Présentation \nLes espèces exotiques envahissantes constituent une menace majeure pour la biodiversité. La réduction des taux d'introduction et d'établissement d'espèces exotiques envahissantes est un élément important de la cible 6, indicateur 6.1 du Kunming Montréal Cadre mondial de la biodiversité (GBF).\n\nLe pipeline recueille de l'information nationale sur les espèces exotiques et envahissantes et évalue les tendances à partir de leurs premiers dossiers documentés. Il combine les données nationales liste de référence du Registre mondial des espèces introduites et envahissantes (GRIIS) ou, en option, les données nationales entrées par les utilisateurs avec la base de données des espèces exotiques premiers signalements.\n\nLe pipeline applique le processus de normalisation et d'intégration des données sur les espèces exotiques (SInAS) pour normaliser et fusionner ces ensembles de données sources. Les noms d'espèces, les emplacements, les habitats, les informations occurrence et les dates de premier enregistrement sont normalisés avant la fusion des données GRIIS et premiers signalements. Les noms d'espèces et les classifications taxonomiques sont vérifiés par rapport à la colonne vertébrale taxonomique GBIF. Les dossiers qui ne peuvent pas être entièrement normalisés sont documentés dans la qualité des données sorties. Si les utilisateurs téléchargent leurs propres données nationales, la liste des espèces sera utilisée au lieu du GRIIS liste de référence. Si une colonne premier signalement est fournie dans les données nationales, les données nationales premier signalement seront utilisées au lieu de l'ensemble de données premiers signalements pour les espèces ayant les deux. Le pipeline crée une série chronologique annuelle d'espèces exotiques envahissantes premiers signalements pour le pays sélectionné. Un premier signalement représente la première détection documentée d'une espèce; il ne représente pas l'année où l'espèce a été introduite, établie ou devenue envahissante.\n\nEn fonction de l'exhaustivité du premier enregistrement et du nombre d'années de conservation, le pipeline choisit l'une des quatre approches suivantes :\n- aucune modélisation lorsque les données disponibles sont trop rares;\n- une comparaison qualitative des profils d'observation du premier enregistrement et du GBIF;\n- un ensemble réduit de modèles quantitatifs; ou\n- l'ensemble complet de modèles quantitatifs.\n\nLes approches quantitatives comprennent un modèle de Poisson naïf, un modèle de détection constante, un modèle Solow-Costello et un modèle d'échantillonnage qui utilise le volume d'enregistrement annuel GBIF comme indicateur indirect de l'effort d'observation. Le sorties décrit les hypothèses, l'ajustement, la tendance estimée, l'interprétation et les limites de chaque modèle. Pour de plus amples renseignements sur l'estimation des taux d'introduction à partir des données du premier enregistrement, voir McGeoch et al. (2023) et Buba et al. (2024).\n\n## Utilisations\nCe pipeline peut être utilisé pour:\n- Compiler et normaliser les données GRIIS et premiers signalements nationales afin de produire un ensemble de données nationales taxonomiquement normalisé des espèces exotiques et envahissantes.\n\n- Identifier les dossiers non appariés, exclus ou potentiellement problématiques pour l'examen de la qualité des données.\n\n- Résumez et examinez les patrons temporels dans premiers signalements observé.\n- Comparer les modèles avec différentes hypothèses sur l'effort de détection et d'observation.\n\n- Appuyer l'évaluation nationale et les rapports liés à la cible 6 du FBG.\n## Limites du pipeline \n* À l'heure actuelle, ce pipeline ne peut être exploité pour les pays suivants en raison de problèmes de données sources non résolus, de nom liste de référence ou de cartographie de localisation : États-Unis d'Amérique (États-Unis), Belgique (BEL), Thaïlande (THA), Eswatini (SWZ), Hongrie (HUN) et Norvège (NOR).\n\n* Les relevés annuels GBIF sont utilisés comme approximation indirecte pour modifier l'effort d'observation. Le volume record de GBIF n'est pas une mesure directe de l'effort de relevé des espèces exotiques envahissantes.\n\n* Les résultats du modèle doivent être interprétés avec prudence, veuillez lire l'interprétation du modèle sorties et les documents énumérés ci-dessous pour obtenir des conseils.\n* La normalisation taxonomique automatisée et la normalisation des lieux ne peuvent pas résoudre tous les dossiers. Avant d'interpréter les résultats, les utilisateurs devraient examiner la qualité des données, la valeur non appariée et l'enregistrement exclu sorties.\n\n* Lorsqu'une date de premier enregistrement est fournie sous forme de fourchette, le pipeline utilise son année moyenne. Cette année estimée ne représente pas une date de détection documentée avec précision.\n\n* Les résultats dépendent des versions et de la couverture des données GRIIS, premiers signalements, GBIF et de configuration.\n\n\n## Avant de commencer \nUn compte GBIF gratuit est nécessaire pour obtenir les données d'observation GBIF utilisées par ce pipeline. Add your GBIF username, password, and account email address to the `runner.env` file using the following environment variables: `GBIF_USER`, `GBIF_PWD`, and `GBIF_EMAIL`.\n\nLes utilisateurs doivent prendre note des versions des bases de données source et du flux de travail utilisés pour une analyse. Toute modification du flux de travail, des tableaux de configuration ou des données sources devrait également être signalée pour soutenir la transparence et la reproductibilité.\n\nSi un jeu de données national est téléchargé par l'utilisateur, assurez-vous que les noms des colonnes correspondent à ce que vous incluez dans le formulaire d'entrée. Examiner la valeur inégalée, l'enregistrement exclu, l'appariement taxonomique, le conflit de fusion et d'autres données de qualité sorties avant d'interpréter les résultats.",
+    "author": [
+      {
+        "name": "Rachel Mason",
+        "identifier": "https://orcid.org/0000-0003-2692-9902"
+      },
+      {
+        "name": "Saxbee Affleck",
+        "identifier": "https://orcid.org/0009-0007-4589-887X"
+      },
+      {
+        "name": "Manuela Gómez-Suárez",
+        "identifier": "https://orcid.org/0000-0002-6100-9207"
+      },
+      {
+        "name": "Hanno Seebens",
+        "identifier": "https://orcid.org/0000-0001-8993-6419"
+      },
+      {
+        "name": "Samara Manzin",
+        "email": "samara.manzin@mcgill.ca",
+        "identifier": "https://orcid.org/0009-0005-9134-9981"
+      },
+      {
+        "name": "Melodie McGeoch",
+        "identifier": "https://orcid.org/0000-0003-3388-2241"
+      }
+    ],
+    "license": "MIT",
+    "external_link": "https://doi.org/10.5281/zenodo.17727120",
+    "references": [
+      {
+        "text": "Buba et al., (2024)",
+        "link": "https://doi.org/10.1111/geb.13859"
+      },
+      {
+        "text": "Buba (2024)",
+        "link": "https://doi.org/10.32614/CRAN.package.alien"
+      },
+      {
+        "text": "McGeoch et al., (2023)",
+        "link": "https://doi.org/10.1111/conl.12981"
+      },
+      {
+        "text": "Seebens & Gomez-Suarez (2025)",
+        "link": "https://doi.org/10.5281/zenodo.17727120"
+      }
+    ]
+  }
+}

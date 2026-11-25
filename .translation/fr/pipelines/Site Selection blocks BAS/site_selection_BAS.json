@@ -1,0 +1,554 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 1358,
+        "y": 94
+      },
+      "data": {
+        "descriptionFile": "site_selection_BAS>Block_creation.yml"
+      }
+    },
+    {
+      "id": "2",
+      "type": "io",
+      "position": {
+        "x": 876,
+        "y": 300
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "6",
+      "type": "output",
+      "position": {
+        "x": 1976,
+        "y": 343
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "13",
+      "type": "output",
+      "position": {
+        "x": 1976,
+        "y": 163
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "14",
+      "type": "output",
+      "position": {
+        "x": 1976,
+        "y": 391
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "26",
+      "type": "io",
+      "position": {
+        "x": 1976,
+        "y": 221
+      },
+      "data": {
+        "descriptionFile": "site_selection_BAS>BAS_algorithm.yml"
+      }
+    },
+    {
+      "id": "31",
+      "type": "output",
+      "position": {
+        "x": 2523,
+        "y": 304.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "50",
+      "type": "output",
+      "position": {
+        "x": 1358,
+        "y": 271
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "52",
+      "type": "constant",
+      "position": {
+        "x": 206,
+        "y": 290
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
+      }
+    },
+    {
+      "id": "53",
+      "type": "constant",
+      "position": {
+        "x": 206,
+        "y": 337
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "min",
+          "max",
+          "mean",
+          "median"
+        ]
+      }
+    },
+    {
+      "id": "55",
+      "type": "constant",
+      "position": {
+        "x": 236,
+        "y": 164
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "56",
+      "type": "constant",
+      "position": {
+        "x": 236,
+        "y": 122
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": null
+      }
+    },
+    {
+      "id": "58",
+      "type": "constant",
+      "position": {
+        "x": 236,
+        "y": 80
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://stac.geobon.org/"
+      }
+    },
+    {
+      "id": "59",
+      "type": "constant",
+      "position": {
+        "x": 236,
+        "y": 206
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": null
+      }
+    },
+    {
+      "id": "60",
+      "type": "userInput",
+      "position": {
+        "x": 229,
+        "y": 12
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "61",
+      "type": "io",
+      "position": {
+        "x": 865.1255198182539,
+        "y": 15.91400744111553
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "63",
+      "type": "constant",
+      "position": {
+        "x": 495.1255198182539,
+        "y": 70.91400744111553
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
+      }
+    },
+    {
+      "id": "64",
+      "type": "userInput",
+      "position": {
+        "x": 495.32133620092657,
+        "y": -91.6759297806111
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Country or region",
+        "options": [
+          "Country or region",
+          "Polygon of bounding box"
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "2",
+      "sourceHandle": "rasters",
+      "target": "0",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-2rasters-0rasters"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "rast_blocks",
+      "target": "6",
+      "targetHandle": null,
+      "id": "reactflow__edge-0rast_blocks-6"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "pca_summary_df",
+      "target": "13",
+      "targetHandle": null,
+      "id": "reactflow__edge-0pca_summary_df-13"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "blocks_plot",
+      "target": "14",
+      "targetHandle": null,
+      "id": "reactflow__edge-0blocks_plot-14"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "rast_blocks",
+      "target": "26",
+      "targetHandle": "rast_blocks",
+      "id": "reactflow__edge-0rast_blocks-26rast_blocks"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "maps_output",
+      "target": "31",
+      "targetHandle": null,
+      "id": "reactflow__edge-26maps_output-31"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "colors_vect",
+      "target": "26",
+      "targetHandle": "colors_vect",
+      "id": "reactflow__edge-0colors_vect-26colors_vect"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "rasters",
+      "target": "50",
+      "targetHandle": null,
+      "id": "reactflow__edge-2rasters-50"
+    },
+    {
+      "source": "52",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-52-2resampling"
+    },
+    {
+      "source": "53",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-53-2aggregation"
+    },
+    {
+      "source": "55",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-55-2t1"
+    },
+    {
+      "source": "56",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-56-2t0"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-58-2stac_url"
+    },
+    {
+      "source": "59",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "temporal_res",
+      "id": "reactflow__edge-59-2temporal_res"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "pts_df",
+      "target": "31",
+      "targetHandle": null,
+      "id": "reactflow__edge-26pts_df-31"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "points_shape",
+      "target": "31",
+      "targetHandle": null,
+      "id": "reactflow__edge-26points_shape-31"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-60-2bbox_crs"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "61",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-60-61country_region_bbox"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "polygon",
+      "target": "0",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-61polygon-0country_polygon"
+    },
+    {
+      "source": "63",
+      "sourceHandle": null,
+      "target": "61",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-63-61buffer"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "polygon",
+      "target": "2",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-61polygon-2study_area"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "polygon",
+      "target": "26",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-61polygon-26country_polygon"
+    },
+    {
+      "source": "64",
+      "target": "61",
+      "targetHandle": "polygon_type",
+      "id": "xy-edge__64-61polygon_type"
+    }
+  ],
+  "inputs": {
+    "pipeline@60": {
+      "label": "Emprise et SCR",
+      "description": "choisissez votre pays ou votre région d'intérêt, puis choisissez un système de coordonnées de référence (SCR) prévu approprié pour le zone d'étude en utilisant la liste déroulante.",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
+    "data>loadFromStac.yml@2|spatial_res": {
+      "description": "Entier, résolution spatiale du rasters dans les mêmes unités que le système de coordonnées de référence (mètres pour les systèmes de référence projetés et degrés pour les systèmes de référence en lat long). Cette entrée peut être vide lors de l'utilisation de ESPG:4326.",
+      "label": "Résolution spatiale",
+      "type": "float",
+      "example": 0.00883,
+      "weight": 1
+    },
+    "pipeline@64": {
+      "label": "Type de polygone",
+      "description": "Type de polygone chargé. Si un pays ou une région est sélectionné dans le `Choose Bounding Box` ci-dessus, sélectionnez `Country or region`. Si un emprise est dessiné dans le `Choose Bounding Box` ci-dessus, sélectionnez `Polygon of bounding box`",
+      "type": "options",
+      "example": "Country or region",
+      "options": [
+        "Country or region",
+        "Polygon of bounding box"
+      ],
+      "weight": 2
+    },
+    "data>loadFromStac.yml@2|collections_items": {
+      "description": "Fournir au moins deux variables environnementales continues raster, en utilisant le format `collection|item`, comme `chelsa-clim|bio1` et `chelsa-clim|bio12`. Le pipeline effectue ACP sur ces variables pour créer les blocs environnementaux.",
+      "label": "Variables environnementales (items de collection STAC)",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio12"
+      ],
+      "weight": 3
+    },
+    "site_selection_BAS>BAS_algorithm.yml@26|options_bas": {
+      "description": "Sélectionner et option entre BAS égal ou probabilité inégale BAS. \"Equal\" ne tiendra pas compte des blocs et placera tous les échantillons au hasard dans l'ensemble du zone d'étude. \"Unequal\" tiendra compte de la taille de chaque bloc environnemental et redistribuera les sites d'échantillonnage en fonction de la taille du bloc.  ",
+      "label": "Type de prélèvement",
+      "type": "options",
+      "options": [
+        "equal",
+        "unequal"
+      ],
+      "example": "equal",
+      "weight": 4
+    },
+    "site_selection_BAS>BAS_algorithm.yml@26|ndesign": {
+      "description": "Un certain nombre de sites d'échantillonnage cibles à obtenir avec l'algorithme. L'utilisateur doit décider d'un certain nombre de sites en fonction de ses objectifs d'échantillonnage et de l'échelle de l'étude. \n\nLes zones d'étude plus vastes devraient avoir un plus grand nombre de lieux d'échantillonnage, mais il existe des contraintes (p. ex. budget, personnel, etc.) qui peuvent limiter les lieux d'échantillonnage et la couverture. \n\nLes chercheurs devraient tenir compte de leurs objectifs d'échantillonnage et de leur calendrier précis, et procéder avec prudence. ",
+      "label": "Total des sites cibles",
+      "type": "int",
+      "example": 100,
+      "weight": 5
+    },
+    "site_selection_BAS>Block_creation.yml@0|n_cols": {
+      "description": "Nombre de colonnes pour la grille spatiale environnementale (ainsi que les lignes définiront le nombre final de blocs environnementaux). \n\nLes blocs sont basés sur un ACP des variables environnementales sélectionnées et représentent une approximation des écozones dans les régions où l'information est insuffisante. \n\nUne recommandation générale est de commencer avec moins de blocs parce qu'elle simplifierait le calcul et la compréhension de la région d'étude, 5-10 blocs, et par la suite augmenterait si nécessaire.",
+      "label": "Nombre de colonnes",
+      "type": "int",
+      "example": 10,
+      "weight": 6
+    },
+    "site_selection_BAS>Block_creation.yml@0|n_rows": {
+      "description": "Nombre de lignes pour le réseau spatial environnemental (avec les colonnes définiront le nombre final de blocs environnementaux). \n\nLes blocs sont basés sur un ACP des variables environnementales sélectionnées et représentent une approximation des écozones dans les régions où l'information est insuffisante. \n\nUne recommandation générale est de commencer avec moins de blocs parce qu'elle simplifierait le calcul et la compréhension de la région d'étude, 5-10 blocs, et par la suite augmenterait si nécessaire.",
+      "label": "Nombre de lignes",
+      "type": "int",
+      "example": 10,
+      "weight": 7
+    }
+  },
+  "outputs": {
+    "site_selection_BAS>Block_creation.yml@0|rast_blocks": {
+      "description": "Un GeoTIFF catégorique identifiant le bloc environnemental attribué à chaque cellule raster classée.",
+      "label": "Blocs environnementaux raster",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 0
+    },
+    "site_selection_BAS>Block_creation.yml@0|pca_summary_df": {
+      "description": "Un CSV indiquant l'écart type, le pourcentage de variance expliqué et le pourcentage cumulatif de variance expliqué pour les composantes principales. Utilisez-le pour évaluer la variation environnementale que représentent les deux premières composantes.",
+      "label": "Résumé de ACP",
+      "type": "csv",
+      "weight": 1
+    },
+    "site_selection_BAS>Block_creation.yml@0|blocks_plot": {
+      "description": "Figure montrant les blocs environnementaux dans l'espace des composantes principales, parallèlement à leur répartition géographique.",
+      "label": "Blocs et carte graphiques",
+      "type": "image/png",
+      "weight": 2
+    },
+    "site_selection_BAS>BAS_algorithm.yml@26|maps_output": {
+      "description": "Deux cartes montrant les sites d'échantillonnage proposés : une au-dessus du polygone de la zone d'étude et une au-dessus des blocs environnementaux. Utilisez-les pour inspecter la couverture géographique et environnementale.",
+      "label": "Sortie des cartes",
+      "type": "image/png",
+      "weight": 3
+    },
+    "data>loadFromStac.yml@2|rasters": {
+      "description": "Le rasters environnemental récupéré pour l'analyse, fourni pour l'inspection et l'exploration ultérieure.",
+      "label": "Environnement rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 4
+    },
+    "site_selection_BAS>BAS_algorithm.yml@26|pts_df": {
+      "description": "Un CSV contenant les sites proposés en longitude et latitude dans WGS84 (EPSG:4326), avec des colonnes nommées lon et lat.",
+      "label": "Points sélectionnés",
+      "type": "csv",
+      "weight": 5
+    },
+    "site_selection_BAS>BAS_algorithm.yml@26|points_shape": {
+      "description": "Un fichier GeoJSON contenant les emplacements d'échantillonnage proposés",
+      "label": "Points sélectionnés GeoJSON",
+      "type": "application/geo+json",
+      "weight": 6
+    }
+  },
+  "metadata": {
+    "name": "Sélection du site d'échantillonnage environnemental",
+    "description": "## Présentation\nLa surveillance de la biodiversité exige souvent que les chercheurs procèdent à des prélèvements d'échantillons de différentes populations en raison de la limitation du budget, du temps et de l'accessibilité. De nombreuses méthodes existent pour produire des échantillons à partir d'une surface continue, mais l'échantillonnage équilibré s'est révélé être l'un des modèles de capture les plus efficaces dans différentes populations. Souvent, les chercheurs s'efforcent de prioriser l'échantillonnage en fonction de différents paramètres, l'un étant les caractéristiques environnementales de leur région d'étude (par exemple les biomes ou les régions écologiques). Des outils qui permettent des cadres d'échantillonnage rapides et robustes fournissent aux chercheurs des plans d'échantillonnage solides pour répondre à de multiples questions écologiques. \n\nNous présentons ici une méthode qui utilise un échantillonnage d'acceptation équilibré pour sélectionner au hasard des sites d'échantillonnage dans une zone définie et qui permet de hiérarchiser les différentes régions du zone d'étude.    \n## Utilisations\nSélection de sites d'échantillonnage utilisant un algorithme BAS avec deux approches différentes (distribution d'échantillonnage égale et inégale).\n## Méthodologie\nDans un premier temps, le pipeline effectue un [Analyse en composantes principales (ACP)](https://en.wikipedia.org/wiki/Principal_component_analysis) sur les variables environnementales définies par l'utilisateur. Il les grille pour produire des blocs environnementaux basés sur les deux axes de l'espace environnemental simplifié. La taille de la grille est définie par l'utilisateur. Lorsque seulement deux variables environnementales sont fournies, aucun ACP n'est exécuté et les variables brutes sont utilisées.\n\nDans une deuxième étape, il utilise les blocs pour générer une distribution d'échantillonnage inégale. L'utilisateur spécifie la taille de l'échantillon cible à attribuer en utilisant une conception aléatoirement équilibrée. Lorsque l'option “unequal” est sélectionnée, la probabilité d'inclusion de chaque bloc est proportionnelle à sa superficie, ce qui garantit que les blocs plus grands ont une plus grande chance d'être échantillonnés.\n\nOn peut aussi choisir une distribution d'échantillonnage égale, où tous les blocs ont la même probabilité de sélection. La procédure sera également tracer les points d'échantillonnage choisis au hasard sur les blocs environnementaux, permettant aux utilisateurs d'évaluer visuellement si certaines zones sont sous-représentées ou absentes du schéma d'échantillonnage aléatoire.\n## Limitations \n* Actuellement, le pipeline ne fonctionne que pour un contour géopolitique défini (p. ex. pays ou province). \n* Un échantillonnage inégal peut produire des résultats inattendus dans l'approche équilibrée. \n## Avant de commencer\n* Choisissez des variables environnementales qui peuvent être d'importance écologique pour votre étude.\n* Définissez le nombre de blocs environnementaux que vous attendez à produire (trop d'entre eux peuvent être bruyants, peu peuvent être sous-représentés dans la diversité environnementale). ",
+    "lifecycle": {
+      "status": "in_review"
+    },
+    "author": [
+      {
+        "name": "Francis van Oordt",
+        "email": "francis.vanoordtlahoz@mail.mcgill.ca",
+        "identifier": "https://orcid.org/0000-0002-8471-235X"
+      },
+      {
+        "name": "Samara Manzin",
+        "email": "samara.manzin@mcgill.ca",
+        "identifier": "https://orcid.org/0009-0005-9134-9981"
+      }
+    ],
+    "license": "CC BY",
+    "references": [
+      {
+        "text": "spbal: Spatially Balanced Sampling Algorithms",
+        "doi": "https://cran.r-project.org/web/packages/spbal/index.html"
+      },
+      {
+        "text": "Survey-gap analysis in expeditionary research: where do we go from here?",
+        "doi": "https://doi.org/10.1111/j.1095-8312.2005.00520.x"
+      },
+      {
+        "text": "Selection of sampling sites for biodiversity inventory: Effects of environmental and geographical considerations",
+        "doi": "https://doi.org/10.1111/2041-210X.13869"
+      }
+    ]
+  }
+}

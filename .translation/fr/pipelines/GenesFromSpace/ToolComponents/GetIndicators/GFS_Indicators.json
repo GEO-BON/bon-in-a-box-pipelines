@@ -1,0 +1,329 @@
+{
+  "nodes": [
+    {
+      "id": "99",
+      "type": "io",
+      "position": {
+        "x": 475,
+        "y": 140.5
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>pop_area_by_habitat.yml"
+      }
+    },
+    {
+      "id": "100",
+      "type": "userInput",
+      "position": {
+        "x": 69,
+        "y": 67.16666666666666
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geo+json",
+        "value": "/userdata/populations.geojson"
+      }
+    },
+    {
+      "id": "101",
+      "type": "userInput",
+      "position": {
+        "x": 12,
+        "y": 102.16666666666666
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "image/tiff;application=geotiff",
+        "value": "/userdata/tcyy.tif"
+      }
+    },
+    {
+      "id": "102",
+      "type": "userInput",
+      "position": {
+        "x": 185,
+        "y": 137.16666666666666
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "y2000",
+          "y2001",
+          "y2002",
+          "y2003",
+          "y2004",
+          "y2005",
+          "y2006",
+          "y2007",
+          "y2008",
+          "y2009",
+          "y2010",
+          "y2011",
+          "y2012",
+          "y2013",
+          "y2014",
+          "y2015",
+          "y2016",
+          "y2017",
+          "y2018",
+          "y2019",
+          "y2020",
+          "y2021",
+          "y2022",
+          "y2023"
+        ]
+      }
+    },
+    {
+      "id": "127",
+      "type": "io",
+      "position": {
+        "x": 1210,
+        "y": 90.5
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>get_Indicators.yml"
+      }
+    },
+    {
+      "id": "139",
+      "type": "output",
+      "position": {
+        "x": 2001,
+        "y": 49
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "140",
+      "type": "output",
+      "position": {
+        "x": 2003,
+        "y": 100
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "141",
+      "type": "output",
+      "position": {
+        "x": 2003,
+        "y": 151
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "142",
+      "type": "output",
+      "position": {
+        "x": 2007,
+        "y": 200
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "100",
+      "sourceHandle": null,
+      "target": "99",
+      "targetHandle": "population_polygons",
+      "id": "reactflow__edge-100-99population_polygons"
+    },
+    {
+      "source": "101",
+      "sourceHandle": null,
+      "target": "99",
+      "targetHandle": "habitat_map",
+      "id": "reactflow__edge-101-99habitat_map"
+    },
+    {
+      "source": "102",
+      "sourceHandle": null,
+      "target": "99",
+      "targetHandle": "time_points",
+      "id": "reactflow__edge-102-99time_points"
+    },
+    {
+      "source": "99",
+      "sourceHandle": "pop_area",
+      "target": "127",
+      "targetHandle": "pop_area",
+      "id": "reactflow__edge-99pop_area-127pop_area"
+    },
+    {
+      "source": "101",
+      "sourceHandle": null,
+      "target": "127",
+      "targetHandle": "habitat_map",
+      "id": "reactflow__edge-101-127habitat_map"
+    },
+    {
+      "source": "100",
+      "sourceHandle": null,
+      "target": "127",
+      "targetHandle": "population_polygons",
+      "id": "reactflow__edge-100-127population_polygons"
+    },
+    {
+      "source": "127",
+      "sourceHandle": "ne_table",
+      "target": "139",
+      "targetHandle": null,
+      "id": "reactflow__edge-127ne_table-139"
+    },
+    {
+      "source": "127",
+      "sourceHandle": "pm",
+      "target": "140",
+      "targetHandle": null,
+      "id": "reactflow__edge-127pm-140"
+    },
+    {
+      "source": "127",
+      "sourceHandle": "interactive_plot",
+      "target": "141",
+      "targetHandle": null,
+      "id": "reactflow__edge-127interactive_plot-141"
+    },
+    {
+      "source": "127",
+      "sourceHandle": "ne500",
+      "target": "142",
+      "targetHandle": null,
+      "id": "reactflow__edge-127ne500-142"
+    }
+  ],
+  "inputs": {
+    "pipeline@100": {
+      "label": "Polygones des populations",
+      "description": "Chemin vers le fichier GeoJSON stockant des polygones de populations.",
+      "type": "application/geo+json",
+      "example": "/userdata/population_polygons.geojson",
+      "weight": 0
+    },
+    "pipeline@101": {
+      "label": "Carte binaire de la présence/absence d'habitat",
+      "description": "Dossier Tif décrivant la présence (1) ou l'absence (0) d'un habitat convenable. Plusieurs couches peuvent être utilisés pour décrire la disponibilité de l'habitat à différents points temporels.",
+      "type": "image/tiff;application=geotiff",
+      "example": "/userdata/tcyy.tif",
+      "weight": 1
+    },
+    "pipeline@102": {
+      "label": "Points temporels de la carte de l'habitat",
+      "description": "Liste de points temporels correspondant à la carte de l'habitat couches.",
+      "type": "text[]",
+      "example": [
+        "y2000",
+        "y2001",
+        "y2002",
+        "y2003",
+        "y2004",
+        "y2005",
+        "y2006",
+        "y2007",
+        "y2008",
+        "y2009",
+        "y2010",
+        "y2011",
+        "y2012",
+        "y2013",
+        "y2014",
+        "y2015",
+        "y2016",
+        "y2017",
+        "y2018",
+        "y2019",
+        "y2020",
+        "y2021",
+        "y2022",
+        "y2023"
+      ],
+      "weight": 2
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@127|ne_nc": {
+      "description": "Rapport Ne:Nc estimé pour les espèces étudiées. Plusieurs valeurs peuvent être fournies, séparées par une virgule.",
+      "label": "Ne:Nc taux estimatif",
+      "type": "float[]",
+      "example": [
+        0.1,
+        0.2
+      ],
+      "weight": 3
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@127|pop_density": {
+      "description": "Densité estimée de la population [nombre d'individus par km2]. Plusieurs valeurs peuvent être fournies, séparées par une virgule.",
+      "label": "Densité de population",
+      "type": "float[]",
+      "example": [
+        50,
+        100,
+        1000
+      ],
+      "weight": 4
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@127|runtitle": {
+      "description": "Définissez un nom pour le exécution du pipeline.",
+      "label": "Titre de l'exécution",
+      "type": "text",
+      "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023",
+      "weight": 5
+    }
+  },
+  "outputs": {
+    "GFS_IndicatorsTool>get_Indicators.yml@127|ne_table": {
+      "description": "Taille efficace estimée de chaque population, selon le dernier point temporel de la carte de couverture de l'habitat.",
+      "label": "Taille effective de la population",
+      "type": "text/tab-separated-values",
+      "weight": 0
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@127|pm": {
+      "description": "Proportion estimée de populations habitées, en comparant le point le plus précoce et le point le plus récent.",
+      "label": "Indicateur de maintien de la population",
+      "type": "float",
+      "weight": 1
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@127|interactive_plot": {
+      "description": "Une interface interactive pour explorer les tendances des indicateurs dans l'espace géographique et le temps.",
+      "label": "Interactive graphique",
+      "type": "text/html",
+      "weight": 2
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@127|ne500": {
+      "description": "Proportion estimée de populations avec Ne>500 au dernier moment.",
+      "label": "Indicateur Ne>500",
+      "type": "float",
+      "weight": 3
+    }
+  },
+  "metadata": {
+    "name": "Calculer les indicateurs de diversité génétique",
+    "description": "Composante de l'outil Genes from Space. Compte tenu des poylgones de la répartition de la population (format GeoJSON) et d'une cheminée raster décrivant la disponibilité de l'habitat au fil du temps (format GeoTIFF), le pipeline retourne les indicateurs de perte de diversité génétique (indicateur Ne500 et Populations Maintened), affichés par une interface interactive. ",
+    "lifecycle": {
+      "status": "subpipeline"
+    },
+    "author": [
+      {
+        "name": "Oliver Selmoni",
+        "email": "oliver.selmoni@gmail.com"
+      }
+    ],
+    "license": "MIT",
+    "external_link": "https://teams.issibern.ch/genesfromspace/",
+    "references": [
+      {
+        "text": "Schuman et al., EcoEvoRxiv.",
+        "doi": "https://doi.org/10.32942/X2RS58"
+      }
+    ]
+  }
+}
