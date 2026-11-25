@@ -21,6 +21,16 @@ inputs:
     description: Tab-separated occurrence records to be cleaned, typically the output of a GBIF download step. Each row should represent one observation with at minimum latitude, longitude, and species columns.
     type: text/tab-separated-values
     example: "/scripts/filtering/cleanCoordinates_presence.tsv"
+  custom_occurrences:
+    label: Optional custom occurrences
+    description: Optional CSV or TSV file with scientific_name, decimal_longitude, and decimal_latitude columns. An id column is optional. Uploaded records are appended to GBIF records before cleaning.
+    type: text/csv
+    example:
+  custom_occurrences_crs:
+    label: Custom occurrence CRS
+    description: Coordinate reference system of the uploaded longitude and latitude columns. If omitted, EPSG:4326 is assumed.
+    type: CRS
+    example:
   predictors:
     label: predictors
     description: Stack of environmental predictor rasters in GeoTIFF format. Used for the 'env' cleaning test to identify environmental outliers.
@@ -72,4 +82,5 @@ conda:
     - r-raster
     - r-dplyr
     - r-CoordinateCleaner
+    - r-sf
     - r-gdalcubes

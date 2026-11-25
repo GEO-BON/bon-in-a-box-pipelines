@@ -83,6 +83,10 @@ setup_presence_background <- function(
  
   }
   
+  if (is.character(presence$id) || is.character(background$id)) {
+    presence$id <- as.character(presence$id)
+    background$id <- as.character(background$id)
+  }
   presence_background <- dplyr::bind_rows(presence, background)
 
   if (partition_type == "none" | runs_n == 1) presence_background <- bind_cols("run1" = 1, presence_background)
