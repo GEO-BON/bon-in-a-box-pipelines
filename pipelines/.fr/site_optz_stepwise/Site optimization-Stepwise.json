@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "name": "Échantillonnage d'optimisation du site",
+    "description": "## Présentation\n\nLes programmes de surveillance de la biodiversité devront peut-être élargir leur réseau d'échantillonnage ou revoir les sites qui ne sont plus régulièrement surveillés. Le choix de sites supplémentaires peut contribuer à améliorer la couverture des conditions environnementales et des zones géographiques peu représentées par le réseau actuel.\n\nCe pipeline utilise une procédure d'optimisation progressive p-médiane telle que décrite dans Medina et al., 2013. Il est implémenté dans le [Paquet SURDES](https://rdrr.io/rforge/SURDES/man/SURDES-package.html) pour sélectionner des sites supplémentaires dans une liste de candidats fournie par l'utilisateur. La sélection tient compte des différences environnementales et des distances géodésiques entre les coordonnées du site en mètres, dans le but de compléter les sites déjà inclus dans le réseau de surveillance.\n\n## Utilisations\n\nUtilisez ce pipeline pour prioriser les points de demande lors de l'expansion ou de la rotation d'un réseau de surveillance. Les points de demande peuvent comprendre les sites d'échantillonnage historiques ou les nouveaux sites proposés.\n\nLa liste des entrées doit identifier deux groupes :\n\n- **Sites actuels (`vini = 1`):** Sites déjà inclus dans le réseau de surveillance.\n- **Points de demande (`vini = 0`):** Sites disponibles pour un échantillonnage supplémentaire.\n\nEnsemble, ces groupes définissent l'ensemble des sites considérés dans l'analyse. Le pipeline extrait des valeurs environnementales à leur emplacement, calcule des matrices de distance et sélectionne des sites supplémentaires par étapes successives d'optimisation.\n\nLes résultats comprennent des valeurs de sélection des sites, une carte et une courbe montrant les changements de variabilité non connus restants à mesure que les sites sont ajoutés. Ces sorties appuient les décisions concernant les points de demande à inclure et le nombre de sites supplémentaires à échantillonner.\n\n## Limitations\n\n- Tous les sites ont besoin de données environnementales valides. Les emplacements situés en dehors de la couverture raster ou dans des cellules contenant des valeurs manquantes peuvent empêcher l'analyse de se terminer.\n- Le temps de calcul augmente avec le nombre de sites et les itérations d'optimisation. Commencez par une petite course pour évaluer les performances.\n- La sortie de variabilité découverte est une mesure dérivée de la matrice de distance d'optimisation. Il ne doit pas être interprété comme un pourcentage de la biodiversité représentée.\n\n## Avant de commencer\n\nPréparer un CSV contenant une rangée par site et les colonnes suivantes:\n\n- **lon:** Longitude en degrés décimaux, WGS84 (EPSG:4326).\n\n- **lat:** Latitude en degrés décimaux, WGS84 (EPSG:4326).\n\n- **vini:** L'indicateur initial de sélection du site utilisé par l'optimisation. Utiliser 1 pour les sites de surveillance actuels et 0 pour les points de demande disponibles pour un échantillonnage supplémentaire.\n\nUtiliser des valeurs numériques sans coordonnées ou classifications manquantes. Inclure au moins un site actuel et un point de demande. Des colonnes supplémentaires peuvent contenir des identifiants de site ou d'autres attributs; elles ne saisissent pas les calculs de distance.\n\nLes coordonnées d'entrée doivent toujours être WGS84 longitude et latitude, quel que soit le SCR sélectionné dans l'emplacement choisi. Les sites sont réaménagés à l'interne pour extraire des données environnementales; les distances géographiques sont calculées directement à partir des coordonnées WGS84.\n\nPlacez le fichier dans votre répertoire BON in a Box `userdata` et entrez son chemin de conteneur dans **Lieux d'échantillonnage**, par exemple `/userdata/sampling_sites.csv`.\n\nLes variables environnementales, la résolution raster et les points de demande fournis déterminent les différences considérées par l'optimisation. Choisir des variables pertinentes aux objectifs de surveillance et s'assurer que leur couverture inclut tous les sites fournis. Définissez le nombre de sites supplémentaires à une valeur ne dépassant pas le nombre de lignes avec `vini = 0`.\n\n"
+  },
+  "inputs": {
+    "pipeline@67": {
+      "label": "Pays, région ou emprise",
+      "description": "Définir l'étendue de l'étude et choisir le système de coordonnées de référence utilisé pour récupérer les données environnementales."
+    },
+    "pipeline@73": {
+      "label": "Type de polygone",
+      "description": "Type de polygone chargé. Si un pays ou une région est sélectionné dans le `Choose Bounding Box` ci-dessus, sélectionnez `Country or region`. Si un emprise est dessiné dans le `Choose Bounding Box` ci-dessus, sélectionnez `Polygon of bounding box`"
+    },
+    "data>loadFromStac.yml@45|spatial_res": {
+      "label": "Résolution spatiale",
+      "description": "Résolution raster environnementale dans les unités SCR sélectionnées: mètres pour un SCR mesuré en mètres, degrés pour EPSG:4326. \n\nS'il est vide, le chargeur tente la résolution native, nécessitant des unités SCR compatibles. \n\nCela ne modifie pas les coordonnées d'entrée requises du WGS84 ni la méthode de distance géodésique."
+    },
+    "data>loadFromStac.yml@45|collections_items": {
+      "label": "items de collection STAC",
+      "description": "Fournir les variables environnementales en utilisant le format `collection|item`, comme `chelsa-clim|bio1` et `chelsa-clim|bio12`. Ces variables définissent les différences environnementales entre les sites."
+    },
+    "pipeline@52": {
+      "label": "Lieu d'échantillonnage",
+      "description": "Chemin vers un CSV avec lon et lat dans WGS84 décimum de degrés (EPSG:4326), et vini: 1 pour les sites actuels, 0 pour les points de demande. Les coordonnées d'entrée utilisent toujours WGS84, indépendamment du traitement sélectionné SCR."
+    },
+    "pipeline@54": {
+      "label": "Algorithme Itérations",
+      "description": "Nombre entier de points de demande à ajouter. Ne doit pas dépasser le nombre de lignes avec vini = 0. Par exemple, 40 sites actuels et 60 points de demande permettent au plus 60 ajouts. Plus d'itérations prennent plus de temps."
+    }
+  },
+  "outputs": {
+    "site_optz_stepwise>site_optz_stepwise.yml@61|point_sel": {
+      "label": "Sélection des points de demande",
+      "description": "CSV des nouveaux points de demande sélectionnés dans l'ordre de sélection, y compris lon, lat, vini, site row (ligne CSV originale, à partir de 1), sélectionné, sélection commande et statut. Les sites actuels sont exclus."
+    },
+    "site_optz_stepwise>site_optz_stepwise.yml@61|uncov": {
+      "label": "Variabilité non couverte",
+      "description": "CSV avec itération et découvert variabilité, calculée comme la somme des scores SURDES p-median à chaque itération. Ce diagnostic n'est pas un pourcentage de biodiversité représenté et il n'est pas garanti de diminuer monotoniquement."
+    },
+    "site_optz_stepwise>site_optz_stepwise.yml@61|surdes_uncov": {
+      "label": "Variabilité non couverte graphique",
+      "description": "PNG montrant la somme des scores SURDES p-médian à chaque itération. Inspecter les sites sélectionnés; ce diagnostic n'est pas un pourcentage de biodiversité représenté."
+    },
+    "site_optz_stepwise>site_optz_stepwise.yml@61|surdes_map": {
+      "label": "Carte des points sélectionnés",
+      "description": "PNG montrant les sites actuels, les points de demande non sélectionnés et les points de demande sélectionnés dans différentes couleurs."
+    },
+    "site_optz_stepwise>site_optz_stepwise.yml@61|sites_gpkg": {
+      "label": "Sites d'échantillonnage GeoPackage",
+      "description": "GeoPackage contenant tous les sites d'entrée dans WGS84 avec vini, site row, selected, selection order, and status (current, Demand, or Selected). Utilisez le statut pour le style visualiseur ; les couleurs automatiques dépendent du visualiseur."
+    }
+  }
+}

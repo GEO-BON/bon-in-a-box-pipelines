@@ -1,0 +1,98 @@
+{
+  "metadata": {
+    "name": "Score d'habitat des espèces",
+    "description": "\n## Présentation   \nLe Indice d'habitat des espèces (SHI) est un indicateur de composante pour le Cadre mondial de la biodiversité (GBF). SHI suit les changements dans l'intégrité écologique en mesurant les changements dans la qualité et la connectivité des habitats des espèces. Il s'agit d'un ensemble de valeurs de l'habitat des espèces (SHS), qui mesurent la superficie appropriée pour une seule espèce d'intérêt, par rapport à la taille totale de son aire de répartition.  \nCe pipeline mesure le Score d'habitat des espèces (SHS) pour les espèces utilisées comme intrants. Il utilise le cartes de répartition, le plages d'altitude et les catégories d'habitat disponibles de l'Union internationale pour la conservation de la nature (UICN). Les changements dans l'habitat sont mesurés à l'aide du Global Forest Watch couches et bientôt d'autres couverture du sol couches seront ajoutés. Pour le cas particulier du Québec, il a cartes de répartition disponible auprès du ministère de l'Environnement. Le sorties est un tableau avec les changements dans la zone de l'habitat par année demandée et un graphique avec une série chronologique de ces valeurs. Rasters de l'habitat disponible pour chaque année peut également être demandé.  \n## Utilisations  \nLe SHI est un indicateur important pour évaluer les progrès accomplis dans la réalisation de l'objectif A du FBG, qui appelle à une meilleure intégrité des écosystèmes naturels. [En savoir plus sur la façon dont SHI peut être utilisé pour évaluer les progrès vers l'objectif A](https://cdn.mol.org/static/files/indicators/habitat/WCMC-species_habitat_index-15Feb2022.pdf).  \n## Limites du pipeline  \nActuellement, le pipeline utilise uniquement des données Global Forest Watch pour mesurer les changements dans l'habitat, de sorte que le pipeline se limite au calcul de SHS pour les espèces forestières.  \n## Avant de commencer  \nPour utiliser ce pipeline, vous aurez besoin d'un [Jeton UICN](https://api.iucnredlist.org/users/sign_up) pour accéder aux données sur l'Union internationale pour la conservation de la nature (UICN) polygones des aires de répartition des espèces."
+  },
+  "inputs": {
+    "pipeline@76": {
+      "label": "Espèce",
+      "description": "Nom scientifique de l'espèce. Plusieurs noms d'espèces peuvent être spécifiés, séparés par une virgule.\n\nLe nom doit correspondre exactement au nom utilisé par la source d'expertise choisie carte de répartition vu plus tard dans les entrées de l'utilisateur ; les synonymes et les noms communs ne seront pas trouvés.\n"
+    },
+    "pipeline@93": {
+      "label": "Emprise et SCR",
+      "description": "Sélectionnez un pays/région et un SCR pour obtenir le emprise associé. Veuillez vous assurer que le SCR correspond à la résolution."
+    },
+    "data>getAreaOfHabitat.yml@80|buff_size": {
+      "label": "Tampon pour zone d'étude",
+      "description": "Taille du tampon autour du zone d'étude. Si elle n'est pas définie, elle sera estimée à la moitié de la largeur totale du zone d'étude."
+    },
+    "pipeline@90": {
+      "label": "Zone d'étude",
+      "description": "Polygone personnalisé de zone d'étude utilisé pour masquer couches de sortie, au format GeoPackage (par exemple /userdata/studyarea.gpkg).   \n\nCette entrée permet aux utilisateurs d'entrer leur propre polygone plutôt que d'entrer un pays ou une région."
+    },
+    "SHI>habitatChange_GFW.yml@67|t_0": {
+      "label": "Année de début",
+      "description": "Année où l'analyse devrait commencer. Commence en 2000, vérifiez l'intervalle de temps disponible pour les données Global Forest Watch à https://stac.geobon.org/collections/gfw-lossyear."
+    },
+    "SHI>habitatChange_GFW.yml@67|t_n": {
+      "label": "Année de fin",
+      "description": "Année où l'analyse devrait prendre fin (elle devrait être postérieure à temps initial). Il doit être dans l'intervalle de temps pour les données Global Forest Watch à https://stac.geobon.org/collections/gfw-lossyear."
+    },
+    "SHI>habitatChange_GFW.yml@67|time_step": {
+      "label": "Pas de temps",
+      "description": "Résolution temporelle pour analyse en nombre d'années. Pour obtenir des valeurs pour le année de fin, pas de temps doit s'intégrer uniformément dans la plage d'analyse donnée."
+    },
+    "data>getAreaOfHabitat.yml@80|range_map_type": {
+      "label": "Type de carte de répartition",
+      "description": "Sélectionnez le type de carte de répartition selon le type de fichier source : 1) polygone, 2) raster, 3) une intersection entre les fichiers raster et polygone."
+    },
+    "pipeline@77": {
+      "label": "Source de carte de répartition d'experts",
+      "description": "Source du carte de répartition d'experts pour l'espèce. Les options sont : Map of Life (MOL), Union internationale pour la conservation de la nature (UICN) et cartes de répartition du ministère de l'Environnement du Québec (QC).\n\nVérifiez que votre espèce est répertoriée dans la table de recherche de la source avant de courir:\n\n  - UICN (Union internationale pour la conservation de la nature) : mammifères, amphibiens, reptiles et quelques plantes (seulement plantes avec UICN cartes de répartition numérisé). [Liste des espèces (colonne \"binomial\")](https://object-arbutus.alliancecan.ca/86e1f3d5df8442d39450533329f621ae:stac/IUCN_rangemaps/iucn_fid_binomials.csv)\n\n  - MOL (Map of Life): mammifères seulement. [Liste des espèces (colonne \"sciname\")](https://object-arbutus.alliancecan.ca/86e1f3d5df8442d39450533329f621ae:stac/mol_range_maps/mol_mammals.csv)\n\n  - QC (Ministère de l'Environnement du Québec) : mammifères, reptiles et amphibiens, Québec seulement. Tapez des noms sans accents. [Liste des espèces (colonne \"NOM_SCIENT\")](https://object-arbutus.alliancecan.ca/86e1f3d5df8442d39450533329f621ae:stac/qc_range_maps/qc_range_maps.csv)\n\n  Les oiseaux ne sont actuellement disponibles auprès d'aucune source."
+    },
+    "data>getAreaOfHabitat.yml@80|r_range_map": {
+      "label": "Carte de répartition (raster)",
+      "description": "Raster avec la zone prévue pour l'espèce si vous choisissez l'option \"Raster\""
+    },
+    "SHI>habitatChange_GFW.yml@67|min_forest": {
+      "label": "Pourcentage minimum couvert forestier",
+      "description": "Pourcentage minimum de couvert arboré requis pour chaque espèce, en fonction de son habitat convenable. agit comme un filtre pour les données Global Forest Watch. Si elle n'est pas disponible, utiliser les valeurs de Map of Life (p. ex. [https://mol.org/species/range/Saguinus_oedipus])"
+    },
+    "SHI>habitatChange_GFW.yml@67|max_forest": {
+      "label": "Pourcentage maximal couvert forestier",
+      "description": "Pourcentage maximal de couvert arboré requis pour chaque espèce, selon l'habitat convenable de l'espèce. agit comme un filtre pour les données Global Forest Watch. Si elle n'est pas disponible, utiliser les valeurs de Map of Life (p. ex. [https://mol.org/species/range/Saguinus_oedipus])"
+    },
+    "pipeline@79": {
+      "label": "Résolution spatiale",
+      "description": "Entier, résolution spatiale du rasters dans les mêmes unités que le système de coordonnées de référence (mètres pour les systèmes de référence projetés et degrés pour les systèmes de référence en lat long). \n\nSi c'est laissé vide il utilisera la résolution native du rasters. \n\nSi la résolution spatiale est plus grossière que la résolution native du rasters, le couches sera rééchantillonné avec la méthode de rééchantillonnage choisie ci-dessous."
+    },
+    "data>getAreaOfHabitat.yml@80|elevation_filter": {
+      "label": "Filtrer par altitude",
+      "description": "Si 'yes' un filtre altitude utilisant les informations de l'UICN est appliqué, si 'no' le carte de répartition est pris comme zone d'habitat."
+    },
+    "data>getAreaOfHabitat.yml@80|elev_buffer": {
+      "label": "Altitude tampon",
+      "description": "Altitude tampon en mètres pour ajouter (ou sous-extraire) à l'aire de répartition altitude déclarée. La valeur par défaut est zéro. Les valeurs positives augmenteront la plage de cette valeur en mètres et les valeurs négatives diminueront la plage de cette valeur."
+    },
+    "data>loadFromStac.yml@84|resampling": {
+      "label": "Méthode de rééchantillonnage",
+      "description": "Méthode de rééchantillonnage utilisée lors du rééchelonnement et/ou du réaménagement du raster couches. Voir [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) pour la description."
+    },
+    "data>loadFromStac.yml@84|aggregation": {
+      "label": "Méthode d'agrégation",
+      "description": "Méthode utilisée pour agréger les éléments lorsque couches se combine avec le temps."
+    }
+  },
+  "outputs": {
+    "SHI>habitatChange_GFW.yml@67|img_shs_map": {
+      "label": "Carte SHS",
+      "description": "Figure montrant une carte indiquant les changements dans l'habitat pour l'intervalle de temps de chaque espèce."
+    },
+    "SHI>habitatChange_GFW.yml@67|df_shs": {
+      "label": "Tableau SHS",
+      "description": "Un fichier TSV (Tab Separated Values) contenant le score de surface, le score de connectivité et le SHS par pas de temps pour chaque espèce. Pourcentage de variation, 100 % étant égal à l'année de référence."
+    },
+    "SHI>habitatChange_GFW.yml@67|img_shs_timeseries": {
+      "label": "SHS séries chronologiques",
+      "description": "Figure montrant une série chronologique de valeurs SHS par pas de temps pour chaque espèce."
+    },
+    "SHI>habitatChange_GFW.yml@67|habitat_change_map": {
+      "label": "Carte SHS (raster)",
+      "description": "Figure montrant une carte indiquant les changements dans l'habitat pour l'intervalle de temps de chaque espèce (raster)."
+    },
+    "SHI>habitatChange_GFW.yml@67|r_habitat_by_tstep": {
+      "label": "Habitat par pas de temps",
+      "description": "Raster de l'habitat par pas de temps."
+    }
+  }
+}

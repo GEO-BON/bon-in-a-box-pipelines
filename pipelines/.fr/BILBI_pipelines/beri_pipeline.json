@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "name": "Indice de résilience des écosystèmes bioclimatiques (BERI)",
+    "description": "\n## Présentation\nL'indice de résilience des écosystèmes bioclimatiques (BERI) du CSIRO est un indicateur complémentaire reconnu au sein du Cadre mondial de la biodiversité de Kunming-Montréal (GBF). Il soutient la surveillance de la cible 8 du FBG, qui vise à minimiser les impacts du changement climatique sur la biodiversité et à renforcer la résilience. BERI mesure la capacité des écosystèmes naturels à conserver la biodiversité face aux changements climatiques (Ferrier et al., 2020). L'indicateur est fonction de la zone de l'écosystème, de la connectivité et de l'intégrité. BERI est un produit mondial de 30 arc-seconde pour les années 2000, 2005, 2010, 2015 et 2020 et est modélisé à partir de données pour plus de 400 000 espèces de plantes, de vertébrés et d'invertébrés (Harwood et al., 2022).\n\nBERI évalue dans quelle mesure la configuration de l'habitat naturel d'un paysage peut tenir compte des changements climatiques dans la répartition des espèces. Pour chaque maille de l'habitat naturel, l'indice évalue la connectivité fonctionnelle de la cellule aux zones avoisinantes qui devraient pouvoir soutenir un assemblage d'espèces semblables à celui qui est actuellement associé à cette cellule, face au changement climatique. Les cellules dont l'habitat est bien relié ont une note élevée, tandis que les zones isolées qui n'ont pas de cote d'analogie climatique accessible ont une note faible. L'indicateur peut ensuite être agrégé et communiqué par n'importe quelle unité spatiale souhaitée (par exemple, un type d'écosystème, un pays ou la planète entière).\n\nCe pipeline ne calcule pas BERI. Il résume le CSIRO BERI couches comme une moyenne géométrique pondérée sur une région d'intérêt. Le code pour calculer la moyenne pondérée a été adapté à partir du script «Moyens géométriques pondérés de CSIRO BILBI (Infrastructure de modélisation biogéographique pour les indicateurs de biodiversité à grande échelle)» sur le [Portail d'accès aux données du CSIRO](https://doi.org/10.25919/4vvz-4j96).\n## Utilisations\nBERI peut être utilisé pour surveiller et signaler les tendances passées à ce jour de la résilience de l'état des écosystèmes et de la connectivité face aux changements climatiques en cours, à l'appui de la cible 8 du FBG. BERI est calculé séparément pour chaque point de temps en utilisant la meilleure cartographie disponible de l'état de l'écosystème (intégrité) pour cette année.\n## Limites du pipeline\n- BERI est une couche modélisée, il y a donc de plus grandes incertitudes dans les zones où les données sont moins nombreuses. Interpréter les résultats avec prudence.\n- Le pipeline résume BERI couches existant; il ne peut pas utiliser des données personnalisées.\n- BERI n'est disponible que pour 2000, 2005, 2010, 2015 et 2020, à une résolution de 30 arc-seconde (environ 1 km)."
+  },
+  "inputs": {
+    "pipeline@24": {
+      "label": "Emprise et SCR",
+      "description": "Sélectionnez un pays/région et un SCR pour obtenir le emprise associé. Vous pouvez également dessiner/injecter un emprise personnalisé avec un SCR."
+    },
+    "data>load_polygons.yml@25|polygon_type": {
+      "label": "Type de polygone",
+      "description": "Type de polygone à charger. \n\n- `Country or region` charge un polygone du pays ou de la région sélectionné.\n- `Polygon of bounding box` charge un polygone du emprise associé au pays ou à la région sélectionné, ou le emprise dessiné."
+    },
+    "data>loadFromStac.yml@1|t0": {
+      "label": "Année de début (facultatif)",
+      "description": "Année de début pour les séries chronologiques couches. Laisser vide si vous utilisez toutes les dates disponibles.\n\nDoit être l'un des: 2000, 2005, 2015, 2010, 2020"
+    },
+    "data>loadFromStac.yml@1|t1": {
+      "label": "Année de fin (facultatif)",
+      "description": "Année de fin pour les séries chronologiques couches. Laisser vide si vous utilisez toutes les dates disponibles.\n\nDoit être l'un des: 2000, 2005, 2015, 2010, 2020"
+    },
+    "data>loadFromStac.yml@1|temporal_res": {
+      "label": "Résolution temporelle (facultatif)",
+      "description": "Résolution temporelle à utiliser lors de la requête de items STAC par date, dans le format (\"P\", intervalle de temps et unité de temps, par exemple \"P1Y\" est annuel, \"P1M\" est mensuel et \"P1D\" est quotidien). Laisser vide si ce n'est pas par date. \n\nDoit être de: P5Y, P10Y, P15Y, P20Y\n\nSi la résolution temporelle est plus grossière que la résolution temporelle des séries chronologiques, le couches sera agrégé avec la méthode d'agrégation choisie ci-dessous."
+    },
+    "pipeline@19": {
+      "label": "Résolution spatiale",
+      "description": "Entier, résolution spatiale du rasters dans les mêmes unités que le système de coordonnées de référence (mètres pour les systèmes de référence projetés et degrés pour les systèmes de référence en lat long). \n\nSi c'est laissé vide il utilisera la résolution native du rasters. \n\nSi la résolution spatiale est plus grossière que la résolution native du rasters, le couches sera rééchantillonné avec la méthode de rééchantillonnage choisie ci-dessous."
+    },
+    "pipeline@18": {
+      "label": "Méthode de rééchantillonnage",
+      "description": "Méthode de rééchantillonnage utilisée lors du rééchelonnement et/ou du réaménagement du raster couches. Voir [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) pour la description.\n\nSera ignoré si pas rééchantillonnage."
+    },
+    "pipeline@20": {
+      "label": "Méthode d'agrégation",
+      "description": "Méthode utilisée pour agréger les éléments lorsque couches se combine avec le temps.\n\nSera ignoré si pas agréger."
+    }
+  },
+  "outputs": {
+    "bilbi_indicators>bilbi_weighted_mean.yml@0|time_series_plot": {
+      "label": "Séries chronologiques graphique",
+      "description": "Graphique de la moyenne géométrique de l'indicateur dans le temps dans le zone d'étude d'intérêt"
+    },
+    "bilbi_indicators>bilbi_weighted_mean.yml@0|summarised_values": {
+      "label": "BERI résumé",
+      "description": "Moyenne géométrique pondérée annuelle de BERI dans le polygone zone d'étude.\n\n\nLa valeur, allant de 0 à 1 représente la proportion de l'habitat relié qui devrait demeurer sous le changement climatique par rapport à ce qui existerait sans modification humaine ou changement climatique."
+    },
+    "data>loadFromStac.yml@1|rasters": {
+      "label": "Raster couches de l'indicateur pour chaque année",
+      "description": "Sortie des fichiers raster au format GeoTIFF."
+    }
+  }
+}

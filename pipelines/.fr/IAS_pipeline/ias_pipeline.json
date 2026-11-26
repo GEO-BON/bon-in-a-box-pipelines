@@ -1,0 +1,90 @@
+{
+  "metadata": {
+    "name": "Espèces exotiques envahissantes",
+    "description": "## Présentation \nLes espèces exotiques envahissantes constituent une menace majeure pour la biodiversité. La réduction des taux d'introduction et d'établissement d'espèces exotiques envahissantes est un élément important de la cible 6, indicateur 6.1 du Kunming Montréal Cadre mondial de la biodiversité (GBF).\n\nLe pipeline recueille de l'information nationale sur les espèces exotiques et envahissantes et évalue les tendances à partir de leurs premiers dossiers documentés. Il combine les données nationales liste de référence du Registre mondial des espèces introduites et envahissantes (GRIIS) ou, en option, les données nationales entrées par les utilisateurs avec la base de données des espèces exotiques premiers signalements.\n\nLe pipeline applique le processus de normalisation et d'intégration des données sur les espèces exotiques (SInAS) pour normaliser et fusionner ces ensembles de données sources. Les noms d'espèces, les emplacements, les habitats, les informations occurrence et les dates de premier enregistrement sont normalisés avant la fusion des données GRIIS et premiers signalements. Les noms d'espèces et les classifications taxonomiques sont vérifiés par rapport à la colonne vertébrale taxonomique GBIF. Les dossiers qui ne peuvent pas être entièrement normalisés sont documentés dans la qualité des données sorties. Si les utilisateurs téléchargent leurs propres données nationales, la liste des espèces sera utilisée au lieu du GRIIS liste de référence. Si une colonne premier signalement est fournie dans les données nationales, les données nationales premier signalement seront utilisées au lieu de l'ensemble de données premiers signalements pour les espèces ayant les deux. Le pipeline crée une série chronologique annuelle d'espèces exotiques envahissantes premiers signalements pour le pays sélectionné. Un premier signalement représente la première détection documentée d'une espèce; il ne représente pas l'année où l'espèce a été introduite, établie ou devenue envahissante.\n\nEn fonction de l'exhaustivité du premier enregistrement et du nombre d'années de conservation, le pipeline choisit l'une des quatre approches suivantes :\n- aucune modélisation lorsque les données disponibles sont trop rares;\n- une comparaison qualitative des profils d'observation du premier enregistrement et du GBIF;\n- un ensemble réduit de modèles quantitatifs; ou\n- l'ensemble complet de modèles quantitatifs.\n\nLes approches quantitatives comprennent un modèle de Poisson naïf, un modèle de détection constante, un modèle Solow-Costello et un modèle d'échantillonnage qui utilise le volume d'enregistrement annuel GBIF comme indicateur indirect de l'effort d'observation. Le sorties décrit les hypothèses, l'ajustement, la tendance estimée, l'interprétation et les limites de chaque modèle. Pour de plus amples renseignements sur l'estimation des taux d'introduction à partir des données du premier enregistrement, voir McGeoch et al. (2023) et Buba et al. (2024).\n\n## Utilisations\nCe pipeline peut être utilisé pour:\n- Compiler et normaliser les données GRIIS et premiers signalements nationales afin de produire un ensemble de données nationales taxonomiquement normalisé des espèces exotiques et envahissantes.\n\n- Identifier les dossiers non appariés, exclus ou potentiellement problématiques pour l'examen de la qualité des données.\n\n- Résumez et examinez les patrons temporels dans premiers signalements observé.\n- Comparer les modèles avec différentes hypothèses sur l'effort de détection et d'observation.\n\n- Appuyer l'évaluation nationale et les rapports liés à la cible 6 du FBG.\n## Limites du pipeline \n* À l'heure actuelle, ce pipeline ne peut être exploité pour les pays suivants en raison de problèmes de données sources non résolus, de nom liste de référence ou de cartographie de localisation : États-Unis d'Amérique (États-Unis), Belgique (BEL), Thaïlande (THA), Eswatini (SWZ), Hongrie (HUN) et Norvège (NOR).\n\n* Les relevés annuels GBIF sont utilisés comme approximation indirecte pour modifier l'effort d'observation. Le volume record de GBIF n'est pas une mesure directe de l'effort de relevé des espèces exotiques envahissantes.\n\n* Les résultats du modèle doivent être interprétés avec prudence, veuillez lire l'interprétation du modèle sorties et les documents énumérés ci-dessous pour obtenir des conseils.\n* La normalisation taxonomique automatisée et la normalisation des lieux ne peuvent pas résoudre tous les dossiers. Avant d'interpréter les résultats, les utilisateurs devraient examiner la qualité des données, la valeur non appariée et l'enregistrement exclu sorties.\n\n* Lorsqu'une date de premier enregistrement est fournie sous forme de fourchette, le pipeline utilise son année moyenne. Cette année estimée ne représente pas une date de détection documentée avec précision.\n\n* Les résultats dépendent des versions et de la couverture des données GRIIS, premiers signalements, GBIF et de configuration.\n\n\n## Avant de commencer \nUn compte GBIF gratuit est nécessaire pour obtenir les données d'observation GBIF utilisées par ce pipeline. Add your GBIF username, password, and account email address to the `runner.env` file using the following environment variables: `GBIF_USER`, `GBIF_PWD`, and `GBIF_EMAIL`.\n\nLes utilisateurs doivent prendre note des versions des bases de données source et du flux de travail utilisés pour une analyse. Toute modification du flux de travail, des tableaux de configuration ou des données sources devrait également être signalée pour soutenir la transparence et la reproductibilité.\n\nSi un jeu de données national est téléchargé par l'utilisateur, assurez-vous que les noms des colonnes correspondent à ce que vous incluez dans le formulaire d'entrée. Examiner la valeur inégalée, l'enregistrement exclu, l'appariement taxonomique, le conflit de fusion et d'autres données de qualité sorties avant d'interpréter les résultats."
+  },
+  "inputs": {
+    "pipeline@41": {
+      "label": "Nom du pays",
+      "description": "Nom du pays pour l'analyse des espèces exotiques envahissantes.\n\nÀ l'heure actuelle, ce pipeline ne peut être exploité pour les pays suivants en raison de problèmes de données sources non résolus, de nom liste de référence ou de cartographie de localisation : États-Unis d'Amérique (États-Unis), Belgique (BEL), Thaïlande (THA), Eswatini (SWZ), Hongrie (HUN) et Norvège (NOR)."
+    },
+    "pipeline@73": {
+      "label": "Année de début",
+      "description": "Année de début pour lequel obtenir des observations GBIF. Ils serviront de substitut à l'effort d'échantillonnage dans un pays donné."
+    },
+    "pipeline@74": {
+      "label": "Année de fin",
+      "description": "Année de fin pour lequel obtenir des observations GBIF. Ils serviront de substitut à l'effort d'échantillonnage dans un pays donné."
+    },
+    "pipeline@97": {
+      "label": "National liste de référence (facultatif)",
+      "description": "Fichier national facultatif liste de référence CSV. Ce fichier doit contenir une colonne contenant des noms scientifiques d'espèces et éventuellement une colonne contenant l'année associée de la première introduction enregistrée.\n\nLaissez vide pour utiliser les ensembles de données GRIIS et premiers signalements pour le pays sélectionné."
+    },
+    "pipeline@98": {
+      "label": "Colonne d'espèces (facultatif)",
+      "description": "Nom exact de la colonne contenant les noms d'espèces scientifiques. \n\nRequis seulement lorsqu'un liste de référence est téléchargé."
+    },
+    "pipeline@99": {
+      "label": "Premier signalement colonne (facultatif)",
+      "description": "Nom exact de la colonne contenant la première année occurrence documentée dans le pays sélectionné. \n\nRequis uniquement lorsqu'un liste de référence est téléchargé; laisser vide s'il n'est pas fourni. La date de normalisation intervient lors de la préparation des données."
+    },
+    "pipeline@100": {
+      "label": "Citation de l'ensemble de données (facultatif)",
+      "description": "Inclure une citation pour l'ensemble de données nationales. Par défaut vers user input data lorsque vide."
+    },
+    "IAS>prepare_datasets.yml@80|kingdoms": {
+      "label": "Règnes",
+      "description": "Règnes à conserver dans les ensembles de données GRIIS et premiers signalements."
+    },
+    "IAS>prepare_datasets.yml@80|habitats": {
+      "label": "Types d'habitat",
+      "description": "Valeurs de l'habitat à conserver dans les ensembles de données GRIIS et premiers signalements."
+    }
+  },
+  "outputs": {
+    "pipeline@41|default_output": {
+      "label": "Nom du pays",
+      "description": "Nom du pays pour l'analyse des espèces exotiques envahissantes."
+    },
+    "IAS>merge_datasets.yml@52|merged_dataset": {
+      "label": "Ensemble de données fusionné SInAS",
+      "description": "Un enregistrement par combinaison normalisée taxon-localisation-établissement."
+    },
+    "IAS>merge_datasets.yml@52|data_quality_report": {
+      "label": "Rapport sur la qualité des données SInAS",
+      "description": "Le statut de contrôle de qualité combiné, les valeurs inégalées et les conflits de fusion, y compris les mesures prises pour chaque numéro."
+    },
+    "IAS>prepare_datasets.yml@80|excluded_records": {
+      "label": "SInAS enregistrements exclus",
+      "description": "Enregistrements sources complets exclus de la fusion parce que leurs emplacements n'ont pas pu être normalisés."
+    },
+    "IAS>merge_datasets.yml@52|run_summary": {
+      "label": "SInAS résumé de l'exécution",
+      "description": "Préparation et fusion des comptes d'enregistrement, des comptes d'avertissement, des exclusions et du statut global de contrôle de la qualité."
+    },
+    "IAS>model_data.yml@81|model_outputs": {
+      "label": "Sorties du modèle",
+      "description": "Hypothèses, paramètres du modèle, statistiques d'ajustement, état de convergence, direction de tendance estimée, interprétation et mises en garde pour chaque option du modèle. Les tendances du premier enregistrement ne sont pas automatiquement équivalentes aux tendances de l'introduction."
+    },
+    "IAS>model_data.yml@81|model_decision": {
+      "label": "Décision concernant la modélisation",
+      "description": "Scénario de données choisi, critères d'adéquation, niveau d'inférence soutenu, directives d'interprétation, portée partagée et références."
+    },
+    "IAS>model_data.yml@81|data_summary": {
+      "label": "Résumé des données de modélisation",
+      "description": "Statistiques sur l'adéquation des données pour le pays sélectionné. L'exhaustivité du premier enregistrement est le pourcentage de GRIIS taxons envahissant partout où il y a une année du premier enregistrement; ce n'est pas l'exhaustivité globale du liste de référence."
+    },
+    "IAS>model_data.yml@81|quantitative_plot": {
+      "label": "Comparaison quantitative des modèles",
+      "description": "Dossiers de découverte annuels ajustés à partir de modèles comportant d'autres hypothèses de détection. Comparer statistiques d'ajustement seulement parmi les modèles convergents installés dans le même pays et les mêmes séries chronologiques."
+    },
+    "IAS>model_data.yml@81|qualitative_plot": {
+      "label": "Modèle qualitatif graphique",
+      "description": "Comparaison descriptive de l'IAS premiers signalements avec le proxy d'observation GBIF. Des patrons similaires peuvent indiquer un effet d'observation-effort; ce graphique n'est pas une estimation corrigée du taux d'introduction."
+    },
+    "IAS>model_data.yml@81|qualitative_interpretation": {
+      "label": "Interprétation qualitative du modèle",
+      "description": "Interprétation choisie à partir de la combinaison IAS-observation et enquête-effort. Une tendance est classée comme stable lorsque sa pente de temps adaptée n'est pas significative à alpha = 0,05."
+    }
+  }
+}

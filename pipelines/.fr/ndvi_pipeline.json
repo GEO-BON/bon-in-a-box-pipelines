@@ -1,0 +1,50 @@
+{
+  "metadata": {
+    "name": "Indice de végétation par différence normalisée",
+    "description": "## Présentation\nCe pipeline calcule l'écosystème indice de végétation par différence normalisée (NDVI) en utilisant openEO Copernicus Data Space Ecosystem. NDVI mesure le \"greenness\" de la végétation, avec des valeurs plus élevées indiquant une végétation dense et de faibles valeurs indiquant des zones stériles avec des sols rocheux, neige, sable ou exposés.\n\nLes bandes rouge et infrarouge de Sentinel 2 L2A sont utilisées pour calculer NDVI. Le pipeline résume ces valeurs sur la période d'intérêt avec le statistique sommaire spécifié. Les NDVI couches sont masqués avec le masque de dilatation SCL pour éviter les valeurs erronées en retirant les pixels couverts par les nuages.\n- En savoir plus sur Sentinel 2 [ici](https://dataspace.copernicus.eu/data-collections/copernicus-sentinel-data/sentinel-2)\n- En savoir plus sur le calcul de NDVI avec openEO [ici](https://openeo.org/documentation/1.0/cookbook/#example-1-ndvi)\n## Avant de commencer\nLe pipeline nécessite une clé API pour l'écosystème Copernicus. Pour acquérir une clé API, visitez le CDSE [site web](https://dataspace.copernicus.eu/analyse/openeo).\n\nLe pipeline peut prendre beaucoup de temps pour tirer et résumer les données, en particulier aux résolutions spatiales fines pour de grandes zones."
+  },
+  "inputs": {
+    "pipeline@210": {
+      "label": "Emprise et SCR",
+      "description": "Sélectionnez un pays/région et un SCR pour obtenir le emprise associé. Vous pouvez également dessiner/injecter un emprise personnalisé avec un SCR."
+    },
+    "data>load_polygons.yml@211|polygon_type": {
+      "label": "Type de polygone",
+      "description": "Type de polygone à charger. \n\n- `Country or region` charge un polygone du pays ou de la région sélectionné.\n- `Polygon of bounding box` charge un polygone du emprise associé au pays ou à la région sélectionné, ou le emprise dessiné."
+    },
+    "NDVI>calculateNDVI.yml@199|start_date": {
+      "label": "Date de début",
+      "description": "Date de début du résumé de l'indice de végétation"
+    },
+    "NDVI>calculateNDVI.yml@199|end_date": {
+      "label": "Date de fin",
+      "description": "Date de fin du résumé de l'indice de végétation"
+    },
+    "NDVI>calculateNDVI.yml@199|spatial_resolution": {
+      "label": "Résolution spatiale",
+      "description": "Résolution spatiale du raster pour le tracé, laisser vide pour avoir la résolution spatiale originale du calque (10m x 10m). Si vous utilisez un SCR projeté, la résolution doit être en mètres. Si vous utilisez un SCR non projeté (par exemple EPSG:4326), cela doit être en degrés (0,08 degrés est ~1 km à l'équateur).\n\nLaisser vide pour avoir la résolution spatiale originale du calque (10m x 10m)."
+    },
+    "NDVI>calculateNDVI.yml@199|summary_statistic": {
+      "label": "Statistique sommaire",
+      "description": "Statistique pour résumer couches dans le temps pour la couche raster résumée et l'espace pour graphique des moyennes NDVI dans le temps"
+    }
+  },
+  "outputs": {
+    "NDVI>calculateNDVI.yml@199|timeseries": {
+      "label": "Séries chronologiques de NDVI",
+      "description": "Séries chronologiques de valeurs NDVI pour chaque date où il y a des données dans la période spécifiée."
+    },
+    "NDVI>calculateNDVI.yml@199|timeseries_plot": {
+      "label": "NDVI série chronologique graphique",
+      "description": "Graphique des valeurs de NDVI dans le temps"
+    },
+    "NDVI>calculateNDVI.yml@199|rasters": {
+      "label": "Indice de végétation rasters",
+      "description": "Raster des valeurs NDVI résumées par la statistique d'entrée (moyenne, max, min, médiane) pour chaque pixel dans la période choisie. Si plusieurs indices ont été choisis, chaque bande correspond à un indice de végétation différent\n"
+    },
+    "data>load_polygons.yml@211|polygon": {
+      "label": "Polygone",
+      "description": "Polygones du pays, WDPA, ZEE pour le pays ou la région d'intérêt"
+    }
+  }
+}

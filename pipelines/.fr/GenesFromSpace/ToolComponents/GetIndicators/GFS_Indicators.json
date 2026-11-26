@@ -1,0 +1,50 @@
+{
+  "metadata": {
+    "name": "Calculer les indicateurs de diversité génétique",
+    "description": "Composante de l'outil Genes from Space. Compte tenu des poylgones de la répartition de la population (format GeoJSON) et d'une cheminée raster décrivant la disponibilité de l'habitat au fil du temps (format GeoTIFF), le pipeline retourne les indicateurs de perte de diversité génétique (indicateur Ne500 et Populations Maintened), affichés par une interface interactive. "
+  },
+  "inputs": {
+    "pipeline@100": {
+      "label": "Polygones des populations",
+      "description": "Chemin vers le fichier GeoJSON stockant des polygones de populations."
+    },
+    "pipeline@101": {
+      "label": "Carte binaire de la présence/absence d'habitat",
+      "description": "Dossier Tif décrivant la présence (1) ou l'absence (0) d'un habitat convenable. Plusieurs couches peuvent être utilisés pour décrire la disponibilité de l'habitat à différents points temporels."
+    },
+    "pipeline@102": {
+      "label": "Points temporels de la carte de l'habitat",
+      "description": "Liste de points temporels correspondant à la carte de l'habitat couches."
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@127|ne_nc": {
+      "label": "Ne:Nc taux estimatif",
+      "description": "Rapport Ne:Nc estimé pour les espèces étudiées. Plusieurs valeurs peuvent être fournies, séparées par une virgule."
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@127|pop_density": {
+      "label": "Densité de population",
+      "description": "Densité estimée de la population [nombre d'individus par km2]. Plusieurs valeurs peuvent être fournies, séparées par une virgule."
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@127|runtitle": {
+      "label": "Titre de l'exécution",
+      "description": "Définissez un nom pour le exécution du pipeline."
+    }
+  },
+  "outputs": {
+    "GFS_IndicatorsTool>get_Indicators.yml@127|ne_table": {
+      "label": "Taille effective de la population",
+      "description": "Taille efficace estimée de chaque population, selon le dernier point temporel de la carte de couverture de l'habitat."
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@127|pm": {
+      "label": "Indicateur de maintien de la population",
+      "description": "Proportion estimée de populations habitées, en comparant le point le plus précoce et le point le plus récent."
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@127|interactive_plot": {
+      "label": "Interactive graphique",
+      "description": "Une interface interactive pour explorer les tendances des indicateurs dans l'espace géographique et le temps."
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@127|ne500": {
+      "label": "Indicateur Ne>500",
+      "description": "Proportion estimée de populations avec Ne>500 au dernier moment."
+    }
+  }
+}

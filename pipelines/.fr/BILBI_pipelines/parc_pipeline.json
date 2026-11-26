@@ -1,0 +1,58 @@
+{
+  "metadata": {
+    "name": "Aire protégée Représentativité et connectivité (PARC)",
+    "description": "\n## Présentation  \n\nLes indices aire protégée Représentativité et connectivité (PARC) mesurent la mesure dans laquelle aires protégées terrestre et d'autres mesures de conservation efficaces basées sur la zone (AMCE), sont représentatifs sur le plan écologique et bien reliés - tant entre eux qu'avec d'autres zones d'écosystèmes naturels intacts dans le paysage environnant (Hoskins et al., 2022).  \n\nL'indice de représentativité PARC fournit une mesure rigoureuse de la mesure dans laquelle un système terrestre de aires protégées et AMCE est représentatif de l'ensemble de la diversité environnementale et biologique au sein d'une unité de déclaration spatiale donnée (p. ex. pays, temps général de l'écosystème). L'indice de connectivité PARC fournit une mesure rigoureuse de la mesure dans laquelle aires protégées et AMCE sont fonctionnellement reliés entre eux et à d'autres zones d'écosystèmes naturels intacts.\n\nEnsemble, l'indicateur composite PARC permet de mesurer les progrès accomplis dans l'expansion de tout système de aires protégées et AMCE. L'indicateur est exprimé en proportion (ou en pourcentage) avec la position d'une unité de déclaration donnée sur cette échelle rigoureusement ajustée pour tenir compte des effets de la représentativité et de la connectivité.\n\nCe pipeline calcule une moyenne géométrique pondérée de l'indicateur PARC sur une région d'intérêt. Le code pour calculer la moyenne pondérée a été adapté à partir du script \"Moyens géométriques pondérés de l'indicateur CSIRO BILBI\" sur le portail d'accès aux données CSIRO](https://doi.org/10.25919/edwj-4b67) \n\n## Utilisations\nLes indices PARC évaluent l'objectif A et la cible 3 du FBG, qu'ils soient générés séparément ou en tant que composites, afin de suivre et de signaler les tendances passées à aujourd'hui en matière de représentativité et de connectivité par des calculs répétés en utilisant la meilleure cartographie disponible de aires protégées et AMCE à plusieurs moments, par exemple pour différentes années. Ils peuvent également servir de base à l'évaluation de la contribution que les ajouts potentiels au système de aires protégées et de AMCE pourraient apporter à l'amélioration des scores actuels de PARC, ce qui permettrait de donner la priorité à ces actions.\n\n## Limites du pipeline\n- PARC est une couche modélisée, il y a donc de plus grandes incertitudes dans les zones où les données sont moins nombreuses. Interpréter les résultats avec prudence."
+  },
+  "inputs": {
+    "pipeline@23": {
+      "label": "Emprise et SCR",
+      "description": "Sélectionnez un pays/région et un SCR pour obtenir le emprise associé. Vous pouvez également dessiner/injecter un emprise personnalisé avec un SCR."
+    },
+    "data>load_polygons.yml@25|polygon_type": {
+      "label": "Type de polygone",
+      "description": "Type de polygone à charger. \n- `Country or region` charge un polygone du pays ou de la région sélectionné.\n- `Polygon of bounding box` charge un polygone du emprise associé au pays ou à la région sélectionné, ou le emprise dessiné."
+    },
+    "data>loadFromStac.yml@1|t0": {
+      "label": "Année de début (facultatif)",
+      "description": "Année de début pour les séries chronologiques couches. Laisser vide si vous utilisez toutes les dates disponibles.\n\nDoit être l'un des: 1970, 1980, 1990, 2000, 2005, 2015, 2010, 2020, 2024"
+    },
+    "data>loadFromStac.yml@1|t1": {
+      "label": "Année de fin (facultatif)",
+      "description": "Année de fin pour les séries chronologiques couches. Laisser vide si vous utilisez toutes les dates disponibles.\n\nDoit être l'un des: 1970, 1980, 1990, 2000, 2005, 2015, 2010, 2020, 2024"
+    },
+    "data>loadFromStac.yml@1|temporal_res": {
+      "label": "Résolution temporelle (facultatif)",
+      "description": "Résolution temporelle à utiliser lors de la requête de items STAC par date, dans le format (\"P\", intervalle de temps et unité de temps, par exemple \"P1Y\" est annuel, \"P1M\" est mensuel et \"P1D\" est quotidien). Laisser vide si ce n'est pas par date. \n\nDoit être de: P5Y, P10Y, P15Y, P20Y\n\nSi la résolution temporelle est plus grossière que la résolution temporelle des séries chronologiques, le couches sera agrégé avec la méthode d'agrégation choisie ci-dessous."
+    },
+    "pipeline@19": {
+      "label": "Résolution spatiale",
+      "description": "Entier, résolution spatiale du rasters dans les mêmes unités que le système de coordonnées de référence (mètres pour les systèmes de référence projetés et degrés pour les systèmes de référence en lat long). \n\nSi c'est laissé vide il utilisera la résolution native du rasters. \n\nSi la résolution spatiale est plus grossière que la résolution native du rasters, le couches sera rééchantillonné avec la méthode de rééchantillonnage choisie ci-dessous."
+    },
+    "pipeline@18": {
+      "label": "Méthode de rééchantillonnage",
+      "description": "Méthode de rééchantillonnage utilisée lors du rééchelonnement et/ou du réaménagement du raster couches. Voir [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) pour la description.\n\nSera ignoré si pas rééchantillonnage."
+    },
+    "pipeline@20": {
+      "label": "Méthode d'agrégation",
+      "description": "Méthode utilisée pour agréger les éléments lorsque couches se combine avec le temps.\n\nSera ignoré si pas agréger."
+    }
+  },
+  "outputs": {
+    "bilbi_indicators>bilbi_weighted_mean.yml@0|time_series_plot": {
+      "label": "Séries chronologiques graphique",
+      "description": "Graphique de la moyenne géométrique de l'indicateur dans le temps dans le zone d'étude d'intérêt"
+    },
+    "bilbi_indicators>bilbi_weighted_mean.yml@0|summarised_values": {
+      "label": "PARC résumé",
+      "description": "Moyenne géométrique pondérée annuelle de PARC dans le polygone zone d'étude.\n\nUn score élevé indique qu'un pourcentage plus élevé de la biodiversité et de la variation environnementale de la région est représenté en aires protégées. Un faible score suggère que certains types écologiques sont sous-représentés."
+    },
+    "data>loadFromStac.yml@1|rasters": {
+      "label": "Rasters de l'indicateur couches pour chaque année",
+      "description": "Sortie des fichiers raster au format GeoTIFF."
+    },
+    "data>load_polygons.yml@25|polygon": {
+      "label": "Polygone",
+      "description": "Polygones du pays, WDPA, ZEE pour le pays ou la région d'intérêt"
+    }
+  }
+}

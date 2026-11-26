@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "name": "Indice de phénologie des végétaux (Europe seulement)",
+    "description": "## Présentation\nLa phénologie est l'un des caractères de l'espèce EBVs. Il décrit la présence, l'absence, l'abondance ou la durée des activités saisonnières des organismes. Ce pipeline utilise le paquet de python openEO pour extraire la phénologie couches de la couche de phénologie de l'écosystème de l'espace de données Copernicus. Le raster a des valeurs pour l'indice de phénologie végétale (IPP), qui est un indice de végétation qui aide à estimer la santé de la végétation et l'activité photosynthétique tout au long de la saison de croissance. Il est plus directement lié à la phénologie végétale que d'autres indices de végétation comme NDVI et ne sature pas dans des conditions de biomasse élevées. Elle est calculée avec une réflectance proche de l'infrarouge, qui est fortement reflétée par une végétation saine. Vous pouvez en savoir plus sur la phénologie couches [ici](https://land.copernicus.eu/en/dataset-catalog). Le script tire la phénologie annuelle couches en utilisant openEO et les rééchantillonne à la résolution spatiale de choix, calcule statistiques sommaires sur un pays ou une région d'intérêt, et soustrait la rasters pour regarder le changement au fil du temps.\n## Utilisations\nCe pipeline peut être utilisé pour regarder la Phénologie EBV. Il peut également servir d'intrant pour les pipelines subséquents, comme les modèles de distribution des espèces.\n## Limites du pipeline \n* Phénologie couches sont disponibles uniquement pour les pays d'Europe.\n* Le pipeline utilise une résolution très fine, donc il faut beaucoup de temps pour fonctionner sur de grandes zones.\n## Avant de commencer\nLe pipeline nécessite une clé API pour l'écosystème Copernicus. Pour acquérir une clé API, visitez le CDSE [site web](https://dataspace.copernicus.eu/analyse/openeo). YSi vous utilisez BON in a Box localement, vous pouvez"
+  },
+  "inputs": {
+    "pipeline@68": {
+      "label": "Emprise et SCR",
+      "description": "Sélectionnez un pays/région et un SCR pour obtenir le emprise associé. Vous pouvez également dessiner/injecter un emprise personnalisé avec un SCR.\n\nCe pipeline ne peut être exécuté que dans **Europe**."
+    },
+    "data>load_polygons.yml@69|polygon_type": {
+      "label": "Type de polygone",
+      "description": "Type de polygone à charger. \n\n- `Country or region` charge un polygone du pays ou de la région sélectionné.\n- `Polygon of bounding box` charge un polygone du emprise associé au pays ou à la région sélectionné, ou le emprise dessiné."
+    },
+    "phenology>summarise_phenology.yml@37|season": {
+      "label": "Saison d'intérêt",
+      "description": "Saison pour laquelle effectuer des analyses phénologiques. La saison 1 est la première saison de croissance (printemps et début de l'été) et la saison 2 est la deuxième saison de croissance (fin d'été et automne).\n"
+    },
+    "phenology>summarise_phenology.yml@37|bands": {
+      "label": "Bandes",
+      "description": "Bandes d'intérêt pour les calculs. \n- SOSD (Date de début de la saison) - date à laquelle la saison de croissance de la végétation commence, quand la valeur de PPI atteint 25% de l'amplitude de la saison pendant la période de green-up.\n- EOSD (Date de fin de saison) - date à laquelle la saison de croissance de la végétation se termine dans le profil chronologique de l'IPP. Se produit lorsque la valeur PPI atteint 15 % de l'amplitude de la saison pendant la période du green-down.\n- SSV (valeur de début de saison) - la valeur du PPI au début de la saison de végétation\n- EOSV (valeur en fin de saison) - valeur de l'IPP à la fin de la saison de végétation\n- MAXV (valeur maximale de la saison de végétation) - la valeur maximale (de pointe) que le PPI atteint pendant la saison de végétation\n- MAXD (date maximale de saison) - date de la saison de végétation où l'IPP maximal est atteint\n- MINV (valeur minimale de la saison) - PPI moyen des minima des côtés gauche et droit de chaque saison\n- AMPL (amplitude de la saison) - différence entre les valeurs PPI maximales et minimales atteintes pendant la saison\n- LENGTH (longueur de la saison) - nombre de jours entre les dates de début et de fin de la saison de végétation\n- LSLOPE (Pente de la période de green-up) - le taux de variation des valeurs de PPI au jour où commence la saison de croissance de la végétation\n- RSLOPE (Pente de la période verte) - le taux de variation des valeurs de PPO à la date de la fin de la saison de végétation\n- SPROD (Productivité saisonnelle) - La saison de croissance fait partie intégrante de la somme de toutes les valeurs PPI quotidiennes entre les dates de début et de fin de saison, moins leur niveau de base.\n- TPROD (Productivité totale) - la saison de croissance intégrale calculée comme somme de toutes les valeurs PPI quotidiennes entre les dates de début et de fin de saison\n- QFLAG (Quality flag) - indicateur de qualité aidant les utilisateurs à filtrer les nuages, les ombres des nuages et de la topographie, les autres zones sombres, les surfaces de neige et d'eau dans leur analyse de l'ensemble de données PPI\n"
+    },
+    "phenology>summarise_phenology.yml@37|spatial_resolution": {
+      "label": "Résolution spatiale",
+      "description": "Entier, résolution spatiale du rasters dans les mêmes unités que le système de coordonnées de référence (mètres pour les systèmes de référence projetés et degrés pour les systèmes de référence en lat long). Laisser vide pour utiliser la résolution spatiale originale du couches. Si laissé vide, SCR doit être EPSG:4326."
+    },
+    "pipeline@44": {
+      "label": "Année de début",
+      "description": "Année de début pour les séries chronologiques couches. Laisser vide si vous utilisez toutes les dates disponibles."
+    },
+    "pipeline@45": {
+      "label": "Année de fin",
+      "description": "Année de fin pour les séries chronologiques couches. Laisser vide si vous utilisez toutes les dates disponibles."
+    },
+    "phenology>summarise_phenology.yml@37|aggregate_function": {
+      "label": "Fonction d'agrégation",
+      "description": "Méthode utilisée pour agréger les éléments lorsque couches se combine avec le temps. Sera ignoré si pas agréger."
+    }
+  },
+  "outputs": {
+    "phenology>phenology_difference.yml@48|phenology_change_plot": {
+      "label": "Graphique du changement phénologique",
+      "description": "Graphique des valeurs phénologiques résumées dans le temps pour les bandes d'intérêt"
+    },
+    "phenology>phenology_difference.yml@48|phenology_change": {
+      "label": "Évolution des paramètres phénologiques",
+      "description": "Carte raster du changement de phénologie du année de début au année de fin. Le année de fin est soustrait du année de début, de sorte que les valeurs plus grandes indiquent une plus grande diminution de la valeur donnée au fil du temps.\n"
+    },
+    "phenology>summarise_phenology.yml@37|rasters": {
+      "label": "Phénologie rasters",
+      "description": "Rasters de la phénologie couches, avec un raster par année dans la plage de temps d'entrée. Sera soit le raster couches brut ou rééchantillonné à la résolution spatiale et l'entrée SCR par l'utilisateur.\n"
+    },
+    "phenology>summarise_phenology.yml@37|timeseries": {
+      "label": "Statistiques zonales",
+      "description": "Valeurs résumées sur le polygone d'intérêt (moyenne, minimale ou maximale) pour chaque année pour chaque tranche d'intérêt"
+    },
+    "data>load_polygons.yml@69|polygon": {
+      "label": "Polygone",
+      "description": "Polygones du pays, WDPA, ZEE pour le pays ou la région d'intérêt"
+    }
+  }
+}

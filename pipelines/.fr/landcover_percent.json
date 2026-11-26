@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "name": "Pourcentage des classes raster",
+    "description": "Calculer le pourcentage de classes sur un emprise ou un polygone d'intérêt dans rasters catégorique."
+  },
+  "inputs": {
+    "pipeline@43": {
+      "label": "Emprise et SCR",
+      "description": "Sélectionnez un pays/région et un SCR pour obtenir le emprise associé."
+    },
+    "data>loadFromStac.yml@42|spatial_res": {
+      "label": "Résolution spatiale (facultatif)",
+      "description": "Entier, résolution spatiale du rasters dans les mêmes unités que le système de coordonnées de référence (mètres pour les systèmes de référence projetés et degrés pour les systèmes de référence en lat long). \n\nSi c'est laissé vide il utilisera la résolution native du rasters. \n\nSi la résolution spatiale est plus grossière que la résolution native du rasters, le couches sera rééchantillonné avec la méthode de rééchantillonnage choisie ci-dessous."
+    },
+    "data>loadFromStac.yml@42|stac_url": {
+      "label": "URL STAC",
+      "description": "URL du catalogue STAC."
+    },
+    "data>loadFromStac.yml@42|collections_items": {
+      "label": "items de collection STAC",
+      "description": "Vecteur de chaînes de caractères. Pour tirer items de collection spécifique, entrez le nom de la collection suivi de '|' suivi d'un item id (par exemple \"chelsa-clim|bio1\"). Pour extraire une collection entière, tapez uniquement le nom de la collection (par exemple \"chelsa-clim\"). Pour tirer items de collection par date, écrivez le nom de la collection et fournissez une date de début, une date de fin et une résolution temporelle.\n\nCouches utilisé dans ce pipeline doit être des variables catégoriques (p. ex. Couverture du sol). "
+    },
+    "data>loadFromStac.yml@42|t0": {
+      "label": "Date de début",
+      "description": "Date de début de la série temporelle couches au format YYYY-MM-DD. Laisser vide si l'extraction d'éléments par nom."
+    },
+    "data>loadFromStac.yml@42|t1": {
+      "label": "Date de fin",
+      "description": "Date de fin de la série temporelle couches au format YYYY-MM-DD. Laisser vide si l'extraction d'éléments par nom."
+    },
+    "data>loadFromStac.yml@42|temporal_res": {
+      "label": "Résolution temporelle",
+      "description": "Résolution temporelle à utiliser lors de la requête de items STAC par date, dans le format (\"P\", intervalle de temps et unité de temps, par exemple \"P1Y\" est annuel, \"P1M\" est montly et \"P1D\" est quotidien). Laisser vide si ce n'est pas par date. Si la résolution temporelle est plus grossière que la résolution temporelle des séries chronologiques, le couches sera agrégé avec la méthode d'agrégation choisie ci-dessous."
+    },
+    "data>loadFromStac.yml@42|resampling": {
+      "label": "Méthode de rééchantillonnage",
+      "description": "Méthode de rééchantillonnage utilisée lors du rééchelonnement et/ou du réaménagement du raster couches. Voir [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) pour la description."
+    },
+    "data>loadFromStac.yml@42|aggregation": {
+      "label": "Méthode d'agrégation",
+      "description": "Méthode utilisée pour agréger les éléments lorsque couches se combine avec le temps."
+    }
+  },
+  "outputs": {
+    "zonal_statistics>percentage_cover_classes.yml@22|class_percentage": {
+      "label": "Pourcentage de classes",
+      "description": "Pourcentage de chaque classe catégorisée dans une couche raster sur un polygone ou emprise d'intérêt"
+    },
+    "data>load_polygons.yml@44|polygon": {
+      "label": "Polygone",
+      "description": "Polygones du pays, WDPA, ZEE pour le pays ou la région d'intérêt"
+    }
+  }
+}

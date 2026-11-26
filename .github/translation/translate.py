@@ -5,12 +5,13 @@ Text is split into segments (one markdown line, table cell or JSON label).
 Things that must not be translated (glossary terms, code, URLs, links) are
 replaced by tokens like X0, so each sentence is sent whole as plain text.
 Each segment is cached by the hash of the masked text, so only new or
-changed segments are translated. Output goes to .translation/<lang>/.
+changed segments are translated. Output goes to <source_dir>/.<lang>/, e.g.
+pipelines/.fr/. Pipeline JSON translations are sparse: only the translated
+text fields, which the server overlays on the English pipeline.
 
 Env: LIBRETRANSLATE_API_KEY (required unless --dry-run), LIBRETRANSLATE_URL.
 """
 import argparse
-import copy
 import hashlib
 import html
 import json
@@ -26,8 +27,7 @@ import requests
 import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
-TR_DIR = ROOT / ".translation"
-CONFIG = TR_DIR / "config.yml"
+CONFIG = ROOT / "translation.config.yml"
 CACHE_NAME = "cache.json"
 API_URL = os.environ.get("LIBRETRANSLATE_URL", "https://translate.geobon.org/translate")
 BATCH_ITEMS = 20
@@ -353,21 +353,33 @@ def translate_markdown(text, tr):
     return "\n".join(out)
 
 
+def translate_fields(item, tr, short, long):
+    """Translated copies of the string fields present in item."""
+    out = {}
+    for field in short:
+        if isinstance(item.get(field), str):
+            out[field] = tr(item[field])
+    for field in long:  # markdown
+        if isinstance(item.get(field), str):
+            out[field] = translate_markdown(item[field], tr)
+    return out
+
+
 def translate_pipeline(data, tr):
-    """Full copy of a pipeline with its user-facing text translated."""
-    d = copy.deepcopy(data)
-    meta = d.get("metadata") or {}
-    if isinstance(meta.get("name"), str):
-        meta["name"] = tr(meta["name"])
-    if isinstance(meta.get("description"), str):
-        meta["description"] = translate_markdown(meta["description"], tr)
+    """Sparse translation of a pipeline: only its user-facing text fields."""
+    out = {}
+    meta = translate_fields(data.get("metadata") or {}, tr, ["name"], ["description"])
+    if meta:
+        out["metadata"] = meta
     for section in ("inputs", "outputs"):
-        for item in (d.get(section) or {}).values():
-            if isinstance(item.get("label"), str):
-                item["label"] = tr(item["label"])
-            if isinstance(item.get("description"), str):
-                item["description"] = translate_markdown(item["description"], tr)
-    return d
+        items = {}
+        for item_id, item in (data.get(section) or {}).items():
+            fields = translate_fields(item, tr, ["label"], ["description"])
+            if fields:
+                items[item_id] = fields
+        if items:
+            out[section] = items
+    return out
 
 
 def render(rel, tr):
@@ -378,9 +390,14 @@ def render(rel, tr):
     return translate_markdown(text, tr)
 
 
-def source_files(patterns):
-    """Files matching the include patterns, minus git-ignored ones."""
-    found = {p.relative_to(ROOT) for pat in patterns for p in ROOT.glob(pat) if p.is_file()}
+def source_files(source_dir, patterns):
+    """Files matching the include patterns, minus git-ignored and hidden ones.
+
+    Hidden folders (.fr, ...) hold the translations themselves.
+    """
+    base = ROOT / source_dir
+    found = {p.relative_to(ROOT) for pat in patterns for p in base.glob(pat)
+             if p.is_file() and not any(part.startswith(".") for part in p.relative_to(base).parts)}
     try:
         listed = subprocess.run(
             ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
@@ -410,8 +427,9 @@ def main():
     args = ap.parse_args()
 
     cfg = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
+    source_dir = Path(cfg.get("source_dir", "pipelines"))
     source_lang = cfg.get("source", "en")
-    sources = source_files(cfg["include"])
+    sources = source_files(source_dir, cfg["include"])
     if args.files:
         targets = [Path(os.path.relpath(Path(f).resolve(), ROOT)) for f in args.files]
         unknown = [str(t) for t in targets if t not in sources]
@@ -425,7 +443,7 @@ def main():
         sys.exit("LIBRETRANSLATE_API_KEY is not set")
 
     for lang in args.lang or cfg["languages"]:
-        lang_dir = TR_DIR / lang
+        lang_dir = ROOT / source_dir / f".{lang}"
         cache_path = lang_dir / CACHE_NAME
         cache = json.loads(cache_path.read_text(encoding="utf-8")) if cache_path.exists() else {}
         tr = Translator(source_lang, lang, Glossary(cfg.get("glossary") or [], lang), cache, api_key)
@@ -447,7 +465,7 @@ def main():
 
         written = 0
         for rel in targets:
-            out_path = lang_dir / rel
+            out_path = lang_dir / rel.relative_to(source_dir)
             content = render(rel, tr)
             if not out_path.exists() or out_path.read_text(encoding="utf-8") != content:
                 out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -457,7 +475,7 @@ def main():
         removed = 0
         if not args.files:  # full run: drop unused cache entries and orphan files
             cache = {k: v for k, v in cache.items() if k in tr.used}
-            removed = remove_orphans(lang_dir, set(sources))
+            removed = remove_orphans(lang_dir, {rel.relative_to(source_dir) for rel in sources})
         lang_dir.mkdir(parents=True, exist_ok=True)
         cache_path.write_text(json.dumps(cache, indent=1, ensure_ascii=False, sort_keys=True) + "\n",
                               encoding="utf-8")

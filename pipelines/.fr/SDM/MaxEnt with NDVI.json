@@ -1,0 +1,110 @@
+{
+  "metadata": {
+    "name": "Modélisation de la distribution des espèces avec MaxEnt en utilisant NDVI",
+    "description": "## Présentation \nLa répartition des espèces est un Variable essentielle de biodiversité (EBV) important dans la classe des populations d'espèces. Savoir où les espèces sont susceptibles de se produire est essentiel pour comprendre les modèles de biodiversité, déterminer les priorités de conservation, évaluer les impacts potentiels des changements environnementaux et appuyer les indicateurs de biodiversité. Cependant, les données de l'espèce occurrence sont souvent éparpillées, inégalement réparties et affectées par un biais d'échantillonnage spatial et taxonomique. Les modèles de répartition des espèces (SDM) aident à combler ces lacunes en estimant où des conditions environnementales appropriées se produisent pour une espèce à partir d'observations connues et de prédicteurs environnementaux.  \n\nLe pipeline MaxEnt construit un modèle de distribution des espèces à l'aide des enregistrements occurrence du [Système mondial d'information sur la biodiversité (GBIF)](https://www.gbif.org/) et du raster couches. Le pipeline récupère les observations GBIF pour le taxon sélectionné ou taxons, nettoie les coordonnées occurrence, élimine les prédicteurs environnementaux hautement collinéaires, génère points d'arrière-plan, et s'adapte à un modèle MaxEnt en utilisant l'ENMeval package R. MaxEnt est une approche de modélisation de la présence-arrière-plan, ce qui signifie qu'elle compare la présence d'espèces connues avec les conditions environnementales de fond dans le [Zone d'étude](https://github.com/user-attachments/assets/a9150fcb-22ca-4a90-bbf2-74fe8f9d840b). \n\nCe cas d'utilisation démontre comment [NDVI](https://www.earthdata.nasa.gov/topics/land-surface/normalized-difference-vegetation-index-ndvi) peut être incorporé comme prédicteur environnemental dans le pipeline de modélisation de la distribution des espèces BON in a Box MaxEnt. NDVI est une mesure de la plante verte. L'inclusion du NDVI aux côtés d'autres variables environnementales permet aux utilisateurs d'étudier si la structure de la végétation améliore le prédictions de la pertinence de l'habitat. \n\nLe pipeline évalue différents paramètres MaxEnt, y compris classes de variables et les multiplicateurs de régularisation, et sélectionne un modèle à l'écoute en fonction des performances du modèle. Il produit une qualité d'habitat prédiction raster, des enregistrements occurrence nettoyés, des prédicteurs environnementaux sélectionnés, une DOI de téléchargement GBIF et une raster résumant la variabilité entre les modèles.  \n## Utilisations\nLe pipeline MaxEnt peut être utilisé pour estimer la distribution potentielle ou la pertinence relative de l'habitat d'une ou de plusieurs espèces dans un zone d'étude sélectionné. Sorties peut appuyer la planification de la conservation, l'établissement de priorités en matière d'échantillonnage, l'identification des points chauds de la biodiversité, la planification aire protégée, l'évaluation des risques pour les espèces préoccupantes de conservation et les évaluations de l'impact environnemental.\n\nLes résultats peuvent également être utilisés comme intrants pour d'autres analyses et indicateurs de la biodiversité, comme l'identification des zones où les espèces sont susceptibles de se produire, la comparaison de la qualité de l'habitat prévue d'une région à l'autre ou la mise en évidence des zones où un échantillonnage occurrence supplémentaire peut être nécessaire. Comme le pipeline récupère à la fois les observations GBIF et le prédicteur environnemental couches, il fournit un flux de travail reproductible pour produire des cartes de distribution des espèces à partir de données publiques sur la biodiversité et l'environnement. \n\nLes DSM prédisent où les espèces sont susceptibles de se produire en fonction d'une série de variables environnementales associées au occurrences connu (Peterson, 2001; Elith et Leathwick, 2009). Le pipeline MaxEnt tire occurrences des espèces d'intérêt de GBIF et de raster couches environnementale du catalogue GEO BON STAC. Ensuite, le pipeline nettoie les données GBIF en incluant seulement un occurrence par pixel et élimine la colinéarité entre le couches environnemental. Troisièmement, le pipeline crée un ensemble de pseudo-absences (points d'arrière-plan) et le combine avec les présences et les prédicteurs environnementaux pour créer un ensemble de données prêt à entrer dans le modèle SDM. Le pipeline exécute le SDM sur ces données en utilisant l'algorithme MaxEnt en utilisant l'ENMeval package R (Kass et al. 2021). Le MaxEnt SDM est exécuté par 1\\) partitionnant occurrence et points d'arrière-plan en sous-ensembles pour la formation et l'évaluation, 2\\) construisant le modèle avec différents paramètres algorithmiques (accordage du modèle), et 3\\) évaluant leurs performances ([voir la vignette du paquet](https://jamiemkass.github.io/ENMeval/articles/ENMeval-2.0-vignette.html#partition)). Enfin, le pipeline calcule l'intervalle de confiance à 95 % à l'aide de techniques de piégeage et de validation croisée.\n## Limites du pipeline\n* MaxEnt utilise des données de présence-arrière-plan, non confirmées. Prédictions doit être interprété comme une aptitude relative à l'habitat ou un potentiel relatif occurrence, et non comme une présence ou une absence confirmées d'espèces.\n* Les enregistrements GBIF peuvent contenir des biais spatiaux, taxonomiques et temporels. Le pipeline applique des étapes de nettoyage des coordonnées, mais les utilisateurs doivent toujours inspecter les présences nettoyées et interpréter les résultats avec prudence, en particulier pour les régions ou les taxons mal échantillonnés.\n* La qualité du modèle dépend fortement du nombre et de la qualité des enregistrements occurrence. Un très petit nombre de présences nettoyées peut produire prédictions peu fiable.\n* Le choix des prédicteurs environnementaux, la méthode d'échantillonnage de fond, classes de variables, les multiplicateurs de régularisation et la méthode de partitionnement peuvent affecter sorties du modèle. Les utilisateurs doivent considérer le modèle comme sensible à ces paramètres, en particulier pour les analyses finales.\n* Les prédicteurs environnementaux doivent être pertinents sur le plan écologique pour l'espèce à l'étude. L'inclusion de nombreux prédicteurs corrélés ou non pertinents peut réduire la capacité d'interprétation et augmenter le risque de suradaptation.\n* Le pipeline estime la pertinence en fonction du prédicteur couches fourni par l'utilisateur. Il ne tient pas compte directement des limites de dispersion, des interactions biotiques, des obstacles à l'utilisation des terres, de la détectabilité des espèces ou des changements environnementaux futurs, à moins que ces facteurs ne soient représentés dans les données d'entrée.\n* De plus grandes zones d'étude, des résolutions spatiales plus fines, plus de prédicteurs environnementaux et plus de modèles augmentent le temps de calcul et l'utilisation de la mémoire.\n## Avant de commencer\nUne clé API GBIF et un identifiant client Copernicus Data Space Ecosystem et un secret client sont nécessaires pour exécuter ce pipeline et peuvent être ajoutés au fichier runner.env.  \n\nAvant Exécution du pipeline, choisissez le taxon ou taxons que vous souhaitez modéliser et assurez-vous que les noms correspondent à la colonne vertébrale taxonomique GBIF. Les noms d'espèces peuvent être vérifiés sur le [Site web GBIF](https://www.gbif.org/).  \n\nSélectionnez un zone d'étude en utilisant les entrées emprise et SCR. La résolution SCR et la résolution spatiale déterminent l'échelle de l'analyse, donc choisissez un SCR approprié pour la région et assurez-vous que la résolution spatiale se trouve dans les unités de ce SCR.  \n\nChoisissez le prédicteur environnemental couches dans le catalogue STAC qui est écologiquement pertinent pour les espèces en voie de modélisation. Par exemple, le climat, la végétation, altitude, couverture du sol ou les prédicteurs liés à l'habitat peuvent être appropriés selon l'espèce. Évitez d'inclure de nombreux prédicteurs qui représentent le même gradient environnemental sous-jacent."
+  },
+  "inputs": {
+    "pipeline@121": {
+      "label": "Liste taxons",
+      "description": "Liste séparée par des virgules de [Taxons](https://en.wikipedia.org/wiki/Taxon). Chaque valeur pourrait être un nom d'espèce, un ordre, une classe, un genre, un royaume ou une famille, tant qu'elle correspond exactement à la colonne vertébrale taxonomique GBIF. Les espèces individuelles peuvent être consultées [sur le site GBIF](https://www.gbif.org/species/).\n\nChoisissez des espèces qui sont influencées par la structure forestière."
+    },
+    "data>GBIFHeatmapFromSTAC.yml@139|taxa": {
+      "label": "Groupe taxonomique",
+      "description": "Grand groupe taxonomique utilisé pour récupérer la carte thermique de densité d'observation GBIF pour l'échantillonnage du point de fond. Choisissez le groupe qui correspond le mieux au modèle taxons, ou tous pour toutes les observations GBIF."
+    },
+    "pipeline@140": {
+      "label": "Emprise et SCR",
+      "description": "Emprise et système de coordonnées de référence définissant l'étendue de l'analyse. Cette mesure est utilisée pour récupérer GBIF occurrences, le prédicteur environnemental rasters, la carte thermique de l'effort d'échantillonnage GBIF, et l'étendue de l'étude pour la modélisation.\n\nLa mesure dans laquelle vous choisissez influe sur la façon dont les résultats doivent être interprétés et peut changer les prédicteurs qui apparaissent comme importants.\n* Plus grande que l'aire de répartition de l'espèce : les résultats se penchent vers occurrence/accessibilité. Les prédictions liées à des limites de distribution à grande échelle (climat, biogéographie) peuvent dominer.\n* L'aire de répartition de l'espèce est semblable ou inférieure à celle de l'espèce. Les prédictions liées à la structure de l'habitat local (végétation, sol) peuvent avoir plus d'importance."
+    },
+    "pipeline@151": {
+      "label": "Zone d'étude",
+      "description": "Polygone du zone d'étude, au format GeoPackage. Pour utiliser un zone d'étude personnalisé, entrez le chemin vers le fichier dans les données utilisateur (par exemple /userdata/study area polygon.gpkg) et il va recouvrir la zone à la forme du polygone. Laisser vide pour utiliser emprise et SCR choisis ci-dessus."
+    },
+    "pipeline@128": {
+      "label": "Résolution spatiale",
+      "description": "Résolution spatiale cible pour la carte thermique rasters et GBIF. Les unités doivent correspondre au SCR, par exemple les compteurs pour SCR projeté ou les degrés pour la latitude-longitude SCR.\n\nLe choix d'une résolution plus grossière réduit le temps de calcul, mais au prix d'un calcul précis. Des variables comme couverture du sol et altitude peuvent perdre de leur pertinence à des échelles grossières, tandis que des variables plus larges comme le climat deviennent relativement plus informatives."
+    },
+    "data>loadFromStac.yml@144|stac_url": {
+      "label": "URL STAC",
+      "description": "URL du catalogue STAC utilisé pour récupérer le prédicteur environnemental couches."
+    },
+    "data>loadFromStac.yml@144|collections_items": {
+      "label": "items de collection STAC",
+      "description": "Pour tirer un élément de collecte spécifique, entrez le nom de la collection suivi de l'identifiant de l'élément (par exemple \"chelsa-clim|bio1\").\n\nPour extraire une collection entière, tapez uniquement le nom de la collection (par exemple \"chelsa-clim\").\n\nSi vous tirez un calque carrelé (par exemple https://stac.geobon.org/viewer/gfw-lossyear/_80N_180W), entrez le nom de la collection (par exemple GFW-lossyear) et un emprise, et le script assemble automatiquement les carreaux en un calque continu."
+    },
+    "pipeline@145": {
+      "label": "Date de début - GBIF",
+      "description": "L'année la plus tôt pour GBIF records YYYY.\n\nIl est recommandé d'utiliser une date de début précoce (p. ex., 1980) pour maximiser le nombre d'enregistrements occurrence pour une espèce donnée."
+    },
+    "pipeline@165": {
+      "label": "Date de début - NDVI",
+      "description": "Date de début du NDVI couches YYYY-MM-DD."
+    },
+    "pipeline@146": {
+      "label": "Date de fin - GBIF",
+      "description": "Dernière année pour GBIF records AAAA."
+    },
+    "pipeline@167": {
+      "label": "Date de fin - NDVI",
+      "description": "Date de fin de la période d'observation au format YYYY-MM-DD."
+    },
+    "data>loadFromStac.yml@144|temporal_res": {
+      "label": "Résolution temporelle",
+      "description": "Résolution temporelle à utiliser lors de la requête de items STAC par date, dans le format (\"P\", intervalle de temps et unité de temps, par exemple \"P1Y\" est annuel, \"P1M\" est mensuel et \"P1D\" est quotidien). \n\nS'il n'y a pas d'option temporelle, tous les éléments seront extraits. Si la résolution temporelle est plus grossière que la résolution temporelle de la série temporelle, le couches sera agrégé à l'aide de la méthode 'first'."
+    },
+    "SDM>selectBackground.yml@40|n_background": {
+      "label": "Nombre de points d'arrière-plan",
+      "description": "Nombre cible de points d'arrière-plan pour générer dans la mesure de l'étude. Ces points sont utilisés pour représenter l'environnement disponible.\n\nIl est généralement recommandé de commencer par 10000 points. Si vous avez un très grand zone d'étude, vous pouvez augmenter ce montant pour capturer pleinement l'espace environnemental disponible. Si vous avez un très petit zone d'étude (soit moins de 10000 pixels), vous pouvez réduire le nombre de points d'arrière-plan."
+    },
+    "SDM>selectBackground.yml@40|method_background": {
+      "label": "Historique de la méthode",
+      "description": "Points d'arrière-plan sont générés en utilisant l'une des cinq méthodes disponibles. Choisir la bonne méthode peut aider à corriger le biais d'échantillonnage dans les données GBIF.\n- `random`: points d'arrière-plan sont échantillonnés au hasard dans toute l'étendue de l'étude. Bon choix si vos données occurrence ont peu de biais spatial vers l'activité humaine/accessibilité (p. ex. routes, villes, zones bien surveillées).\n- `weighted_raster`: points d'arrière-plan sont échantillonnés proportionnellement au nombre d'observations dans la carte thermique de densité d'observation du groupe taxonomique sélectionné. Recommandé pour les données fortement biaisées, ou lorsque occurrences est manquant en raison de lacunes dans la couverture des enquêtes/études. Il s'agit de la correction la plus extrême des deux méthodes basées sur raster (pondéré et non pondéré).\n- `unweighted_raster`: points d'arrière-plan ne sont échantillonnés que dans des cellules où il y a des observations d'un groupe cible. S'attaque également au biais de l'échantillonnage et aux lacunes de l'enquête, mais de façon plus prudente que le ratio pondéré. Recommandé comme défaut des deux (pondéré et non pondéré).\n- `inclusion_buffer`: points d'arrière-plan sont échantillonnés dans un tampon autour des observations. Utile si vous ne pensez pas que votre espèce est bien représentée par le groupe taxonomique cible. \n- `thickening`: points d'arrière-plan sont échantillonnés proportionnellement à la densité locale des observations, au sein d'un tampon autour de chaque observation. Aussi utile lorsque le groupe cible de taxons ne représente pas bien votre espèce, comme alternative à inclusion buffer."
+    },
+    "pipeline@46": {
+      "label": "Nombre d'exécutions",
+      "description": "Nombre de parcours de bootstrap ou de validation croisée utilisés lors de la préparation des données d'entraînement et d'essais SDM. Le nombre d'exécutions correspond au nombre de fois que les données de occurrence et de fond sont divisées en sous-ensembles de formation/test pendant le réglage du modèle (validation croisée) ou rééchantillonnées pour estimer l'incertitude de prédiction (bootstrap). Des valeurs plus élevées peuvent fournir des intervalles de confiance plus fluides, mais augmenteront proportionnellement le temps d'exécution. "
+    },
+    "SDM>runMaxent.yml@108|fc": {
+      "label": "Classes de variables",
+      "description": "MaxEnt classes de variables contrôle les formes des relations que le modèle peut apprendre entre les espèces occurrence et les prédicteurs environnementaux. Les classes plus simples, telles que L ou LQ, s'adaptent à des réponses plus douces, plus limitées et sont souvent plus sûres pour les petits ensembles de données. Des combinaisons plus complexes, comme le LQH ou le LQHP, peuvent capter des réponses écologiques plus souples, mais elles peuvent surpasser lorsque les enregistrements occurrence sont limités. Ce pipeline teste toutes les valeurs fournies ici et sélectionne la combinaison la plus performante en utilisant la méthode de sélection des paramètres configurée à l'étape MaxEnt. Les valeurs acceptées sont les combinaisons de L (linéaire), Q (quadratique), P (produit), H (hanche) ou T (seuil, déprécié)."
+    },
+    "SDM>runMaxent.yml@108|rm": {
+      "label": "Multiplicateur de régularisation",
+      "description": "Valeurs multiplicateur de régularisation à évaluer pour le réglage du modèle MaxEnt. Le multiplicateur de régularisation contrôle à quel point MaxEnt pénalise fortement la complexité du modèle. Des valeurs plus basses permettent un modèle plus souple qui peut s'adapter étroitement aux modèles locaux. Des valeurs plus élevées produisent un prédictions plus lisse et plus généralisé et réduisent le risque de suradaptation. "
+    },
+    "SDM>runMaxent.yml@108|partition_type": {
+      "label": "Type de partition",
+      "description": "Cette option contrôle comment ENMeval partitionne les données de présence et de fond tout en harmonisant les paramètres MaxEnt.\n\nIl est recommandé de commencer par un coefficient k aléatoire. Si vous soupçonnez une suradaptation ou une autocorrélation spatiale, passez au bloc ou au tableau de bord parce que ces données de partition géographiquement plutôt que aléatoirement, ce qui rend l'évaluation plus robuste à l'autocorrélation spatiale entre les points voisins. Si vous n'avez pas assez de points occurrence pour la partition spatiale, utilisez jackknife.\n\n   - Les partitions aléatoires k-fold \\- se regroupent au hasard dans un nombre de bacs (K) spécifié par l'utilisateur, et exécute le modèle k fois, chaque bac étant utilisé une fois comme test. Recommandé pour commencer par 10 plis.\n  - Bloc \\- partitionne le emprise en quatre quadrants de taille égale et assigne des groupes par quadrant. Comme chaque pli est une grande région géographique contiguë, cela permet d'évaluer dans quelle mesure le modèle se transfère vers des zones larges et distinctes. Il s'agit d'un essai plus strict de l'autocorrélation spatiale que le tableau de bord.\n  - Checkerboard 1 \\- génère une grille de checkerboard à partir du zone d'étude et assigne des groupes basés sur le carré dans lequel les points tombent. Les plis sont plus petits et interspersés spatialement (s'alternant à travers le zone d'étude) plutôt que de grands blocs contigus, de sorte qu'il teste l'indépendance spatiale à une échelle plus fine que le bloc.\n  - Checkerboard 2 \\- Similaire à checkerboard 1 mais effectue ceci séparément pour occurrence et points d'arrière-plan\n  - Jackknife \\- Ne partitionne pas le points d'arrière-plan en test et formation (les utilise tous), effectue une validation croisée. Recommandé uniquement pour les petits ensembles de données."
+    },
+    "pipeline@147": {
+      "label": "Nombre de plis",
+      "description": "Nombre de plis pour la partition aléatoire k-fold MaxEnt lorsque type de partition = aléatoire k-fold. Peut être laissé vide quand une autre méthode est choisie."
+    }
+  },
+  "outputs": {
+    "pipeline@121|default_output": {
+      "label": "Taxons",
+      "description": "Taxons fourni au pipeline et utilisé pour la récupération GBIF occurrence et le montage de modèle."
+    },
+    "filtering>cleanCoordinates.yml@34|clean_presence": {
+      "label": "Présences",
+      "description": "Nettoyer les enregistrements GBIF occurrence qui ont passé les tests de nettoyage des coordonnées sélectionnés. Ces enregistrements sont utilisés comme points de présence dans le workflow SDM."
+    },
+    "SDM>removeCollinearity.yml@97|rasters_selected": {
+      "label": "Prédicteurs environnementaux",
+      "description": "GeoTIFF prédicteur rasters conservé après filtrage de la colinéarité. Ce sont les variables environnementales utilisées pour adapter et projeter le modèle MaxEnt."
+    },
+    "SDM>runMaxent.yml@108|sdm_pred": {
+      "label": "Prédictions",
+      "description": "Qualité de l'habitat de MaxEnt prédiction raster ajustée en utilisant les paramètres du modèle sélectionné."
+    },
+    "SDM>rangePredictions.yml@68|range_predictions": {
+      "label": "Variabilité de prédictions",
+      "description": "La variabilité de la confiance de 95 % de chaque prédiction peut être vue sur une carte pour montrer l'incertitude."
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@142|gbif_doi": {
+      "label": "DOI du téléchargement GBIF",
+      "description": "Un DOI permanent attribué à ce téléchargement de données GBIF spécifique. Doit être cité dans toute publication utilisant ces données — voir [Lignes directrices sur les citations de GBIF](https://www.gbif.org/citation-guidelines)."
+    }
+  }
+}

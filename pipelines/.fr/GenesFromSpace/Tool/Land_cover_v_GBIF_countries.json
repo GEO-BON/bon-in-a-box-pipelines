@@ -1,0 +1,74 @@
+{
+  "metadata": {
+    "name": "Perte de couverture du sol par les populations de GBIF occurrences (pays)",
+    "description": "Outil Genes from Space. L'outil récupère l'espèce occurrence de GBIF, puis sert à définir les polygones de la répartition des populations en fonction de la proximité géographique. L'outil dresse ensuite une carte de l'habitat approprié au fil du temps, en fonction de la présence de classes d'intérêt couverture du sol. Enfin, l'outil évalue la taille de l'habitat convenable au fil du temps pour chaque population et calcule les indicateurs de surveillance de la diversité génétique en conséquence (Ne500 et Populations Maintened indicators). Les cartes démographiques et les indicateurs de diversité génétique sont affichés par une interface interactive. "
+  },
+  "inputs": {
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|runtitle": {
+      "label": "Titre de l'exécution",
+      "description": "Définissez un nom pour le exécution du pipeline."
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@146|pipeline@12": {
+      "label": "Noms d'espèces",
+      "description": "Nom scientifique de l'espèce, utilisé pour chercher occurrences dans GBIF. "
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@146|pipeline@22": {
+      "label": "Liste des pays",
+      "description": "pays d'intérêt, sera utilisé pour rechercher des observations GBIF."
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@146|pipeline@14": {
+      "label": "Observations année de début - GBIF",
+      "description": "Integer, 4 chiffres année, date de début pour récupérer occurrences"
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@146|pipeline@15": {
+      "label": "Observations année de fin - GBIF",
+      "description": "Entier, 4 chiffres année, date de fin pour récupérer occurrences"
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@146|GFS_IndicatorsTool>get_pop_poly.yml@5|buffer_size": {
+      "label": "Taille de tampon",
+      "description": "Taille du rayon [en km] pour déterminer la présence de la population autour des coordonnées des observations des espèces."
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@146|GFS_IndicatorsTool>get_pop_poly.yml@5|pop_distance": {
+      "label": "Distance entre les populations",
+      "description": "Distance [en km] pour séparer les observations d'espèces dans différentes populations."
+    },
+    "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_Landcover_1992_2020.json@119|GFS_IndicatorsTool>get_LCY.yml@115|lc_classes": {
+      "label": "Classes couverture du sol",
+      "description": "Liste des identificateurs de classe couverture du sol à extraire (par exemple : 120 représente \"grassland\", 130 pour \"shurbland\"). Pour la liste des identifiants voir https://savs.eumetsat.int/html/images/landcover_legend.png)"
+    },
+    "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_Landcover_1992_2020.json@119|GFS_IndicatorsTool>get_LCY.yml@115|yoi": {
+      "label": "Années d'intérêt - changement d'habitat",
+      "description": "Liste des années pour lesquelles couverture du sol doit être extrait (intervalle maximal 1992-2020)."
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|pop_density": {
+      "label": "Densité de population",
+      "description": "Densité estimée de la population [nombre d'individus par km2]. Plusieurs valeurs peuvent être fournies, séparées par une virgule."
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|ne_nc": {
+      "label": "Ne:Nc taux estimatif",
+      "description": "Rapport Ne:Nc estimé pour les espèces étudiées. Plusieurs valeurs peuvent être fournies, séparées par une virgule."
+    },
+    "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_Landcover_1992_2020.json@119|GFS_IndicatorsTool>get_LCY.yml@115|res": {
+      "label": "Résolution de la carte couverture du sol",
+      "description": "La résolution souhaitée pour la carte couverture du sol sera obtenue par rééchantillonnage. À préciser en degrés décimaux (0,01 ~ 1 km). Valeur minimale 0,003 (~300 m)."
+    }
+  },
+  "outputs": {
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|ne_table": {
+      "label": "Taille effective de la population",
+      "description": "Taille efficace estimée de chaque population, selon le dernier point temporel de la carte de couverture de l'habitat."
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|pm": {
+      "label": "Indicateur de maintien de la population",
+      "description": "Proportion estimée de populations habitées, en comparant le point le plus précoce et le point le plus récent."
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|interactive_plot": {
+      "label": "Interactive graphique",
+      "description": "Une interface interactive pour explorer les tendances des indicateurs dans l'espace géographique et le temps."
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|ne500": {
+      "label": "Indicateur Ne>500",
+      "description": "Proportion estimée de populations avec Ne>500 au dernier moment."
+    }
+  }
+}

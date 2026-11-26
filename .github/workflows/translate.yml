@@ -1,6 +1,6 @@
 name: Translate pipelines
 
-# Machine-translates pipeline .json and .md files into .translation/<lang>/
+# Machine-translates pipeline .json and .md files into pipelines/.<lang>/
 # and commits the result to the PR branch. Only new or changed text is sent
 # to LibreTranslate (see .github/translation/translate.py).
 
@@ -10,7 +10,8 @@ on:
     paths:
       - 'pipelines/**.json'
       - 'pipelines/**.md'
-      - '.translation/config.yml'
+      - '!pipelines/.*/**'
+      - 'translation.config.yml'
       - '.github/translation/**'
       - '.github/workflows/translate.yml'
 
@@ -52,7 +53,7 @@ jobs:
       - name: Commit translations
         if: github.event.pull_request.head.repo.full_name == github.repository
         run: |
-          git add .translation
+          git add pipelines/.[a-z][a-z]
           if git diff --cached --quiet; then
             echo "No translation changes."
             exit 0

@@ -1,0 +1,102 @@
+{
+  "metadata": {
+    "name": "ProtConn Analyse avec WDPA",
+    "description": "\n## Présentation\nLe Protected Connected Index (ProtConn) est un indicateur clé au sein du Cadre mondial de la biodiversité de Kunming-Montréal (GBF) pour évaluer les progrès vers les objectifs A et 3 qui visent à protéger 30 % de la planète grâce à des réseaux bien connectés d'ici 2030. ProtConn quantifie le pourcentage d'un pays ou d'une région où aires protégées est effectivement connecté, ce qui permet le déplacement des espèces et le flux écologique. \n\nProtConn mesure à quel point une région est protégée et connectée (Saura et al. 2017, 2018). ProtConn est calculé en évaluant l'arrangement spatial de aires protégées pour déterminer la facilité avec laquelle les espèces peuvent se déplacer entre elles dans un paysage. Il traite aires protégées comme \"nodes\" et le mouvement potentiel entre eux comme \"links\", mesurant la probabilité qu'une espèce avec une distance de dispersion donnée puisse voyager entre aires protégées. Cette probabilité est calculée entre le bord le plus proche de aires protégées adjacent avec un noyau de dispersion exponentielle négative avec la distance de dispersion d'entrée comme médiane, ou où la probabilité de dispersion est de 0,5. La valeur finale du ProtConn est exprimée en pourcentage du zone d'étude total, divisé en pourcentages représentant la connectivité à l'intérieur du AP, entre les différents AP et entre les frontières internationales. Pour en savoir plus sur la méthode ProtConn, voir Saura et al. 2017, 2018, 2019. \n\nLe pipeline utilise le paquet «Makurhini» (Godinez-Gomez et al. 2026) pour calculer les paramètres ProtConn. Le pipeline peut être exécuté avec des données de la base de données mondiale de aires protégées (UNEP-WCMC et UICN 2026) tirées pour un pays ou une région spécifique dans le pipeline, des fichiers de forme personnalisés de aires protégées qui sont téléchargés par l'utilisateur, ou une combinaison des deux. Cela permet aux utilisateurs d'évaluer ProtConn actuellement et avec l'ajout du futur aires protégées. ProtConn peut être calculé au niveau du pays ou de la région. \n## Utilisations\nProtConn peut être utilisé pour évaluer les progrès actuels vers les objectifs A et 3 du FBG. Le pipeline peut également être utilisé pour comparer la connectivité de différents aires protégées proposés, aidant à la planification et à la conception. Le pipeline peut être exécuté avec une combinaison de aires protégées actuel de WDPA et de polygones d'entrée utilisateur des sites aire protégée proposés, permettant aux utilisateurs d'évaluer différents plans pour l'expansion de aire protégée.\n## Limites du pipeline \n* Sur les ensembles de données plus grands, le pipeline est lent et utilise beaucoup de mémoire, surtout avec des distances de dispersion d'entrée plus grandes. \n* Actuellement, le pipeline ne tient pas compte de la résistance du paysage (c.-à-d. si les terres entre aires protégées sont facilement traversées par des espèces) \n## Avant de commencer \nAucune clé API n'est nécessaire pour exécuter ce pipeline. Si vous souhaitez lancer le pipeline avec un polygone personnalisé pour votre zone d'étude, entrez votre chemin de fichier à partir du dossier de données utilisateur dans la boîte d'entrée \"polygon de zone d'étude\" (ex: /userdata/study area polygon.gpkg).\n\nSi vous souhaitez lancer le pipeline avec une combinaison de polygones aire protégée personnalisés et de données WDPA, assurez-vous que vos données sont au format GeoPackage et entrez le chemin de fichier dans l'entrée \"polygone de aires protégées\" (ex: /userdata/my PA polygons.gpkg).\n\nSi vous souhaitez lancer l'analyse uniquement avec des données aire protégée personnalisées, veuillez utiliser le pipeline `ProtConn Analysis with custom PAs`.\n\nCliquez sur [ici](https://boninabox.geobon.org/indicator?i=ProtConn) pour plus d'informations sur le paramétrage et Exécution du pipeline.\n## Lignes directrices en matière de citation\nVeuillez consulter les directives de citation sur l'archive Zenodo : \n\n> Griffith, J., Larocque, G., Tremblay, L., Lord, J.-M., Godinez-Gomez, O., Correa-Ayram, C. A., Goicolea, T., & Saura, S. (2026). pipeline BON in a Box pour le Protected Connected Index (ProtConn) [logiciel d'ordinateur]. Zenodo. [https://doi.org/10.5281/zenodo.20328903](https://doi.org/10.5281/zenodo.20328903)"
+  },
+  "inputs": {
+    "pipeline@60": {
+      "label": "Emprise et SCR",
+      "description": "Sélectionnez un pays/région et un SCR pour obtenir le emprise associé.\n\nLe SCR ** doit être dans un système de coordonnées de référence projeté (en mètres) pour calculer les distances correctes entre aires protégées. "
+    },
+    "pipeline@41": {
+      "label": "Polygone de zone d'étude (facultatif)",
+      "description": "Polygone du zone d'étude, au format GeoPackage. Pour utiliser un zone d'étude personnalisé, entrez le chemin vers le fichier dans les données utilisateur (par exemple /userdata/study area polygon.gpkg) et il remplacera le polygone du pays à partir du script \"Get country polygon\". Laisser vide pour utiliser des polygones de pays ou de région tirés du script \"Get country polygon\". Aires protégées à l'extérieur du pays polygone sera cultivé."
+    },
+    "pipeline@29": {
+      "label": "Polygone de aires protégées (facultatif)",
+      "description": "Le aires protégées (AP) d'intérêt. Pour combiner les données WDPA et les données personnalisées, ajoutez le chemin à la GeoPackage personnalisée ici \"par exemple /userdata/my protected areas.gpkg). Ils seront combinés dans le script. Si vous souhaitez utiliser uniquement des polygones personnalisés, veuillez utiliser l'analyse \"ProtConn avec un pipeline AP personnalisé\". Laisser vide pour utiliser uniquement les données WDPA."
+    },
+    "pipeline@69": {
+      "label": "Transfrontière tampon",
+      "description": "Tampon pour tirer aires protégées transfrontière (données WDPA seulement). Le tampon tirera aires protégées à l'intérieur de cette distance de la frontière du pays ou emprise dans l'unité du système de coordonnées de référence (mètres ou degrés). Si vous tirez des données WDPA avec un emprise personnalisé, le tampon ne sera pas appliqué.\n\nIl est recommandé que l'utilisateur choisisse une distance transfrontière 5 fois supérieure au seuil de distance le plus élevé, ce qui correspond à une probabilité de dispersion de ~0.03."
+    },
+    "protconn_analysis>protconn_analysis.yml@42|date_column_name": {
+      "label": "Date nom de la colonne (facultatif)",
+      "description": "Nom de la colonne dans l'utilisateur fourni fichier aire protégée qui spécifie quand le AP a été créé. Laisser vide si uniquement en utilisant des données WDPA."
+    },
+    "protconn_analysis>protconn_analysis.yml@42|distance_threshold": {
+      "label": "Seuil d'analyse de distance",
+      "description": "Se réfère à la distance de seuil (en mètres) utilisée pour estimer si les zones sont reliées dans une analyse spatiale. Ce seuil représente la probabilité médiane de dispersion (c.-à-d. lorsque la probabilité de dispersion entre les patchs est de 0,5). La probabilité de dispersion est calculée avec une fonction de désintégration exponentielle avec une distance croissante.\n\nLes distances de dispersion communes qui englobent une grande majorité d'espèces terrestres sont de 1000 mètres (1km), 3000 mètres (3km), 10 000 mètres (10 km) et 100 000 mètres (100 km; Saura et al., 2017).\n\nNotez que plus les distances incluses, plus le pipeline prendra de temps pour courir et plus il aura besoin de mémoire. De plus, les distances de dispersion plus grandes seront plus intensives en calcul. "
+    },
+    "protconn_analysis>protconn_analysis.yml@42|time_series": {
+      "label": "Séries chronologiques",
+      "description": "Calculer les valeurs de la série chronologique ProtConn en fonction de la date de l'établissement AP"
+    },
+    "protconn_analysis>protconn_analysis.yml@42|start_year": {
+      "label": "Année de début (facultatif)",
+      "description": "Année pour commencer les séries chronologiques. Cette entrée ne sera utilisée que si l'entrée de la série chronologique est sélectionnée."
+    },
+    "protconn_analysis>protconn_analysis.yml@42|years": {
+      "label": "Année limite",
+      "description": "Année pour laquelle vous voulez calculer ProtConn (p. ex., une entrée de 2000 ne calculera ProtConn que pour AP qui ont été désignés avant l'année 2000)"
+    },
+    "protconn_analysis>protconn_analysis.yml@42|year_int": {
+      "label": "Année (facultatif)",
+      "description": "Intervalle d'année pour la série temporelle graphique de valeurs ProtConn (par exemple, une entrée de 20 calculera ProtConn pour tous les 20 ans en filtrant aires protégées établie avant cette année). Cette entrée ne sera utilisée que si l'entrée de la série chronologique est sélectionnée."
+    },
+    "protconn_analysis>protconn_analysis.yml@42|pa_size_threshold": {
+      "label": "AP seuil de taille",
+      "description": "Seuil de taille pour AP, en mètres carrés. Aires protégées plus petit que cette zone sera enlevé. Un seuil de 1000m2 a été utilisé dans Saura et al. 2017 parce qu'à des échelles plus grandes, aires protégées de moins de 1000m2 n'a pas d'impact important sur les valeurs de ProtConn. L'élimination du petit aires protégées accélère significativement le calcul et est recommandée pour les grandes surfaces. Saisissez une valeur de 0 pour conserver tous les aires protégées."
+    },
+    "pipeline@68": {
+      "label": "AP types de statut juridique à inclure",
+      "description": "Statut juridique types de aires protégées à inclure.\n\n**Proposition :** Le site est en voie d'être reconnu par des moyens légaux ou autres. Il peut encore être géré comme un aire protégée pendant ce processus. \n\n**Inscription :** aires protégées désigné en vertu de la Convention du patrimoine mondial de l'UNESCO.\n\n**Adoptée:** Spécialement aires protégées d'importance marine (SPAMI) créée dans le cadre de la convention de Barcelone, axée sur la protection du milieu marin et de la région côtière de la Méditerranée.\n\n**Désigné :** Le site est légalement reconnu comme un aire protégée. Cela implique un engagement contraignant spécifique en faveur de la conservation à long terme. \n\n**Créée :** Le site est reconnu comme aire protégée par d'autres moyens efficaces. Cela implique un engagement à long terme en faveur de la conservation, mais sans reconnaissance juridique."
+    },
+    "data>cleanWDPA.yml@48|include_unesco": {
+      "label": "Inclure les réserves de biosphère de l'UNESCO",
+      "description": "Vérifier d'inclure les réserves de biosphère de l'UNESCO. Ils servent de sites d'apprentissage pour le développement durable et combinent la conservation de la biodiversité avec l'utilisation durable des ressources naturelles et le développement durable. Elles peuvent ne pas être protégées par la loi et ne pas être entièrement conservées, car elles sont souvent utilisées pour le développement ou les établissements humains. À l'exclusion de celles-ci, l'ensemble de données se limitera à respecter des normes de conservation plus strictes.\n"
+    },
+    "data>cleanWDPA.yml@48|buffer_points": {
+      "label": "Points tampon aire protégée",
+      "description": "Basculer sur tampon aire protégée points par zone signalée. Certains aires protégées sont signalés comme des points uniques plutôt que des polygones. Si coché, cela créera une circulaire aire protégée autour du point signalé qui est égal à la zone déclarée. S'il n'y a pas de zone signalée, il supprimera le point. Si elle n'est pas cochée, tous les aires protégées représentés en points seront supprimés.\n"
+    },
+    "data>cleanWDPA.yml@48|include_oecm": {
+      "label": "Inclure AMCE",
+      "description": "Inclure des zones avec d'autres mesures de conservation efficaces (AMCE). Ceux-ci ne sont pas officiellement désignés aires protégées mais atteignent toujours des résultats en matière de conservation.\n"
+    },
+    "data>cleanWDPA.yml@48|include_marine": {
+      "label": "Y compris le aires protégées marin et côtier",
+      "description": "Accélérer pour inclure aires protégées marin et côtier. Notez que l'analyse se limite encore aux limites du polygone zone d'étude.\n"
+    },
+    "protconn_analysis>protconn_analysis.yml@42|include_na_dates": {
+      "label": "Inclure les valeurs manquantes pour la date",
+      "description": "Comment les valeurs manquantes pour la date devraient être traitées dans l'analyse des séries chronologiques. Si la valeur aires protégées est mise en jeu, les valeurs manquantes pour la date d'établissement seront incluses dans l'analyse des séries chronologiques et affectées à la valeur choisie pour année de début. Sinon, ces aires protégées seront omis de l'analyse des séries chronologiques (notez qu'ils seront toujours inclus dans l'analyse principale)."
+    }
+  },
+  "outputs": {
+    "protconn_analysis>protconn_analysis.yml@42|protected_areas": {
+      "label": "Aires protégées",
+      "description": "Polygones aires protégées pour le calcul de ProtConn. Le chevauchement aires protégées a été fusionné pour accélérer le calcul."
+    },
+    "protconn_analysis>protconn_analysis.yml@42|result_plot": {
+      "label": "Résultat ProtConn graphique",
+      "description": "Donut graphique du pourcentage de la superficie totale non protégée, protégée et reliée, et protégée et non reliée pour chaque distance de dispersion d'entrée (en mètres)."
+    },
+    "protconn_analysis>protconn_analysis.yml@42|result_yrs_plot": {
+      "label": "ProtConn série chronologique graphique",
+      "description": "Changement dans le pourcentage de zone protégée et le pourcentage de zone protégée et connectée au fil du temps, à l'intervalle de temps choisi, par rapport aux buts de Kunming-Montreal GBF."
+    },
+    "data>load_polygons.yml@61|polygon": {
+      "label": "Polygone zone d'étude",
+      "description": "Polygone du zone d'étude"
+    },
+    "protconn_analysis>protconn_analysis.yml@42|result_yrs": {
+      "label": "Résultats des séries chronologiques ProtConn",
+      "description": "Tableau des séries chronologiques des valeurs ProtConn et ProtUnconn, calculées à l'intervalle de temps spécifié."
+    },
+    "protconn_analysis>protconn_analysis.yml@42|protconn_result": {
+      "label": "Résultats ProtConn",
+      "description": "Les résultats des calculs ProtConn. \"Prot\" et \"Unprot\" est le pourcentage du zone d'étude qui est protégé et non protégé, respectivement. \"ProtConn\" est le pourcentage de zone d'étude qui est protégé, et connecté, ProtUnconn est le pourcentage qui est protégé mais non connecté. «ProtConn intérieur» est le pourcentage du paysage qui est relié à l'intérieur d'un seul aire protégée, c'est-à-dire la contribution à la connectivité globale provenant de l'intérieur du aire protégée, sans que les espèces aient à traverser des terres non protégées. \"ProtConn Contig\" est la proportion connectée par adjascence physique directe, captant la valeur de AP voisine ou touchante."
+    }
+  }
+}

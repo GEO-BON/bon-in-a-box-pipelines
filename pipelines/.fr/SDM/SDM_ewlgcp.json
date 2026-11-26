@@ -1,0 +1,98 @@
+{
+  "metadata": {
+    "name": "Modélisation de la distribution des espèces avec ewlgcpSDM",
+    "description": "**Ce pipeline n'est pas activement entretenu. S'il vous plaît ne pas utiliser.**   \n  \n  Ce pipeline génère prédictions à partir d'un modèle de répartition des espèces à l'aide d'une approche ponctuelle et du procédé de Cox Log-Gaussian pondéré par l'effort (ewlgcp) mis en œuvre dans le package R [ewlgcpSDM](https://github.com/BiodiversiteQuebec/ewlgcpSDM)."
+  },
+  "inputs": {
+    "pipeline@121": {
+      "label": "Liste taxons",
+      "description": "Tableau des valeurs taxons"
+    },
+    "pipeline@149": {
+      "label": "Boundation et SCR",
+      "description": "Sélectionnez un emprise et SCR"
+    },
+    "SDM>selectBackground.yml@40|method_background": {
+      "label": "Historique de la méthode",
+      "description": "Méthode utilisée pour échantillonner points d'arrière-plan"
+    },
+    "SDM>selectBackground.yml@40|n_background": {
+      "label": "Nombre de points d'arrière-plan",
+      "description": "Nombre de points d'arrière-plan"
+    },
+    "data>loadFromStac.yml@140|stac_url": {
+      "label": "URL STAC",
+      "description": "URL du catalogue STAC pour tirer le prédicteur couches."
+    },
+    "data>loadFromStac.yml@140|collections_items": {
+      "label": "items de collection STAC",
+      "description": "Nom de la collection de STAC couches suivi de '|' suivi d'un item id"
+    },
+    "data>loadFromStac.yml@140|study_area": {
+      "label": "Zone d'étude",
+      "description": "Polygone de zone d'étude utilisé pour la culture couches de sortie"
+    },
+    "pipeline@46": {
+      "label": "Nombre de blocs",
+      "description": "Nombre de blocs (pour la méthode de validation croisée, actuellement ignoré)"
+    },
+    "pipeline@128": {
+      "label": "Résolution spatiale",
+      "description": "Entier, résolution spatiale du rasters dans les mêmes unités que le système de coordonnées de référence (mètres pour les systèmes de référence projetés et degrés pour les systèmes de référence en lat long). \n\nSi c'est laissé vide il utilisera la résolution native du rasters. \n\nSi la résolution spatiale est plus grossière que la résolution native du rasters, le couches sera rééchantillonné avec la méthode de rééchantillonnage choisie ci-dessous."
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@139|min_year": {
+      "label": "année minimale",
+      "description": "Observations de moins d'un an"
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@139|max_year": {
+      "label": "année maximale",
+      "description": "Maximum d'observations de l'année"
+    },
+    "data>GBIFHeatmapFromSTAC.yml@145|taxa": {
+      "label": "Taxons",
+      "description": "groupe taxonomique pour lequel récupérer la carte thermique GBIF"
+    }
+  },
+  "outputs": {
+    "pipeline@121|default_output": {
+      "label": "Nom de l'espèce",
+      "description": "Espèces pour lesquelles la répartition est modélisée"
+    },
+    "SDM>removeCollinearity.yml@97|rasters_selected": {
+      "label": "Prédicteurs environnementaux",
+      "description": "Environnement couches utilisé comme prédicteurs dans la modélisation de la distribution des espèces"
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@139|gbif_doi": {
+      "label": "DOI du téléchargement GBIF",
+      "description": "DOI de téléchargement GBIF. Utilisé pour citer des données téléchargées."
+    },
+    "data>loadFromStac.yml@140|rasters": {
+      "label": "Rasters",
+      "description": "tableau des chemins de sortie raster"
+    },
+    "SDM>runewlgcp.yml@151|sdm_pred": {
+      "label": "Prédictions",
+      "description": "modèle prédictions pendant la formation sur l'ensemble des données"
+    },
+    "SDM>runewlgcp.yml@151|sdm_unc": {
+      "label": "incertitude",
+      "description": "métriques d'incertitude du modèle"
+    },
+    "SDM>runewlgcp.yml@151|sdm_ci": {
+      "label": "Plage CI",
+      "description": "différence entre la limite supérieure et la limite inférieure de l'IC"
+    },
+    "SDM>runewlgcp.yml@151|sdm_obs": {
+      "label": "observations",
+      "description": "Observations GBIF utilisées pour le modèle SDM"
+    },
+    "SDM>runewlgcp.yml@151|sdm_bg": {
+      "label": "historique",
+      "description": "Points d'arrière-plan utilisé pour le modèle SDM"
+    },
+    "SDM>runewlgcp.yml@151|sdm_dmesh": {
+      "label": "dmesh",
+      "description": "double maille utilisée par le modèle SDM"
+    }
+  }
+}
