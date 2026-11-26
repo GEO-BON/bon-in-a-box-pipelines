@@ -428,8 +428,8 @@
   },
   "outputs": {
     "zonal_statistics>zonal_stats.yml@25|zonal_stats": {
-      "description": "Summary statistic over the polygon.",
-      "label": "Summary statistic",
+      "description": "Summary statistics over the polygon.",
+      "label": "Summary statistics",
       "type": "text/csv",
       "weight": 0
     },
