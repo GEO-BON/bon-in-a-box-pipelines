@@ -10,7 +10,11 @@
     },
     "pipeline@73": {
       "label": "Type de polygone",
-      "description": "Type de polygone chargé. Si un pays ou une région est sélectionné dans le `Choose Bounding Box` ci-dessus, sélectionnez `Country or region`. Si un emprise est dessiné dans le `Choose Bounding Box` ci-dessus, sélectionnez `Polygon of bounding box`"
+      "description": "Type de polygone chargé. Si un pays ou une région est sélectionné dans le `Choisir l'emprise` ci-dessus, sélectionnez `Pays ou région`. Si un emprise est dessiné dans le `Choisir l'emprise` ci-dessus, sélectionnez `Polygone de l'emprise`",
+      "options": {
+        "Country or region": "Pays ou région",
+        "Polygon of bounding box": "Polygone de l'emprise"
+      }
     },
     "data>loadFromStac.yml@45|spatial_res": {
       "label": "Résolution spatiale",

@@ -10,7 +10,11 @@
     },
     "data>load_polygons.yml@211|polygon_type": {
       "label": "Type de polygone",
-      "description": "Type de polygone à charger. \n\n- `Country or region` charge un polygone du pays ou de la région sélectionné.\n- `Polygon of bounding box` charge un polygone du emprise associé au pays ou à la région sélectionné, ou le emprise dessiné."
+      "description": "Type de polygone à charger. \n\n- `Pays ou région` charge un polygone du pays ou de la région sélectionné.\n- `Polygone de l'emprise` charge un polygone du emprise associé au pays ou à la région sélectionné, ou le emprise dessiné.",
+      "options": {
+        "Country or region": "Pays ou région",
+        "Polygon of bounding box": "Polygone de l'emprise"
+      }
     },
     "NDVI>calculateNDVI.yml@199|start_date": {
       "label": "Date de début",

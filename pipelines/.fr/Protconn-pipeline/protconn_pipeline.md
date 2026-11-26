@@ -34,7 +34,7 @@ Si vous souhaitez lancer le pipeline avec un polygone personnalisé pour votre z
 
 Si vous souhaitez exécuter le pipeline avec une combinaison de polygones aire protégée personnalisés et de données WDPA, assurez-vous que vos données sont au format GeoPackage et entrez le chemin de fichier dans l'entrée « polygone de aires protégées ».
 
-Si vous souhaitez lancer l'analyse uniquement avec des données aire protégée personnalisées, veuillez utiliser le pipeline `ProtConn Analysis with custom PAs`.
+Si vous souhaitez lancer l'analyse uniquement avec des données aire protégée personnalisées, veuillez utiliser le pipeline `ProtConn Analyse avec AP personnalisé`.
 
 
 ## Exécution du pipeline
@@ -47,7 +47,7 @@ BON in a Box contient un pipeline pour calculer ProtConn pour un pays ou une ré
 
 - **Polygon de zone d'étude:** c'est une entrée optionnelle pour ajouter un fichier zone d'étude personnalisé, qui remplacera le polygone généré à partir de l'entrée emprise et SCR. Le fichier zone d'étude personnalisé doit être au format GeoPackage et ajouté au dossier de données utilisateur de votre dépôt local. Cette entrée doit être le chemin vers le fichier dans les données utilisateur (par exemple /userdata/study area polygon.gpkg).
 
-- **Polygon de aires protégées:** c'est une entrée optionnelle et ne devrait être utilisé que si l'utilisateur veut utiliser des données aire protégée personnalisées, par exemple s'il veut calculer ProtConn pour aires protégées ou aires protégées qui ne sont pas encore dans WDPA. Si vous utilisez le pipeline `ProtConn Analysis with WDPA`, cette entrée est facultative et tout fichier ajouté sera combiné avec les données WDPA du pays d'intérêt. Si vous utilisez le pipeline `ProtConn Analysis with custom PAs`, cette entrée est obligatoire et le pipeline analysera uniquement les polygones aire protégée d'entrée utilisateur.
+- **Polygon de aires protégées:** c'est une entrée optionnelle et ne devrait être utilisé que si l'utilisateur veut utiliser des données aire protégée personnalisées, par exemple s'il veut calculer ProtConn pour aires protégées ou aires protégées qui ne sont pas encore dans WDPA. Si vous utilisez le pipeline `ProtConn Analyse avec WDPA`, cette entrée est facultative et tout fichier ajouté sera combiné avec les données WDPA du pays d'intérêt. Si vous utilisez le pipeline `ProtConn Analyse avec AP personnalisé`, cette entrée est obligatoire et le pipeline analysera uniquement les polygones aire protégée d'entrée utilisateur.
 
 - **Transfrontalier tampon:** l'utilisateur doit sélectionner un tampon pour tirer le aires protégées transfrontière. Le tampon tirera aires protégées à cette distance de la frontière du pays ou emprise dans l'unité du système de coordonnées de référence. Si vous tirez des données WDPA avec un emprise personnalisé, le tampon ne sera pas appliqué. Il est recommandé que l'utilisateur choisisse une distance transfrontière 5 fois supérieure au seuil de distance le plus élevé, ce qui correspond à une probabilité de dispersion de ~0.03. La valeur par défaut est zéro.
 
@@ -67,12 +67,12 @@ BON in a Box contient un pipeline pour calculer ProtConn pour un pays ou une ré
 
 - **Seuil de taille AP :** l'utilisateur doit saisir un seuil de taille pour AP, en mètres carrés. Aires protégées plus petit que cette zone sera enlevé. Un seuil de 1 000 m2 a été utilisé dans Saura et al. 2017 parce qu'à des échelles plus grandes, aires protégées de moins de 1 000 m2 n'a pas d'impact important sur les valeurs de ProtConn. L'élimination du petit aires protégées accélère significativement le calcul et est recommandée pour les grandes surfaces. Pour éviter de filtrer AP par seuil de taille, saisissez une valeur de 0.
 
-- **Les types de statut juridique AP à inclure:** l'utilisateur peut choisir les types de statut juridique de données WDPA à inclure dans l'analyse. Cette entrée n'est pertinente que si l'on utilise des données WDPA. Le aires protégées peut avoir un statut juridique de `Proposed`, `Inscribed`, `Adopted`, `Designated` ou `Established`.
-  - `Proposed` signifie que le site est en voie d'être reconnu par des moyens légaux ou autres efficaces. Il peut encore être géré comme un aire protégée pendant ce processus.
-  - `Inscribed` signifie qu'il est inscrit sur une liste internationale (p. ex. Patrimoine mondial). Cela peut se chevaucher avec désigné.
-  - `Adopted` signifie qu'il s'agit d'un aire protégée spécialement d'importance marine (SPAMI) créé dans le cadre de la Convention de Barcelone, axé sur la protection du milieu marin et des régions côtières de la Méditerranée.
-  - `Designated` signifie qu'il est officiellement établi en vertu du droit ou de la politique nationale ou internationale.
-  - `Established` signifie qu'il est protégé et géré, mais peut-être manque de désignation juridique formelle.
+- **Les types de statut juridique AP à inclure:** l'utilisateur peut choisir les types de statut juridique de données WDPA à inclure dans l'analyse. Cette entrée n'est pertinente que si l'on utilise des données WDPA. Le aires protégées peut avoir un statut juridique de `Effectif proposé`, `Inscrit`, `Adopté`, `Désignation` ou `Création`.
+  - `Effectif proposé` signifie que le site est en voie d'être reconnu par des moyens légaux ou autres efficaces. Il peut encore être géré comme un aire protégée pendant ce processus.
+  - `Inscrit` signifie qu'il est inscrit sur une liste internationale (p. ex. Patrimoine mondial). Cela peut se chevaucher avec désigné.
+  - `Adopté` signifie qu'il s'agit d'un aire protégée spécialement d'importance marine (SPAMI) créé dans le cadre de la Convention de Barcelone, axé sur la protection du milieu marin et des régions côtières de la Méditerranée.
+  - `Désignation` signifie qu'il est officiellement établi en vertu du droit ou de la politique nationale ou internationale.
+  - `Création` signifie qu'il est protégé et géré, mais peut-être manque de désignation juridique formelle.
 
 - **Inclure les réserves de biosphère de l'UNESCO:** l'utilisateur peut spécifier s'il souhaite inclure l'homme de l'UNESCO et les réserves de biosphère dans l'analyse ou non. Ils servent de sites d'apprentissage pour le développement durable et combinent la conservation de la biodiversité avec l'utilisation durable des ressources naturelles et le développement durable. Elles peuvent ne pas être protégées par la loi et ne pas être entièrement conservées, car elles sont souvent utilisées pour le développement ou les établissements humains. À l'exclusion de celles-ci, l'ensemble de données se limitera à respecter des normes de conservation plus strictes. Cette entrée n'est pertinente que si les données WDPA sont utilisées.
 

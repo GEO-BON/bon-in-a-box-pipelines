@@ -41,7 +41,7 @@ BON in a Box a un pipeline pour calculer SHS et SHI pour les espèces, les pays 
 
 - **Source de carte de répartition d'experts:** Source à partir de laquelle obtenir le carte de répartition d'experts pour les espèces d'intérêt. Les options sont : Map of Life (MOL), Union internationale pour la conservation de la nature (UICN) et cartes de répartition du ministère de l'Environnement du Québec (QC).
 
-- **Carte de répartition (raster) :** raster avec la superficie prévue pour les espèces d'intérêt. À utiliser lorsque l'entrée `Type of range map` est sélectionnée pour être *raster*.
+- **Carte de répartition (raster) :** raster avec la superficie prévue pour les espèces d'intérêt. À utiliser lorsque l'entrée `Type de carte de répartition` est sélectionnée pour être *raster*.
 
 - **Système de référence spatiale:** Système de référence pour le domaine d'intérêt. Il peut s'agir 1) de l'identificateur du système de référence spatiale (RSID), 2) du nom de l'autorité (par exemple EPSG) avec le SRID ou 3) de la description des détails du système de référence spatiale (par exemple [https://spatialreference.org/]. Si seulement le SRID est donné et le logiciel ne peut pas trouver le système de référence essayer les options 2 ou 3.
 
@@ -51,7 +51,7 @@ BON in a Box a un pipeline pour calculer SHS et SHI pour les espèces, les pays 
 
 - **Année de début :** L'année à laquelle l'analyse devrait commencer doit être 2000 ou plus tard. Vérifiez l'intervalle de temps disponible pour les données Global Forecst Watch [ici](https://stac.geobon.org/collections/gfw-lossyear).
 
-- **Année de fin:** L'année à laquelle l'analyse doit se terminer doit être postérieure à l'entrée `Initial time`. Il devrait être dans l'intervalle de temps pour les données Global Forest Watch (GFW) qui peuvent être trouvées [ici](https://stac.geobon.org/collections/gfw-lossyear).
+- **Année de fin:** L'année à laquelle l'analyse doit se terminer doit être postérieure à l'entrée `Temps initial`. Il devrait être dans l'intervalle de temps pour les données Global Forest Watch (GFW) qui peuvent être trouvées [ici](https://stac.geobon.org/collections/gfw-lossyear).
 
 - **Pas de temps:** Résolution temporelle pour analyse, en nombre d'années. Pour obtenir des valeurs pour le année de fin, le pas de temps devrait s'intégrer uniformément dans la plage d'analyse donnée.
 

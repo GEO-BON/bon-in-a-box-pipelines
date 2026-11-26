@@ -22,7 +22,12 @@
     },
     "data>getAreaOfHabitat.yml@80|range_map_type": {
       "label": "Type de carte de répartition",
-      "description": "Sélectionnez le type de carte de répartition selon le type de fichier source : 1) polygone, 2) raster, 3) une intersection entre les fichiers raster et polygone."
+      "description": "Sélectionnez le type de carte de répartition selon le type de fichier source : 1) polygone, 2) raster, 3) une intersection entre les fichiers raster et polygone.",
+      "options": {
+        "Polygon": "Polygone",
+        "Raster": "Raster",
+        "Both": "Les deux"
+      }
     },
     "pipeline@77": {
       "label": "Source de carte de répartition d'experts",
@@ -58,7 +63,11 @@
     },
     "data>getAreaOfHabitat.yml@80|elevation_filter": {
       "label": "Filtrer par altitude",
-      "description": "Si 'yes' un filtre altitude utilisant les informations de l'UICN est appliqué, si 'no' le carte de répartition est pris comme zone d'habitat."
+      "description": "Si 'yes' un filtre altitude utilisant les informations de l'UICN est appliqué, si 'no' le carte de répartition est pris comme zone d'habitat.",
+      "options": {
+        "Yes": "Oui",
+        "No": "Numéro"
+      }
     },
     "data>getAreaOfHabitat.yml@80|elev_buffer": {
       "label": "Altitude tampon",

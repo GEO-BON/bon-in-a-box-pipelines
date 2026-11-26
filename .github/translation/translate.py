@@ -58,7 +58,9 @@ TABLE_SEP_RE = re.compile(r"^\s*\|?(\s*:?-+:?\s*\|)+\s*(:?-+:?\s*)?$")
 
 
 class Glossary:
-    def __init__(self, entries, lang):
+    def __init__(self, entries, lang, translatable_code=()):
+        # Inline code naming UI text (input labels, pipeline names): translated, backticks kept.
+        self.translatable_code = set(translatable_code)
         self.rules = []
         for e in sorted(entries, key=lambda e: -len(e["term"])):
             translations = e.get("translations")
@@ -88,13 +90,19 @@ def mask(text, glossary, translate_link_text):
         values.append((value, glossary))
         return f"X{len(values) - 1}"
 
+    def code(span):
+        inner = span[1:-1]
+        if inner in glossary.translatable_code:
+            return f"`{translate_link_text(inner)}`"
+        return span  # option values, file names, error messages: kept as written
+
     def link(m):
         bang, label, target = m.groups()
         return token(f"{bang}[{translate_link_text(label)}]({target})")
 
     t = TOKEN_RE.sub(lambda m: token(m.group(0)), text)  # literal "X1" in the source
     t = LINK_RE.sub(link, t)  # first, so code inside link text is handled by the nested call
-    t = CODE_RE.sub(lambda m: token(m.group(0)), t)
+    t = CODE_RE.sub(lambda m: token(code(m.group(0))), t)
     t = RAW_HTML_RE.sub(lambda m: token(m.group(0)), t)
     t = URL_RE.sub(lambda m: token(m.group(0)), t)
     t = DOI_RE.sub(lambda m: token(m.group(0)), t)
@@ -365,6 +373,20 @@ def translate_fields(item, tr, short, long):
     return out
 
 
+def is_display_option(value):
+    """Option values that read as text (\"Country or region\", \"Amphibians\") get a translated
+    display label. Codes (TERRESTRIAL, EOSD) and identifiers (near, mean) are left as is."""
+    return isinstance(value, str) and re.match(r"^[A-Z][a-z]", value) is not None
+
+
+def translate_options(item, tr):
+    """Display labels for an input's options, keyed by the English value sent to scripts."""
+    options = item.get("options")
+    if not isinstance(options, list):
+        return {}
+    return {value: tr(value) for value in options if is_display_option(value)}
+
+
 def translate_pipeline(data, tr):
     """Sparse translation of a pipeline: only its user-facing text fields."""
     out = {}
@@ -375,6 +397,8 @@ def translate_pipeline(data, tr):
         items = {}
         for item_id, item in (data.get(section) or {}).items():
             fields = translate_fields(item, tr, ["label"], ["description"])
+            if section == "inputs" and (options := translate_options(item, tr)):
+                fields["options"] = options
             if fields:
                 items[item_id] = fields
         if items:
@@ -406,6 +430,26 @@ def source_files(source_dir, patterns):
     except (OSError, subprocess.CalledProcessError):
         pass
     return sorted(found)
+
+
+def translatable_code(sources, cfg):
+    """Texts that are translated even inside `code`, so references match what the form shows:
+    pipeline input/output labels, pipeline names, option values with a display label,
+    plus translate_code from the config."""
+    texts = set(cfg.get("translate_code") or [])
+    for rel in sources:
+        if rel.suffix != ".json":
+            continue
+        try:
+            data = json.loads((ROOT / rel).read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        texts.add((data.get("metadata") or {}).get("name"))
+        for section in ("inputs", "outputs"):
+            for item in (data.get(section) or {}).values():
+                texts.add(item.get("label"))
+                texts.update(v for v in item.get("options") or [] if is_display_option(v))
+    return {t for t in texts if isinstance(t, str) and t.strip()}
 
 
 def remove_orphans(lang_dir, sources):
@@ -446,7 +490,8 @@ def main():
         lang_dir = ROOT / source_dir / f".{lang}"
         cache_path = lang_dir / CACHE_NAME
         cache = json.loads(cache_path.read_text(encoding="utf-8")) if cache_path.exists() else {}
-        tr = Translator(source_lang, lang, Glossary(cfg.get("glossary") or [], lang), cache, api_key)
+        glossary = Glossary(cfg.get("glossary") or [], lang, translatable_code(sources, cfg))
+        tr = Translator(source_lang, lang, glossary, cache, api_key)
 
         for rel in targets:  # first pass: find segments missing from the cache
             render(rel, tr)

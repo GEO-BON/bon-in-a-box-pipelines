@@ -6,7 +6,10 @@
   "inputs": {
     "data>load_polygons.yml@28|polygon_type": {
       "label": "Type de polygone",
-      "description": "Type de polygone à charger. Pays ou région polygones, base de données mondiale de aires protégées (WDPA), zones économiques exclusives (ZEE), ou un polygone personnalisé d'un emprise."
+      "description": "Type de polygone à charger. Pays ou région polygones, base de données mondiale de aires protégées (WDPA), zones économiques exclusives (ZEE), ou un polygone personnalisé d'un emprise.",
+      "options": {
+        "Country or region": "Pays ou région"
+      }
     },
     "pipeline@27": {
       "label": "Emprise et SCR",

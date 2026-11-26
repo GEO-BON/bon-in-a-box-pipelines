@@ -9,6 +9,12 @@ include:  # relative to source_dir
   - "**/*.json"
   - "**/*.md"
 
+# Text inside `backticks` is kept as written (option values, file names, error messages),
+# except pipeline input/output labels and pipeline names, which are translated like the
+# labels themselves. List other `code` texts to translate here.
+translate_code:
+  - Choose Bounding Box
+
 # Glossary rules, per target language:
 #   - no `translations` key       -> term is never translated
 #   - language listed             -> term is replaced with that exact text
@@ -48,6 +54,12 @@ glossary:
   - term: Spatio Temporal Asset Catalog
 
   # GIS and technical terms
+  - term: Polygon of bounding box
+    translations:
+      fr: Polygone de l'emprise
+  - term: Choose Bounding Box
+    translations:
+      fr: Choisir l'emprise
   - term: bounding box
     translations:
       fr: emprise
