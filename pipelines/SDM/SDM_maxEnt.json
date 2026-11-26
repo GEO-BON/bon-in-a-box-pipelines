@@ -416,14 +416,7 @@
           "mode",
           "cubic",
           "cubicspline",
-          "lanczos",
-          "rms",
-          "min",
-          "max",
-          "sum",
-          "med",
-          "q1",
-          "q3"
+          "lanczos"
         ]
       }
     },
@@ -999,7 +992,7 @@
       "description": "Latest year for GBIF records. Accepts YYYY or YYYY-MM-DD; if a full date is supplied, only the year is used.",
       "type": "text",
       "example": "2024",
-      "weight": 6
+      "weight": 8
     },
     "SDM>selectBackground.yml@40|n_background": {
       "description": "Target number of background points to generate within the study extent. These points are used to represent the available environment.\n\nTypically it is recommended to start with 10000 points. If you have a very large study area you can increase this amount to fully capture the available environmental space. If you have a very small study area (i.e. fewer than 10000 pixels) you can reduce the number of background points.",
@@ -1070,14 +1063,14 @@
       "description": "Number of folds for random k-fold MaxEnt partitioning when partition type = random k-fold. Can be left blank when another method is chosen.",
       "type": "int",
       "example": 10,
-      "weight": 13
+      "weight": 16
     },
     "data>loadStacAssets.yml@150|study_area": {
       "description": "Optional study-area polygon in GeoPackage format used to mask the output rasters.",
       "label": "Study area",
       "type": "application/geopackage+sqlite3",
       "example": null,
-      "weight": 14
+      "weight": 5
     }
   },
   "outputs": {
