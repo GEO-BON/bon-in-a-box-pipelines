@@ -35,8 +35,8 @@
   },
   "outputs": {
     "zonal_statistics>zonal_stats.yml@25|zonal_stats": {
-      "label": "Statistique sommaire",
-      "description": "Statistique sommaire sur le polygone."
+      "label": "Statistiques sommaires",
+      "description": "Statistiques sommaires sur le polygone."
     },
     "BII>BIIChange.yml@14|bii_change": {
       "label": "variation du BII",
