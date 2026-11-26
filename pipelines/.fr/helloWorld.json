@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "name": "Ligne Hello World",
+    "description": "Ce pipeline d'exemple très simple montre comment connecter un script à une sortie unique. L'entrée du script est laissé vide, devenant ainsi une entrée de pipeline."
+  },
+  "inputs": {
+    "helloWorld>helloPython.yml@0|some_int": {
+      "label": "Quelques int",
+      "description": "Un nombre que nous augmenterons"
+    },
+    "helloWorld>helloPython.yml@0|study_area_bbox": {
+      "label": "Emprise",
+      "description": "Emprise et SCR de zone d'étude"
+    }
+  },
+  "outputs": {
+    "helloWorld>helloPython.yml@0|increment": {
+      "label": "Un nombre (input++)",
+      "description": "bla bla"
+    }
+  }
+}

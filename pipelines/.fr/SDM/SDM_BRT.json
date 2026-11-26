@@ -1,0 +1,110 @@
+{
+  "metadata": {
+    "name": "Modélisation de la distribution des espèces avec arbres de régression boostés (BRT)",
+    "description": "**Ce pipeline n'est pas activement entretenu. S'il vous plaît ne pas utiliser.**  \n\n  \n  Ce pipeline génère prédictions pour un modèle de distribution d'espèces utilisant les TBR."
+  },
+  "inputs": {
+    "pipeline@121": {
+      "label": "Espèce",
+      "description": "Nom de l'espèce. Les espèces ayant moins de 50 présences utilisables dans le zone d'étude donnent un très petit ensemble de tests et un statistiques d'ajustement peu fiable."
+    },
+    "pipeline@174": {
+      "label": "Boundation et SCR",
+      "description": "Sélectionnez un emprise et SCR. Choisissez une zone qui contient suffisamment de présences (voir Espèces)."
+    },
+    "pipeline@137": {
+      "label": "Prédicteurs environnementaux",
+      "description": "Vecteur de chaînes de caractères, nom de la collection suivie de '|' suivi du point id. Affichage GEO BON STAC articles de catalogue [ici](https://stac.geobon.org/viewer/). Les nom de la collection et le nom de l'élément peut être trouvé dans l'URL (par exemple pour \"https://stac.geobon.org/viewer/chelsa-clim/bio1\" des nom de la collection est chelsa-climat et l'élément id est bio1). Choisir quelques variables qui limitent l'espèce de façon plausible et évitent les variables fortement corrélées. Seuls les 5 premiers sont indiqués dans le espace environnemental produit."
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@159|min_year": {
+      "label": "année minimale",
+      "description": "Observations de moins d'un an"
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@159|max_year": {
+      "label": "année maximale",
+      "description": "Maximum d'observations de l'année"
+    },
+    "pipeline@128": {
+      "label": "Résolution spatiale",
+      "description": "Entier, résolution spatiale du rasters dans les mêmes unités que le système de coordonnées de référence (mètres pour les systèmes de référence projetés et degrés pour les systèmes de référence en lat long). \n\nSi c'est laissé vide il utilisera la résolution native du rasters. \n\nSi la résolution spatiale est plus grossière que la résolution native du rasters, le couches sera rééchantillonné avec la méthode de rééchantillonnage \"near\"."
+    },
+    "pipeline@152": {
+      "label": "Pseudoabsence tampon",
+      "description": "La distance minimale d'un AP est permise par une présence en kilomètres. Gardez-le bien en dessous de la taille du zone d'étude, sinon aucune cellule candidate ne reste. Les valeurs plus grandes rendent les absences plus distinctes des présences, mais excluent l'habitat convenable à proximité."
+    },
+    "pipeline@153": {
+      "label": "Max candidat Pseudoabsences",
+      "description": "Le nombre maximal de pseudo-absences à considérer. Cela accélère la génération de AP sur la grande rasters. Si la région a plus de cellules valides (cellules avec données, en dehors du masque à eau) que cette limite, un sous-ensemble aléatoire de cette taille est utilisé. Autrement, chaque cellule valide qui n'est pas une présence est un candidat et la limite n'a aucun effet."
+    },
+    "pipeline@154": {
+      "label": "Proportion de Pseudoabsence",
+      "description": "Nombre de pseudo-absences par présence (par exemple 2,4 donne 2,4 pseudo-absences par présence). Des valeurs plus élevées permettent d'échantillonner l'environnement de façon plus approfondie mais réduisent la part de présences dans l'ensemble d'essai, ce qui réduit la précision et PR AUC sans que le modèle soit pire. Comparer ces statistiques seulement entre les parcours avec la même valeur."
+    },
+    "pipeline@167": {
+      "label": "Zone d'étude",
+      "description": "Polygone de zone d'étude utilisé pour la culture couches de sortie"
+    },
+    "data>loadFromStac.yml@161|t0": {
+      "label": "Date de début",
+      "description": "Date de début pour les séries horaires couches dans le catalogue STAC. Peut être dans le format AAAA ou YYYY-MM-DD. Par exemple, le SEC couverture du sol peut être extrait en spécifiant le nom de l'article ou en spécifiant toute la collection ainsi que la date de début et de fin ici. Laisser vide si l'extraction d'éléments par nom."
+    },
+    "data>loadFromStac.yml@161|t1": {
+      "label": "Date de fin",
+      "description": "Date de fin des séries chronologiques couches. Peut être dans le format AAAA ou YYYY-MM-DD. Par exemple, le SEC couverture du sol peut être extrait en spécifiant le nom de l'article ou en spécifiant toute la collection ainsi que la date de début et de fin ici. Laisser vide si l'extraction d'éléments par nom."
+    },
+    "data>loadFromStac.yml@161|temporal_res": {
+      "label": "Résolution temporelle",
+      "description": "Résolution temporelle à utiliser lors de la requête de items STAC par date, dans le format (\"P\", intervalle de temps et unité de temps, par exemple \"P1Y\" est annuel, \"P1M\" est montly et \"P1D\" est quotidien). Laisser vide si ce n'est pas par date. Si la résolution temporelle est plus grossière que la résolution temporelle des séries chronologiques, le couches sera agrégé avec la méthode d'agrégation choisie ci-dessous."
+    }
+  },
+  "outputs": {
+    "pipeline@121|default_output": {
+      "label": "Espèce",
+      "description": "Nom de l'espèce"
+    },
+    "filtering>cleanCoordinates.yml@34|clean_presence": {
+      "label": "Présences",
+      "description": "Occurrences de GBIF après nettoyage"
+    },
+    "SDM>BRT>fitBRT.yml@132|pseudoabsences": {
+      "label": "Pseudoabsences",
+      "description": "Coordonnées des points de pseudo-absence utilisés pour former et tester le modèle. Vérifiez qu'ils couvrent les environnements du zone d'étude et ne sont pas concentrés autour des présences."
+    },
+    "SDM>BRT>fitBRT.yml@132|env_corners": {
+      "label": "Espace environnemental",
+      "description": "Graphique de présences (bleu) et pseudo-absences (vert) dans espace environnemental, pour les 5 premiers prédicteurs. Les présences dans une partie distincte du nuage signifient des prédicteurs informatifs; un fort chevauchement signifie que le modèle peut difficilement les séparer."
+    },
+    "SDM>BRT>fitBRT.yml@132|tuning": {
+      "label": "Courbe de réglage",
+      "description": "Décrit comment le coefficient de corrélation (MCC) de Matthew change lorsque la valeur seuil passe de 0 à 1. Le pic est le seuil utilisé pour le carte de répartition. Une bonne courbe a un pic clair à un seuil intermédiaire, avec un MCC bien supérieur à 0,3. Une courbe plate, ou un pic proche de 0 ou 1, signifie une faible séparation ou des scores serrés dans une plage étroite."
+    },
+    "SDM>BRT>fitBRT.yml@132|fit_stats": {
+      "label": "Statistiques d'ajustement",
+      "description": "JSON de BRT statistiques d'ajustement et valeur seuil optimale.\n\n- ROC AUC (0,5 est aléatoire, au-dessus de 0,7 est acceptable)\n- PR AUC (comparer avec la part des présences dans l'ensemble d'essai)\n- MCC au meilleur seuil (0 est aléatoire, 1 est parfait)\n\nCalculé sur une petite fraction aléatoire, ainsi traiter comme indicatif. Vérifiez les valeurs suspectes."
+    },
+    "SDM>BRT>fitBRT.yml@132|predicted_sdm": {
+      "label": "SDM prévu",
+      "description": "Carte du score occurrence, généralement entre 0 et 1. Plus haut signifie plus approprié par rapport aux pseudo-absences. Il ne s'agit pas d'une probabilité étalonnée et peut tomber à l'extérieur de 0 à 1: l'utiliser pour comparer les emplacements, pas comme une probabilité absolue."
+    },
+    "SDM>BRT>fitBRT.yml@132|range": {
+      "label": "Portée",
+      "description": "Carte de répartition seuil à la valeur optimale. Carte binaire (1 est prédite appropriée) obtenue en appliquant le seuil maximal de MCC au SDM prévu. Il montre où l'adéquation du modèle PREDICTS, la présence non confirmée, et dépend des paramètres de pseudo-absence."
+    },
+    "SDM>BRT>fitBRT.yml@132|sdm_uncertainty": {
+      "label": "SDM Incertitude",
+      "description": "Carte de l'incertitude relative du BRT pour chaque emplacement. C'est la variance prédite par le modèle pour chaque cellule (pas une incertitude de bootstrap). Les valeurs plus élevées signifient des scores moins certains : utilisez-le pour diminuer le poids ou masquer les zones de la carte prédite."
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@159|gbif_doi": {
+      "label": "DOI du téléchargement GBIF",
+      "description": "DOI de téléchargement GBIF. Utilisé pour citer des données téléchargées."
+    },
+    "data>loadFromStac.yml@160|rasters": {
+      "label": "Rasters",
+      "description": "tableau des chemins de sortie raster"
+    },
+    "data>loadFromStac.yml@161|rasters": {
+      "label": "Rasters",
+      "description": "Sortie des fichiers raster au format GeoTIFF."
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "name": "Obtenez des polygones de population de emprise",
+    "description": "Composante de l'outil Genes from Space. Compte tenu d'un emprise géographique, d'une espèce d'intérêt et d'une fenêtre temporelle, l'outil rétroduit le occurrences de l'espèce de GBIF, puis calcule les polygones de population en fonction de la proximité géographique. "
+  },
+  "inputs": {
+    "pipeline@12": {
+      "label": "Noms d'espèces",
+      "description": "Nom scientifique de l'espèce, utilisé pour chercher occurrences dans GBIF. "
+    },
+    "pipeline@21": {
+      "label": "Emprise ",
+      "description": "Vecteur de flotteur, coordonnées bbox du bbox dans l'ordre xmin, ymin, xmax, ymax"
+    },
+    "pipeline@14": {
+      "label": "Année de début",
+      "description": "Integer, 4 chiffres année, date de début pour récupérer occurrences"
+    },
+    "pipeline@15": {
+      "label": "Année de fin",
+      "description": "Entier, 4 chiffres année, date de fin pour récupérer occurrences"
+    },
+    "GFS_IndicatorsTool>get_pop_poly.yml@5|buffer_size": {
+      "label": "Taille de tampon",
+      "description": "Taille du rayon [en km] pour déterminer la présence de la population autour des coordonnées des observations des espèces."
+    },
+    "GFS_IndicatorsTool>get_pop_poly.yml@5|pop_distance": {
+      "label": "Distance entre les populations",
+      "description": "Distance [en km] pour séparer les observations d'espèces dans différentes populations."
+    }
+  },
+  "outputs": {
+    "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons": {
+      "label": "Polygones des populations",
+      "description": "Chemin vers le fichier GeoJSON stockant des polygones de populations."
+    }
+  }
+}

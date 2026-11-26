@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "name": "Indice d'habitat de la biodiversité (BHI)",
+    "description": "\n## Présentation\nLe CSIRO Indice d'habitat de la biodiversité (BHI) évalue directement les progrès accomplis dans la réalisation de l'objectif A au sein du Cadre mondial de la biodiversité de Kunming-Montréal (GBF) en vue d'accroître la superficie des écosystèmes nationaux d'ici 2050 en maintenant, en améliorant et en rétablissant l'intégrité, la connectivité et la résilience de tous les écosystèmes. BHI estime la proportion d'espèces qui devraient persister (c'est-à-dire éviter l'extinction) à l'intérieur et à l'intérieur de l'unité de déclaration spatiale (Hoskins et al., 2020). Plus précisément, BHI estime le niveau de diversité des espèces qui devrait être conservé dans une unité spatiale donnée (p. ex., un pays, un grand type d'écosystème ou la planète entière) en fonction de la zone de l'unité, de la connectivité et de l'intégrité des écosystèmes naturels de l'ensemble de cette unité (Harwood et al., 2022). Les résultats pour l'indicateur peuvent être exprimés en 1. la «proportion effective de l'habitat restant dans l'unité – adaptation aux effets de la condition et de la connectivité fonctionnelle de l'habitat, et de la variation spatiale de la composition des espèces des communautés écologiques (diversité beta); ou 2. la proportion efficace d'habitat qui peut se traduire, par l'analyse standard des espèces-zones, en un prédiction de la proportion d'espèces qui devrait persister (c.-à-d. éviter l'extinction) à long terme. Ce pipeline calcule une moyenne géométrique pondérée de l'indicateur BERI sur une région d'intérêt. Le code pour calculer la moyenne pondérée a été adapté à partir du script \"Moyens géométrique pondérés de CSIRO BILBI\" sur le [Portail d'accès aux données du CSIRO](https://doi.org/10.25919/tt2t-h452)\n## Utilisations  \nBHI traite directement de trois des principaux attributs écosystémiques de l'objectif A du FBG, qui comprennent la superficie, l'intégrité et la connétivité, ainsi que l'effet combiné de ces attributs sur la diversité des espèces.  \n\nLe BHI sert à surveiller et à signaler les tendances passées à aujourd'hui de la persistance attendue de la diversité des espèces en recalculant à plusieurs reprises l'indicateur en utilisant la meilleure cartographie disponible de l'état ou de l'intégrité de l'écosystème observée à plusieurs moments, p. ex. pendant différentes années. Une grande variété de sources de données peut être utilisée à cette fin, couvrant des échelles spatiales allant de l'échelle mondiale à l'échelle infranationale, et comprenant des données rassemblées par les pays pour établir des comptes de l'état des écosystèmes dans le cadre du Système de comptabilité des écosystèmes de l'ONU. Le BHI peut également servir d'indicateur de référence pour l'évaluation de la contribution que les actions sectorielles proposées ou mises en œuvre devraient apporter au renforcement de la capacité actuelle des écosystèmes à conserver la diversité des espèces, fournissant ainsi une base pour la hiérarchisation stratégique de ces actions par les pays.\n## Limites du pipeline\n- BHI est une couche modélisée, il y a donc de plus grandes incertitudes dans les zones où les données sont moins nombreuses. Interpréter les résultats avec prudence."
+  },
+  "inputs": {
+    "pipeline@23": {
+      "label": "Emprise et SCR",
+      "description": "Sélectionnez un pays/région et un SCR pour obtenir le emprise associé. Vous pouvez également dessiner/injecter un emprise personnalisé avec un SCR."
+    },
+    "data>load_polygons.yml@24|polygon_type": {
+      "label": "Type de polygone",
+      "description": "Type de polygone à charger. \n\n- `Pays ou région` charge un polygone du pays ou de la région sélectionné.\n- `Polygone de l'emprise` charge un polygone du emprise associé au pays ou à la région sélectionné, ou le emprise dessiné.",
+      "options": {
+        "Country or region": "Pays ou région",
+        "Polygon of bounding box": "Polygone de l'emprise"
+      }
+    },
+    "data>loadFromStac.yml@1|t0": {
+      "label": "Année de début (facultatif)",
+      "description": "Année de début pour les séries chronologiques couches. Laisser vide si vous utilisez toutes les dates disponibles.\n\nDoit être l'un des: 2000, 2005, 2015, 2010, 2020"
+    },
+    "data>loadFromStac.yml@1|t1": {
+      "label": "Année de fin (facultatif)",
+      "description": "Année de fin pour les séries chronologiques couches. Laisser vide si vous utilisez toutes les dates disponibles.\n\nDoit être l'un des: 2000, 2005, 2015, 2010, 2020"
+    },
+    "data>loadFromStac.yml@1|temporal_res": {
+      "label": "Résolution temporelle (facultatif)",
+      "description": "Résolution temporelle à utiliser lors de la requête de items STAC par date, dans le format (\"P\", intervalle de temps et unité de temps, par exemple \"P1Y\" est annuel, \"P1M\" est mensuel et \"P1D\" est quotidien). Laisser vide si ce n'est pas par date. \n\nDoit être de: P5Y, P10Y, P15Y, P20Y\n\nSi la résolution temporelle est plus grossière que la résolution temporelle des séries chronologiques, le couches sera agrégé avec la méthode d'agrégation choisie ci-dessous."
+    },
+    "pipeline@19": {
+      "label": "Résolution spatiale (facultatif)",
+      "description": "Entier, résolution spatiale du rasters dans les mêmes unités que le système de coordonnées de référence (mètres pour les systèmes de référence projetés et degrés pour les systèmes de référence en lat long). \n\nSi c'est laissé vide il utilisera la résolution native du rasters. \n\nSi la résolution spatiale est plus grossière que la résolution native du rasters, le couches sera rééchantillonné avec la méthode de rééchantillonnage choisie ci-dessous."
+    },
+    "pipeline@18": {
+      "label": "Méthode de rééchantillonnage (facultatif)",
+      "description": "Méthode de rééchantillonnage utilisée lors du rééchelonnement et/ou du réaménagement du raster couches. Voir [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) pour la description.\n\nSera ignoré si pas rééchantillonnage."
+    },
+    "pipeline@20": {
+      "label": "Méthode d'agrégation (facultatif)",
+      "description": "Méthode utilisée pour agréger les éléments lorsque couches se combine avec le temps.\n\nSera ignoré si pas agréger."
+    }
+  },
+  "outputs": {
+    "bilbi_indicators>bilbi_weighted_mean.yml@0|time_series_plot": {
+      "label": "Séries chronologiques graphique",
+      "description": "Graphique de la moyenne géométrique de l'indicateur dans le temps dans le zone d'étude d'intérêt"
+    },
+    "bilbi_indicators>bilbi_weighted_mean.yml@0|summarised_values": {
+      "label": "BHI résumé",
+      "description": "Moyenne géométrique pondérée annuelle de BHI dans le polygone zone d'étude.\n\n\nUne valeur plus élevée (plus proche de 1) indique qu'une grande proportion de l'habitat demeure en bon état et est bien reliée, ce qui entraîne une forte attente de persistance de l'espèce. Une valeur inférieure indique qu'une proportion importante de l'habitat original a été perdue, dégradée ou fragmentée, ce qui met la biodiversité en danger."
+    },
+    "data>loadFromStac.yml@1|rasters": {
+      "label": "Raster indicateur couches pour chaque année",
+      "description": "Sortie des fichiers raster au format GeoTIFF."
+    },
+    "data>load_polygons.yml@24|polygon": {
+      "label": "Polygone",
+      "description": "Polygones du pays, WDPA, ZEE pour le pays ou la région d'intérêt"
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "metadata": {
+    "name": "Obtenir couverture du sol changement de couverture 1992-2020",
+    "description": "Composante de l'outil Genes from Space. Compte tenu d'un domaine d'intérêt, l'outil crée une pile raster décrivant la présence d'habitats pour les classes couverture du sol et pour les années d'intérêt (intervalle de temps autorisé : 1992-2020). "
+  },
+  "inputs": {
+    "GFS_IndicatorsTool>get_LCY.yml@115|population_polygons": {
+      "label": "Polygones des populations",
+      "description": "Chemin vers le fichier GeoJSON stockant des polygones de populations."
+    },
+    "GFS_IndicatorsTool>get_LCY.yml@115|res": {
+      "label": "Résolution de la carte couverture du sol",
+      "description": "La résolution souhaitée pour la carte couverture du sol sera obtenue par rééchantillonnage. À préciser en degrés décimaux (0,01 ~ 1 km). Valeur minimale 0,003 (~300 m)."
+    },
+    "GFS_IndicatorsTool>get_LCY.yml@115|yoi": {
+      "label": "Années d'intérêt",
+      "description": "Liste des années pour lesquelles couverture du sol doit être extrait (intervalle maximal 1992-2020)."
+    },
+    "GFS_IndicatorsTool>get_LCY.yml@115|lc_classes": {
+      "label": "Classes couverture du sol",
+      "description": "Liste des identifiants de classe couverture du sol à extraire (pour les identifiants voir https://savs.eumetsat.int/html/images/landcover_legend.png)"
+    }
+  },
+  "outputs": {
+    "GFS_IndicatorsTool>get_LCY.yml@115|lcyy": {
+      "label": "Couverture du sol année par année",
+      "description": "Dossier Tif montrant la répartition annuelle des catégories d'intérêt couverture du sol."
+    },
+    "GFS_IndicatorsTool>get_LCY.yml@115|time_points": {
+      "label": "Années avec information couverture du sol",
+      "description": "Liste des années pour lesquelles des informations couverture du sol sont disponibles."
+    }
+  }
+}

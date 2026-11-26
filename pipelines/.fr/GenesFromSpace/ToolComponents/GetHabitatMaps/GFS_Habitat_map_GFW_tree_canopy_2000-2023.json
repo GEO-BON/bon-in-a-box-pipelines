@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "name": "Obtenir GFW couvert forestier changement 2000-2023",
+    "description": "Composante de l'outil Genes from Space. Compte tenu d'une zone d'intérêt, l'outil crée une cheminée raster décrivant la présence d'habitats forestiers pour les années d'intérêt (intervalle maximal : de 2000 à 2023). Présence d'habitat forestier disponible par le Global Forest Watch (https://www.globalforestwatch.org/)"
+  },
+  "inputs": {
+    "GFS_IndicatorsTool>get_TCY.yml@23|population_polygons": {
+      "label": "Polygones des populations",
+      "description": "Chemin vers le fichier GeoJSON stockant des polygones de populations."
+    },
+    "GFS_IndicatorsTool>get_TCY.yml@23|res": {
+      "label": "Résolution de la carte couvert arboré",
+      "description": "La résolution souhaitée pour la carte couvert arboré sera obtenue par rééchantillonnage. À préciser en degrés décimaux (0,01 ~ 1 km). Valeur minimale 0,001 (~100 m)."
+    },
+    "GFS_IndicatorsTool>get_TCY.yml@23|yoi": {
+      "label": "Années d'intérêt",
+      "description": "Liste des années pour lesquelles couvert arboré doit être extrait (intervalle maximal 2000-2023)."
+    }
+  },
+  "outputs": {
+    "GFS_IndicatorsTool>get_TCY.yml@23|tcyy": {
+      "label": "Couvert arboré année par année",
+      "description": "Fichier Tif de couvert arboré, découpé selon bbox"
+    },
+    "GFS_IndicatorsTool>get_TCY.yml@23|time_points": {
+      "label": "Années avec information couvert arboré",
+      "description": "Liste des années pour lesquelles des informations couvert arboré sont disponibles."
+    }
+  }
+}

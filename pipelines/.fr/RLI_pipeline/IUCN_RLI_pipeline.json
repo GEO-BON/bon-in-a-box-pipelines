@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "name": "Pipeline Indice de la Liste rouge (RLI)",
+    "description": "## Présentation\nLe Indice de la Liste rouge (RLI) montre l'évolution du risque global d'extinction pour les espèces et est utilisé pour suivre les progrès vers la réduction des extinctions et de la perte de biodiversité. De nombreuses espèces qui déplacent des catégories dans le Liste rouge le font en raison de la taxonomie révisée ou de l'amélioration des connaissances. Par conséquent, l'examen des tendances brutes du statut Liste rouge peut être trompeur. RLI modèles ces tendances pour montrer des changements globaux de la situation des groupes d'espèces qui sont basés uniquement sur une amélioration ou une dissuasion réelle. RLI a été largement intégré dans divers cadres politiques. Initialement utilisée pour évaluer les progrès accomplis dans la réalisation de l'objectif de 2010 de la Convention sur la diversité biologique (Rodrigues, 2006), elle a depuis été utilisée dans les évaluations régionales, thématiques et mondiales par des organismes tels que la Plateforme intergouvernementale scientifique et politique sur la biodiversité et les services écosystémiques (IPBES), l'Avenir de l'environnement mondial et d'autres (Global Biodiversity Outlook, 2010).\n## Utilisations\nLe RLI est un indicateur clé des objectifs de développement durable de l'ONU, en particulier l'objectif 15, et il est adopté par la Convention sur les espèces migratrices et ses accords. Il sert également d'indicateur principal pour l'objectif A et la cible 4 du Cadre mondial de la biodiversité de Kunming-Montréal (CDB, 2022). De plus, en suivant la proportion d'espèces menacées qui montrent une amélioration du statut, le RLI joue un rôle central dans l'évaluation des progrès réalisés vers le but A. Au-delà des tendances mondiales, le RLI peut être utilisé pour suivre l'évolution du risque d'extinction dans les domaines biogéographiques, les unités politiques, les écosystèmes, les habitats, les groupes taxonomiques, les types de menaces, l'utilisation ou les métiers, ainsi que ceux pertinents aux divers accords et traités internationaux (Butchart et al., 2004; Butchart et al., 2005). Le RLI appuie la réalisation de plusieurs autres buts et cibles dans le cadre, tels que le but B, la cible 2 et la cible 5, soulignant les changements dans le risque d'extinction, y compris pour les espèces utilisées. En calculant le RLI dans des contextes plus spécifiques, comme pour les espèces touchées par la pollution (cible 7), les espèces touchées par les espèces exotiques envahissantes (cible 6b) ou celles utilisées pour l'alimentation et la médecine (cible 9b), l'indicateur fournit des indications ciblées qui éclairent directement les efforts déployés pour atteindre ces objectifs. Pour en savoir plus sur l'indicateur RLI du Cadre mondial de la biodiversité, consultez les métadonnées [ici](https://www.gbf-indicators.org/metadata/headline/A-3).\n  \nLes éléments suivants sont suggérés qui sont propres à chaque objectif :\n1. RLI des espèces touchées par la pollution (cible 7)\n  - Pays: Le choix de l'utilisateur \n  - Groupe taxonomique: Tous \n  - Catégorie de menace : Pollution \n  - Utilisation des espèces: Ne pas filtrer par l'utilisation ou le commerce des espèces\n\n2. RLI des espèces touchées par des espèces exotiques envahissantes (cible 6b)\n  - Pays: Le choix de l'utilisateur\n  - Groupe taxonomique: Tous\n  - Catégorie de menace : Espèces ou maladies exotiques envahissantes\n  - Utilisation des espèces: Ne pas filtrer par l'utilisation ou le commerce des espèces\n\n3. RLI des espèces utilisées dans les aliments et les médicaments (cible 9b)\n  - Pays: Le choix de l'utilisateur\n  - Groupe taxonomique: Tous\n  - Catégorie de menace : Ne pas filtrer par catégorie de menace\n  - Utilisation des espèces : aliments - humains, aliments - animaux, médicaments humains et vétérinaires\n\n4. RLI pour toutes les espèces utilisées (objectif B et cible 5)\n  - Pays: Le choix de l'utilisateur\n  - Groupe taxonomique: Tous\n  - Catégorie de menace : Ne pas filtrer par catégorie de menace\n  - Utilisation des espèces : Toutes\n\n5. RLI pour les espèces menacées par la pêche (cible 9)\n  - Pays: Le choix de l'utilisateur\n  - Groupe taxonomique: Tous\n  - Catégorie de menace : Pêche\n  - Utilisation des espèces: Ne pas filtrer par l'utilisation ou le commerce des espèces\n\n## Limites du pipeline\n* Dans les grands pays ou les pays riches en espèces, ainsi que dans les catégories de menace ou d'utilisation qui comptent un nombre important d'espèces, ce pipeline prend beaucoup de temps pour récupérer les données.\n* Ce pipeline calcule le RLI pour les espèces seulement. Les sous-espèces, sous-populations et variétés sont exclues de l'analyse.\n* La liste des évaluations de l'UICN extraites pour ce pipeline ne sont que celles faites à l'échelle mondiale. Les évaluations régionales sont exclues de l'analyse.\n## Avant de commencer\nPour utiliser ce pipeline, vous aurez besoin d'un [Jeton UICN](https://api.iucnredlist.org/users/sign_up) pour accéder aux données sur l'Union internationale pour la conservation de la nature (UICN) Liste rouge des espèces menacées. Pour interpréter les résultats de ce pipeline, il est important de comprendre les catégorisations de menaces de l'UICN, qui sont présentes tout au long du sorties. Certains résultats présentent ces catégories directement, tandis que d'autres, comme les calculs Indice de la Liste rouge (RLI), les utilisent pour modéliser les changements dans le risque d'extinction au fil du temps. Le Liste rouge de l'UICN des espèces menacées définit les catégories de menaces suivantes :\n  - EX: Exinct \n  - EW: Éteint à l'état sauvage \n  - RE: Disparu au niveau régional \n  - CR: En danger critique \n  - EN: En danger \n  - VU: Vulnérable \n  - LR/cd: Risque faible \n  - Dépendant de mesures de conservation \n  - NT or LR/nt: Quasi menacé \n  - LC or LR/lc: Préoccupation mineure \n  - DD: Données insuffisantes\n\n(UICN, 2025)"
+  },
+  "inputs": {
+    "pipeline@95": {
+      "label": "Pays",
+      "description": "Pays d'intérêt."
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spGroup.yml@82|taxonomic_group": {
+      "label": "Groupe taxonomique",
+      "description": "Sélectionnez les groupes taxonomiques pour lesquels calculer le RLI. Si 'All' est sélectionné, le pipeline comprendra tous les groupes taxonomiques.",
+      "options": {
+        "All": "Tous",
+        "Amphibians": "Amphibiens",
+        "Birds": "Oiseaux",
+        "Mammals": "Mammifères",
+        "Reptiles": "Reptiles",
+        "Fishes": "Poissons",
+        "Insects": "Insectes",
+        "Angelfishes": "Poissons-anges",
+        "Arachnids": "Arachnides",
+        "Blennies": "Blennies",
+        "Brown algae": "Algues brunes",
+        "Butterfly fishes": "Poissons papillons",
+        "Cacti": "Cactus",
+        "Chameleons": "Chaméléons",
+        "Cone snails": "Escargots du cône",
+        "Conifers": "Conifères",
+        "Corals": "Corails",
+        "Crocodiles and alligators": "Crocodiles et alligators",
+        "Crustaceans": "Crustacés",
+        "Cycads": "Cycadères",
+        "Fernes and allies": "Fernes et alliés",
+        "Flowering plants": "Plantes à fleurs",
+        "Fw caridean shrimps": "Fw crevettes caridiennes",
+        "Fw crabs": "Crabes mouchetés",
+        "Fw crayfish": "Écrevisses",
+        "Green algae": "Algues vertes",
+        "Groupers": "Groupeurs",
+        "Gymnosperms": "Gymnospermes",
+        "Hagfishes": "Poissons",
+        "Horseshoe crabs": "Crabes d'Amérique",
+        "Lichens": "Lichens",
+        "Lobsters": "Homards",
+        "Magnolias": "Magnolias",
+        "Mangrove plants": "Plantes de mangrove",
+        "Molluscs": "Moluques",
+        "Mosses": "Mousses",
+        "Mushrooms": "Champignons",
+        "Others": "Autres",
+        "Pufferfishes": "Poissons-appâts",
+        "Red algae": "Algues rouges",
+        "Reef building corals": "Récif construisant des coraux",
+        "Seabreams porgies picarels": "Porgies picarels",
+        "Seagrasses": "Graisses de mer",
+        "Seasnakes": "Serpents marins",
+        "Sharks and rays": "Requins et rayons",
+        "Sturgeons": "Esturgeons",
+        "Surgeonfishes": "Poissons-surgeons",
+        "Tarpons and ladyfishes": "Tarpons et coccinelles",
+        "Tunas and billfishes": "Tunas et poissons à bec",
+        "Velvet worms": "Vers de velours",
+        "Wrasses and parrotfishes": "Morceaux et perroquets"
+      }
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spUse.yml@77|species_use": {
+      "label": "Utilisation des espèces",
+      "description": "Sélectionnez l'utilisation ou les échanges d'espèces. Ceci filtrera la liste des espèces pour n'inclure que les espèces ayant les utilisations sélectionnées. Si 'All' est sélectionné, le pipeline comprendra toutes les espèces qui ont une utilisation enregistrée dans la base de données Liste rouge. Vous pouvez omettre ce filtre en sélectionnant « Ne pas filtrer par l'utilisation ou le commerce d'espèces ».",
+      "options": {
+        "All": "Tous",
+        "Do not filter by species use or trade": "Ne pas filtrer par l'utilisation ou le commerce des espèces",
+        "Food - human": "Alimentation humaine",
+        "Food - animal": "Aliments - animaux",
+        "Medicine - human & veterinary": "Médecine - humain & vétérinaire",
+        "Poisons": "Poison",
+        "Manufacturing chemicals": "Fabrication de produits chimiques",
+        "Other chemicals": "Autres produits chimiques",
+        "Fuels": "Combustibles",
+        "Fibre": "Fibres",
+        "Construction or structural materials": "Matériaux de construction ou de construction",
+        "Wearing apparel, accessories": "Vêtements, accessoires",
+        "Other household goods": "Autres articles ménagers",
+        "Handicrafts, jewellery, etc.": "Artisanat, bijouterie, etc.",
+        "Pets/display animals, horticulture": "Animaux de compagnie/animaux d'exposition, horticulture",
+        "Research": "Recherche",
+        "Sport hunting/specimen collecting": "Chasse sportive/collecte de spécimens",
+        "Establishing ex-situ production": "Établissement de la production ex situ",
+        "Other": "Autres",
+        "Unknown": "Inconnu"
+      }
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spThreats.yml@92|threat_category_input": {
+      "label": "Catégorie de menace",
+      "description": "Sélectionnez la ou les menaces d'espèces à filtrer. Ceci renvoie une liste des espèces Liste rouge de l'UICN menacées par les catégories sélectionnées.",
+      "options": {
+        "Do not filter by threat category": "Ne pas filtrer par catégorie de menace",
+        "Residential & commercial development": "Développement résidentiel et commercial",
+        "Agriculture & aquaculture": "Agriculture et aquaculture",
+        "Energy production & mining": "Production d'énergie et exploitation minière",
+        "Transportation & service corridors": "Couloirs de transport et de service",
+        "Biological resource use": "Utilisation des ressources biologiques",
+        "Human intrusions & disturbance": "Intérêts humains et perturbations",
+        "Natural system modifications": "Modifications du système naturel",
+        "Invasive and other problematic species, genes & diseases": "Espèces envahissantes et autres espèces, gènes et maladies problématiques",
+        "Invasive alien species or diseases": "Espèces ou maladies exotiques envahissantes",
+        "Pollution": "Pollution",
+        "Geological events": "Événements géologiques",
+        "Climate change & severe weather": "Changement climatique et temps violent",
+        "Fisheries": "Pêche",
+        "Other options": "Autres options"
+      }
+    }
+  },
+  "outputs": {
+    "IUCNRedlistIndex>RedListIndex.yml@59|redlist_data": {
+      "label": "Données Liste rouge",
+      "description": "Ensemble de données contenant les résultats du calcul Indice de la Liste rouge (RLI)."
+    },
+    "IUCNRedlistIndex>RedListIndex.yml@59|redlist_trend_plot": {
+      "label": "Liste rouge tendance",
+      "description": "Le Indice de la Liste rouge des espèces pour le groupe taxonomique choisi au fil du temps. Un RLI de 1,0 indique que toutes les espèces ont un statut de moins concerné, alors que 0,0 indique qu'elles ont disparu. Si la valeur RLI est constante au fil du temps, le risque global d'extinction demeure inchangé. Une tendance à la hausse montre une réduction du taux de perte de biodiversité."
+    },
+    "IUCNRedlistIndex>RedListIndex.yml@59|redlist_matrix": {
+      "label": "Matrice Liste rouge",
+      "description": "Matrice montrant la répartition des catégories de menaces dans le temps pour le groupe d'espèces."
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spList.yml@58|number_species": {
+      "label": "Nombre d'espèces",
+      "description": "Nombre d'espèces dans ce pays, filtrées par le taxon, la menace et les catégories d'utilisation."
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spGroup.yml@82|taxonomic_group": {
+      "label": "Groupe(s) taxonomique(s)",
+      "description": "Le ou les groupes taxonomiques d'intérêt."
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spThreats.yml@92|threat_category": {
+      "label": "Menaces d'espèces",
+      "description": "Catégorie de menace de l'UICN"
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spUse.yml@77|species_use": {
+      "label": "Utilisation(s) des espèces",
+      "description": "L'espèce utilise ou commercialise."
+    },
+    "IUCNRedlistIndex>IUCN_redlist_historyAssesment.yml@55|api_citation": {
+      "label": "Référence de l'API de l'UICN",
+      "description": "Citation pour les données acquises en utilisant l'API Liste rouge de l'UICN."
+    }
+  }
+}

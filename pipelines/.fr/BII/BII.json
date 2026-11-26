@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "name": "Indice d'intégrité de la biodiversité",
+    "description": "## Présentation \nLe Indice d'intégrité de la biodiversité (BII) est une mesure conçue pour évaluer le degré d'intégrité et de fonctionnement des écosystèmes terrestres par rapport à leur état naturel. Il mesure l'abondance des espèces présentes à l'origine dans une région donnée par rapport à ce qui serait attendu dans un écosystème non perturbé. Le BII explique les effets de l'utilisation des terres et de la pression humaine sur l'abondance des espèces, offrant une vue d'ensemble de la santé de la biodiversité. Une valeur BII plus élevée indique une communauté plus proche de sa composition naturelle, alors qu'une valeur plus faible suggère une perturbation écologique importante. Le BII est un indicateur complémentaire permettant d'évaluer l'objectif A dans le Cadre mondial de la biodiversité de Kunming-Montréal (GBF). \n\nCe pipeline ne calcule pas le BII; il résume le BII couches produit par le Natural History Museum au fil de l'espace et du temps. Le BII a été créé par le Natural History Museum, Londres, et utilise leur base de données PREDICTS, qui regroupe les données d'études comparant la biodiversité terrestre à des sites présentant des niveaux de pression humaine variables (Newbold et al., 2016). \n\nVoici comment le couches est produit. La base de données sert à établir un état de référence en utilisant les profils de biodiversité dans les habitats à niveaux de perturbation minimes. Ensuite, il attribue des scores de sensibilité à chaque espèce en fonction de leur vulnérabilité à la pression humaine. L'intégrité est calculée en comparant l'abondance des espèces observées dans une zone donnée à ce qui est attendu dans des conditions de référence à faible impact humain. PREDICTS contenait plus de 3 millions d'enregistrements provenant de plus de 26 000 sites répartis dans 94 pays, représentant plus de 45 000 espèces de plantes, d'invertébrés et de vertébrés.\n## Utilisations  \n\nCe pipeline résume le Natural History Museum global 10 x 10 km BII couches pour un pays ou une région d'intérêt. \n\nIl peut être utilisé pour: \n  \n\n  - calculer un statistique sommaire de BII (moyenne, médiane ou mode) pour chaque année disponible\n- voir comment BII dans une zone a changé au fil du temps \n- carte où BII a augmenté ou diminué entre deux années choisies\n\nBII est exprimé en pourcentage, avec des pourcentages plus élevés indiquant un écosystème plus intact.\n## Limites du pipeline \nLe pipeline ne modélise pas le Indice d'intégrité de la biodiversité à partir des données, il calcule statistiques sommaires sur la couche 10 x 10 km BII précalculée par la couche globale calculée Natural History Museum. Par conséquent, vous ne pouvez pas personnaliser le modèle ou saisir des données personnalisées. De plus, comme BII est une couche de données modélisées, les valeurs peuvent être moins précises dans les zones où il y a un manque de données. Pour en savoir plus sur la base de données PREDICTS, visitez le [page sur le site Natural History Museum](https://www.nhm.ac.uk/our-science/research/projects/predicts/science.html).\n## Avant de commencer \nIl n'y a pas de données ou de clés API nécessaires pour cette analyse. Pour voir la couche globale, allez à notre [Catalogue STAC](https://stac.geobon.org/viewer/bii_nhm/bii_nhm_10km_2020)."
+  },
+  "inputs": {
+    "pipeline@67": {
+      "label": "Emprise et SCR",
+      "description": "Sélectionnez un pays/région et un SCR pour obtenir le emprise associé. Vous pouvez également dessiner/injecter un emprise personnalisé avec un SCR."
+    },
+    "data>load_polygons.yml@68|polygon_type": {
+      "label": "Type de polygone",
+      "description": "Type de polygone à charger. \n\n- `Pays ou région` charge un polygone du pays ou de la région sélectionné.\n- `Polygone de l'emprise` charge un polygone du emprise associé au pays ou à la région sélectionné, ou le emprise dessiné.",
+      "options": {
+        "Country or region": "Pays ou région",
+        "Polygon of bounding box": "Polygone de l'emprise"
+      }
+    },
+    "zonal_statistics>zonal_stats.yml@25|summary_statistic": {
+      "label": "Statistique sommaire",
+      "description": "Statistique sommaire pris à travers le polygone. Choisissez un ou plusieurs."
+    },
+    "data>loadFromStac.yml@56|spatial_res": {
+      "label": "Résolution spatiale (facultatif)",
+      "description": "Entier, résolution spatiale du rasters dans les mêmes unités que le système de coordonnées de référence (mètres pour les systèmes de référence projetés et degrés pour les systèmes de référence en lat long). Si c'est laissé vide, il utilisera la résolution native du rasters. Si la résolution spatiale est plus grossière que la résolution native du rasters, le couches sera rééchantillonné en utilisant la méthode \"near\"."
+    },
+    "pipeline@63": {
+      "label": "Année de début (facultatif)",
+      "description": "Année de début pour les séries chronologiques couches. Laisser vide si vous utilisez toutes les dates disponibles.\n\nDoit être l'un des: 2000, 2005, 2010, 2015, 2020"
+    },
+    "pipeline@64": {
+      "label": "Année de fin (facultatif)",
+      "description": "Année de fin pour les séries chronologiques couches. Laisser vide si vous utilisez toutes les dates disponibles.\n\nDoit être l'un des: 2000, 2005, 2010, 2015, 2020"
+    }
+  },
+  "outputs": {
+    "zonal_statistics>zonal_stats.yml@25|zonal_stats": {
+      "label": "Statistiques sommaires",
+      "description": "Statistiques sommaires sur le polygone."
+    },
+    "BII>BIIChange.yml@14|bii_change": {
+      "label": "variation du BII",
+      "description": "Carte raster de variation du BII. Des chiffres plus élevés indiquent une plus grande perte de BII."
+    },
+    "data>load_polygons.yml@68|polygon": {
+      "label": "Polygone",
+      "description": "Polygones du pays, WDPA, ZEE pour le pays ou la région d'intérêt"
+    },
+    "data>loadFromStac.yml@56|rasters": {
+      "label": "Rasters",
+      "description": "Sortie des fichiers raster au format GeoTIFF."
+    }
+  }
+}
