@@ -22,6 +22,38 @@ gdalcubes_set_gdal_config("CHECK_WITH_INVERT_PROJ", "FALSE") # disable checks on
 gdalcubes_set_gdal_config("GDAL_NUM_THREADS", 1) # restrict GDAL threads to 1
 
 gdalcubes::gdalcubes_options(parallel = 1)
+
+# GDAL does not retry failed HTTP requests by default. This covers 429/5xx responses and connection timeouts/resets.
+# Set as environment variables so they apply to terra as well as gdalcubes.
+Sys.setenv(GDAL_HTTP_MAX_RETRY = "5", GDAL_HTTP_RETRY_DELAY = "5")
+
+# Remote reads occasionally return truncated data ("TIFFFillTile: Read error ... got X bytes, expected Y",
+# "IReadBlock failed"). GDAL does not retry those, and terra only reports them as warnings,
+# leaving NA cells (or failing later with "there are no cell values"). Retry the whole operation instead.
+gdal_read_error_pattern <- "IReadBlock failed|TIFFFillTile|TIFFReadEncodedTile|TIFFReadEncodedStrip"
+retry_on_read_error <- function(fn, attempts = 3, delay_seconds = 30) {
+  for (attempt in seq_len(attempts)) {
+    read_error <- NULL
+    result <- tryCatch(
+      withCallingHandlers(fn(), warning = function(w) {
+        if (grepl(gdal_read_error_pattern, conditionMessage(w))) {
+          read_error <<- conditionMessage(w)
+          invokeRestart("muffleWarning")
+        }
+      }),
+      error = function(e) {
+        if (is.null(read_error)) stop(e)
+        NULL
+      }
+    )
+    if (is.null(read_error)) {
+      return(result)
+    }
+    message("Read error on attempt ", attempt, "/", attempts, ": ", read_error)
+    if (attempt < attempts) Sys.sleep(delay_seconds)
+  }
+  biab_error_stop(paste("Failed to read remote raster after", attempts, "attempts:", read_error))
+}
 CRS <- paste0(input$bbox_crs$CRS$authority, ":", input$bbox_crs$CRS$code)
 bounding_box <- input$bbox_crs$bbox
 
@@ -195,24 +227,26 @@ for (coll_it in collections_items) { # Loop through input array
     empty_raster <- rast(xmin = bounding_box[1], xmax = bounding_box[3], ymin = bounding_box[2], ymax = bounding_box[4], resolution = resolution, crs = srs.cube)
 
     # Resample if crs or spatial resolution are not empty
-    if (!is.null(input$spatial_res) | !is.null(CRS)) {
-      resampled <- project(r, empty_raster)
-    } else {
-      resampled <- r
-    }
+    masked <- retry_on_read_error(function() {
+      if (!is.null(input$spatial_res) | !is.null(CRS)) {
+        resampled <- project(r, empty_raster)
+      } else {
+        resampled <- r
+      }
 
-    # Change band names if they are all called data
-    if (names(resampled) == "data") {
-      names(resampled) <- ci[2]
-    }
+      # Change band names if they are all called data
+      if (names(resampled) == "data") {
+        names(resampled) <- ci[2]
+      }
 
-    # Crop if there is a study area
-    if (!is.null(input$study_area)) {
-      study_area <- vect(poly)
-      masked <- mask(resampled, study_area)
-    } else {
-      masked <- resampled
-    }
+      # Crop if there is a study area
+      if (!is.null(input$study_area)) {
+        study_area <- vect(poly)
+        mask(resampled, study_area)
+      } else {
+        resampled
+      }
+    })
 
     # Name file path, adds
     base_name <- names(masked)
@@ -224,7 +258,8 @@ for (coll_it in collections_items) { # Loop through input array
       k <- k + 1
     }
 
-    file <- writeRaster(masked, paths)
+    # Without resampling, the remote pixels are only read here.
+    file <- retry_on_read_error(function() writeRaster(masked, paths, overwrite = TRUE))
 
     #### Case 2: Pull all items in a collection ####
   } else { # if there are not collection items specified
